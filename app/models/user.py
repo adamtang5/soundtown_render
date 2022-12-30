@@ -53,7 +53,7 @@ class User(db.Model, UserMixin):
       'email': self.email,
       'display_name': self.display_name,
       'avatar_url': self.avatar_url,
-      'banner_url': self.banner_url
+      'banner_url': self.banner_url,
       'created_at': self.created_at,
       'updated_at': self.updated_at,
       "comment_amount":len(self.comments),
