@@ -25,8 +25,12 @@ MarkupSafe = "==2.0.1"
 SQLAlchemy = "==1.4.19"
 Werkzeug = "==2.0.1"
 WTForms = "==2.3.3"
-boto3 = "*"
+boto3 = "==1.22.5"
 pytz = "*"
+botocore = "==1.25.5"
+jmespath = "==1.0.0"
+s3transfer = "==0.5.2"
+urllib3 = "==1.26.9"
 
 [dev-packages]
 psycopg2-binary = "==2.8.6"
