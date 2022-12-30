@@ -11,7 +11,12 @@ def seed_songs():
   data = json.load(f)
 
   for song_dict in data['songs']:
-    new_song = Song(user_id=random.randint(1,3),title = song_dict["title"],audio_url = song_dict["audio_url"],description = song_dict["description"],image_url = song_dict["image_url"])
+    new_song = Song(
+      user_id=random.randint(1,3),
+      title=song_dict["title"],
+      audio_url=song_dict["audio_url"],
+      description=song_dict["description"],
+      image_url=song_dict["image_url"])
     db.session.add(new_song)
 
   db.session.commit()

@@ -1,7 +1,7 @@
 from .db import db
 from datetime import datetime
 from .song_like import song_likes
-from .playlist_songs import playlist_songs
+from .playlist_song import playlist_song
 
 
 class Song(db.Model):
@@ -27,7 +27,7 @@ class Song(db.Model):
 
   playlists = db.relationship(
     "Playlist",
-    secondary=playlist_songs,
+    secondary=playlist_song,
     back_populates="songs"
   )
 
@@ -40,7 +40,7 @@ class Song(db.Model):
       'audio_url': self.audio_url,
       'description': self.description,
       'image_url': self.image_url,
-      'comments': sorted([comment.to_dict() for comment in self.comments], key=lambda comment: comment['created_at'], reverse=False),
+      'comments': sorted([comment.to_dict() for comment in self.comments], key=lambda comment: comment['created_at']),
       'created_at': self.created_at,
       'updated_at': self.updated_at,
       'likes': [like.id for like in self.likes]

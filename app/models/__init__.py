@@ -3,4 +3,4 @@ from .user import User
 from .song import Song
 from .comment import Comment
 from .playlist import Playlist
-from .playlist_songs import playlist_songs
+from .playlist_song import playlist_song

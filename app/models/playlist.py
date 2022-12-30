@@ -1,7 +1,7 @@
 from .db import db
 from datetime import datetime
 from .playlist_like import playlist_likes
-from .playlist_songs import playlist_songs
+from .playlist_song import playlist_song
 
 
 class Playlist(db.Model):
@@ -25,7 +25,7 @@ class Playlist(db.Model):
 
   songs = db.relationship(
     "Song",
-    secondary=playlist_songs,
+    secondary=playlist_song,
     back_populates="playlists"
   )
 
