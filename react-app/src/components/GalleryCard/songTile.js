@@ -1,10 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { loadSong } from "../../store/player";
-import { likeSong, unlikeSong } from "../../store/song";
 import { useDispatch, useSelector } from "react-redux";
 import SongTileActions from "./SongTileActions";
-import "./songTile.css";
+import "./SongTile.css";
 import { getAllUsers } from "../../store/user";
 
 const SongTile = ({ song }) => {
@@ -21,7 +20,6 @@ const SongTile = ({ song }) => {
 
     formData.append("user_id", user?.id);
     formData.append("song_id", song.id);
-    const likedSong = await dispatch(likeSong(formData));
     dispatch(getAllUsers());
   };
   const handle_UnLikeButtonClick = async (e) => {
@@ -30,7 +28,6 @@ const SongTile = ({ song }) => {
 
     formData.append("user_id", user?.id);
     formData.append("song_id", song.id);
-    const unlikedSong = await dispatch(unlikeSong(formData));
     dispatch(getAllUsers());
   };
 
@@ -86,9 +83,6 @@ const SongTile = ({ song }) => {
             <p className="song_tile_text_description">{song.description}</p>
           </div>
         </div>
-        {/* <div className="song_tile_options">
-          <SongTileActions song={song} />
-        </div> */}
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { deleteSong, editSong } from "../../../store/song";
-import "./editsong.css";
+import "./EditSong.css";
 
 const EditSongForm = ({ setShowEditSongModal }) => {
   const dispatch = useDispatch();

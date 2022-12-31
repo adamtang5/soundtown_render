@@ -6,7 +6,7 @@ const SingleSong = ({ songId, view }) => {
 
   return (
     <div className={`flex-row queue_single_song_details ${view}`}>
-      <img src={song?.image_url} />
+      <img src={song?.image_url} alt={song?.title} />
       <p>{song?.title}</p>
     </div>
   );

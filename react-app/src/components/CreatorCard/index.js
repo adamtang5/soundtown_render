@@ -21,7 +21,7 @@ const CreatorCard = ({ creator }) => {
   }, []);
 
   return (
-    <a href={updatedCreator?.github_url} target="_blank">
+    <a href={updatedCreator?.github_url} target="_blank" rel="noreferrer">
       <div className="creator-card flex-column">
         {creatorLoaded && <CreatorAvatar creator={updatedCreator} />}
         <div className="creator-name-tag">

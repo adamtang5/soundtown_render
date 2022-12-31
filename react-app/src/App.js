@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { authenticate } from "./store/session";
-import UploadSong from "./components/SongFolders/Upload_Song/Uploadsong";
+import UploadSong from "./components/SongFolders/UploadSongForm";
 import HomePage from "./components/HomePage";
-import EditSongForm from "./components/SongFolders/Edit_Song/editSong";
+import EditSongForm from "./components/SongFolders/EditSongForm";
 import { getAllSongs } from "./store/song";
 import { getAllPlaylists } from "./store/playlist";
 import SingleSong from "./components/SongFolders/SingleSong";
@@ -18,7 +18,7 @@ import { ModalProvider } from "./components/Context/Modal";
 import { getAllDetails } from "./store/user-details";
 import { getAllUsers } from "./store/user";
 import NewUsersPage from "./components/NewUserPage";
-import ExplorePage from "./components/explorePage";
+import ExplorePage from "./components/ExplorePage";
 
 function App() {
   const [loaded, setLoaded] = useState(false);

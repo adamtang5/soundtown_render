@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import PlaylistTile from "../../GalleryCard/playlistTile";
-import NewPlaylistForm from "../../PlaylistFolders/CreatePlaylist";
+import PlaylistTile from "../../GalleryCard/PlaylistTile";
 
 import { Modal } from "../../Context/Modal";
 

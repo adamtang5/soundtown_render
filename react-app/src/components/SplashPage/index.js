@@ -77,18 +77,8 @@ const SplashPage = () => {
         </div>
       </div>
       <div className="flex-column splashpage_title_songs_container">
-        {/* <span>
-          <span>
-            <form>
-              <input placeholder="Search for artists, bands, tracks, podcasts" />
-              <button></button>
-            </form>
-          </span>
-          or
-          <a>Upload your own</a>
-        </span> */}
         <div className="splashpage_inner_title_container">
-          Hear what’s trending for free in the SoundCloud community
+          Hear what’s trending for free in the SoundTown community
         </div>
         <div className="splashpage_song_container flex-row" onClick={() => setShowLoginModal(true)}>
           <GridDisplay likedSongs={songs?.slice(0, 8)} />

@@ -8,7 +8,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar_container flex-column">
       <div className="tech-icon">
-        <a href="https://github.com/stevenkleinberg/Python_Group7_Soundcloud" target="_blank">
+        <a href="https://github.com/stevenkleinberg/Python_Group7_Soundcloud" target="_blank" rel="noreferrer">
           <img src="https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/github/github-original.svg" alt="project on github" />
         </a>
       </div>

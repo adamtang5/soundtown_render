@@ -1,12 +1,11 @@
 import React from 'react'
 import { useSelector } from "react-redux";
 import GridDisplay from "../../LibraryPage/Likes/GridDisplay";
-import "./songlist.css";
 
 
 function AllSongsList() {
-    const allSongs = useSelector((state) => state.songs);
-    const songsArr = Object.values(allSongs);
+  const allSongs = useSelector((state) => state.songs);
+  const songsArr = Object.values(allSongs);
 
   return (
     <>
