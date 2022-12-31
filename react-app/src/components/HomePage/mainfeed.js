@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 
 const MainFeed = () => {
   const songs = useSelector((state) => state.songs);
-  const songs_array = Object.values(songs);
-  const reverse_song_array = songs_array.slice().reverse();
+  const songsArr = Object.values(songs);
+  const songsArrRev = songsArr.slice().reverse();
   return (
     <div className="mainfeed">
       <div className="mainFeed_gallery_list">
@@ -13,7 +13,7 @@ const MainFeed = () => {
           type="songs"
           description="Up-and-coming tracks on SoundTown"
           title={"Charts: Hot & Trending"}
-          songs={songs_array}
+          songs={songsArr}
         />
       </div>
       <div className="mainFeed_gallery_list">
@@ -21,7 +21,7 @@ const MainFeed = () => {
           type="songs"
           description="The latest Uploads from around the world"
           title={"Discover Daily"}
-          songs={reverse_song_array}
+          songs={songsArrRev}
         />
       </div>
       <div className="mainFeed_gallery_list">
@@ -29,7 +29,7 @@ const MainFeed = () => {
           type="songs"
           description="Emerging artists and tracks"
           title={"Bubbling Up"}
-          songs={songs_array}
+          songs={songsArr}
         />
       </div>
     </div>

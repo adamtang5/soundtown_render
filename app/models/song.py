@@ -35,7 +35,7 @@ class Song(db.Model):
     return {
       'id': self.id,
       'user_id': self.user_id,
-      'user': user.to_dict(),
+      'user': self.user.to_dict(),
       'title': self.title,
       'audio_url': self.audio_url,
       'description': self.description,

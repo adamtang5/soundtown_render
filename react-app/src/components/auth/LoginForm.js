@@ -5,8 +5,8 @@ import { login } from "../../store/session";
 import { FaUserAlt } from 'react-icons/fa';
 import { IoLogOutSharp } from 'react-icons/io5';
 import { IoCloseOutline } from 'react-icons/io5';
-
 import "./auth.css";
+
 const LoginForm = ({ setShowLoginModal, setShowSignUpModal }) => {
   const history = useHistory();
   const [errors, setErrors] = useState([]);
@@ -14,20 +14,6 @@ const LoginForm = ({ setShowLoginModal, setShowSignUpModal }) => {
   const [password, setPassword] = useState("");
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
-
-  // const formatError = (errorText) => {
-  //   if (errorText.includes(" : ")) {
-  //     let array = errorText.split(" : This field");
-  //     let firstWord = array[0].split("");
-  //     firstWord[0] = firstWord[0].toUpperCase();
-  //     firstWord = firstWord.join("");
-  //     return `${firstWord}${array[1]}`;
-  //   } else if (errorText.includes("csrf")) {
-  //     return 'An error occurred. Please try again.';
-  //   } else {
-  //     return errorText;
-  //   }
-  // };
 
   const onLogin = async (e) => {
     e.preventDefault();

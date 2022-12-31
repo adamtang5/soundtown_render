@@ -33,13 +33,17 @@ const SplashPage = () => {
       <div className="imagebox">
         <div className="imagetoptitle">
           <div className="splash-header-logo-div">
-            <div className="splash-header-wrapper flex-row-center"><Logo /> <h2> SoundTown</h2> </div>
+            <div className="splash-header-wrapper flex-row-center">
+              <Logo />
+              <h2> SoundTown</h2>
+            </div>
           </div>
 
           <div className="soundcloudbuttons">
-            <button className="signuptitle cursor-pointer" onClick={openLoginModal}>
-              Sign In
-            </button>
+            <button
+              className="signuptitle cursor-pointer"
+              onClick={openLoginModal}
+            >Sign In</button>
             {showLoginModal && (
               <Modal onClose={() => setShowLoginModal(false)}>
                 <div className="login_modal_container">
@@ -50,9 +54,10 @@ const SplashPage = () => {
                 </div>
               </Modal>
             )}
-            <button className="caccounttitle cursor-pointer" onClick={openSignUpModal}>
-              Create account
-            </button>
+            <button
+              className="caccounttitle cursor-pointer"
+              onClick={openSignUpModal}
+            >Create account</button>
             {showSignUpModal && (
               <Modal onClose={() => setShowSignUpModal(false)}>
                 <div className="login_modal_container">
