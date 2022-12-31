@@ -1,7 +1,7 @@
 import React from "react";
 
-import MainFeed from "./mainfeed";
-import Sidebar from "./sidebar";
+import MainFeed from "./MainFeed";
+import Sidebar from "./Sidebar";
 
 import "./HomePage.css";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import SongTile from "../../GalleryCard/songTile";
+import SongTile from "../../GalleryCard/SongTile";
 
 const GridDisplay = ({ likedSongs }) => {
   return (

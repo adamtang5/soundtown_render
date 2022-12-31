@@ -3,18 +3,30 @@ from app.models import db, User
 
 # Adds a demo user, you can add other users here if you want
 def seed_users():
-    demo = User(
-        email='demo@aa.io', password='password')
-    marnie = User(
-        email='marnie@aa.io', password='password')
-    bobbie = User(
-        email='bobbie@aa.io', password='password')
+  demo = User(
+    email='demo@aa.io',
+    display_name='Demo user',
+    avatar_url='https://avatarfiles.alphacoders.com/194/thumb-194221.jpg',
+    banner_url='https://i.ytimg.com/vi/zob-2dpRtH0/maxresdefault.jpg',
+    password='password')
+  marnie = User(
+    email='marnie@aa.io',
+    display_name='Marnie Bernard',
+    avatar_url='https://avatarfiles.alphacoders.com/194/thumb-194221.jpg',
+    banner_url='https://i.ytimg.com/vi/zob-2dpRtH0/maxresdefault.jpg',
+    password='password')
+  bobbie = User(
+    email='bobbie@aa.io',
+    display_name='Bobby Bernard',
+    avatar_url='https://avatarfiles.alphacoders.com/194/thumb-194221.jpg',
+    banner_url='https://i.ytimg.com/vi/zob-2dpRtH0/maxresdefault.jpg',
+    password='password')
 
-    db.session.add(demo)
-    db.session.add(marnie)
-    db.session.add(bobbie)
+  db.session.add(demo)
+  db.session.add(marnie)
+  db.session.add(bobbie)
 
-    db.session.commit()
+  db.session.commit()
 
 
 # Uses a raw SQL query to TRUNCATE the users table.
@@ -23,5 +35,5 @@ def seed_users():
 # resets the auto incrementing primary key, CASCADE deletes any
 # dependent entities
 def undo_users():
-    db.session.execute('TRUNCATE users RESTART IDENTITY CASCADE;')
-    db.session.commit()
+  db.session.execute('TRUNCATE users RESTART IDENTITY CASCADE;')
+  db.session.commit()

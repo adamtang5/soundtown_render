@@ -3,9 +3,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSong } from "../../../store/song";
-import "./uploadSong.css";
 
-const UploadSong = ({ setShowUploadModal }) => {
+const UploadSongForm = ({ setShowUploadModal }) => {
   const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -14,7 +13,6 @@ const UploadSong = ({ setShowUploadModal }) => {
   const [musicFile, setMusicFile] = useState();
   const [description, setDescription] = useState("");
   const [imageFile, setImageFile] = useState();
-  // const [imageLoading, setImageLoading] = useState(false);
   const [audioLoading, setAudioLoading] = useState(false);
 
   const handleCancel = e => {
@@ -210,4 +208,4 @@ const UploadSong = ({ setShowUploadModal }) => {
   );
 };
 
-export default UploadSong;
+export default UploadSongForm;

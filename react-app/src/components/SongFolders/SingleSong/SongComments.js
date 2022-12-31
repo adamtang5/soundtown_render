@@ -10,7 +10,7 @@ import { loadSong, queueSong } from "../../../store/player";
 
 import { Modal } from "../../Context/Modal";
 import AddtoPlaylist from "../../PlaylistFolders/AddtoPlaylist";
-import EditSongForm from "../Edit_Song/editSong";
+import EditSongForm from "../EditSongForm";
 
 const SongComments = ({ song }) => {
   const [errors, setErrors] = useState([]);
@@ -118,7 +118,6 @@ const SongComments = ({ song }) => {
               className="comment_input"
               autoComplete="off"
             />
-            {/* <button type="submit" className="comment_submit_button">Post</button> */}
           </form>
         </div>
         <div className="form-errors">
@@ -148,15 +147,6 @@ const SongComments = ({ song }) => {
             )}
           </div>
           {sessionUser?.id === song?.user_id && (
-            // <button className="cool_button">
-            //   <NavLink
-            //     to={`/songs/${+song.id}/edit`}
-            //     exact={true}
-            //     activeClassName="active"
-            //   >
-            //     Edit
-            //   </NavLink>
-            // </button>
             <>
               <div onClick={() => setShowEditSongModal(true)} className="cool_button cool_div">
                 Edit
@@ -196,7 +186,6 @@ const SongComments = ({ song }) => {
           <p>{song?.user?.display_name}</p>
         </div>
         <div className="song-details flex-column">
-          {/* <div className="song-description">{song?.description}</div> */}
           <div className="song-comments-list flex-column">
             <div className="comments-count flex-row">
               <SpeechBubble />

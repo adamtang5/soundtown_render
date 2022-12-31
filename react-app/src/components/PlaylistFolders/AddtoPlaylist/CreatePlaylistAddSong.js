@@ -55,9 +55,9 @@ const CreatePlaylistAddSong = ({ songsArr }) => {
             />
           </div>
           <div className="atp_bc">
-            <a onClick={handleSubmit} className="atp_bs">
+            <button onClick={handleSubmit} className="cursor-pointer atp_bs">
               Save
-            </a>
+            </button>
           </div>
         </>
       )}
@@ -90,6 +90,7 @@ const CreatePlaylistAddSong = ({ songsArr }) => {
                   <img
                     src={songs[+songId]?.image_url}
                     className="create_playlist_song_img"
+                    alt={songs[+songId]?.title}
                   />
                   <p>{songs[+songId]?.title}</p>
                 </div>

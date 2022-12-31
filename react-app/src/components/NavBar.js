@@ -7,7 +7,8 @@ import "./NavBar.css";
 import UserProfile from "./UserProfile";
 import LoginForm from "./auth/LoginForm";
 import SignUpForm from "./auth/SignUpForm"
-import UploadSong from "./SongFolders/Upload_Song/Uploadsong";
+import UploadSong from "./SongFolders/UploadSongForm";
+
 const NavBar = () => {
   const sessionUser = useSelector((state) => state.session.user);
   const rawSongs = useSelector((state) => state.songs);
@@ -112,6 +113,7 @@ const NavBar = () => {
                               <img
                                 className="search_results_img"
                                 src={playlistOrSong.image_url}
+                                alt={playlistOrSong.title}
                               />
                               <a
                                 href={`/playlists/${playlistOrSong.id}`}
@@ -121,12 +123,13 @@ const NavBar = () => {
                               </a>
                             </li>
                           ) :
-                          rawSongs[playlistOrSong.id] && rawSongs[playlistOrSong.id].title == playlistOrSong.title &&
+                          rawSongs[playlistOrSong.id] && rawSongs[playlistOrSong.id].title === playlistOrSong.title &&
                           (
                             <li key={playlistOrSong.id} className="flex-row search_results_li">
                               <img
                                 className="search_results_img"
                                 src={playlistOrSong.image_url}
+                                alt={playlistOrSong.title}
                               />
                               <a
                                 href={`/songs/${playlistOrSong.id}`}
@@ -152,6 +155,7 @@ const NavBar = () => {
                                 <img
                                   className="search_results_img"
                                   src={playlistOrSong.image_url}
+                                  alt={playlistOrSong.title}
                                 />
                                 <a
                                   href={`/playlists/${playlistOrSong.id}`}
@@ -161,12 +165,13 @@ const NavBar = () => {
                                 </a>
                               </li>
                             ) :
-                            rawSongs[playlistOrSong.id] && rawSongs[playlistOrSong.id].title == playlistOrSong.title &&
+                            rawSongs[playlistOrSong.id] && rawSongs[playlistOrSong.id].title === playlistOrSong.title &&
                             (
                               <li key={playlistOrSong.id} className="flex-row search_results_li">
                                 <img
                                   className="search_results_img"
                                   src={playlistOrSong.image_url}
+                                  alt={playlistOrSong.title}
                                 />
                                 <a
                                   href={`/songs/${playlistOrSong.id}`}

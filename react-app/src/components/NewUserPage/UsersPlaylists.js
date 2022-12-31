@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import PlaylistTile from "../GalleryCard/playlistTile";
+import PlaylistTile from "../GalleryCard/PlaylistTile";
 
 const UsersPlaylists = () => {
   const { userId } = useParams();

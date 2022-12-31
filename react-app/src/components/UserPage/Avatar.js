@@ -15,7 +15,7 @@ function Avatar() {
     const [display_name, setDisplayName] = useState(currentDetails?.display_name);
     const [avatar_url, setUrl] = useState("");
     const [activity, setActivity] = useState(false);
-    const [display_box, setDisplayBox] = useState(false);
+    const [displayBox, setDisplayBox] = useState(false);
 
     const handleSubmit = async (ev) => {
         ev.preventDefault();

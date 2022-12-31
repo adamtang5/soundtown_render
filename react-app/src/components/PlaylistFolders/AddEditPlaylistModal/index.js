@@ -14,7 +14,7 @@ const AddEditPlaylistModal = ({ modalMode, modalFunction, songArr }) => {
           <p
             onClick={() => setMode("basic")}
             className={
-              mode == "basic" ? "AEP_basic_title selected" : "AEP_basic_title"
+              mode === "basic" ? "AEP_basic_title selected" : "AEP_basic_title"
             }
           >
             Basic Info
@@ -24,7 +24,7 @@ const AddEditPlaylistModal = ({ modalMode, modalFunction, songArr }) => {
             <p
               onClick={() => setMode("tracks")}
               className={
-                mode == "tracks"
+                mode === "tracks"
                   ? "AEP_basic_title selected"
                   : "AEP_basic_title"
               }

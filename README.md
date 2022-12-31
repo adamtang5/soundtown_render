@@ -1,6 +1,6 @@
 # Sound Town
 <div align="center"><a href="https://sound-town.herokuapp.com/">
-<img src="https://github.com/stevenkleinberg/Python_Group7_Soundcloud/blob/main/react-app/src/static/images/logo/SoundTown-icon-with-text-transparent-bg.png?raw=true" height=200 /></a></div>
+<img src="https://github.com/adamtang5/soundtown_render/blob/main/react-app/src/static/images/logo/SoundTown-icon-with-text-transparent-bg.png?raw=true" height=200 /></a></div>
 
 This is a clone of [Soundcloud](https://soundcloud.com/). Access the [Sound Town MVP](https://sound-town.herokuapp.com/).
 
@@ -8,10 +8,12 @@ This is a clone of [Soundcloud](https://soundcloud.com/). Access the [Sound Town
 
 # Index
 |
-[MVP Feature List](https://github.com/stevenkleinberg/Python_Group7_Soundcloud/wiki/MVP-Feature-List) |
-[Database Schema](https://github.com/stevenkleinberg/Python_Group7_Soundcloud/wiki/Database-Schema) |
-[API Documentation](https://github.com/stevenkleinberg/Python_Group7_Soundcloud/wiki/API-Documentation) |
-[Frontend Routes](https://github.com/stevenkleinberg/Python_Group7_Soundcloud/wiki/Frontend-Routes) |
+[MVP Feature List](https://github.com/adamtang5/soundtown_render/wiki/MVP-Feature-List) |
+[User Stories and Acceptance Criteria](https://github.com/adamtang5/soundtown_render/wiki/User-Stories-and-Acceptance-Criteria) |
+[Database Schema](https://github.com/adamtang5/soundtown_render/wiki/Database-Schema) |
+[Redux State Shape](https://github.com/adamtang5/soundtown_render/wiki/Redux-State-Shape) |
+[API Documentation](https://github.com/adamtang5/soundtown_render/wiki/API-Documentation) |
+[Frontend Routes](https://github.com/adamtang5/soundtown_render/wiki/Frontend-Routes) |
 
 
 # Technologies Used
@@ -22,7 +24,7 @@ This is a clone of [Soundcloud](https://soundcloud.com/). Access the [Sound Town
 
 1. Clone this repo.
 
-    * ```git clone git@github.com:stevenkleinberg/Python_Group7_Soundcloud.git```
+    * ```git clone git@github.com:adamtang5/soundtown_render.git```
 
 2. Install frontend dependencies in the `react-app` directory.
 

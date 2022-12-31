@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
 import { deleteSongtoPlaylist } from "../../../store/playlist";
@@ -23,7 +23,7 @@ const AllTracksModal = ({ songArr }) => {
         {songArr?.map((song) => (
           <li key={song?.id} className="AEP_li flex-row">
             <div className="flex-row">
-              <img src={song?.image_url} className="AEP_li_img" />
+              <img src={song?.image_url} className="AEP_li_img" alt={song?.title} />
               <NavLink to={`/songs/${song?.id}`}>{song?.title}</NavLink>
             </div>
             <p
