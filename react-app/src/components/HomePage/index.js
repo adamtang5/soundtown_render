@@ -1,8 +1,6 @@
 import React from "react";
-
 import MainFeed from "./MainFeed";
 import Sidebar from "./Sidebar";
-
 import "./HomePage.css";
 
 const HomePage = () => {

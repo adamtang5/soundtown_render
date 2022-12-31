@@ -33,7 +33,7 @@ class Playlist(db.Model):
     return {
       'id': self.id,
       'user_id': self.user_id,
-      'user': user.to_dict(),
+      'user': self.user.to_dict(),
       'title': self.title,
       'songs_order': self.songs_order,
       'image_url': self.image_url,

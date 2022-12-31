@@ -15,12 +15,11 @@ import SplashPage from "./components/SplashPage";
 import PlaylistsPage from "./components/PlaylistFolders/PlaylistsPage";
 import LibraryPage from "./components/LibraryPage";
 import { ModalProvider } from "./components/Context/Modal";
-import { getAllDetails } from "./store/user-details";
 import { getAllUsers } from "./store/user";
 import NewUsersPage from "./components/NewUserPage";
 import ExplorePage from "./components/ExplorePage";
 
-function App() {
+const App = () => {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
@@ -36,7 +35,6 @@ function App() {
     (async () => {
       await dispatch(getAllSongs());
       await dispatch(getAllPlaylists());
-      await dispatch(getAllDetails());
       await dispatch(getAllUsers());
     })();
   }, [dispatch]);
@@ -86,6 +84,6 @@ function App() {
       </BrowserRouter>
     </ModalProvider>
   );
-}
+};
 
 export default App;
