@@ -13,12 +13,6 @@ const SongGallery = ({ title, description, songs }) => {
       <div className="songs_slider">
         <SongSlider songs={songs} />
       </div>
-
-      {/* <div className="songs_slider">
-        {songs.map((song) => (
-          <SongTile song={song}/>
-        ))}
-      </div> */}
     </div>
   );
 };

@@ -7,7 +7,7 @@ import { ImMenu3 } from 'react-icons/im'
 import { CgPlayList } from 'react-icons/cg'
 import { MdOutlinePlaylistAdd } from 'react-icons/md'
 
-function SongTileActions({ song }) {
+const SongTileActions = ({ song }) => {
   const playingId = useSelector((state) => state.player.playingId);
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
@@ -69,6 +69,6 @@ function SongTileActions({ song }) {
       </div >
     </>
   );
-}
+};
 
 export default SongTileActions;

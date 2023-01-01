@@ -12,7 +12,6 @@ const SongSlider = ({ songs }) => {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 3,
-
   };
   return (
     <div className="song_slider_surrounding_div">
