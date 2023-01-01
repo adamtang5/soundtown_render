@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { queueAdvance, historyStepBack } from "../../store/player";
 import errorFile from "../../static/audio/buzz.mp3";
-import "./audio.css";
+import "./Audio.css";
 
 import { ReactComponent as QueueIcon } from "../../static/svgs/queue.svg";
 import { useState } from "react";
