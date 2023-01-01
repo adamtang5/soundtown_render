@@ -1,0 +1,238 @@
+.song_tile {
+  align-items: center;
+  padding: 0 8px;
+  width: 320px;
+}
+
+.song_tile_cover {
+  position: relative;
+  width: 200px;
+  margin-left: -95px;
+}
+
+.song_tile_cover_img {
+  display: block;
+  width: 100%;
+}
+
+.song_tile_cover_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.song_tile_cover_overlay:hover {
+  opacity: 1;
+}
+
+.song_tile_cover_overlay_inner {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.song_tile_cover_overlay_inner_top {
+  width: 200px;
+  height: 130px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.song_tile_cover_overlay_inner_bottom {
+  width: 200px;
+  height: 70px;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.song_tile_cover_play {
+  font-size: 2.5em;
+  background: none;
+  box-shadow: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: font-size 0.25s, color 0.25s;
+}
+
+.song_tile_cover_play:hover {
+  font-size: 3.5em;
+  color: orangered;
+}
+
+.song_tile_cover_is_liked {
+  padding-right: 10px;
+  padding-bottom: 10px;
+  font-size: 1em;
+  text-decoration: double;
+  background: none;
+  box-shadow: none;
+  border: none;
+  color: orangered;
+  transition: font-size 0.25s, color 0.5s;
+  cursor: pointer;
+}
+
+.song_tile_cover_is_liked:hover {
+  font-size: 2em;
+  cursor: pointer;
+  /* color: white; */
+}
+
+.song_tile_cover_not_liked {
+  padding-right: 10px;
+  padding-bottom: 10px;
+  font-size: 1em;
+  background: none;
+  box-shadow: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: font-size 0.25s, color 0.5s;
+}
+
+.song_tile_cover_not_liked:hover {
+  font-size: 2em;
+  /* color: orangered; */
+}
+
+.song_tile_bottom {
+  width: 200px;
+  justify-content: space-between;
+}
+
+.song_tile_text {
+  margin-top: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: flex-start;
+}
+
+.song_tile_text_title {
+  text-decoration: none;
+  font-size: 20px;
+  font-family: sans-serif;
+  color: rgb(55, 55, 55);
+  line-height: 19.6px;
+  list-style-position: outside;
+}
+
+.song_tile_text_title:hover {
+  color: black;
+}
+
+.song_tile_text_description {
+  font-size: 15px;
+  font-family: sans-serif;
+  color: rgb(153, 153, 153);
+}
+
+.song_tile_text_description:hover {
+  color: rgb(55, 55, 55);
+}
+
+.song_tile_actions {
+  font-size: 24px;
+  font-weight: 700;
+  position: relative;
+}
+
+.song_tile_actions_icon {
+  font-size: 22px;
+  position: absolute;
+  top: -24px;
+  left: 5px;
+}
+
+.add_to_playlist_modal_container {
+  width: 550px;
+  height: 650px;
+  overflow: hidden;
+}
+
+.mainfeed_slider_title {
+  font-size: xx-large;
+}
+
+.mainfeed_slider_desc {
+  margin: 0px 0px 5px 0px;
+}
+
+.song_tile_actions_container {
+  margin: 0px 0px 10px 5px;
+}
+
+.song_tile_dropdown {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0px 0px 4px black;
+  border-radius: 2px;
+  /* display: inline-block; */
+  color: #151515;
+  font-size: 15px;
+  width: 180px;
+}
+
+.song-tile-action-dropdown {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  /* border: red solid 1px; */
+  border-radius: 3px;
+}
+
+.song-tile-action-dropdown:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+}
+
+.stad:nth-child(1) {
+  border-bottom: #15151518 solid .1px;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 5px;
+}
+
+.stad:nth-child(2) {
+  border-bottom: #15151518 solid .1px;
+  padding: 5px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.cg-icon {
+  font-size: 22px;
+  transform: rotate3d(90px);
+  transform: scale(1, -1);
+}
+
+.stad:nth-child(-n+2):hover {
+  background-color: rgba(128, 128, 128, 0.419);
+  width: 100%;
+}
