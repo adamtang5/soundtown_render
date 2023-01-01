@@ -4,7 +4,7 @@ import { Modal } from "../Context/Modal";
 import { loadSong, queueSong } from "../../store/player";
 import AddtoPlaylist from "../PlaylistFolders/AddtoPlaylist";
 
-function PlaylistTitleActions({ songs }) {
+const PlaylistTitleActions = ({ songs }) => {
   const playingId = useSelector((state) => state.player.playingId);
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
@@ -70,6 +70,6 @@ function PlaylistTitleActions({ songs }) {
       </div>
     </>
   );
-}
+};
 
 export default PlaylistTitleActions;

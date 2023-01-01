@@ -20,20 +20,6 @@ const SignUpForm = ({ setShowSignUpModal, setShowLoginModal }) => {
 
   const dispatch = useDispatch();
 
-  // const formatError = (errorText) => {
-  //   if (errorText.includes(" : ")) {
-  //     let array = errorText.split(" : This field");
-  //     let firstWord = array[0].split("");
-  //     firstWord[0] = firstWord[0].toUpperCase();
-  //     firstWord = firstWord.join("");
-  //     return `${firstWord}${array[1]}`;
-  //   } else if (errorText.includes("csrf")) {
-  //     return 'An error occurred. Please try again.';
-  //   } else {
-  //     return errorText;
-  //   }
-  // };
-
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {

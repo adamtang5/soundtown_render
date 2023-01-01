@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import PlaylistTile from "../GalleryCard/PlaylistTile"
 
-function ExplorePlaylists() {
+const ExplorePlaylists = () => {
   const playlistsObj = useSelector((state) => state.playlists);
   const playlists = Object.values(playlistsObj);
   return (
@@ -14,7 +14,7 @@ function ExplorePlaylists() {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ExplorePlaylists
+export default ExplorePlaylists;
