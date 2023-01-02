@@ -10,13 +10,9 @@ const QueueBox = () => {
   // const listArr = [...playHistory, currSongId, ...queue];
   return (
     <div className="queue_box_container">
-      {playHistory?.map((songId, idx) => (
-        <SingleSong key={idx} songId={songId} view={"queue_history"} />
-      ))}
+      {playHistory?.map((songId, idx) => <SingleSong key={idx} songId={songId} view={"queue_history"} />)}
       <SingleSong songId={currSongId} view={"queue_playing"} />
-      {queue?.map((songId, idx) => (
-        <SingleSong key={idx} songId={songId} view={""} />
-      ))}
+      {queue?.map((songId, idx) => <SingleSong key={idx} songId={songId} view={""} />)}
     </div>
   );
 };

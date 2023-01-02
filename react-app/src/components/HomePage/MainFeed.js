@@ -3,9 +3,10 @@ import GalleryCard from "../GalleryCard";
 import { useSelector } from "react-redux";
 
 const MainFeed = () => {
-  const songs = useSelector((state) => state.songs);
-  const songsArr = Object.values(songs);
-  const songsArrRev = songsArr.slice().reverse();
+  const songs = useSelector(state => state.songs);
+  const songsArr = Object.values(songs).sort((a, b) => a.id - b.id);
+  const songsArrRev = Object.values(songs).sort((a, b) => b.id - a.id);
+
   return (
     <div className="mainfeed">
       <div className="mainFeed_gallery_list">
