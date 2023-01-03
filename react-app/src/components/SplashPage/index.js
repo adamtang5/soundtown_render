@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getAllSongs } from "../../store/song";
 import LoginForm from "../auth/LoginForm";
 import SignUpForm from "../auth/SignUpForm";
@@ -11,9 +12,15 @@ import "./SplashPage.css";
 
 const SplashPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const sessionUser = useSelector(state => state.session.user);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const songs = useSelector((state) => Object.values(state.songs));
+
+  useEffect(() => {
+    if (sessionUser != null) history.push('/');
+  }, []);
 
   const openLoginModal = () => {
     if (showLoginModal) return;
