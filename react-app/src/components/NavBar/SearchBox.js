@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const SearchBox = () => {
-  const rawSongs = useSelector(state => state.songs);
-  const rawPlaylists = useSelector(state => state.playlists);
-  const songs = Object.values(rawSongs);
-  const playlists = Object.values(rawPlaylists);
-  const playlistsAndSongs = songs.concat(playlists);
+  const songs = useSelector(state => state.songs);
+  const playlists = useSelector(state => state.playlists);
+  const songsArr = Object.values(songs);
+  const playlistsArr = Object.values(playlists);
+  const playlistsAndSongs = songsArr.concat(playlistsArr);
 
   const [showResults, setShowResults] = useState(false);
   const [searchInput, setSearchInput] = useState("");
@@ -32,114 +32,97 @@ const SearchBox = () => {
   }, [showResults]);
 
   return (
-    <div className="flex-row-center navbar_input_container">
+    <div className="flex-row-center navbar-input-container">
       <div className="navbar-search-container">
         <input
-          className="navbar_search"
+          className="navbar-search"
           placeholder="Search"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
         {showResults && (
-          <div className="search_results">
+          <div className="search-results">
             <ul>
-              {playlistsAndSongs
-                ?.filter((playlistOrSong) =>
-                  playlistOrSong.title.toLowerCase().startsWith(searchInput.toLowerCase())
-                ).length ?
-                playlistsAndSongs
-                  ?.filter((playlistOrSong) =>
-                    playlistOrSong.title.toLowerCase().startsWith(searchInput.toLowerCase())
+              {playlistsAndSongs?.filter((playlistOrSong) =>
+                playlistOrSong.title.toLowerCase().startsWith(searchInput.toLowerCase())
+              ).length ? playlistsAndSongs?.filter((playlistOrSong) =>
+                playlistOrSong.title.toLowerCase().startsWith(searchInput.toLowerCase())
+              )
+                .map((playlistOrSong) =>
+                  playlistOrSong.songs ? (
+                    <li key={playlistOrSong.id} className="flex-row search-results-li">
+                      <img
+                        className="search-results-img"
+                        src={playlistOrSong.image_url}
+                        alt={playlistOrSong.title}
+                      />
+                      <a
+                        href={`/playlists/${playlistOrSong.id}`}
+                        className="search-results-a"
+                      >
+                        {playlistOrSong.title}
+                      </a>
+                    </li>
+                  ) : songs[playlistOrSong.id] && songs[playlistOrSong.id].title === playlistOrSong.title && (
+                    <li key={playlistOrSong.id} className="flex-row search-results-li">
+                      <img
+                        className="search-results-img"
+                        src={playlistOrSong.image_url}
+                        alt={playlistOrSong.title}
+                      />
+                      <a
+                        href={`/songs/${playlistOrSong.id}`}
+                        className="search-results-a"
+                      >
+                        {playlistOrSong.title}
+                      </a>
+                    </li>
                   )
-                  .map((playlistOrSong) =>
-                    playlistOrSong.songs ?
-                      (
-                        <li key={playlistOrSong.id} className="flex-row search_results_li">
-                          <img
-                            className="search_results_img"
-                            src={playlistOrSong.image_url}
-                            alt={playlistOrSong.title}
-                          />
-                          <a
-                            href={`/playlists/${playlistOrSong.id}`}
-                            className="search_results_a"
-                          >
-                            {playlistOrSong.title}
-                          </a>
-                        </li>
-                      ) :
-                      rawSongs[playlistOrSong.id] && rawSongs[playlistOrSong.id].title === playlistOrSong.title &&
-                      (
-                        <li key={playlistOrSong.id} className="flex-row search_results_li">
-                          <img
-                            className="search_results_img"
-                            src={playlistOrSong.image_url}
-                            alt={playlistOrSong.title}
-                          />
-                          <a
-                            href={`/songs/${playlistOrSong.id}`}
-                            className="search_results_a"
-                          >
-                            {playlistOrSong.title}
-                          </a>
-                        </li>
-                      )
+                ) : playlistsAndSongs?.filter((playlistOrSong) =>
+                  playlistOrSong.title.toLowerCase().includes(searchInput.toLowerCase())
+                ).length ? playlistsAndSongs?.filter((playlistOrSong) =>
+                  playlistOrSong.title.toLowerCase().includes(searchInput.toLowerCase())
+                )
+                  .map((playlistOrSong) => playlistOrSong.songs ? (
+                    <li key={playlistOrSong.id} className="flex-row search-results-li">
+                      <img
+                        className="search-results-img"
+                        src={playlistOrSong.image_url}
+                        alt={playlistOrSong.title}
+                      />
+                      <a
+                        href={`/playlists/${playlistOrSong.id}`}
+                        className="search-results-a"
+                      >
+                        {playlistOrSong.title}
+                      </a>
+                    </li>
                   ) :
-                playlistsAndSongs
-                  ?.filter((playlistOrSong) =>
-                    playlistOrSong.title.toLowerCase().includes(searchInput.toLowerCase())
-                  ).length ?
-                  playlistsAndSongs
-                    ?.filter((playlistOrSong) =>
-                      playlistOrSong.title.toLowerCase().includes(searchInput.toLowerCase())
-                    )
-                    .map((playlistOrSong) =>
-                      playlistOrSong.songs ?
-                        (
-                          <li key={playlistOrSong.id} className="flex-row search_results_li">
-                            <img
-                              className="search_results_img"
-                              src={playlistOrSong.image_url}
-                              alt={playlistOrSong.title}
-                            />
-                            <a
-                              href={`/playlists/${playlistOrSong.id}`}
-                              className="search_results_a"
-                            >
-                              {playlistOrSong.title}
-                            </a>
-                          </li>
-                        ) :
-                        rawSongs[playlistOrSong.id] && rawSongs[playlistOrSong.id].title === playlistOrSong.title &&
-                        (
-                          <li key={playlistOrSong.id} className="flex-row search_results_li">
-                            <img
-                              className="search_results_img"
-                              src={playlistOrSong.image_url}
-                              alt={playlistOrSong.title}
-                            />
-                            <a
-                              href={`/songs/${playlistOrSong.id}`}
-                              className="search_results_a"
-                            >
-                              {playlistOrSong.title}
-                            </a>
-                          </li>
-                        )
-                    ) :
-                  (
-                    <>
-                      <li className="flex-row search_results_li">
-
+                    songs[playlistOrSong.id] && songs[playlistOrSong.id].title === playlistOrSong.title &&
+                    (
+                      <li key={playlistOrSong.id} className="flex-row search-results-li">
+                        <img
+                          className="search-results-img"
+                          src={playlistOrSong.image_url}
+                          alt={playlistOrSong.title}
+                        />
                         <a
-                          className="search_results_a"
+                          href={`/songs/${playlistOrSong.id}`}
+                          className="search-results-a"
                         >
-                          Nothing Found
+                          {playlistOrSong.title}
                         </a>
                       </li>
-                    </>
-                  )
-
+                    )
+                  ) : (
+                <>
+                  <li className="flex-row search-results-empty">
+                    <div className="search-results-a">
+                      Nothing Found
+                    </div>
+                  </li>
+                </>
+              )
               }
             </ul>
           </div>
