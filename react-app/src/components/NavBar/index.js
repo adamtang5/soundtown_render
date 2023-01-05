@@ -9,7 +9,7 @@ const NavBar = () => {
   const [showUploadModal, setShowUploadModal] = useState(false);
 
   return (
-    <header className="navbar">
+    <header className="navbar flex-row">
       <NavBarLeft />
       <NavBarRight
         showUploadModal={showUploadModal}
