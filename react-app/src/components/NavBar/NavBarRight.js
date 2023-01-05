@@ -1,4 +1,4 @@
-import UserProfile from "../UserProfile";
+import UserProfile from "./UserProfile";
 import UploadButton from "./UploadButton";
 import { useSelector } from "react-redux";
 

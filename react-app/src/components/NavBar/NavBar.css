@@ -1,4 +1,5 @@
 * {
+  --height-navbar: 45.99px;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -6,9 +7,9 @@
 
 .navbar {
   background-color: #333;
-  height: var(--navbar-height);
-  display: flex;
-  justify-content: space-evenly;
+  /* height: var(--navbar-height); */
+  font-family: Interstate, Lucida Grande, Arial, sans-serif;
+  justify-content: space-between;
   align-items: center;
   padding: 0 11%;
   list-style: none;
@@ -17,27 +18,21 @@
   border-bottom: 1px solid #303030;
   margin-bottom: 1px;
   z-index: 10;
-  height: 45.99px;
+  height: var(--height-navbar);
 }
 
 .navlinks {
-  position: relative;
+  height: 100%;
   text-decoration: none;
   color: var(--color-border);
   text-align: center;
-  justify-self: center;
-  padding: 3px;
   font-size: medium;
-  transition: color 0.3s ease;
 }
 
-button.navlinks {
+button.navlinks,
+button.dropdown-links {
   background-color: unset;
   border: none;
-}
-
-.navlinks:hover {
-  color: white;
 }
 
 .navlist {
@@ -72,13 +67,12 @@ button.navlinks {
   flex-direction: column;
   background-color: white;
   border: rgba(17, 17, 17, 0.222) .1px solid;
-
+  top: 0.5px;
 }
 
 .nav-profile-dropdown * {
   color: var(--color-border-dark);
 }
-
 
 .navlinks .profile {
   color: #151515;
@@ -87,7 +81,6 @@ button.navlinks {
 .navlinks.logo img {
   width: 40px;
   height: 40px;
-
 }
 
 .user-profile-div {
@@ -101,9 +94,8 @@ button.navlinks {
   justify-content: space-between;
   align-items: center;
   color: white;
-  height: 6vh;
+  height: var(--height-navbar);
   font-size: 14px;
-
 }
 
 .user-profile-dis-avtr {
@@ -114,11 +106,15 @@ button.navlinks {
 
 .user-profile-dis-name {
   min-width: fit-content;
-  font-family: Interstate, Lucida Grande, Arial, sans-serif;
   font-weight: 100;
   font-size: 14px;
   line-height: 1.5;
   color: #CCCCCC;
+  transition: color 0.3s ease-in-out;
+}
+
+.user-profile-dis-name:hover {
+  color: white;
 }
 
 .drop-nav-links {
@@ -147,32 +143,15 @@ button.navlinks {
   display: flex;
   flex-direction: column;
   background-color: var(--color-border-light);
-
 }
 
 .profile-dropdown * {
   color: var(--color-border-dark);
 }
 
-
-.HomeLinkDiv {
-  position: relative;
+.navbar-left {
   height: 100%;
-  left: -58px;
-
-}
-
-.nav-home {
-  width: 104px;
-  height: 101%;
-  padding: 0 25px;
-  font-family: Interstate, Lucida Grande, Arial, sans-serif;
-  font-weight: 100;
-  line-height: 1.5;
-  color: #ccc;
-  border-right: #111 solid 1px;
-  font-size: 14px;
-
+  align-items: center;
 }
 
 .nav-logo {
@@ -182,7 +161,6 @@ button.navlinks {
   text-align: center;
   justify-self: center;
   padding: 3px 10px;
-  transition: color 0.3s ease;
   background-color: #111;
   height: 100%;
   font-size: 14px;
@@ -192,33 +170,26 @@ button.navlinks {
 .nav-logo img {
   width: 35px;
   height: 35px;
-
 }
 
-.navlinks.stream {
+.navlinks.nav-home,
+.navlinks.nav-stream,
+.navlinks.nav-library {
   position: relative;
   border-right: #111 solid 1px;
   height: 100%;
   width: 104px;
-  font-family: Interstate, Lucida Grande, Arial, sans-serif;
   font-weight: 100;
   line-height: 1.5;
   color: #ccc;
   font-size: 14px;
-
+  transition: color 0.3s ease-in-out;
 }
 
-.navlinks.library {
-  position: relative;
-  border-right: #111 solid 1px;
-  height: 100%;
-  width: 104px;
-  font-family: Interstate, Lucida Grande, Arial, sans-serif;
-  font-weight: 100;
-  line-height: 1.5;
-  color: #ccc;
-  font-size: 14px;
-
+.navlinks.nav-home:hover,
+.navlinks.nav-stream:hover,
+.navlinks.nav-library:hover {
+  color: white;
 }
 
 .UploadUser {
@@ -232,11 +203,8 @@ button.navlinks {
   left: -50px;
 }
 
-
-
 .navlinks.upload {
   position: relative;
-  font-family: Interstate, Lucida Grande, Arial, sans-serif;
   font-weight: lighter;
   height: 100%;
   padding: 0 10px;
@@ -246,7 +214,7 @@ button.navlinks {
   font-size: 14px;
 }
 
-.HomeLinkDiv .activeNav {
+.navbar-left .activeNav {
   background-color: #111;
   color: #FFFFFF;
 }
