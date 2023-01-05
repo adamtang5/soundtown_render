@@ -9,7 +9,7 @@ import { likeSong, unlikeSong } from "../../../store/song";
 import { loadSong, queueSong } from "../../../store/player";
 
 import { Modal } from "../../Context/Modal";
-import AddtoPlaylist from "../../PlaylistFolders/AddtoPlaylist";
+import AddToPlaylist from "../../PlaylistFolders/AddToPlaylist";
 import EditSongForm from "../EditSongForm";
 
 const SongComments = ({ song }) => {
@@ -174,7 +174,7 @@ const SongComments = ({ song }) => {
           {showPlaylistModal && (
             <Modal onClose={() => setShowPlaylistModal(false)}>
               <div className="add_to_playlist_modal_container">
-                <AddtoPlaylist song={song} />
+                <AddToPlaylist song={song} />
               </div>
             </Modal>
           )}

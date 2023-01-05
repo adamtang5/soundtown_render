@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Modal } from "../Context/Modal";
 import { loadSong, queueSong } from "../../store/player";
-import AddtoPlaylist from "../PlaylistFolders/AddtoPlaylist";
+import AddToPlaylist from "../PlaylistFolders/AddToPlaylist";
 
 const PlaylistTitleActions = ({ songs }) => {
   const playingId = useSelector((state) => state.player.playingId);
@@ -63,7 +63,7 @@ const PlaylistTitleActions = ({ songs }) => {
         {showPlaylistModal && (
           <Modal onClose={() => setShowPlaylistModal(false)}>
             <div className="add_to_playlist_modal_container">
-              <AddtoPlaylist song={songs} />
+              <AddToPlaylist song={songs} />
             </div>
           </Modal>
         )}
