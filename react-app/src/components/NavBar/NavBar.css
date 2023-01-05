@@ -31,6 +31,11 @@
   transition: color 0.3s ease;
 }
 
+button.navlinks {
+  background-color: unset;
+  border: none;
+}
+
 .navlinks:hover {
   color: white;
 }
