@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { Modal } from "./Context/Modal";
-import Logo from "./Icons/Logo";
-import UserProfile from "./UserProfile";
-import UploadSong from "./SongFolders/UploadSongForm";
+import { Modal } from "../Context/Modal";
+import Logo from "../Icons/Logo";
+import UserProfile from "../UserProfile";
+import UploadSong from "../SongFolders/UploadSongForm";
 import "./NavBar.css";
 
 const NavBar = () => {
