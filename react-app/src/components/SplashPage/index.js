@@ -16,7 +16,7 @@ const SplashPage = () => {
   const sessionUser = useSelector(state => state.session.user);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
-  const songs = useSelector((state) => Object.values(state.songs));
+  const songsArr = useSelector(state => Object.values(state.songs));
 
   useEffect(() => {
     if (sessionUser != null) history.push('/');
@@ -36,21 +36,28 @@ const SplashPage = () => {
   }, [dispatch]);
 
   return (
-    <div className="splashpage_container">
-      <div className="imagebox">
-        <div className="imagetoptitle">
-          <div className="splash-header-logo-div">
-            <div className="splash-header-wrapper flex-row-center">
-              <Logo />
-              <h2> SoundTown</h2>
-            </div>
+    <main className="page-container flex-column">
+      <header className="splash-banner flex-column">
+        <header className="splash-banner-header flex-row">
+          <div className="splash-banner-header-logo flex-row">
+            <Logo />
+            <h2 className="splash-banner-header-logo-text">SoundTown</h2>
           </div>
-
-          <div className="soundcloudbuttons">
-            <button
-              className="signuptitle cursor-pointer"
-              onClick={openLoginModal}
-            >Sign In</button>
+          <nav className="splash-banner-header-nav">
+            <ul className="flex-row">
+              <li>
+                <button
+                  className="login-button cursor-pointer"
+                  onClick={openLoginModal}
+                >Sign In</button>
+              </li>
+              <li>
+                <button
+                  className="signup-button cursor-pointer"
+                  onClick={openSignUpModal}
+                >Create account</button>
+              </li>
+            </ul>
             {showLoginModal && (
               <Modal onClose={() => setShowLoginModal(false)}>
                 <div className="login_modal_container">
@@ -61,10 +68,6 @@ const SplashPage = () => {
                 </div>
               </Modal>
             )}
-            <button
-              className="caccounttitle cursor-pointer"
-              onClick={openSignUpModal}
-            >Create account</button>
             {showSignUpModal && (
               <Modal onClose={() => setShowSignUpModal(false)}>
                 <div className="login_modal_container">
@@ -75,28 +78,24 @@ const SplashPage = () => {
                 </div>
               </Modal>
             )}
-          </div>
-        </div>
-        <h3 className="imagebox_inner_title">
-          What's next in music is first on SoundTown
-        </h3>
-        <p className="imagebox_inner_para">
-          Upload your first track and begin your journey. SoundTown gives you
-          space to create, find your fans, and connect with other artists.
-        </p>
-        <div className="splash_logo">
+          </nav>
+        </header>
+        <section className="splash-blurb flex-column">
+          <h3>What's next in music is first on SoundTown</h3>
+          <p>
+            Upload your first track and begin your journey. SoundTown gives you
+            space to create, find your fans, and connect with other artists.
+          </p>
           <Logo />
-        </div>
-      </div>
-      <div className="flex-column splashpage_title_songs_container">
-        <div className="splashpage_inner_title_container">
-          Hear what’s trending for free in the SoundTown community
-        </div>
+        </section>
+      </header>
+      <section className="flex-column splash-rec">
+        <h3>Hear what’s trending for free in the SoundTown community</h3>
         <div className="splashpage_song_container flex-row" onClick={() => setShowLoginModal(true)}>
-          <GridDisplay likedSongs={songs?.slice(0, 8)} />
+          <GridDisplay likedSongs={songsArr?.slice(0, 8)} />
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

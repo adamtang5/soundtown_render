@@ -200,7 +200,6 @@ button.dropdown-links {
   width: fit-content;
   position: relative;
   height: 100%;
-  left: -50px;
 }
 
 .navlinks.upload {
