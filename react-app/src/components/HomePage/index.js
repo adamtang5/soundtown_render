@@ -5,14 +5,14 @@ import "./HomePage.css";
 
 const HomePage = () => {
   return (
-    <div className="homepage_container">
+    <main className="page-container two-columns flex-row">
       <div className="mainfeed_left_container">
         <MainFeed />
       </div>
       <div className="mainfeed_right_container">
         <Sidebar />
       </div>
-    </div>
+    </main>
   );
 };
 

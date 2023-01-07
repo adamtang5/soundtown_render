@@ -2,12 +2,6 @@ body {
   background-color: rgb(242, 242, 242);
 }
 
-.homepage_container {
-  background-color: white;
-  display: flex;
-  margin: 0px 75px var(--page-container-bottom-margin) 75px;
-}
-
 .sidebar_container {
   border-left: 2.5px solid rgb(242, 242, 242);
   align-items: center;
@@ -73,7 +67,7 @@ body {
 
 .mainfeed {
   width: 80%;
-  margin-left: 160px;
+  /* margin-left: 160px; */
 }
 
 .sidebar-text {
