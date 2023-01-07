@@ -60,7 +60,14 @@ a {
 .page-container {
   background-color: white;
   margin: 0px 75px var(--page-container-bottom-margin) 75px;
+}
+
+.one-column {
   align-items: center;
+}
+
+.two-columns {
+  align-items: flex-start;
 }
 
 .Pl_S_banner {
