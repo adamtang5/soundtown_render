@@ -19,7 +19,7 @@ const SplashPage = () => {
   const songsArr = useSelector(state => Object.values(state.songs));
 
   useEffect(() => {
-    if (sessionUser != null) history.push('/');
+    if (sessionUser) history.push('/');
   }, []);
 
   const openLoginModal = () => {
