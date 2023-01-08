@@ -3,88 +3,81 @@ import { NavLink } from "react-router-dom";
 import { loadSong } from "../../store/player";
 import { useDispatch, useSelector } from "react-redux";
 import SongTileActions from "./SongTileActions";
-import "./SongTile.css";
 import { getAllUsers } from "../../store/user";
+import "./SongTile.css";
 
 const SongTile = ({ song }) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.session.user);
+  const sessionUser = useSelector(state => state.session.user);
   const handlePlayButtonClick = (e) => {
     e.preventDefault();
     dispatch(loadSong(song.id));
   };
 
-  const handle_LikeButtonClick = async (e) => {
+  const handleLike = async (e) => {
     e.preventDefault();
     const formData = new FormData();
 
-    formData.append("user_id", user?.id);
+    formData.append("user_id", sessionUser.id);
     formData.append("song_id", song.id);
     dispatch(getAllUsers());
   };
-  const handle_UnLikeButtonClick = async (e) => {
+  const handleUnLike = async (e) => {
     e.preventDefault();
     const formData = new FormData();
 
-    formData.append("user_id", user?.id);
+    formData.append("user_id", sessionUser.id);
     formData.append("song_id", song.id);
     dispatch(getAllUsers());
+  };
+
+  const coverStyle = {
+    backgroundImage: `url(${song.image_url})`,
+    backgroundSize: "cover",
   };
 
   return (
-    <div className="song_tile flex-column">
-      <div className="song_tile_cover">
-        <img className="song_tile_cover_img" src={song.image_url} alt="" />
-        {user && (
-          <div className="song_tile_cover_overlay">
-            <div className="song_tile_cover_overlay_inner flex-column">
-              <div className="song_tile_cover_overlay_inner_top flex-row">
-                <div
-                  onClick={handlePlayButtonClick}
-                  className="song_tile_cover_play"
-                >
-                  {" "}
-                  &#9654;
-                </div>
-              </div>
-              <div className="song_tile_cover_overlay_inner_bottom flex-row">
-                <SongTileActions song={song} />
-                {song?.likes?.includes(user?.id) && (
-                  <div
-                    onClick={handle_UnLikeButtonClick}
-                    className="song_tile_cover_is_liked"
-                  >
-                    {" "}
-                    &#10084;
-                  </div>
-                )}
-                {!song.likes.includes(user?.id) && (
-                  <div
-                    onClick={handle_LikeButtonClick}
-                    className="song_tile_cover_not_liked"
-                  >
-                    {" "}
-                    &#10084;
-                  </div>
-                )}
-              </div>
-            </div>
+    <article className="song-tile">
+      <div
+        className="song-tile-cover"
+        style={coverStyle}
+        alt={song.title}
+      >
+        <div className="overlay-group flex-row">
+          <SongTileActions song={song} />
+          <div
+            onClick={handlePlayButtonClick}
+            className="overlay-play"
+          >
+            &#9654;
           </div>
-        )}
-      </div>
-      <div className="song_tile_bottom flex-row">
-        <div className="song_tile_text flex-column">
-          <div>
-            <NavLink className="song_tile_text_title" to={`/songs/${song.id}`}>
-              {song.title}
-            </NavLink>
-          </div>
-          <div>
-            <p className="song_tile_text_description">{song.description}</p>
+          <div className="overlay-like">
+            {song?.likes?.includes(sessionUser.id) && (
+              <div
+                onClick={handleUnLike}
+                className="liked"
+              >
+                &#10084;
+              </div>
+            )}
+            {!song.likes.includes(sessionUser.id) && (
+              <div
+                onClick={handleLike}
+                className="not-liked"
+              >
+                &#10084;
+              </div>
+            )}
           </div>
         </div>
       </div>
-    </div>
+      <footer className="song-tile-info">
+        <NavLink to={`/songs/${song.id}`}>
+          <h3>{song.title}</h3>
+        </NavLink>
+        <span>{song.description}</span>
+      </footer>
+    </article>
   );
 };
 

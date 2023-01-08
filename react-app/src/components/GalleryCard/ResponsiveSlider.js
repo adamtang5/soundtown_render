@@ -40,16 +40,17 @@ const ResponsiveSlider = ({ title, description, songs }) => {
     ],
   };
   return (
-    <div>
-      <p className="mainfeed_slider_title">{title}</p>
-      <p className="mainfeed_slider_desc">{description}</p>
-
-      <Slider {...settings}>
-        {songs?.map((song) => (
-          <SongTile song={song} key={song.id} />
-        ))}
-      </Slider>
-    </div>
+    <>
+      <h2>{title}</h2>
+      <h3>{description}</h3>
+      <div className="carousel-wrapper">
+        <Slider {...settings}>
+          {songs?.map((song) => (
+            <SongTile song={song} key={song.id} />
+          ))}
+        </Slider>
+      </div>
+    </>
   );
 };
 

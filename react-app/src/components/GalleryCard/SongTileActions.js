@@ -44,30 +44,28 @@ const SongTileActions = ({ song }) => {
   };
 
   return (
-    <>
-      <div className="song_tile_actions_container">
-        <div className="song_tile_actions" onClick={openMenu}>
-          < ImMenu3 className="song_tile_actions_icon opHov" />
-        </div>
-        <div className="song_tile_dropdown">
-          {showMenu && (
-            <div className="song-tile-action-dropdown">
-              <div className='stad flex-row-center' onClick={() => addSongToQueue(song.id)} > <span className='flex-row-center '> < CgPlayList className="cg-icon" />  Add to Queue</span></div>
-              <div className='stad flex-row-center' onClick={openPlaylistModal}><span className=' flex-row-center'><MdOutlinePlaylistAdd className="cg-icon" /> Add to Playlist</span></div>
+    <div className="overlay-actions">
+      <div className="song_tile_actions" onClick={openMenu}>
+        < ImMenu3 className="song_tile_actions_icon opHov" />
+      </div>
+      <div className="song_tile_dropdown">
+        {showMenu && (
+          <div className="song-tile-action-dropdown">
+            <div className='stad flex-row-center' onClick={() => addSongToQueue(song.id)} > <span className='flex-row-center '> < CgPlayList className="cg-icon" />  Add to Queue</span></div>
+            <div className='stad flex-row-center' onClick={openPlaylistModal}><span className=' flex-row-center'><MdOutlinePlaylistAdd className="cg-icon" /> Add to Playlist</span></div>
+          </div>
+        )}
+      </div>
+      {
+        showPlaylistModal && (
+          <Modal onClose={() => setShowPlaylistModal(false)}>
+            <div className="add_to_playlist_modal_container">
+              <AddToPlaylist song={song} />
             </div>
-          )}
-        </div>
-        {
-          showPlaylistModal && (
-            <Modal onClose={() => setShowPlaylistModal(false)}>
-              <div className="add_to_playlist_modal_container">
-                <AddToPlaylist song={song} />
-              </div>
-            </Modal>
-          )
-        }
-      </div >
-    </>
+          </Modal>
+        )
+      }
+    </div>
   );
 };
 
