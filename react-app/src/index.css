@@ -5,11 +5,12 @@
   --color-border-light: #f2f2f2;
   --color-primary: #f50;
   --color-warning: #cf0000;
+  --color-off-white-bg: #f2f2f2;
   --navbar-height: 66px;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Lucida Grande", 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: Interstate, "Lucida Grande", 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 :root {
@@ -67,7 +68,21 @@ a {
 }
 
 .two-columns {
-  align-items: flex-start;
+  position: relative;
+}
+
+.mainfeed {
+  padding: 0;
+  margin: 0 330px 0 0;
+  position: relative;
+}
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 300px;
 }
 
 .Pl_S_banner {
