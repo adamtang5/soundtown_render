@@ -5,11 +5,11 @@ import "./HomePage.css";
 
 const HomePage = () => {
   return (
-    <main className="page-container two-columns flex-row">
-      <div className="mainfeed_left_container">
+    <main className="page-container two-columns">
+      <div className="mainfeed">
         <MainFeed />
       </div>
-      <div className="mainfeed_right_container">
+      <div className="sidebar">
         <Sidebar />
       </div>
     </main>
