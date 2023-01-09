@@ -117,13 +117,3 @@ a {
   font-size: 13.3333px;
   padding: 5px 10px 3px;
 }
-
-
-.opHov {
-  cursor: pointer;
-}
-
-.opHov:hover {
-  opacity: .95;
-  color: rgba(128, 128, 128, 0.686);
-}
