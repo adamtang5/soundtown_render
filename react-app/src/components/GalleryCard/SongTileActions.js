@@ -73,18 +73,6 @@ const SongTileActions = ({ song }) => {
                 {item.leftIcon}{item.label}
               </li>
             ))}
-            {/* <li
-              className='flex-row'
-              onClick={() => addSongToQueue(song.id)}
-            >
-              <CgPlayList className="cg-icon" />Add to Queue
-            </li>
-            <li
-              className='flex-row'
-              onClick={openPlaylistModal}
-            >
-              <MdOutlinePlaylistAdd className="cg-icon" />Add to Playlist
-            </li> */}
           </ul>
         )}
       </div>
