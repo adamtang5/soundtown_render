@@ -5,25 +5,22 @@ import TechCard from "../TechCard";
 import techs from '../TechCard/techs.json';
 import { ImSpinner3 } from 'react-icons/im';
 
-const updateCreator = async (creator) => {
-  const res = await fetch(`https://api.github.com/users/${creator.github_username}`);
-  const data = await res.json();
-  return {
-    ...creator,
-    avatar_url: data.avatar_url,
-    github_url: data.html_url,
-  };
-};
-
 const Sidebar = () => {
   const [creators, setCreators] = useState([]);
   useEffect(() => {
-    for (const creator of creatorData) {
-      updateCreator(creator)
-        .then(newData => setCreators([...creators, newData]))
-        .then(() => console.log(creators))
-        .catch(err => console.error(err));
-    }
+    const updateCreator = async (creator) => {
+      const res = await fetch(`https://api.github.com/users/${creator.github_username}`);
+      if (res.ok) {
+        const data = await res.json();
+        return {
+          ...creator,
+          avatar_url: data.avatar_url,
+          github_url: data.html_url,
+        };
+      }
+    };
+    Promise.all(creatorData.map(creator => updateCreator(creator)))
+      .then(newCreators => setCreators(newCreators));
   }, []);
 
   return (
