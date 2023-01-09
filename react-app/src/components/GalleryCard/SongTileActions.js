@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { Modal } from "../Context/Modal";
 import { loadSong, queueSong } from "../../store/player";
 import AddToPlaylist from "../PlaylistFolders/AddToPlaylist";
-import { ImMenu3 } from 'react-icons/im'
-import { CgPlayList } from 'react-icons/cg'
-import { MdOutlinePlaylistAdd } from 'react-icons/md'
+import { ImMenu3 } from 'react-icons/im';
+import { CgPlayList } from 'react-icons/cg';
+import { MdOutlinePlaylistAdd } from 'react-icons/md';
 
 const SongTileActions = ({ song }) => {
-  const playingId = useSelector((state) => state.player.playingId);
+  const playingId = useSelector(state => state.player.playingId);
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
@@ -43,6 +43,19 @@ const SongTileActions = ({ song }) => {
     }
   };
 
+  const dropdownItems = [
+    {
+      onClick: () => addSongToQueue(song.id),
+      leftIcon: <CgPlayList className="cg-icon" />,
+      label: "Add to Queue",
+    },
+    {
+      onClick: openPlaylistModal,
+      leftIcon: <MdOutlinePlaylistAdd className="cg-icon" />,
+      label: "Add to Playlist",
+    },
+  ];
+
   return (
     <div className="overlay-actions">
       <div className="dropdown-hamburger" onClick={openMenu}>
@@ -50,21 +63,28 @@ const SongTileActions = ({ song }) => {
       </div>
       <div className="dropdown-container">
         {showMenu && (
-          <ul className="song-tile-action-dropdown flex-column">
-            <li
-              className='stad flex-row-center'
+          <ul className="dropdown-list flex-column">
+            {dropdownItems.map((item, idx) => (
+              <li
+                key={idx}
+                className="flex-row"
+                onClick={item.onClick}
+              >
+                {item.leftIcon}{item.label}
+              </li>
+            ))}
+            {/* <li
+              className='flex-row'
               onClick={() => addSongToQueue(song.id)}
-            ><span className='flex-row-center '>
-                <CgPlayList className="cg-icon" />  Add to Queue
-              </span>
+            >
+              <CgPlayList className="cg-icon" />Add to Queue
             </li>
             <li
-              className='stad flex-row-center'
+              className='flex-row'
               onClick={openPlaylistModal}
-            ><span className=' flex-row-center'>
-                <MdOutlinePlaylistAdd className="cg-icon" /> Add to Playlist
-              </span>
-            </li>
+            >
+              <MdOutlinePlaylistAdd className="cg-icon" />Add to Playlist
+            </li> */}
           </ul>
         )}
       </div>
