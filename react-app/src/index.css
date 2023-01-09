@@ -85,6 +85,25 @@ a {
   width: 300px;
 }
 
+.spinning {
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.pinwheel {
+  width: 40px;
+  height: 40px;
+}
+
 .Pl_S_banner {
   background-color: grey;
   height: 380px;
