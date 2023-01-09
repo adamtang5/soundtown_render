@@ -43,7 +43,7 @@ const PlaylistTitleActions = ({ songs }) => {
   return (
     <>
       <div>
-        <div className="song_tile_actions" onClick={openMenu}>
+        <div className="dropdown-hamburger" onClick={openMenu}>
           ...
         </div>
         <div className="dropdown">

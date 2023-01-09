@@ -45,15 +45,27 @@ const SongTileActions = ({ song }) => {
 
   return (
     <div className="overlay-actions">
-      <div className="song_tile_actions" onClick={openMenu}>
-        < ImMenu3 className="song_tile_actions_icon opHov" />
+      <div className="dropdown-hamburger" onClick={openMenu}>
+        <ImMenu3 className="hamburger-icon cursor-pointer" />
       </div>
-      <div className="song_tile_dropdown">
+      <div className="dropdown-container">
         {showMenu && (
-          <div className="song-tile-action-dropdown">
-            <div className='stad flex-row-center' onClick={() => addSongToQueue(song.id)} > <span className='flex-row-center '> < CgPlayList className="cg-icon" />  Add to Queue</span></div>
-            <div className='stad flex-row-center' onClick={openPlaylistModal}><span className=' flex-row-center'><MdOutlinePlaylistAdd className="cg-icon" /> Add to Playlist</span></div>
-          </div>
+          <ul className="song-tile-action-dropdown flex-column">
+            <li
+              className='stad flex-row-center'
+              onClick={() => addSongToQueue(song.id)}
+            ><span className='flex-row-center '>
+                <CgPlayList className="cg-icon" />  Add to Queue
+              </span>
+            </li>
+            <li
+              className='stad flex-row-center'
+              onClick={openPlaylistModal}
+            ><span className=' flex-row-center'>
+                <MdOutlinePlaylistAdd className="cg-icon" /> Add to Playlist
+              </span>
+            </li>
+          </ul>
         )}
       </div>
       {
