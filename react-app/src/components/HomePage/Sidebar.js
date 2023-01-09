@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import CreatorCard from "../CreatorCard";
-import creators from '../CreatorCard/creators.json';
+import creatorData from '../CreatorCard/creators.json';
 import TechCard from "../TechCard";
 import techs from '../TechCard/techs.json';
 import { ImSpinner3 } from 'react-icons/im';
@@ -16,16 +16,19 @@ const updateCreator = async (creator) => {
 };
 
 const Sidebar = () => {
+  const [creators, setCreators] = useState([]);
   useEffect(() => {
-    for (let i = 0; i < creators.length; i++) {
-      updateCreator(creators[i])
-        .then(newData => creators[i] = newData);
+    for (const creator of creatorData) {
+      updateCreator(creator)
+        .then(newData => setCreators([...creators, newData]))
+        .then(() => console.log(creators))
+        .catch(err => console.error(err));
     }
   }, []);
 
   return (
     <div className="sidebar_container flex-column">
-      {creators.every(detail => detail.avatar_url) ?
+      {creators.length === creatorData.length && creators.every(detail => detail.avatar_url) ?
         (
           <>
             <div className="tech-icon">
