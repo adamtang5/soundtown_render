@@ -24,7 +24,7 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <div className="sidebar_container flex-column">
+    <div className="sidebar-container flex-column">
       {creators.length === creatorData.length && creators.every(detail => detail.avatar_url) ?
         (
           <>

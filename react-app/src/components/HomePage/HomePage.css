@@ -2,10 +2,12 @@ body {
   background-color: var(--color-off-white-bg);
 }
 
-.sidebar_container {
+.sidebar-container {
   border-left: 2.5px solid var(--color-off-white-bg);
   align-items: center;
   padding-top: 20px;
+  position: sticky;
+  top: 50px;
 }
 
 .gallery_container {
