@@ -47,7 +47,8 @@ body {
 .mainfeed-section {
   width: 100%;
   margin: 20px 0 25px;
-  border-bottom: 2px solid grey;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--color-border);
 }
 
 .mainfeed-section>h2 {
