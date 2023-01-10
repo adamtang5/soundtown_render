@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { loadSong } from "../../store/player";
+import { likeSong, unlikeSong } from "../../store/song";
 import { useDispatch, useSelector } from "react-redux";
 import SongTileActions from "./SongTileActions";
 import { getAllUsers } from "../../store/user";
@@ -20,6 +21,7 @@ const SongTile = ({ song }) => {
 
     formData.append("user_id", sessionUser.id);
     formData.append("song_id", song.id);
+    dispatch(likeSong(formData));
     dispatch(getAllUsers());
   };
   const handleUnLike = async (e) => {
@@ -28,6 +30,7 @@ const SongTile = ({ song }) => {
 
     formData.append("user_id", sessionUser.id);
     formData.append("song_id", song.id);
+    dispatch(unlikeSong(formData));
     dispatch(getAllUsers());
   };
 
