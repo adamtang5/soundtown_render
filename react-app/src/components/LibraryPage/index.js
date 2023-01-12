@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink, Switch, useHistory } from "react-router-dom";
 import ProtectedRoute from "../auth/ProtectedRoute";
 import ShowcaseSongs from "../SongFolders/SongList/ShowcaseSongs";
 import ShowcasePlaylists from "../ExplorePage/ShowcasePlaylists";
-import SongsList from "../SongFolders/SongList";
-import Playlist from "./Playlist";
-import Likes from "./Likes";
-import "./LibraryPage.css";
 
 const LibraryPage = () => {
   const history = useHistory();
-  const [selected, setSelected] = useState("songs");
+  const sessionUser = useSelector(state => state.session.user);
+  const songsArr = useSelector(state => Object.values(state.songs));
+  const userSongs = songsArr.filter(song => song.user_id === sessionUser.id);
+  const userLikes = songsArr.filter(song => song.likes.includes(sessionUser.id));
+  const playlistsArr = useSelector(state => Object.values(state.playlists));
+  const userPlaylists = playlistsArr.filter(playlist => playlist.user_id === sessionUser.id);
 
   if (history.location.pathname === `/library`) {
     history.push(`/library/songs`);
@@ -31,6 +33,21 @@ const LibraryPage = () => {
     },
   ];
 
+  const routes = [
+    {
+      path: "/library/songs",
+      component: <ShowcaseSongs songs={userSongs} h3="Hear your uploaded songs:" />,
+    },
+    {
+      path: "/library/likes",
+      component: <ShowcaseSongs songs={userLikes} h3="Hear the tracks you've liked:" />,
+    },
+    {
+      path: "/library/playlists",
+      component: <ShowcasePlaylists playlists={userPlaylists} h3="Hear your own playlists:" />,
+    },
+  ]
+
   return (
     <main className="page-container">
       <nav className="sticky-nav">
@@ -44,21 +61,15 @@ const LibraryPage = () => {
           ))}
         </ul>
       </nav>
-      <div className="library_container flex-column">
-        <div className="inner_library_container flex-column">
-          <Switch>
-            <ProtectedRoute path={"/library/songs"} exact={true}>
-              <SongsList />
+      <section className="showcase">
+        <Switch>
+          {routes.map((route, idx) => (
+            <ProtectedRoute path={route.path} key={idx}>
+              {route.component}
             </ProtectedRoute>
-            <ProtectedRoute path={"/library/likes"} exact={true}>
-              <Likes />
-            </ProtectedRoute>
-            <ProtectedRoute path={"/library/playlists"} exact={true}>
-              <Playlist />
-            </ProtectedRoute>
-          </Switch>
-        </div>
-      </div>
+          ))}
+        </Switch>
+      </section>
     </main>
   );
 };

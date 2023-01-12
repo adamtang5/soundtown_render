@@ -25,6 +25,17 @@ const ExplorePage = () => {
     },
   ];
 
+  const routes = [
+    {
+      path: "/explore/songs",
+      component: <ShowcaseSongs songs={songsArr} h3="Every song from every user!" />,
+    },
+    {
+      path: "/explore/playlists",
+      component: <ShowcasePlaylists playlists={playlistsArr} h3="Check out playlists from around the town!" />,
+    },
+  ]
+
   return (
     <main className="page-container">
       <nav className="sticky-nav">
@@ -38,14 +49,13 @@ const ExplorePage = () => {
           ))}
         </ul>
       </nav>
-      <section className="library-showcase">
+      <section className="showcase">
         <Switch>
-          <ProtectedRoute path={"/explore/songs"} exact={true}>
-            <ShowcaseSongs songs={songsArr} />
-          </ProtectedRoute>
-          <ProtectedRoute path={"/explore/playlists"} exact={true}>
-            <ShowcasePlaylists playlists={playlistsArr} />
-          </ProtectedRoute>
+          {routes.map((route, idx) => (
+            <ProtectedRoute path={route.path} key={idx}>
+              {route.component}
+            </ProtectedRoute>
+          ))}
         </Switch>
       </section>
     </main>

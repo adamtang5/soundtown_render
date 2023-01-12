@@ -1,10 +1,10 @@
 import React from "react";
 import PlaylistTile from "../GalleryCard/PlaylistTile"
 
-const ShowcasePlaylists = ({ playlists }) => {
+const ShowcasePlaylists = ({ playlists, h3 }) => {
   return (
     <>
-      <h3>Find Playlists from around the town!</h3>
+      <h3>{h3}</h3>
       <div className="showcase-grid flex-row">
         {playlists?.map(playlist => <PlaylistTile key={playlist.id} playlist={playlist} />)}
       </div>
