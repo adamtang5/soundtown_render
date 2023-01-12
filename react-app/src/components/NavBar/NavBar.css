@@ -171,7 +171,7 @@ button.dropdown-links {
 }
 
 .navlinks.nav-home,
-.navlinks.nav-stream,
+.navlinks.nav-explore,
 .navlinks.nav-library {
   position: relative;
   border-right: #111 solid 1px;
@@ -185,12 +185,12 @@ button.dropdown-links {
 }
 
 .navlinks.nav-home:hover,
-.navlinks.nav-stream:hover,
+.navlinks.nav-explore:hover,
 .navlinks.nav-library:hover {
   color: white;
 }
 
-.UploadUser {
+.navbar-right {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -211,7 +211,7 @@ button.dropdown-links {
   font-size: 14px;
 }
 
-.navbar-left .activeNav {
+.navbar-left .active {
   background-color: #111;
   color: #FFFFFF;
 }
