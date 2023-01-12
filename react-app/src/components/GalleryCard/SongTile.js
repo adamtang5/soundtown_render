@@ -5,13 +5,12 @@ import { likeSong, unlikeSong } from "../../store/song";
 import { useDispatch, useSelector } from "react-redux";
 import SongTileActions from "./SongTileActions";
 import { getAllUsers } from "../../store/user";
-import "./SongTile.css";
+import "./Tile.css";
 
 const SongTile = ({ song }) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  const handlePlayButtonClick = (e) => {
-    e.preventDefault();
+  const handlePlay = (e) => {
     dispatch(loadSong(song.id));
   };
 
@@ -40,16 +39,16 @@ const SongTile = ({ song }) => {
   };
 
   return (
-    <article className="song-tile">
+    <article className="tile">
       <div
-        className="song-tile-cover"
+        className="tile-cover"
         style={coverStyle}
         alt={song.title}
       >
         <div className="overlay-group flex-row">
           <SongTileActions song={song} />
           <div
-            onClick={handlePlayButtonClick}
+            onClick={handlePlay}
             className="overlay-play"
           >
             &#9654;
@@ -74,7 +73,7 @@ const SongTile = ({ song }) => {
           </div>
         </div>
       </div>
-      <footer className="song-tile-info">
+      <footer className="tile-info">
         <NavLink to={`/songs/${song.id}`}>
           <h3>{song.title}</h3>
         </NavLink>

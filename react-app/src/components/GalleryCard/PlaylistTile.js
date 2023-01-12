@@ -2,48 +2,42 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { loadPlaylist } from "../../store/player";
 import { useDispatch } from "react-redux";
+import './Tile.css';
 
 const PlaylistTile = ({ playlist }) => {
   const dispatch = useDispatch();
-  const handlePlayButtonClick = (e) => {
-    e.preventDefault();
+  const handlePlay = (e) => {
     dispatch(loadPlaylist(playlist));
   };
+
+  const coverStyle = {
+    backgroundImage: `url(${playlist.image_url})`,
+    backgroundSize: "cover",
+  }
+
   return (
-    <div className="playlist_tile flex-column">
-      <div className="playlist_tile_cover">
-        <img
-          className="playlist_tile_cover_img"
-          src={playlist.image_url}
-          alt=""
-        />
-        <div className="playlist_tile_cover_overlay">
-          <button
-            onClick={handlePlayButtonClick}
-            className="playlist_tile_cover_play"
+    <article className="tile">
+      <div
+        className="tile-cover"
+        style={coverStyle}
+        alt={playlist.title}
+      >
+        <div className="overlay-single flex-row">
+          <div
+            onClick={handlePlay}
+            className="overlay-play"
           >
             &#9654;
-          </button>
-        </div>
-      </div>
-      <div className="playlist_tile_bottom flex-row">
-        <div className="playlist_tile_text flex-column">
-          <div className="playlist_tile_text_container">
-            <NavLink
-              className="playlist_tile_text_title"
-              to={`/playlists/${playlist.id}`}
-            >
-              {playlist.title}
-            </NavLink>
-          </div>
-          <div className="playlist_tile_text_container">
-            <p className="playlist_tile_text_description">
-              {playlist.description}
-            </p>
           </div>
         </div>
       </div>
-    </div>
+      <footer className="tile-info">
+        <NavLink to={`/playlists/${playlist.id}`}>
+          <h3>{playlist.title}</h3>
+        </NavLink>
+        <span>{playlist.description}</span>
+      </footer>
+    </article>
   );
 };
 

@@ -1,15 +1,16 @@
-.song-tile {
-  padding: 0 8px;
-  width: 200px;
+.tile {
+  width: 150px;
+  margin-right: 50px;
 }
 
-.song-tile-cover {
+.tile-cover {
   position: relative;
   height: 150px;
   width: 150px;
 }
 
-.overlay-group {
+.overlay-group,
+.overlay-single {
   position: absolute;
   top: 0;
   left: 0;
@@ -19,17 +20,24 @@
   color: white;
   opacity: 0;
   transition: opacity 0.25s;
+}
+
+.overlay-group:hover,
+.overlay-single:hover {
+  opacity: 1;
+}
+
+.overlay-group {
   justify-content: space-between;
 }
 
-.overlay-group:hover {
-  opacity: 1;
+.overlay-single {
+  justify-content: center;
 }
 
 .overlay-play {
   display: flex;
   align-self: center;
-  padding-left: 20px;
   font-size: 2.5em;
   background: none;
   box-shadow: none;
@@ -42,6 +50,10 @@
 .overlay-play:hover {
   font-size: 3em;
   color: orangered;
+}
+
+.overlay-group .overlay-play {
+  padding-left: 25px;
 }
 
 .overlay-like {
@@ -119,28 +131,28 @@
   cursor: pointer;
 }
 
-.song-tile-info {
+.tile-info {
   margin-top: 10px;
 }
 
-.song-tile-info h3 {
+.tile-info h3 {
   font-weight: 400;
   text-decoration: none;
   font-size: 20px;
   color: rgb(55, 55, 55);
 }
 
-.song-tile-info h3:hover {
+.tile-info h3:hover {
   color: black;
 }
 
-.song-tile-info span {
+.tile-info span {
   font-size: 15px;
   font-family: sans-serif;
   color: rgb(153, 153, 153);
 }
 
-.song-tile-info span:hover {
+.tile-info span:hover {
   color: rgb(55, 55, 55);
 }
 
