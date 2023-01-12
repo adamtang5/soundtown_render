@@ -51,6 +51,12 @@ const App = () => {
           <Route path="/welcome">
             <SplashPage />
           </Route>
+          <ProtectedRoute path="/" exact={true}>
+            <HomePage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/explore">
+            <ExplorePage />
+          </ProtectedRoute>
           <Route path="/upload-song" exact={true}>
             <UploadSong />
           </Route>
@@ -64,17 +70,11 @@ const App = () => {
             {/* <UserPage />  noels users page */}
             <NewUsersPage />
           </ProtectedRoute>
-          <ProtectedRoute path="/" exact={true}>
-            <HomePage />
-          </ProtectedRoute>
           <ProtectedRoute path="/playlists/:id" exact={true}>
             <PlaylistsPage />
           </ProtectedRoute>
           <ProtectedRoute path="/library">
             <LibraryPage />
-          </ProtectedRoute>
-          <ProtectedRoute path="/explore">
-            <ExplorePage />
           </ProtectedRoute>
           <Route>
             <p>not found</p>
