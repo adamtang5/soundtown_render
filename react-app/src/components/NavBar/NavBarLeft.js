@@ -18,12 +18,12 @@ const NavBarLeft = () => {
         className="nav-logo"
         to="/"
         exact={true}
-        activeClassName="activeNav"
+        activeClassName="active"
       >
         <Logo />
       </NavLink>
       {navLink("Home", "/")}
-      {navLink("Stream", "/explore/songs")}
+      {navLink("Explore", "/explore/songs")}
       {navLink("Library", "/library/songs")}
       <SearchBox />
     </div>

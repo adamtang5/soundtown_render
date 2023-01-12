@@ -7,7 +7,7 @@ const NavBarRight = ({ showUploadModal, setShowUploadModal }) => {
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <div className="UploadUser">
+    <div className="navbar-right">
       <UploadButton
         showUploadModal={showUploadModal}
         setShowUploadModal={setShowUploadModal}
