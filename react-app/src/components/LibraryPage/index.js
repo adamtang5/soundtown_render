@@ -1,52 +1,49 @@
 import React, { useState } from "react";
-import { NavLink, Switch } from "react-router-dom";
+import { NavLink, Switch, useHistory } from "react-router-dom";
 import ProtectedRoute from "../auth/ProtectedRoute";
+import ShowcaseSongs from "../SongFolders/SongList/ShowcaseSongs";
+import ShowcasePlaylists from "../ExplorePage/ShowcasePlaylists";
 import SongsList from "../SongFolders/SongList";
 import Playlist from "./Playlist";
-
-import "./LibraryPage.css";
 import Likes from "./Likes";
+import "./LibraryPage.css";
 
 const LibraryPage = () => {
+  const history = useHistory();
   const [selected, setSelected] = useState("songs");
 
+  if (history.location.pathname === `/library`) {
+    history.push(`/library/songs`);
+  }
+
+  const navData = [
+    {
+      to: "/library/songs",
+      label: "My Songs",
+    },
+    {
+      to: "/library/likes",
+      label: "My Likes",
+    },
+    {
+      to: "/library/playlists",
+      label: "My Playlists",
+    },
+  ];
+
   return (
-    <>
-      <div className="library_links_container flex-row">
-        <NavLink
-          to="/library/songs"
-          className={
-            selected === "songs"
-              ? `library_links library_links_selected`
-              : `library_links`
-          }
-          onClick={() => setSelected("songs")}
-        >
-          My Songs
-        </NavLink>
-        <NavLink
-          to="/library/likes"
-          className={
-            selected === "likes"
-              ? `library_links library_links_selected`
-              : `library_links`
-          }
-          onClick={() => setSelected("likes")}
-        >
-          Likes
-        </NavLink>
-        <NavLink
-          to="/library/playlists"
-          className={
-            selected === "playlists"
-              ? `library_links library_links_selected`
-              : `library_links`
-          }
-          onClick={() => setSelected("playlists")}
-        >
-          Playlist
-        </NavLink>
-      </div>
+    <main className="page-container">
+      <nav className="sticky-nav">
+        <ul className="flex-row">
+          {navData.map(data => (
+            <li key={data.label}>
+              <NavLink to={data.to} activeClassName="active">
+                {data.label}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
       <div className="library_container flex-column">
         <div className="inner_library_container flex-column">
           <Switch>
@@ -62,7 +59,7 @@ const LibraryPage = () => {
           </Switch>
         </div>
       </div>
-    </>
+    </main>
   );
 };
 
