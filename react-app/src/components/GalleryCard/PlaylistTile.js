@@ -6,6 +6,7 @@ import './Tile.css';
 
 const PlaylistTile = ({ playlist }) => {
   const dispatch = useDispatch();
+
   const handlePlay = (e) => {
     dispatch(loadPlaylist(playlist));
   };
