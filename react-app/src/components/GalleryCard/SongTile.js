@@ -1,34 +1,34 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { loadSong } from "../../store/player";
-import { likeSong, unlikeSong } from "../../store/song";
 import { useDispatch, useSelector } from "react-redux";
 import SongTileActions from "./SongTileActions";
 import { getAllUsers } from "../../store/user";
+import { loadSong } from "../../store/player";
+import { likeSong, unlikeSong } from "../../store/song";
 import "./Tile.css";
 
 const SongTile = ({ song }) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
+
   const handlePlay = (e) => {
     dispatch(loadSong(song.id));
   };
 
   const handleLike = async (e) => {
-    e.preventDefault();
     const formData = new FormData();
-
     formData.append("user_id", sessionUser.id);
     formData.append("song_id", song.id);
+
     dispatch(likeSong(formData));
     dispatch(getAllUsers());
   };
-  const handleUnLike = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
 
+  const handleUnLike = async (e) => {
+    const formData = new FormData();
     formData.append("user_id", sessionUser.id);
     formData.append("song_id", song.id);
+
     dispatch(unlikeSong(formData));
     dispatch(getAllUsers());
   };
@@ -47,12 +47,7 @@ const SongTile = ({ song }) => {
       >
         <div className="overlay-group flex-row">
           <SongTileActions song={song} />
-          <div
-            onClick={handlePlay}
-            className="overlay-play"
-          >
-            &#9654;
-          </div>
+          <div onClick={handlePlay} className="overlay-play">&#9654;</div>
           <div className="overlay-like">
             {song?.likes?.includes(sessionUser.id) && (
               <div
