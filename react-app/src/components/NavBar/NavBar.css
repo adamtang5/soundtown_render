@@ -1,5 +1,4 @@
 * {
-  --height-navbar: 45.99px;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -7,18 +6,17 @@
 
 .navbar {
   background-color: #333;
-  /* height: var(--navbar-height); */
+  height: var(--height-navbar);
   font-family: Interstate, Lucida Grande, Arial, sans-serif;
   justify-content: space-between;
   align-items: center;
-  padding: 0 11%;
+  padding: 0 var(--x-margin);
   list-style: none;
   position: sticky;
   top: 0;
   border-bottom: 1px solid #303030;
   margin-bottom: 1px;
   z-index: 10;
-  height: var(--height-navbar);
 }
 
 .navlinks {
