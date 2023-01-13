@@ -6,8 +6,7 @@ import LoginForm from "../auth/LoginForm";
 import SignUpForm from "../auth/SignUpForm";
 import { Modal } from "../Context/Modal";
 import Logo from "../Icons/Logo";
-import GridDisplay from "../LibraryPage/Likes/GridDisplay";
-
+import ShowcaseSongs from "../SongFolders/SongList/ShowcaseSongs";
 import "./SplashPage.css";
 
 const SplashPage = () => {
@@ -19,7 +18,7 @@ const SplashPage = () => {
   const songsArr = useSelector(state => Object.values(state.songs));
 
   useEffect(() => {
-    if (sessionUser) history.push('/');
+    if (sessionUser) history.push('/home');
   }, []);
 
   const openLoginModal = () => {
@@ -89,11 +88,12 @@ const SplashPage = () => {
           <Logo />
         </section>
       </header>
-      <section className="flex-column splash-rec">
-        <h3>Hear what’s trending for free in the SoundTown community</h3>
-        <div className="splashpage_song_container flex-row" onClick={() => setShowLoginModal(true)}>
-          <GridDisplay likedSongs={songsArr?.slice(0, 8)} />
-        </div>
+      <section className="splash-showcase flex-column">
+        <ShowcaseSongs
+          songs={songsArr}
+          h3="Hear what's trending for free in the SoundTown community"
+          setShowLoginModal={setShowLoginModal}
+        />
       </section>
     </main>
   );

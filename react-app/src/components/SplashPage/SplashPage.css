@@ -85,16 +85,17 @@
   height: 250px;
 }
 
-.splash-rec {
+.splash-showcase {
   align-items: center;
 }
 
-.splash-rec h3 {
-  margin: 10px 0px;
-  font-size: 25px;
-  font-weight: 100;
+.splash-showcase>h3 {
+  margin: 20px 0px;
+  font-size: 20px;
+  font-weight: 400;
 }
 
-.splashpage_song_container {
-  width: 100%;
+.splash-showcase .showcase-grid {
+  height: 520px;
+  overflow: hidden;
 }
