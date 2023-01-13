@@ -27,9 +27,7 @@ const PlaylistTile = ({ playlist }) => {
           <div
             onClick={handlePlay}
             className="overlay-play"
-          >
-            &#9654;
-          </div>
+          >&#9654;</div>
         </div>
       </div>
       <footer className="tile-info">

@@ -14,7 +14,7 @@ const ResponsiveSlider = ({ title, description, songs }) => {
     initialSlide: 0,
     responsive: [
       {
-        breakpoint: 1200,
+        breakpoint: 1240,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,

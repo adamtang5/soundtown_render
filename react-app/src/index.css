@@ -148,7 +148,8 @@ nav ul {
 .showcase-grid {
   margin-top: 20px;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
+  gap: 50px;
 }
 
 .Pl_S_banner {
