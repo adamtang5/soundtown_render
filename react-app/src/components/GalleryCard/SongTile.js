@@ -7,7 +7,7 @@ import { loadSong } from "../../store/player";
 import { likeSong, unlikeSong } from "../../store/song";
 import "./Tile.css";
 
-const SongTile = ({ song }) => {
+const SongTile = ({ song, setShowLoginModal }) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
 
@@ -33,6 +33,10 @@ const SongTile = ({ song }) => {
     dispatch(getAllUsers());
   };
 
+  const openLoginModal = () => {
+    setShowLoginModal(true);
+  };
+
   const coverStyle = {
     backgroundImage: `url(${song.image_url})`,
     backgroundSize: "cover",
@@ -45,28 +49,33 @@ const SongTile = ({ song }) => {
         style={coverStyle}
         alt={song.title}
       >
-        <div className="overlay-group flex-row">
-          <SongTileActions song={song} />
-          <div onClick={handlePlay} className="overlay-play">&#9654;</div>
-          <div className="overlay-like">
-            {song?.likes?.includes(sessionUser.id) && (
-              <div
-                onClick={handleUnLike}
-                className="liked"
-              >
-                &#10084;
-              </div>
-            )}
-            {!song.likes.includes(sessionUser.id) && (
-              <div
-                onClick={handleLike}
-                className="not-liked"
-              >
-                &#10084;
-              </div>
-            )}
+        {sessionUser != null ? (
+          <div className="overlay-group flex-row">
+            <SongTileActions song={song} />
+            <div onClick={handlePlay} className="overlay-play">&#9654;</div>
+            <div className="overlay-like">
+              {song?.likes?.includes(sessionUser.id) && (
+                <div
+                  onClick={handleUnLike}
+                  className="liked"
+                >&#10084;</div>
+              )}
+              {!song.likes.includes(sessionUser.id) && (
+                <div
+                  onClick={handleLike}
+                  className="not-liked"
+                >&#10084;</div>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="overlay-single flex-row">
+            <div
+              onClick={openLoginModal}
+              className="overlay-play"
+            >&#9654;</div>
+          </div>
+        )}
       </div>
       <footer className="tile-info">
         <NavLink to={`/songs/${song.id}`}>
