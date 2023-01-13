@@ -148,7 +148,7 @@ nav ul {
 .showcase-grid {
   margin-top: 20px;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 50px;
 }
 

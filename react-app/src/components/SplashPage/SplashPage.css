@@ -98,4 +98,5 @@
 .splash-showcase .showcase-grid {
   height: 520px;
   overflow: hidden;
+  justify-content: center;
 }
