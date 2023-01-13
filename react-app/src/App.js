@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "./store/session";
 import { getAllUsers } from "./store/user";
@@ -48,10 +48,13 @@ const App = () => {
       <BrowserRouter>
         {sessionUser != null && <NavBar />}
         <Switch>
+          <Route path="/" exact={true}>
+            {sessionUser != null ? <Redirect to="/home" /> : <Redirect to="/welcome" />}
+          </Route>
           <Route path="/welcome">
             <SplashPage />
           </Route>
-          <ProtectedRoute path="/" exact={true}>
+          <ProtectedRoute path="/home">
             <HomePage />
           </ProtectedRoute>
           <ProtectedRoute path="/explore">
