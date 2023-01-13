@@ -7,7 +7,7 @@ const navLink = (label, url) => (
     className={`navlinks flex-row-center nav-${label.toLowerCase()}`}
     to={url}
     exact={true}
-    activeClassName="activeNav"
+    activeClassName="active"
   >{label}</NavLink>
 );
 
@@ -22,9 +22,9 @@ const NavBarLeft = () => {
       >
         <Logo />
       </NavLink>
-      {navLink("Home", "/")}
-      {navLink("Explore", "/explore/songs")}
-      {navLink("Library", "/library/songs")}
+      {navLink("Home", "/home")}
+      {navLink("Explore", "/explore")}
+      {navLink("Library", "/library")}
       <SearchBox />
     </div>
   );
