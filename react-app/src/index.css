@@ -140,6 +140,10 @@ nav ul {
   border-bottom: 2px solid;
 }
 
+.showcase {
+  margin-top: 16px;
+}
+
 .showcase h3 {
   font-size: 18px;
   font-weight: 400;
