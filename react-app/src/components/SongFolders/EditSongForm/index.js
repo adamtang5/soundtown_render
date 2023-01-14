@@ -11,9 +11,9 @@ const EditSongForm = ({ setShowEditSongModal }) => {
   const song = useSelector((state) => state.songs[+id]);
   const [errors, setErrors] = useState([]);
   const [title, setTitle] = useState(song?.title);
-  const [audio_url, setAudioUrl] = useState(song?.audio_url);
+  const [audioUrl, setAudioUrl] = useState(song?.audio_url);
   const [description, setDescription] = useState(song?.description);
-  const [image_url, setImageUrl] = useState(song?.image_url);
+  const [imageUrl, setImageUrl] = useState(song?.image_url);
   const [audioLoading, setAudioLoading] = useState(false);
   const [newAudio, setNewAudio] = useState();
   const [newImage, setNewImage] = useState();
@@ -34,11 +34,11 @@ const EditSongForm = ({ setShowEditSongModal }) => {
     ev.preventDefault();
     const formData = new FormData();
 
-    formData.append("audio_url", newAudio || audio_url);
+    formData.append("audio_url", newAudio || audioUrl);
     formData.append("id", +id);
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("image_url", newImage || image_url);
+    formData.append("image_url", newImage || imageUrl);
 
     if (newAudio) setAudioLoading(true);
 
@@ -87,12 +87,12 @@ const EditSongForm = ({ setShowEditSongModal }) => {
 
   const handleImageButtonClick = e => {
     e.preventDefault();
-    document.getElementById("image_url").click();
+    document.getElementById("imageUrl").click();
   };
 
   const handleAudioButtonClick = e => {
     e.preventDefault();
-    document.getElementById("audio_url").click();
+    document.getElementById("audio-url").click();
   };
 
   return (
@@ -105,15 +105,15 @@ const EditSongForm = ({ setShowEditSongModal }) => {
           <img
             alt=''
             id="upload-image"
-            src={image_url}
+            src={imageUrl}
             className={`upload-song-image`}
           />
           <input
             type="file"
             accept="image/*"
             onChange={updateImageUrl}
-            name="image_url"
-            id="image_url"
+            name="image-url"
+            id="image-url"
             hidden
           />
           <button
@@ -148,8 +148,8 @@ const EditSongForm = ({ setShowEditSongModal }) => {
             type="file"
             accept="audio/*"
             onChange={updateAudioUrl}
-            name="audio_url"
-            id="audio_url"
+            name="audio-url"
+            id="audio-url"
             hidden
           />
           <button
