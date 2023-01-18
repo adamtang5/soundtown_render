@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "../Context/Modal";
 import NavBarLeft from "./NavBarLeft";
-import UploadSong from "../SongFolders/UploadSongForm";
+import UploadSongForm from "../SongFolders/UploadSongForm";
 import "./NavBar.css";
 import NavBarRight from "./NavBarRight";
 
@@ -17,7 +17,7 @@ const NavBar = () => {
       />
       {showUploadModal && (
         <Modal onClose={() => setShowUploadModal(false)}>
-          <UploadSong setShowUploadModal={setShowUploadModal} />
+          <UploadSongForm setShowUploadModal={setShowUploadModal} />
         </Modal>
       )}
     </header>

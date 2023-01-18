@@ -22,7 +22,7 @@ import NewUsersPage from "./components/NewUserPage";
 const App = () => {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
+  const sessionUser = useSelector(state => state.session.user);
 
   useEffect(() => {
     (async () => {
