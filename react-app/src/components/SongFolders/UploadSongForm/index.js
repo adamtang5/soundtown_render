@@ -1,19 +1,22 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSong } from "../../../store/song";
 
 const UploadSongForm = ({ setShowUploadModal }) => {
-  const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const history = useHistory();
+  const sessionUser = useSelector(state => state.session.user);
   const [errors, setErrors] = useState([]);
   const [title, setTitle] = useState("");
   const [musicFile, setMusicFile] = useState();
   const [description, setDescription] = useState("");
   const [imageFile, setImageFile] = useState();
   const [audioLoading, setAudioLoading] = useState(false);
+
+  useEffect(() => {
+    console.log(imageFile);
+  }, [imageFile]);
 
   const handleCancel = e => {
     e.preventDefault();
@@ -48,14 +51,14 @@ const UploadSongForm = ({ setShowUploadModal }) => {
 
     setAudioLoading(true);
 
-    const res = await dispatch(createSong(formData));
+    const res = dispatch(createSong(formData));
     if (res) {
       if (res.errors) {
         setErrors(res.errors);
       } else {
         setAudioLoading(false);
-        history.push(`/`);
         setShowUploadModal(false);
+        history.push(`/`);
       }
     } else {
       setAudioLoading(false);
@@ -76,49 +79,52 @@ const UploadSongForm = ({ setShowUploadModal }) => {
       const img = document.getElementById("upload-image");
       fr.onload = () => img.src = fr.result;
       fr.readAsDataURL(file);
+      setImageFile(file);
     }
-
-    setImageFile(file);
   };
 
   const handleImageButtonClick = e => {
     e.preventDefault();
-    document.getElementById("image_url").click();
+    document.getElementById("image-url").click();
   };
 
   const handleAudioButtonClick = e => {
     e.preventDefault();
-    document.getElementById("audio_url").click();
+    document.getElementById("audio-url").click();
   };
 
   return (
-    <form onSubmit={handleSubmit} id="upload-song" className="modal-form flex-column">
-      <div className="form-header flex-row">
-        <h2 className="active">Upload Song</h2>
-      </div>
-      <div className="upload-form-container flex-row">
+    <form
+      onSubmit={handleSubmit}
+      id="upload-song"
+      className="modal-form"
+    >
+      {/* <div className="form-header flex-row"> */}
+      <h2>Upload Song</h2>
+      {/* </div> */}
+      <fieldset className="upload-form-container flex-row">
         <div className="upload-song-left flex-column">
           <img
             id="upload-image"
             alt=''
-            className={`upload-song-image${!!imageFile ? '' : ' hidden'}`}
+            className={`upload-song-image${imageFile ? '' : ' hidden'}`}
           />
           <div
-            className={`upload-song-placeholder${!!imageFile ? ' hidden' : ''}`}
+            className={`upload-song-placeholder${imageFile ? ' hidden' : ''}`}
           />
           <input
             type="file"
             accept="image/*"
             onChange={updateImageUrl}
-            name="image_url"
-            id="image_url"
+            name="image-url"
+            id="image-url"
             hidden
           />
           <button
-            className={`cursor-pointer image-button ${!!imageFile ? "replace-image-button" : "upload-image-button"}`}
+            className={`cursor-pointer image-button ${imageFile ? "replace-image-button" : "upload-image-button"}`}
             onClick={handleImageButtonClick}
           >
-            {!!imageFile ? "Replace Image"
+            {imageFile ? "Replace Image"
               : (
                 <div className="inner-button flex-row">
                   <div className="upload-image-camera">
@@ -128,8 +134,6 @@ const UploadSongForm = ({ setShowUploadModal }) => {
                 </div>
               )}
           </button>
-
-
         </div>
         <div className="upload-song-right flex-column">
           <label className="modal-field-label label-required">Title</label>
@@ -154,15 +158,15 @@ const UploadSongForm = ({ setShowUploadModal }) => {
             type="file"
             accept="audio/*"
             onChange={updateAudioUrl}
-            name="audio_url"
-            id="audio_url"
+            name="audio-url"
+            id="audio-url"
             hidden
           />
           <button
-            className={`cursor-pointer audio-button ${!!musicFile ? "replace-audio-button" : "upload-audio-button"}`}
+            className={`cursor-pointer audio-button ${musicFile ? "replace-audio-button" : "upload-audio-button"}`}
             onClick={handleAudioButtonClick}
           >
-            {!!musicFile ? "Replace Music File"
+            {musicFile ? "Replace Music File"
               : (
                 <div className="inner-button flex-row">
                   <div className="upload-audio-note">
@@ -176,7 +180,7 @@ const UploadSongForm = ({ setShowUploadModal }) => {
           {audioLoading && <p>Uploading music file...</p>}
 
         </div>
-      </div>
+      </fieldset>
       <div className="form-footer flex-column">
         <div className="error-block">
           {errors?.map((error, ind) => (
