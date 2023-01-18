@@ -14,10 +14,6 @@ const UploadSongForm = ({ setShowUploadModal }) => {
   const [imageFile, setImageFile] = useState();
   const [audioLoading, setAudioLoading] = useState(false);
 
-  useEffect(() => {
-    console.log(imageFile);
-  }, [imageFile]);
-
   const handleCancel = e => {
     e.preventDefault();
     e.stopPropagation();
@@ -65,20 +61,19 @@ const UploadSongForm = ({ setShowUploadModal }) => {
     }
   };
 
-  const updateAudioUrl = async (e) => {
+  const updateAudioFile = async (e) => {
     const file = await e.target.files[0];
-    setMusicFile(file);
+    if (file) setMusicFile(file);
   };
 
-  const updateImageUrl = async (e) => {
-    e.preventDefault();
+  const updateImageFile = async (e) => {
     const file = await e.target.files[0];
 
-    if (FileReader && file) {
+    if (file) {
       const fr = new FileReader();
       const img = document.getElementById("upload-image");
-      fr.onload = () => img.src = fr.result;
       fr.readAsDataURL(file);
+      fr.onload = () => img.src = fr.result;
       setImageFile(file);
     }
   };
@@ -99,9 +94,7 @@ const UploadSongForm = ({ setShowUploadModal }) => {
       id="upload-song"
       className="modal-form"
     >
-      {/* <div className="form-header flex-row"> */}
       <h2>Upload Song</h2>
-      {/* </div> */}
       <fieldset className="upload-form-container flex-row">
         <div className="upload-song-left flex-column">
           <img
@@ -115,66 +108,61 @@ const UploadSongForm = ({ setShowUploadModal }) => {
           <input
             type="file"
             accept="image/*"
-            onChange={updateImageUrl}
+            onChange={updateImageFile}
             name="image-url"
             id="image-url"
             hidden
           />
           <button
-            className={`cursor-pointer image-button ${imageFile ? "replace-image-button" : "upload-image-button"}`}
+            className={`cursor-pointer image-button ${imageFile ? "replace-image-button" : "upload-image-button flex-row"}`}
             onClick={handleImageButtonClick}
           >
-            {imageFile ? "Replace Image"
-              : (
-                <div className="inner-button flex-row">
-                  <div className="upload-image-camera">
-                    <i className="fa-solid fa-camera fa-1x" />
-                  </div>
-                  <div className="upload-image-text">Upload image</div>
-                </div>
-              )}
+            {imageFile ? (
+              <span>Replace Image</span>
+            ) : (
+              <>
+                <div className="upload-image-camera" />
+                <span>Upload image</span>
+              </>
+            )}
           </button>
         </div>
         <div className="upload-song-right flex-column">
-          <label className="modal-field-label label-required">Title</label>
+          <label className="label-required">Title</label>
           <input
-            className="modal-field"
             type="text"
             onChange={(e) => setTitle(e.target.value)}
             value={title}
             required
           />
 
-          <label className="modal-field-label">Description</label>
+          <label>Description</label>
           <textarea
-            className="modal-field"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={5}
           />
 
           <input
-            className="modal-field"
             type="file"
             accept="audio/*"
-            onChange={updateAudioUrl}
+            onChange={updateAudioFile}
             name="audio-url"
             id="audio-url"
             hidden
           />
           <button
-            className={`cursor-pointer audio-button ${musicFile ? "replace-audio-button" : "upload-audio-button"}`}
+            className={`cursor-pointer audio-button ${musicFile ? "replace-audio-button" : "upload-audio-button flex-row"}`}
             onClick={handleAudioButtonClick}
           >
-            {musicFile ? "Replace Music File"
-              : (
-                <div className="inner-button flex-row">
-                  <div className="upload-audio-note">
-                    <i className="fa-solid fa-music fa-1x" />
-                  </div>
-                  <div className="upload-audio-text">Upload Music</div>
-                </div>
-              )}
+            {musicFile ? (
+              <span>Replace Music File</span>
+            ) : (
+              <>
+                <div className="upload-audio-note" />
+                <span>Upload Music</span>
+              </>
+            )}
           </button>
 
           {audioLoading && <p>Uploading music file...</p>}
