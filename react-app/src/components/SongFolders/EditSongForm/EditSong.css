@@ -1,3 +1,7 @@
+#upload-song {
+  height: 550px;
+}
+
 .modal-form {
   position: relative;
 }
@@ -5,6 +9,7 @@
 .modal-form label {
   font-size: 12px;
   margin-bottom: 10px;
+  align-self: flex-start;
 }
 
 .modal-form input,
@@ -30,6 +35,7 @@
   color: var(--color-primary);
   font-size: 24px;
   width: fit-content;
+  margin: 0 10px;
 }
 
 .upload-form-container,
@@ -44,6 +50,7 @@
   align-items: center;
   position: relative;
   width: 270px;
+  padding: 0 10px;
 }
 
 .upload-song-right,
@@ -55,26 +62,28 @@
 .upload-song-placeholder {
   width: 250px;
   height: 250px;
+  position: relative;
 }
 
 .upload-song-placeholder {
   background-image: linear-gradient(135deg, #8e8485, #70929c);
+  position: relative;
 }
 
 .image-button {
-  position: relative;
+  position: absolute;
+  bottom: 20px;
   z-index: 1;
 }
 
 .replace-image-button {
   width: 125px;
-  top: -20px;
-  align-self: flex-end;
+  right: 20px;
 }
 
 .upload-image-button {
   width: 135px;
-  top: -50px;
+  left: 57.5px;
 }
 
 .audio-button {
@@ -118,14 +127,36 @@
   margin-left: 2px;
 }
 
+.modal-form>footer {
+  position: absolute;
+  bottom: 20px;
+  padding: 0 20px;
+  width: 100%;
+  /* padding: 120px 20px 20px; */
+  /* position: sticky;
+  bottom: 0; */
+}
+
 .form-footer {
   padding: 120px 20px 20px;
   position: sticky;
   bottom: 0;
 }
 
+.modal-form .info-text {
+  color: var(--color-info);
+}
+
+.modal-form .info-text,
+.modal-form .error-text {
+  align-self: flex-start;
+  margin: 10px 5px;
+  font-size: 12px;
+}
+
 .error-block {
   padding: 20px 0;
+  font-size: 12px;
 }
 
 .legend-required {

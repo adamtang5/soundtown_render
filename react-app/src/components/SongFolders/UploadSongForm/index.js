@@ -9,10 +9,20 @@ const UploadSongForm = ({ setShowUploadModal }) => {
   const sessionUser = useSelector(state => state.session.user);
   const [errors, setErrors] = useState([]);
   const [title, setTitle] = useState("");
-  const [musicFile, setMusicFile] = useState();
+  const [audioFile, setAudioFile] = useState();
+  const [audioMissing, setAudioMissing] = useState(false);
   const [description, setDescription] = useState("");
   const [imageFile, setImageFile] = useState();
+  const [imageMissing, setImageMissing] = useState(false);
   const [audioLoading, setAudioLoading] = useState(false);
+
+  useEffect(() => {
+    console.log(imageFile);
+  }, [imageFile]);
+
+  useEffect(() => {
+    console.log(audioFile);
+  }, [audioFile]);
 
   const handleCancel = e => {
     e.preventDefault();
@@ -20,7 +30,7 @@ const UploadSongForm = ({ setShowUploadModal }) => {
 
     setErrors([]);
     setTitle("");
-    setMusicFile();
+    setAudioFile();
     setDescription("");
     setImageFile();
     setShowUploadModal(false);
@@ -29,17 +39,21 @@ const UploadSongForm = ({ setShowUploadModal }) => {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
 
-    if (!musicFile || !imageFile) {
-      let errors = [];
-      if (!imageFile) errors.push("Image file is required");
-      if (!musicFile) errors.push("Music file is required");
-      setErrors(errors);
+
+    if (!audioFile || !imageFile) {
+      if (!imageFile) setImageMissing(true);
+      if (!audioFile) setAudioMissing(true);
+
+      // let errors = [];
+      // if (!imageFile) errors.push("Image file is required");
+      // if (!audioFile) errors.push("Music file is required");
+      // setErrors(errors);
       return;
     }
 
     const formData = new FormData();
 
-    formData.append("audio_url", musicFile);
+    formData.append("audio_url", audioFile);
     formData.append("user_id", sessionUser.id);
     formData.append("title", title);
     formData.append("description", description);
@@ -63,7 +77,7 @@ const UploadSongForm = ({ setShowUploadModal }) => {
 
   const updateAudioFile = async (e) => {
     const file = await e.target.files[0];
-    if (file) setMusicFile(file);
+    if (file) setAudioFile(file);
   };
 
   const updateImageFile = async (e) => {
@@ -97,35 +111,37 @@ const UploadSongForm = ({ setShowUploadModal }) => {
       <h2>Upload Song</h2>
       <fieldset className="upload-form-container flex-row">
         <div className="upload-song-left flex-column">
-          <img
-            id="upload-image"
-            alt=''
-            className={`upload-song-image${imageFile ? '' : ' hidden'}`}
-          />
-          <div
-            className={`upload-song-placeholder${imageFile ? ' hidden' : ''}`}
-          />
-          <input
-            type="file"
-            accept="image/*"
-            onChange={updateImageFile}
-            name="image-url"
-            id="image-url"
-            hidden
-          />
-          <button
-            className={`cursor-pointer image-button ${imageFile ? "replace-image-button" : "upload-image-button flex-row"}`}
-            onClick={handleImageButtonClick}
-          >
-            {imageFile ? (
-              <span>Replace Image</span>
-            ) : (
-              <>
-                <div className="upload-image-camera" />
-                <span>Upload image</span>
-              </>
-            )}
-          </button>
+          <label className="label-required">Image</label>
+          <div className="upload-song-placeholder">
+            <img
+              id="upload-image"
+              alt=''
+              className={`upload-song-image${imageFile ? '' : ' hidden'}`}
+            />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={updateImageFile}
+              name="image-url"
+              id="image-url"
+              hidden
+            />
+            <button
+              className={`cursor-pointer image-button ${imageFile ? "replace-image-button" : "upload-image-button flex-row"}`}
+              onClick={handleImageButtonClick}
+            >
+              {imageFile ? (
+                <span>Replace Image</span>
+              ) : (
+                <>
+                  <div className="upload-image-camera" />
+                  <span>Upload image</span>
+                </>
+              )}
+            </button>
+          </div>
+          {imageFile && <div className="info-text">{imageFile.name}</div>}
+          {imageMissing && <div className="error-text">Image file is required</div>}
         </div>
         <div className="upload-song-right flex-column">
           <label className="label-required">Title</label>
@@ -143,6 +159,7 @@ const UploadSongForm = ({ setShowUploadModal }) => {
             rows={5}
           />
 
+          <label className="label-required">Music</label>
           <input
             type="file"
             accept="audio/*"
@@ -152,10 +169,10 @@ const UploadSongForm = ({ setShowUploadModal }) => {
             hidden
           />
           <button
-            className={`cursor-pointer audio-button ${musicFile ? "replace-audio-button" : "upload-audio-button flex-row"}`}
+            className={`cursor-pointer audio-button ${audioFile ? "replace-audio-button" : "upload-audio-button flex-row"}`}
             onClick={handleAudioButtonClick}
           >
-            {musicFile ? (
+            {audioFile ? (
               <span>Replace Music File</span>
             ) : (
               <>
@@ -164,12 +181,14 @@ const UploadSongForm = ({ setShowUploadModal }) => {
               </>
             )}
           </button>
+          {audioFile && <div className="info-text">{audioFile.name}</div>}
+          {audioMissing && <div className="error-text">Music file is required</div>}
 
           {audioLoading && <p>Uploading music file...</p>}
 
         </div>
       </fieldset>
-      <div className="form-footer flex-column">
+      <footer>
         <div className="error-block">
           {errors?.map((error, ind) => (
             <div className="error-text" key={ind}>
@@ -195,7 +214,7 @@ const UploadSongForm = ({ setShowUploadModal }) => {
 
           </div>
         </div>
-      </div>
+      </footer>
     </form>
   );
 };
