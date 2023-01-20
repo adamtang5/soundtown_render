@@ -63,15 +63,15 @@ const App = () => {
           <ProtectedRoute path="/library">
             <LibraryPage />
           </ProtectedRoute>
+          <ProtectedRoute path="/songs/:id" exact={true}>
+            <SingleSong />
+          </ProtectedRoute>
           {/* <Route path="/upload-song" exact={true}>
             <UploadSong />
           </Route> */}
           <Route path="/songs/:id/edit" exact={true}>
             <EditSongForm />
           </Route>
-          <ProtectedRoute path="/songs/:id" exact={true}>
-            <SingleSong />
-          </ProtectedRoute>
           <ProtectedRoute path="/users/:userId">
             {/* <UserPage />  noels users page */}
             <NewUsersPage />

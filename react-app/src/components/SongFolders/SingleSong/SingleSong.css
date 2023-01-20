@@ -1,6 +1,4 @@
 .song_container_main {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   padding-bottom: 60px;
   margin-bottom: var(--page-container-bottom-margin);

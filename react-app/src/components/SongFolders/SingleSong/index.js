@@ -1,14 +1,15 @@
+import Moment from "react-moment";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import SongComments from "./SongComments";
 import { loadSong } from "../../../store/player";
-import Moment from "react-moment";
+import SongComments from "./SongComments";
 import "./SingleSong.css";
-import React from "react";
+
 const SingleSong = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { id } = useParams();
-  const song = useSelector((state) => state.songs[id]);
+  const song = useSelector(state => state.songs[+id]);
 
   const handlePlayButtonClick = (e) => {
     e.preventDefault();
@@ -16,7 +17,7 @@ const SingleSong = () => {
   };
 
   return (
-    <div className="song_container_main">
+    <main className="page-container flex-column">
       <div className="Pl_S_banner flex-row">
         <div className="left_box_banner flex-column">
           <div className="title_banner flex-row">
@@ -39,7 +40,7 @@ const SingleSong = () => {
       <div className="flex-row song_mainfeed_sidebar_conatiner">
         <SongComments song={song} />
       </div>
-    </div>
+    </main>
   );
 };
 
