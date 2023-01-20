@@ -43,11 +43,6 @@ const UploadSongForm = ({ setShowUploadModal }) => {
     if (!audioFile || !imageFile) {
       if (!imageFile) setImageMissing(true);
       if (!audioFile) setAudioMissing(true);
-
-      // let errors = [];
-      // if (!imageFile) errors.push("Image file is required");
-      // if (!audioFile) errors.push("Music file is required");
-      // setErrors(errors);
       return;
     }
 
@@ -77,7 +72,10 @@ const UploadSongForm = ({ setShowUploadModal }) => {
 
   const updateAudioFile = async (e) => {
     const file = await e.target.files[0];
-    if (file) setAudioFile(file);
+    if (file) {
+      setAudioFile(file);
+      setAudioMissing(false);
+    }
   };
 
   const updateImageFile = async (e) => {
@@ -89,6 +87,7 @@ const UploadSongForm = ({ setShowUploadModal }) => {
       fr.readAsDataURL(file);
       fr.onload = () => img.src = fr.result;
       setImageFile(file);
+      setImageMissing(false);
     }
   };
 
@@ -197,21 +196,16 @@ const UploadSongForm = ({ setShowUploadModal }) => {
           ))}
         </div>
         <div className="form-action flex-row">
-          <div className="legend">
-            <div className="legend-required">Required fields</div>
-          </div>
+          <div className="legend-required">Required fields</div>
           <div className="form-action-buttons flex-row">
             <button
               className="cursor-pointer modal-button button-cancel"
               onClick={handleCancel}
-            >
-              Cancel
-            </button>
-
-            <button className="cursor-pointer modal-button button-submit" type="submit">
-              Submit
-            </button>
-
+            >Cancel</button>
+            <button
+              className="cursor-pointer modal-button button-submit"
+              type="submit"
+            >Submit</button>
           </div>
         </div>
       </footer>
