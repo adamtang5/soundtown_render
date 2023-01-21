@@ -17,30 +17,34 @@ const SingleSong = () => {
   };
 
   return (
-    <main className="page-container flex-column">
-      <div className="Pl_S_banner flex-row">
-        <div className="left_box_banner flex-column">
-          <div className="title_banner flex-row">
-            <div className="flex-row banner_title_group_1">
-              <div className="banner_play_button">
-                <div className="song_page_play" onClick={handlePlayButtonClick} >&#9654;</div>
-              </div>
-              <div className="flex-column">
-                <h3>{song?.title}</h3>
+    <>
+      <header className="single-song-banner flex-row">
+        <div className="single-song-banner-left flex-column">
+          <div className="single-song-banner-top-left flex-row">
+            <div
+              className="song-page-play cursor-pointer"
+              onClick={handlePlayButtonClick}
+            >&#9654;</div>
+            <div className="single-song-banner-info flex-row">
+              <div className="single-song-banner-ident flex-column">
+                <h2>{song?.title}</h2>
                 <p>{song?.description}</p>
               </div>
+              <Moment fromNow>{song?.created_at}</Moment>
             </div>
-            <Moment fromNow>{song?.created_at}</Moment>
           </div>
+          <p>{/* WaveForms go here */}</p>
         </div>
-        <div>
-          <img alt='' src={song?.image_url} className="song_image" />
-        </div>
-      </div>
-      <div className="flex-row song_mainfeed_sidebar_conatiner">
+        <img
+          className="song-image"
+          src={song?.image_url}
+          alt={song?.title}
+        />
+      </header>
+      <main className="page-container flex-column">
         <SongComments song={song} />
-      </div>
-    </main>
+      </main>
+    </>
   );
 };
 
