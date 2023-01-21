@@ -62,11 +62,6 @@
   margin-bottom: var(--page-container-bottom-margin);
 }
 
-.song_mainfeed_sidebar_conatiner {
-  width: 1240px;
-  background-color: rgb(255, 255, 255);
-}
-
 .song_mainfeed_container {
   display: flex;
   flex-direction: column;
