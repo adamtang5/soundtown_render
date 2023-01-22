@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSong } from "../../../store/song";
@@ -21,14 +21,6 @@ const UploadSongForm = ({ setShowUploadModal }) => {
   const [audioLoading, setAudioLoading] = useState(false);
   const [newAudio, setNewAudio] = useState();
   const [newImage, setNewImage] = useState();
-
-  useEffect(() => {
-    console.log(newImage);
-  }, [newImage]);
-
-  useEffect(() => {
-    console.log(newAudio);
-  }, [newAudio]);
 
   const handleCancel = e => {
     e.preventDefault();
