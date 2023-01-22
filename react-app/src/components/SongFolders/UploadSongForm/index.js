@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSong } from "../../../store/song";
+import ModalFormDescription from "../../ModalForm/ModalFormDescription";
+import ModalFormImage from "../../ModalForm/ModalFormImage";
+import ModalFormMusic from "../../ModalForm/ModalFormMusic";
+import ModalFormTitle from "../../ModalForm/ModalFormTitle";
 
 const UploadSongForm = ({ setShowUploadModal }) => {
   const dispatch = useDispatch();
@@ -9,20 +13,22 @@ const UploadSongForm = ({ setShowUploadModal }) => {
   const sessionUser = useSelector(state => state.session.user);
   const [errors, setErrors] = useState([]);
   const [title, setTitle] = useState("");
-  const [audioFile, setAudioFile] = useState();
+  const [audioUrl, setAudioUrl] = useState();
   const [audioMissing, setAudioMissing] = useState(false);
   const [description, setDescription] = useState("");
-  const [imageFile, setImageFile] = useState();
+  const [imageUrl, setImageUrl] = useState();
   const [imageMissing, setImageMissing] = useState(false);
   const [audioLoading, setAudioLoading] = useState(false);
+  const [newAudio, setNewAudio] = useState();
+  const [newImage, setNewImage] = useState();
 
   useEffect(() => {
-    console.log(imageFile);
-  }, [imageFile]);
+    console.log(newImage);
+  }, [newImage]);
 
   useEffect(() => {
-    console.log(audioFile);
-  }, [audioFile]);
+    console.log(newAudio);
+  }, [newAudio]);
 
   const handleCancel = e => {
     e.preventDefault();
@@ -30,29 +36,27 @@ const UploadSongForm = ({ setShowUploadModal }) => {
 
     setErrors([]);
     setTitle("");
-    setAudioFile();
+    setAudioUrl();
     setDescription("");
-    setImageFile();
+    setImageUrl();
     setShowUploadModal(false);
   }
 
   const handleSubmit = async (ev) => {
     ev.preventDefault();
 
-
-    if (!audioFile || !imageFile) {
-      if (!imageFile) setImageMissing(true);
-      if (!audioFile) setAudioMissing(true);
+    if (!newAudio || !newImage) {
+      if (!newImage) setImageMissing(true);
+      if (!newAudio) setAudioMissing(true);
       return;
     }
 
     const formData = new FormData();
-
-    formData.append("audio_url", audioFile);
+    formData.append("audio_url", newAudio || audioUrl);
     formData.append("user_id", sessionUser.id);
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("image_url", imageFile);
+    formData.append("image_url", newImage || imageUrl);
 
     setAudioLoading(true);
 
@@ -73,7 +77,7 @@ const UploadSongForm = ({ setShowUploadModal }) => {
   const updateAudioFile = async (e) => {
     const file = await e.target.files[0];
     if (file) {
-      setAudioFile(file);
+      setNewAudio(file);
       setAudioMissing(false);
     }
   };
@@ -83,11 +87,11 @@ const UploadSongForm = ({ setShowUploadModal }) => {
 
     if (file) {
       const fr = new FileReader();
-      const img = document.getElementById("upload-image");
       fr.readAsDataURL(file);
-      fr.onload = () => img.src = fr.result;
-      setImageFile(file);
+      setNewImage(file);
       setImageMissing(false);
+      const img = document.getElementById("upload-image");
+      fr.onload = () => img.src = fr.result;
     }
   };
 
@@ -110,78 +114,32 @@ const UploadSongForm = ({ setShowUploadModal }) => {
       <h2>Upload Song</h2>
       <fieldset className="upload-form-container flex-row">
         <div className="upload-song-left flex-column">
-          <label className="label-required">Image</label>
-          <div className="upload-song-placeholder">
-            <img
-              id="upload-image"
-              alt=''
-              className={`upload-song-image${imageFile ? '' : ' hidden'}`}
-            />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={updateImageFile}
-              name="image-url"
-              id="image-url"
-              hidden
-            />
-            <button
-              className={`cursor-pointer image-button ${imageFile ? "replace-image-button" : "upload-image-button flex-row"}`}
-              onClick={handleImageButtonClick}
-            >
-              {imageFile ? (
-                <span>Replace Image</span>
-              ) : (
-                <>
-                  <div className="upload-image-camera" />
-                  <span>Upload image</span>
-                </>
-              )}
-            </button>
-          </div>
-          {imageFile && <div className="info-text">{imageFile.name}</div>}
-          {imageMissing && <div className="error-text">Image file is required</div>}
+          <ModalFormImage
+            imageUrl={imageUrl}
+            updateImageFile={updateImageFile}
+            newImage={newImage}
+            handleImageButtonClick={handleImageButtonClick}
+            imageMissing={imageMissing}
+          />
         </div>
         <div className="upload-song-right flex-column">
-          <label className="label-required">Title</label>
-          <input
-            type="text"
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
-            required
+          <ModalFormTitle
+            title={title}
+            setTitle={setTitle}
           />
 
-          <label>Description</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={5}
+          <ModalFormDescription
+            description={description}
+            setDescription={setDescription}
           />
 
-          <label className="label-required">Music</label>
-          <input
-            type="file"
-            accept="audio/*"
-            onChange={updateAudioFile}
-            name="audio-url"
-            id="audio-url"
-            hidden
+          <ModalFormMusic
+            audioUrl={audioUrl}
+            updateAudioFile={updateAudioFile}
+            newAudio={newAudio}
+            handleAudioButtonClick={handleAudioButtonClick}
+            audioMissing={audioMissing}
           />
-          <button
-            className={`cursor-pointer audio-button ${audioFile ? "replace-audio-button" : "upload-audio-button flex-row"}`}
-            onClick={handleAudioButtonClick}
-          >
-            {audioFile ? (
-              <span>Replace Music File</span>
-            ) : (
-              <>
-                <div className="upload-audio-note" />
-                <span>Upload Music</span>
-              </>
-            )}
-          </button>
-          {audioFile && <div className="info-text">{audioFile.name}</div>}
-          {audioMissing && <div className="error-text">Music file is required</div>}
 
           {audioLoading && <p>Uploading music file...</p>}
 

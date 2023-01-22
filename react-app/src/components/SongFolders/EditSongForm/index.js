@@ -1,22 +1,32 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { deleteSong, editSong } from "../../../store/song";
+import ModalFormImage from "../../ModalForm/ModalFormImage";
+import ModalFormTitle from "../../ModalForm/ModalFormTitle";
+import ModalFormDescription from "../../ModalForm/ModalFormDescription";
+import ModalFormMusic from "../../ModalForm/ModalFormMusic";
 import "./EditSong.css";
 
 const EditSongForm = ({ setShowEditSongModal }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-  const song = useSelector((state) => state.songs[+id]);
+  const song = useSelector(state => state.songs[+id]);
   const [errors, setErrors] = useState([]);
   const [title, setTitle] = useState(song?.title);
   const [audioUrl, setAudioUrl] = useState(song?.audio_url);
+  const [audioMissing, setAudioMissing] = useState(false);
   const [description, setDescription] = useState(song?.description);
   const [imageUrl, setImageUrl] = useState(song?.image_url);
+  const [imageMissing, setImageMissing] = useState(false);
   const [audioLoading, setAudioLoading] = useState(false);
   const [newAudio, setNewAudio] = useState();
   const [newImage, setNewImage] = useState();
+
+  useEffect(() => {
+    console.log(newImage);
+  }, [newImage]);
 
   const handleCancel = e => {
     e.preventDefault();
@@ -32,8 +42,17 @@ const EditSongForm = ({ setShowEditSongModal }) => {
 
   const handleSubmit = async (ev) => {
     ev.preventDefault();
-    const formData = new FormData();
 
+    if (!newAudio && !audioUrl) {
+      setAudioMissing(true);
+      return;
+    }
+    if (!newImage && !imageUrl) {
+      setImageMissing(true);
+      return;
+    }
+
+    const formData = new FormData();
     formData.append("audio_url", newAudio || audioUrl);
     formData.append("id", +id);
     formData.append("title", title);
@@ -42,14 +61,14 @@ const EditSongForm = ({ setShowEditSongModal }) => {
 
     if (newAudio) setAudioLoading(true);
 
-    const res = await dispatch(editSong(formData));
+    const res = dispatch(editSong(formData));
     if (res) {
       if (res.errors) {
         setErrors(res.errors);
       } else {
         setAudioLoading(false);
-        history.push(`/songs/${+id}`);
         setShowEditSongModal(false);
+        history.push(`/songs/${id}`);
       }
     } else {
       setAudioLoading(false);
@@ -60,34 +79,33 @@ const EditSongForm = ({ setShowEditSongModal }) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const res = await dispatch(deleteSong(+id));
+    const res = dispatch(deleteSong(+id));
     if (res) {
+      setShowEditSongModal(false);
       history.push("/");
     }
   };
 
-  const updateAudioUrl = async (e) => {
+  const updateAudioFile = async (e) => {
     const file = await e.target.files[0];
-    setNewAudio(file);
+    if (file) setNewAudio(file);
   };
 
-  const updateImageUrl = async (e) => {
-    e.preventDefault();
+  const updateImageFile = async (e) => {
     const file = await e.target.files[0];
 
-    if (FileReader && file) {
+    if (file) {
       const fr = new FileReader();
+      fr.readAsDataURL(file);
+      setNewImage(file);
       const img = document.getElementById("upload-image");
       fr.onload = () => img.src = fr.result;
-      fr.readAsDataURL(file);
     }
-
-    setNewImage(file);
   };
 
   const handleImageButtonClick = e => {
     e.preventDefault();
-    document.getElementById("imageUrl").click();
+    document.getElementById("image-url").click();
   };
 
   const handleAudioButtonClick = e => {
@@ -96,128 +114,46 @@ const EditSongForm = ({ setShowEditSongModal }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} id="edit-song" className="modal-form flex-column">
-      <div className="form-header flex-row">
-        <h2 className="active">Edit Song</h2>
-      </div>
-      <div className="edit-form-container flex-row">
+    <form
+      onSubmit={handleSubmit}
+      id="edit-song"
+      className="modal-form"
+    >
+      <h2>Edit Song</h2>
+      <fieldset className="edit-form-container flex-row">
         <div className="edit-song-left flex-column">
-          <img
-            alt=''
-            id="upload-image"
-            src={imageUrl}
-            className={`upload-song-image`}
+          <ModalFormImage
+            imageUrl={imageUrl}
+            updateImageFile={updateImageFile}
+            newImage={newImage}
+            handleImageButtonClick={handleImageButtonClick}
+            imageMissing={imageMissing}
           />
-          <input
-            type="file"
-            accept="image/*"
-            onChange={updateImageUrl}
-            name="image-url"
-            id="image-url"
-            hidden
-          />
-          <button
-            className={`cursor-pointer image-button replace-image-button`}
-            onClick={handleImageButtonClick}
-          >
-            Replace Image
-          </button>
-
         </div>
-
         <div className="edit-song-right flex-column">
-          <label className="modal-field-label label-required">Title</label>
-          <input
-            className="modal-field"
-            type="text"
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
-            required
+          <ModalFormTitle
+            title={title}
+            setTitle={setTitle}
           />
 
-          <label className="modal-field-label">Description</label>
-          <textarea
-            className="modal-field"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={5}
+          <ModalFormDescription
+            description={description}
+            setDescription={setDescription}
           />
 
-          <input
-            className="modal-field"
-            type="file"
-            accept="audio/*"
-            onChange={updateAudioUrl}
-            name="audio-url"
-            id="audio-url"
-            hidden
+          <ModalFormMusic
+            audioUrl={audioUrl}
+            updateAudioFile={updateAudioFile}
+            newAudio={newAudio}
+            handleAudioButtonClick={handleAudioButtonClick}
+            audioMissing={audioMissing}
           />
-          <button
-            className={`cursor-pointer audio-button replace-audio-button`}
-            onClick={handleAudioButtonClick}
-          >
-            Replace Music File
-          </button>
 
           {audioLoading && <p>Uploading music file...</p>}
 
         </div>
-      </div>
-
-
-      {/* <input
-          className="field"
-          id="nameInput"
-          type="text"
-          onChange={(e) => setTitle(e.target.value)}
-          value={title}
-          placeholder={"rename here... "}
-          name="name"
-          required
-        />
-        <button
-          type="button"
-          className="field"
-          onClick={() => setNewAudio(!newAudio)}
-        >
-          Upload New Audio File
-        </button>
-        {newAudio && (
-          <input
-            className="field"
-            type="file"
-            accept="audio/*"
-            onChange={updateAudioUrl}
-            name="audio_url"
-            id="audio_url"
-          />
-        )}
-
-        <textarea
-          className="field"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
-        />
-        <button
-          type="button"
-          className="field"
-          onClick={() => setNewImage(!newImage)}
-        >
-          Upload New Image File
-        </button>
-        {newImage && (
-          <input
-            className="field"
-            type="file"
-            accept="image/*"
-            onChange={updateImageUrl}
-            name="image_url"
-            id="image_url"
-          />
-        )} */}
-
-      <div className="form-footer flex-column">
+      </fieldset>
+      <footer>
         <div className="error-block">
           {errors?.map((error, ind) => (
             <div className="error-text" key={ind}>
@@ -226,44 +162,23 @@ const EditSongForm = ({ setShowEditSongModal }) => {
           ))}
         </div>
         <div className="form-action flex-row">
-          <div className="legend">
-            <div className="legend-required">Required fields</div>
-          </div>
+          <div className="legend-required">Required fields</div>
           <div className="form-action-buttons flex-row">
             <button
               className="cursor-pointer modal-button button-cancel"
               onClick={handleCancel}
-            >
-              Cancel
-            </button>
-
-            <button className="cursor-pointer modal-button button-submit" type="submit">
-              Save changes
-            </button>
-
-            <button className="cursor-pointer modal-button button-delete" onClick={handleDelete}>
-              Delete song
-            </button>
-
+            >Cancel</button>
+            <button
+              className="cursor-pointer modal-button button-submit"
+              type="submit"
+            >Save Changes</button>
+            <button
+              className="cursor-pointer modal-button button-delete"
+              onClick={handleDelete}
+            >Delete Song</button>
           </div>
         </div>
-
-        {/* <button
-          id="btnfield"
-          // onClick={(e) => (
-          //     setUser_id(user.id)
-          // )}
-          type="submit"
-          style={{ margin: "5px", width: "100px" }}
-        >
-          Submit
-        </button>
-        <form onSubmit={deleteSubmit} id="deletePictureForm">
-          <button style={{ margin: "5px", width: "100px" }} type="submit">
-            Delete
-          </button>
-        </form> */}
-      </div>
+      </footer>
     </form >
   );
 };
