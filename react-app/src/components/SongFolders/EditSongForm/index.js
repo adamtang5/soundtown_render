@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { deleteSong, editSong } from "../../../store/song";
@@ -23,10 +23,6 @@ const EditSongForm = ({ setShowEditSongModal }) => {
   const [audioLoading, setAudioLoading] = useState(false);
   const [newAudio, setNewAudio] = useState();
   const [newImage, setNewImage] = useState();
-
-  useEffect(() => {
-    console.log(newImage);
-  }, [newImage]);
 
   const handleCancel = e => {
     e.preventDefault();
