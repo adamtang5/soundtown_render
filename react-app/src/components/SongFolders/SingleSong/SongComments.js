@@ -1,42 +1,51 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Avatar from "../../Icons/Avatar";
-import SpeechBubble from "../../Icons/SpeechBubble";
-import SingleComment from "./Comments/SingleComment";
 import { createComment } from "../../../store/comment";
 import { likeSong, unlikeSong } from "../../../store/song";
 import { loadSong, queueSong } from "../../../store/player";
+import Avatar from "../../Icons/Avatar";
+import SpeechBubble from "../../Icons/SpeechBubble";
+import SingleComment from "./Comments/SingleComment";
+import EditSongForm from "../EditSongForm";
 
 import { Modal } from "../../Context/Modal";
 import AddToPlaylist from "../../PlaylistFolders/AddToPlaylist";
-import EditSongForm from "../EditSongForm";
+import NewCommentForm from "./Comments/NewCommentForm";
+import LikeButton from "../../Buttons/LikeButton";
+import CopyLinkButton from "../../Buttons/CopyLinkButton";
+import EditButton from "../../Buttons/EditButton";
+import DropdownButton from "../../Buttons/DropdownButton";
 
 const SongComments = ({ song }) => {
+  const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state.session.user);
+  const songs = useSelector(state => state.songs);
+  const playingId = useSelector(state => state.player.playingId);
   const [errors, setErrors] = useState([]);
   const [content, setContent] = useState("");
-
   const [showMoreDropdown, setShowMoreDropdown] = useState(false);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
-  const sessionUser = useSelector((state) => state.session.user);
-  const songs = useSelector((state) => state.songs);
-  const playingId = useSelector((state) => state.player.playingId);
-  const dispatch = useDispatch();
   const [clipboardMenu, setClipboardMenu] = useState(false);
   const [showEditSongModal, setShowEditSongModal] = useState(false);
 
-  const showMoreDropdownFnc = () => {
-    if (showMoreDropdown) return;
+  useEffect(() => {
+    if (!clipboardMenu) return;
 
-    setShowMoreDropdown(true);
-  };
+    const closeClipboardDropdown = () => {
+      if (!clipboardMenu) return;
+      setClipboardMenu(false);
+    };
+
+    document.addEventListener("click", closeClipboardDropdown);
+
+    return () => document.removeEventListener("click", closeClipboardDropdown);
+  }, [clipboardMenu]);
 
   useEffect(() => {
     if (!showMoreDropdown) return;
 
     const closeEditDropdown = () => {
       if (!showMoreDropdown) return;
-
       setShowMoreDropdown(false);
     };
 
@@ -45,36 +54,51 @@ const SongComments = ({ song }) => {
     return () => document.removeEventListener("click", closeEditDropdown);
   }, [showMoreDropdown]);
 
-  const handleSubmit = async (e) => {
+  const handleNewCommentSubmit = async (e) => {
     e.preventDefault();
+
     const comment = {
       user_id: sessionUser.id,
       song_id: song.id,
       content,
     };
-    const data = await dispatch(createComment(comment));
+    const data = dispatch(createComment(comment));
     if (data.errors) {
       setErrors(data.errors);
     } else {
       setContent("");
     }
   };
-  const handle_LikeButtonClick = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
 
+  const handleLike = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
     formData.append("user_id", sessionUser.id);
     formData.append("song_id", song.id);
-    await dispatch(likeSong(formData));
+    dispatch(likeSong(formData));
   };
-  const handle_UnLikeButtonClick = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
 
+  const handleUnlike = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
     formData.append("user_id", sessionUser.id);
     formData.append("song_id", song.id);
-    await dispatch(unlikeSong(formData));
+    dispatch(unlikeSong(formData));
   };
+
+  const dropdownItems = [
+    {
+      onClick: () => addSongToQueue(song.id),
+      label: "Add to queue",
+    },
+    {
+      onClick: () => setShowPlaylistModal(true),
+      label: "Add to playlist",
+    },
+  ];
+
   const addSongToQueue = (id) => {
     if (!playingId) {
       dispatch(loadSong(id));
@@ -85,92 +109,49 @@ const SongComments = ({ song }) => {
 
   const addToClipBoard = () => {
     if (clipboardMenu) return;
-
     navigator.clipboard.writeText(window.location.href);
     setClipboardMenu(true);
   };
-  useEffect(() => {
-    if (!clipboardMenu) return;
 
-    const closeClipboardDropdown = () => {
-      if (!clipboardMenu) return;
-
-      setClipboardMenu(false);
-    };
-
-    document.addEventListener("click", closeClipboardDropdown);
-
-    return () => document.removeEventListener("click", closeClipboardDropdown);
-  }, [clipboardMenu]);
   return (
-    <div className="song_mainfeed_container">
+    <>
       <div className="song_mainfeed_top">
-        <div className="new-comment-form_wrapper flex-row">
-          <div className="new-comment-form_placeholder" />
-          <form className="new-comment-form flex-row" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              onChange={(e) => setContent(e.target.value)}
-              value={content}
-              placeholder="Write a comment"
-              name="comment_input"
-              id="comment_input"
-              className="comment_input"
-              autoComplete="off"
-            />
-          </form>
-        </div>
-        <div className="form-errors">
-          {errors.map((error, idx) => (
-            <div key={idx}>{error}</div>
-          ))}
-        </div>
-        <div className="song_button_group flex-row">
-          {!song?.likes.includes(sessionUser.id) && (
-            <button onClick={handle_LikeButtonClick} className="cool_button">
-              {" "}
-              &#10084; Like
-            </button>
-          )}
-          {song?.likes.includes(sessionUser.id) && (
-            <button onClick={handle_UnLikeButtonClick} className="cool_button">
-              {" "}
-              &#10084; Unlike
-            </button>
-          )}
-          <button onClick={addToClipBoard} className="cool_button">
-            Copy Link
-          </button>
-          <div>
-            {clipboardMenu && (
-              <div className="dropdown-clipboard">Copied to clipboard</div>
-            )}
-          </div>
+        <NewCommentForm
+          handleNewCommentSubmit={handleNewCommentSubmit}
+          content={content}
+          setContent={setContent}
+          errors={errors}
+        />
+
+        <div className="song-button-group flex-row">
+          <LikeButton
+            isLiked={song?.likes.includes(sessionUser.id)}
+            handleUnlike={handleUnlike}
+            handleLike={handleLike}
+          />
+
+          <CopyLinkButton
+            handleCopy={addToClipBoard}
+            showNotification={clipboardMenu}
+          />
+
           {sessionUser?.id === song?.user_id && (
-            <>
-              <div onClick={() => setShowEditSongModal(true)} className="cool_button cool_div">
-                Edit
-              </div>
-              {showEditSongModal && (
-                <Modal onClose={() => setShowEditSongModal(false)}>
-                  <EditSongForm setShowEditSongModal={setShowEditSongModal} />
-                </Modal>
-              )}
-            </>
+            <EditButton
+              showModal={showEditSongModal}
+              setShowModal={setShowEditSongModal}
+              buttonClasses={['song-button', 'cursor-pointer']}
+              modalForm={<EditSongForm setShowEditSongModal={setShowEditSongModal} />}
+            />
           )}
-          <div className="flex-row">
-            <button onClick={showMoreDropdownFnc} className="cool_button">
-              More
-            </button>
-            {showMoreDropdown && (
-              <div className="single_song_more_dropdown">
-                <p onClick={() => addSongToQueue(song.id)}>Add to queue</p>
-                <p onClick={() => setShowPlaylistModal(true)}>
-                  Add to playlist
-                </p>
-              </div>
-            )}
-          </div>
+
+          <DropdownButton
+            toggleLabel="More"
+            toggleClasses={['song-button', 'cursor-pointer']}
+            showDropdown={showMoreDropdown}
+            setShowDropdown={setShowMoreDropdown}
+            dropdownUlClasses={['menu', 'button-group-menu']}
+            dropdownItems={dropdownItems}
+          />
           {showPlaylistModal && (
             <Modal onClose={() => setShowPlaylistModal(false)}>
               <div className="add_to_playlist_modal_container">
@@ -178,6 +159,7 @@ const SongComments = ({ song }) => {
               </div>
             </Modal>
           )}
+
         </div>
       </div>
       <div className="comment-section flex-row">
@@ -204,7 +186,7 @@ const SongComments = ({ song }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

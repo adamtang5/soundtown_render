@@ -12,9 +12,12 @@ const SingleSong = () => {
   return (
     <>
       <SingleSongHeader song={song} />
-      <main className="page-container flex-column">
-        <SongComments song={song} />
-      </main>
+      <div className="page-container single-song-secondary flex-row">
+        <main className="single-song-main">
+          <SongComments song={song} />
+        </main>
+        <aside>Sidebar goes here</aside>
+      </div>
     </>
   );
 };
