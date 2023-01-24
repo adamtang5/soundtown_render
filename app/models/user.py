@@ -54,6 +54,6 @@ class User(db.Model, UserMixin):
       'banner_url': self.banner_url,
       'created_at': self.created_at,
       'updated_at': self.updated_at,
-      "comment_amount":len(self.comments),
-      "like_amount":len(self.likes)
+      "comment_amount": len(self.comments),
+      "like_amount": len(self.likes)
     }
