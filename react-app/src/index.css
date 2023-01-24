@@ -24,8 +24,14 @@ a {
   color: black;
 }
 
-nav ul {
+nav ul,
+ul.menu {
   list-style: none;
+}
+
+li button {
+  border: none;
+  background-color: transparent;
 }
 
 fieldset {
@@ -176,20 +182,27 @@ fieldset {
   justify-self: center;
 }
 
-.cool_button {
-  border: 2px solid grey;
+.song-button {
+  border: 1px solid var(--color-info);
   background-color: transparent;
   border-radius: 4px;
   padding: 3px 10px;
-  margin: 0px 5px 0px 0px;
 }
 
-.cool_button:hover {
-  border: 2.2px solid var(--color-primary);
+.song-button:hover {
+  border: 1.1px solid var(--color-border-dark);
+}
+
+.song-button.highlighted {
+  border-color: var(--color-primary);
   color: var(--color-primary);
 }
 
-.cool_div {
+.song-button.highlighted:hover {
+  border-width: 1.1px;
+}
+
+/* .cool_div {
   font-size: 13.3333px;
   padding: 5px 10px 3px;
-}
+} */
