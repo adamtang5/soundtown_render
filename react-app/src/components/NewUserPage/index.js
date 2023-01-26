@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  NavLink,
-  useParams,
-  Switch,
-  useHistory,
-} from "react-router-dom";
+import { NavLink, useParams, Switch, useHistory } from "react-router-dom";
 import { getAllUsers } from "../../store/user";
 import { editDetails } from "../../store/user-details";
 import ProtectedRoute from "../auth/ProtectedRoute";
-
-import "./NewUserPage.css";
 import UsersPlaylists from "./UsersPlaylists";
 import UsersSongs from "./UsersSongs";
+
+import "./NewUserPage.css";
 
 const NewUsersPage = () => {
   const dispatch = useDispatch();
   const { userId } = useParams();
   const history = useHistory();
-  const currentUser = useSelector((state) => state.session.user);
+  const sessionUser = useSelector((state) => state.session.user);
   const user = useSelector((state) => state.users[userId]);
-  const userDetails = user?.user_detail;
 
   const [loadingAvatar, setLoadingAvatar] = useState(false);
   const [loadingBanner, setLoadingBanner] = useState(false);
@@ -42,8 +36,8 @@ const NewUsersPage = () => {
     const avatarFile = e.target.files[0];
 
     const formData = new FormData();
-    formData.append("id", userDetails?.id);
-    formData.append("display_name", userDetails?.display_name);
+    formData.append("id", user?.id);
+    formData.append("display_name", user?.display_name);
     formData.append("avatar_url", avatarFile);
 
     setLoadingAvatar(true);
@@ -56,8 +50,8 @@ const NewUsersPage = () => {
     const bannerFile = e.target.files[0];
 
     const formData = new FormData();
-    formData.append("id", userDetails?.id);
-    formData.append("display_name", userDetails?.display_name);
+    formData.append("id", user?.id);
+    formData.append("display_name", user?.display_name);
     formData.append("banner_url", bannerFile);
 
     setLoadingBanner(true);
@@ -68,7 +62,7 @@ const NewUsersPage = () => {
   if (user) {
     document.documentElement.style.setProperty(
       "--user-banner-url",
-      `url(${userDetails?.banner_url})`
+      `url(${user?.banner_url})`
     );
   }
 
@@ -83,11 +77,11 @@ const NewUsersPage = () => {
               src={
                 loadingAvatar
                   ? "https://soundtownbucket.s3.amazonaws.com/e119c0b2842f44eb84dbcc441b3b9744.png"
-                  : userDetails?.avatar_url
+                  : user?.avatar_url
               }
               className="user_banner_avatar"
             />
-            {currentUser?.id === +userId && (
+            {sessionUser?.id === +userId && (
               <input
                 type="file"
                 className="user_upload_button"
@@ -96,12 +90,12 @@ const NewUsersPage = () => {
             )}
           </div>
           <div className="user_detail_block">
-            <p className="user_display_name">{userDetails?.display_name}</p>
+            <p className="user_display_name">{user?.display_name}</p>
             <p>{user?.email}</p>
           </div>
         </div>
         <div className="user_banner_img_container">
-          {currentUser?.id === +userId && (
+          {sessionUser?.id === +userId && (
             <input type="file" onChange={submitOnlyBanner} />
           )}
         </div>

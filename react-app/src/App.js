@@ -12,9 +12,9 @@ import SplashPage from "./components/SplashPage";
 import HomePage from "./components/HomePage";
 import ExplorePage from "./components/ExplorePage";
 import LibraryPage from "./components/LibraryPage";
-// import UploadSong from "./components/SongFolders/UploadSongForm";
-import EditSongForm from "./components/SongFolders/EditSongForm";
 import SingleSong from "./components/SongFolders/SingleSong";
+// import UploadSong from "./components/SongFolders/UploadSongForm";
+// import EditSongForm from "./components/SongFolders/EditSongForm";
 import Audio from "./components/AudioPlayer/Audio";
 import PlaylistsPage from "./components/PlaylistFolders/PlaylistsPage";
 import NewUsersPage from "./components/NewUserPage";
@@ -68,10 +68,10 @@ const App = () => {
           </ProtectedRoute>
           {/* <Route path="/upload-song" exact={true}>
             <UploadSong />
-          </Route> */}
+          </Route>
           <Route path="/songs/:id/edit" exact={true}>
             <EditSongForm />
-          </Route>
+          </Route> */}
           <ProtectedRoute path="/users/:userId">
             {/* <UserPage />  noels users page */}
             <NewUsersPage />
