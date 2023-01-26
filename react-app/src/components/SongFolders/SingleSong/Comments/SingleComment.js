@@ -1,21 +1,21 @@
+import Moment from "react-moment";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteComment, editComment } from "../../../../store/comment";
 import Avatar from "../../../Icons/Avatar";
-import Moment from "react-moment";
-import "./SingleComment.css";
 import EditCommentButton from "./EditCommentButton";
 import DeleteCommentButton from "./DeleteCommentButton";
-import { deleteComment, editComment } from "../../../../store/comment";
+import "./SingleComment.css";
 
 const SingleComment = ({ comment }) => {
-  const sessionUser = useSelector((state) => state.session.user);
+  const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state.session.user);
   const [showActions, setShowActions] = useState(false);
   const [showContentDisplay, setShowContentDisplay] = useState(true);
   const [showContentEdit, setShowContentEdit] = useState(false);
   const [content, setContent] = useState(comment?.content);
   const [errors, setErrors] = useState([]);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const dispatch = useDispatch();
 
   const commentCardMouseOver = (e) => {
     if (!showContentEdit) {
@@ -42,7 +42,7 @@ const SingleComment = ({ comment }) => {
       user_id: sessionUser.id,
       content,
     };
-    const data = await dispatch(editComment(newComment));
+    const data = dispatch(editComment(newComment));
     if (data.errors) {
       setErrors(data.errors);
     } else {
@@ -64,26 +64,22 @@ const SingleComment = ({ comment }) => {
   };
 
   const confirmDelete = async (ev) => {
-    const data = await dispatch(deleteComment(comment.id));
+    const data = dispatch(deleteComment(comment.id));
     if (data.errors) {
       setErrors(data.errors);
-      // } else {
-      //     setShowDeleteConfirm(false);
     }
   };
 
   return (
-    <div
+    <li
       onMouseOver={commentCardMouseOver}
       onMouseOut={commentCardMouseOut}
       className="comment-card flex-row"
     >
-      <div className="comment-body flex-row">
-        <div className="comment-avatar">
-          <a href={`/users/${comment.user_id}`}>
-            <Avatar user={comment.user} />
-          </a>
-        </div>
+      <article className="comment-body flex-row">
+        <aside className="comment-avatar">
+          <Avatar user={comment.user} isLink={true} />
+        </aside>
         <div className="comment-text flex-column">
           <div className="comment-info">
             {comment.user_id === sessionUser.id ? (
@@ -104,9 +100,8 @@ const SingleComment = ({ comment }) => {
           </div>
           <div className="comment-content">
             <div
-              className={`content-display${
-                showContentDisplay ? "" : " hidden"
-              }`}
+              className={`content-display${showContentDisplay ? "" : " hidden"
+                }`}
             >
               {comment?.content}
             </div>
@@ -130,8 +125,8 @@ const SingleComment = ({ comment }) => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="comment-meta flex-column">
+      </article>
+      <aside className="comment-meta flex-column">
         <Moment fromNow>{comment?.updated_at}</Moment>
         <div
           className={`comment-actions flex-row${showActions ? "" : " hidden"}`}
@@ -173,8 +168,8 @@ const SingleComment = ({ comment }) => {
             </>
           )}
         </div>
-      </div>
-    </div>
+      </aside>
+    </li>
   );
 };
 
