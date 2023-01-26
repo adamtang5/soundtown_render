@@ -1,8 +1,8 @@
 import './SpeechBubble.css';
 
-const SpeechBubble = () => {
+const SpeechBubble = ({ classes }) => {
     return (
-        <div className="comment-icon" />
+        <div className={classes.join(' ')} />
     )
 };
 
