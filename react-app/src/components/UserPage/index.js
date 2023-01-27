@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, NavLink, useHistory } from "react-router-dom";
+import { getAllUsers } from "../../store/user";
 import { editDetails } from "../../store/user-details";
-import GridDisplay from "../LibraryPage/Likes/GridDisplay";
-import Avatar from "./Avatar";
-import BackGroundImage from "./BackgroundHeader";
-import "./userpage.css";
-import "./user_page.scss";
+import Avatar from "../Icons/Avatar";
+import DynamicAvatar from "./DynamicAvatar";
+import "./UserPage.css";
 
 const UserPage = () => {
   const dispatch = useDispatch();
@@ -18,6 +17,10 @@ const UserPage = () => {
   if (history.location.pathname === `/users/${userId}`) {
     history.push(`/users/${userId}/songs`);
   }
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
 
   const updateAvatar = async (e) => {
     e.preventDefault();
@@ -43,15 +46,28 @@ const UserPage = () => {
     dispatch(editDetails(formData));
   };
 
+  const bannerStyle = {
+    backgroundImage: `url(${user?.banner_url})`,
+  };
+
   return (
     <>
-      <header className="user-page-banner flex-row">
-        <div className="user-page-banner-left flex-row">
-          {/* TODO: Dynamic Avatar Component*/}
-          <h2>{user?.display_name}</h2>
+      <header className="user-page-banner">
+        <div
+          className="banner-bg"
+          style={bannerStyle}
+        />
+        <div
+          className="banner-content flex-row"
+        >
+          <div className="user-page-banner-left flex-row">
+            {/* <Avatar user={user} isLink={false} /> */}
+            <DynamicAvatar />
+            <h2>{user?.display_name}</h2>
+          </div>
+          <button className="update-banner-button">Upload header image</button>
+          <input type="file" hidden />
         </div>
-        <button className="update-banner-button"></button>
-        <input type="file" hidden />
       </header>
       <div className="page-container flex-row">
         <main className="user-page-main flex-row">

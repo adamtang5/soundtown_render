@@ -167,6 +167,10 @@ fieldset {
   gap: 50px;
 }
 
+.placeholder {
+  background-image: linear-gradient(135deg, #8e8485, #70929c);
+}
+
 .Pl_S_banner {
   background-color: grey;
   height: 380px;

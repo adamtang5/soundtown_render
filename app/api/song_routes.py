@@ -21,7 +21,7 @@ def new_song():
     if form.validate_on_submit():
       keys = list(request.files.to_dict().keys())
       if len(keys) != 2:
-        return {"errors": "No file uploaded"}
+        return jsonify({"error": "Missing file(s)"}), 400
       raw_audio_url = request.files["audio_url"]
       print("---------------audio url----------------", raw_audio_url)
       raw_image_url = request.files["image_url"]
