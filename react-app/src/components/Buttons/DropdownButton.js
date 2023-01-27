@@ -5,7 +5,6 @@ const DropdownButton = ({
   setShowDropdown,
   dropdownUlClasses,
   dropdownItems,
-  dropdownButtonClasses,
 }) => {
   return (
     <div style={{ position: "relative" }}>

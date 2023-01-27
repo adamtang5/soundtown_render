@@ -18,6 +18,7 @@ import SingleSong from "./components/SongFolders/SingleSong";
 import Audio from "./components/AudioPlayer/Audio";
 import PlaylistsPage from "./components/PlaylistFolders/PlaylistsPage";
 import NewUsersPage from "./components/NewUserPage";
+import UserPage from "./components/UserPage";
 
 const App = () => {
   const [loaded, setLoaded] = useState(false);
@@ -72,6 +73,9 @@ const App = () => {
           <Route path="/songs/:id/edit" exact={true}>
             <EditSongForm />
           </Route> */}
+          <ProtectedRoute path="/users-future/:userId">
+            <UserPage />
+          </ProtectedRoute>
           <ProtectedRoute path="/users/:userId">
             {/* <UserPage />  noels users page */}
             <NewUsersPage />

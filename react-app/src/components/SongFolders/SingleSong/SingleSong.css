@@ -1,7 +1,6 @@
 .single-song-banner {
   background: linear-gradient(135deg, rgb(185, 172, 182) 0%, rgb(107, 108, 108) 100%);
   position: relative;
-  top: -1px;
   margin: 0 var(--x-margin);
   align-items: center;
   padding: 30px 20px 20px 30px;

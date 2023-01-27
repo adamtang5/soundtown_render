@@ -13,13 +13,13 @@ def seed_users():
     email='marnie@aa.io',
     display_name='Marnie Bernard',
     avatar_url='https://avatarfiles.alphacoders.com/126/thumb-126015.png',
-    banner_url='https://initiate.alphacoders.com/images/520/cropped-1400-425-520087.jpg?3614',
+    banner_url='https://images.unsplash.com/photo-1551193541-5937ec516252?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2067&q=80',
     password='password')
   bobbie = User(
     email='bobbie@aa.io',
     display_name='Bobby Bernard',
     avatar_url='https://avatarfiles.alphacoders.com/328/thumb-328691.jpg',
-    banner_url='https://initiate.alphacoders.com/images/112/cropped-851-315-112449.jpg?6836',
+    banner_url='https://images.unsplash.com/photo-1504892612018-159ffa1d147f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
     password='password')
 
   db.session.add(demo)
