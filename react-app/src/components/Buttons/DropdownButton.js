@@ -11,6 +11,7 @@ const DropdownButton = ({
       <button
         onClick={() => setShowDropdown(true)}
         className={toggleClasses.join(' ')}
+        style={{ justifyContent: "center", alignItems: "center" }}
       >{toggleLabel}</button>
       {showDropdown && (
         <ul

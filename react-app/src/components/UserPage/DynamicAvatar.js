@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { editUserDetails } from "../../store/user";
@@ -11,13 +11,19 @@ const DynamicAvatar = () => {
   const sessionUser = useSelector(state => state.session.user);
   const user = useSelector(state => state.users[+userId]);
   const [showDropdown, setShowDropdown] = useState(false);
-  // const currentDetails = useSelector((state) => state.details[userId]);
 
-  // const [displayName, setDisplayName] = useState(currentDetails?.display_name);
-  const [avatarUrl, setAvatarUrl] = useState(user?.avatar_url);
-  const [newAvatar, setNewAvatar] = useState();
-  const [activity, setActivity] = useState(false);
-  const [displayBox, setDisplayBox] = useState(false);
+  useEffect(() => {
+    if (!showDropdown) return;
+
+    const closeDropdown = () => {
+      if (!showDropdown) return;
+      setShowDropdown(false);
+    };
+
+    document.addEventListener("click", closeDropdown);
+
+    return () => document.removeEventListener("click", closeDropdown);
+  }, [showDropdown]);
 
   const updateImageToggleLabel = (
     <>
@@ -27,11 +33,19 @@ const DynamicAvatar = () => {
   );
 
   const deleteAvatarUrl = async (e) => {
-    e.preventDefault();
-
     const formData = new FormData();
     formData.append('avatar_url', '');
     dispatch(editUserDetails(+userId, formData));
+  };
+
+  const updateAvatarUrl = async (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append('avatar_url', file);
+      dispatch(editUserDetails(+userId, formData));
+    }
   };
 
   const handleImageButtonClick = e => {
@@ -48,57 +62,15 @@ const DynamicAvatar = () => {
       onClick: deleteAvatarUrl,
       label: "Delete image",
     },
-  ]
-  const handleSubmit = async (ev) => {
-    ev.preventDefault();
-
-    const formData = new FormData();
-    formData.append("avatar_url", avatarUrl);
-
-    dispatch(editUserDetails(+userId, formData));
-
-    // setAvatarUrl("")
-    setActivity(false)
-    setDisplayBox(false);
-  };
-
-  const updateAvatarUrl = (e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      const fr = new FileReader();
-      fr.readAsDataURL(file);
-      setNewAvatar(file);
-      const img = document.getElementById("upload-image");
-      fr.onload = () => img.src = fr.result;
-    }
-    // setAvatarUrl(file);
-  };
-
-  const updateActivity = (e) => {
-    if (e.target.files) {
-      setActivity(true);
-    } else {
-      setActivity(false);
-    }
-  };
-
-  const checkDisplayName = (e) => {
-    if (e) {
-      setDisplayBox(true);
-    } else {
-      setDisplayBox(false);
-    }
-  };
+  ];
 
   return (
     <>
       <div className="dynamic-avatar-placeholder placeholder">
         <img
-          id="upload-image"
-          alt=""
-          className="dynamic-avatar-image"
+          className={`dynamic-avatar-image ${user?.avatar_url ? 'white-bg' : ''}`}
           src={user?.avatar_url}
+          alt=""
         />
         {sessionUser.id === +userId && (
           <>
@@ -110,7 +82,7 @@ const DynamicAvatar = () => {
               id="avatar-url"
               hidden
             />
-            {newAvatar || user?.avatar_url ? (
+            {user?.avatar_url ? (
               <DropdownButton
                 toggleLabel={updateImageToggleLabel}
                 toggleClasses={['cursor-pointer', 'image-button', 'flex-row', 'update-image-button']}
@@ -119,13 +91,6 @@ const DynamicAvatar = () => {
                 dropdownUlClasses={['menu', 'update-image-menu']}
                 dropdownItems={dropdownItems}
               />
-              // <button
-              //   className="cursor-pointer image-button flex-row update-image-button"
-              //   onClick={handleImageButtonClick}
-              // >
-              //   <div className="upload-image-camera" />
-              //   <span>Update image</span>
-              // </button>
             ) : (
               <button
                 className="cursor-pointer image-button flex-row upload-image-button"
@@ -138,49 +103,6 @@ const DynamicAvatar = () => {
           </>
         )}
       </div>
-
-      {/* <div className="avatardiv placeholderDiv">
-        <form onSubmit={(e) => handleSubmit(e)} id="submitDetailsForm">
-          <img
-            src={currentDetails?.avatar_url}
-            className="userImage "
-            onChange={(e) => (updateAvatarUrl(e), updateActivity(e))}
-          />
-          {sessionUser.id === +userId ?
-            <>
-              <input
-                className="chooseFileAvatar"
-                type="file"
-                accept="image/*"
-                onChange={(e) => (updateAvatarUrl(e), updateActivity(e))}
-                name="avatar-url"
-                id="avatar-url"
-              />
-            </>
-            :
-            <>
-            </>
-          }
-          {activity ?
-            <>
-              <div className="submitFormDiv">
-                <button
-                  className="btn"
-                  type="submit"
-                  onClick={() => (
-                    checkDisplayName(displayName)
-                  )}
-                >
-                  Submit
-                </button>
-              </div>
-            </>
-            : (
-              <></>
-            )}
-        </form>
-        <DisplayName />
-      </div> */}
     </>
   );
 };
