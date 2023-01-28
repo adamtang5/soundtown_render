@@ -38,24 +38,30 @@ def edit_user(id):
   if current_user.id != id:
     return jsonify({"error": "unauthorized"}), 403
 
-  display_name = request.form.get('display_name', "")
+  display_name = request.form.get('display_name', None)
   raw_avatar_url = request.form.get('avatar_url', None)
+  raw_avatar_file = request.files.get('avatar_url', None)
   raw_banner_url = request.form.get('banner_url', None)
+  raw_banner_file = request.files.get('banner_url', None)
 
-  if raw_avatar_url:
-    if not allowed_file(raw_avatar_url.filename):
+  if raw_avatar_url == '':
+    user.avatar_url = ''
+  elif raw_avatar_file:
+    if not allowed_file(raw_avatar_file.filename):
       return FILE_TYPE_ERROR
 
-    raw_avatar_url.filename = get_unique_filename(raw_avatar_url.filename)
-    avatar_upload = upload_file_to_s3(raw_avatar_url)
+    raw_avatar_file.filename = get_unique_filename(raw_avatar_file.filename)
+    avatar_upload = upload_file_to_s3(raw_avatar_file)
     user.avatar_url = avatar_upload['url']
 
-  if raw_banner_url:
-    if not allowed_file(raw_banner_url.filename):
+  if raw_banner_url == '':
+    user.banner_url = raw_banner_url
+  elif raw_banner_file:
+    if not allowed_file(raw_banner_file.filename):
       return FILE_TYPE_ERROR
 
-    raw_banner_url.filename = get_unique_filename(raw_banner_url.filename)
-    banner_upload = upload_file_to_s3(raw_banner_url)
+    raw_banner_file.filename = get_unique_filename(raw_banner_file.filename)
+    banner_upload = upload_file_to_s3(raw_banner_file)
     user.banner_url = banner_upload['url']
 
   if display_name is not None:
