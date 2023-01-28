@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, NavLink, useHistory } from "react-router-dom";
-import { getAllUsers } from "../../store/user";
-import { editDetails } from "../../store/user-details";
-import Avatar from "../Icons/Avatar";
+import { editUserDetails, getAllUsers } from "../../store/user";
+import DropdownButton from "../Buttons/DropdownButton";
 import DynamicAvatar from "./DynamicAvatar";
 import "./UserPage.css";
 
@@ -12,7 +11,8 @@ const UserPage = () => {
   const history = useHistory();
   const { userId } = useParams();
   const sessionUser = useSelector(state => state.session.user);
-  const user = useSelector(state => state.users[+userId]);
+  const user = useSelector(state => state.users[userId]);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   if (history.location.pathname === `/users/${userId}`) {
     history.push(`/users/${userId}/songs`);
@@ -22,29 +22,57 @@ const UserPage = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  const updateAvatar = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (!showDropdown) return;
 
-    const avatarFile = e.target.files[0];
+    const closeDropdown = () => {
+      if (!showDropdown) return;
+      setShowDropdown(false);
+    };
+
+    document.addEventListener("click", closeDropdown);
+
+    return () => document.removeEventListener("click", closeDropdown);
+  }, [showDropdown]);
+
+  const deleteBannerUrl = async (e) => {
     const formData = new FormData();
-    formData.append('id', user.id);
-    formData.append('display_name', user.display_name);
-    formData.append('avatar_url', avatarFile);
-
-    dispatch(editDetails(formData));
+    formData.append('banner_url', '');
+    dispatch(editUserDetails(+userId, formData));
   };
 
-  const updateBanner = async (e) => {
-    e.preventDefault();
+  const updateBannerUrl = async (e) => {
+    const file = e.target.files[0];
 
-    const bannerFile = e.target.files[0];
-    const formData = new FormData();
-    formData.append('id', user.id);
-    formData.append('display_name', user.display_name);
-    formData.append('banner_url', bannerFile);
-
-    dispatch(editDetails(formData));
+    if (file) {
+      const formData = new FormData();
+      formData.append('banner_url', file);
+      dispatch(editUserDetails(+userId, formData));
+    }
   };
+
+  const updateImageToggleLabel = (
+    <>
+      <div className="upload-image-camera" />
+      <span>Update header image</span>
+    </>
+  );
+
+  const handleImageButtonClick = e => {
+    e.preventDefault();
+    document.getElementById('banner-url').click();
+  };
+
+  const dropdownItems = [
+    {
+      onClick: handleImageButtonClick,
+      label: "Replace header image",
+    },
+    {
+      onClick: deleteBannerUrl,
+      label: "Delete header image",
+    },
+  ];
 
   const bannerStyle = {
     backgroundImage: `url(${user?.banner_url})`,
@@ -52,7 +80,7 @@ const UserPage = () => {
 
   return (
     <>
-      <header className="user-page-banner">
+      <header className="user-page-banner placeholder">
         <div
           className="banner-bg"
           style={bannerStyle}
@@ -61,12 +89,39 @@ const UserPage = () => {
           className="banner-content flex-row"
         >
           <div className="user-page-banner-left flex-row">
-            {/* <Avatar user={user} isLink={false} /> */}
             <DynamicAvatar />
             <h2>{user?.display_name}</h2>
           </div>
-          <button className="update-banner-button">Upload header image</button>
-          <input type="file" hidden />
+          {sessionUser.id === +userId && (
+            <>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={updateBannerUrl}
+                name="banner-url"
+                id="banner-url"
+                hidden
+              />
+              {user?.banner_url ? (
+                <DropdownButton
+                  toggleLabel={updateImageToggleLabel}
+                  toggleClasses={['cursor-pointer', 'flex-row', 'update-banner-button']}
+                  showDropdown={showDropdown}
+                  setShowDropdown={setShowDropdown}
+                  dropdownUlClasses={['menu', 'update-banner-menu']}
+                  dropdownItems={dropdownItems}
+                />
+              ) : (
+                <button
+                  className="cursor-pointer flex-row upload-banner-button"
+                  onClick={handleImageButtonClick}
+                >
+                  <div className="upload-image-camera" />
+                  <span>Upload header image</span>
+                </button>
+              )}
+            </>
+          )}
         </div>
       </header>
       <div className="page-container flex-row">

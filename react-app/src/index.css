@@ -15,10 +15,10 @@
   font-family: Interstate, "Lucida Grande", 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-:root {
+/* :root {
   --user-banner-url: url("https://i.ytimg.com/vi/zob-2dpRtH0/maxresdefault.jpg");
 }
-
+ */
 a {
   text-decoration: none;
   color: black;
@@ -169,6 +169,10 @@ fieldset {
 
 .placeholder {
   background-image: linear-gradient(135deg, #8e8485, #70929c);
+}
+
+.white-bg {
+  background-color: white;
 }
 
 .Pl_S_banner {
