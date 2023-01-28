@@ -57,7 +57,7 @@ const EditSongForm = ({ setShowEditSongModal }) => {
 
     if (newAudio) setAudioLoading(true);
 
-    const res = dispatch(editSong(formData));
+    const res = dispatch(editSong(+id, formData));
     if (res) {
       if (res.errors) {
         setErrors(res.errors);

@@ -92,8 +92,8 @@ export const getAllSongs = () => async (dispatch) => {
 };
 
 //! Edit/Update Songs from the db
-export const editSong = (data) => async (dispatch) => {
-  const response = await fetch(`/api/songs/`, {
+export const editSong = (id, data) => async (dispatch) => {
+  const response = await fetch(`/api/songs/${id}`, {
     method: "PUT",
     body: data,
   });

@@ -2,7 +2,9 @@ from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
 from app.models import User, db
 from datetime import datetime
-from app.api.utils import validation_errors_to_error_messages
+from app.api.utils import (
+  validation_errors_to_error_messages, FILE_TYPE_ERROR, UNAUTHORIZED_ERROR
+)
 from app.s3_helpers import (
   upload_file_to_s3, allowed_file, get_unique_filename
 )
@@ -30,19 +32,18 @@ def edit_user(id):
   """
   Edit User Details
   """
-  FILE_TYPE_ERROR = jsonify({"error": "file type not permitted"}), 400
   user = User.query.get(id)
   if not user:
-    return jsonify({"error": "user not found"}), 404
+    return jsonify({"errors": ["user not found"]}), 404
 
   if current_user.id != id:
-    return jsonify({"error": "unauthorized"}), 403
+    return UNAUTHORIZED_ERROR
 
-  display_name = request.form.get('display_name', None)
-  raw_avatar_url = request.form.get('avatar_url', None)
-  raw_avatar_file = request.files.get('avatar_url', None)
-  raw_banner_url = request.form.get('banner_url', None)
-  raw_banner_file = request.files.get('banner_url', None)
+  display_name = request.form.get('display_name')
+  raw_avatar_url = request.form.get('avatar_url')
+  raw_avatar_file = request.files.get('avatar_url')
+  raw_banner_url = request.form.get('banner_url')
+  raw_banner_file = request.files.get('banner_url')
 
   if raw_avatar_url == '':
     user.avatar_url = ''
