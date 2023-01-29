@@ -6,7 +6,7 @@ import LoginForm from "../auth/LoginForm";
 import SignUpForm from "../auth/SignUpForm";
 import { Modal } from "../Context/Modal";
 import Logo from "../Icons/Logo";
-import ShowcaseSongs from "../SongFolders/SongList/ShowcaseSongs";
+import ShowcaseSongs from "../Modules/ShowcaseSongs";
 import "./SplashPage.css";
 
 const SplashPage = () => {

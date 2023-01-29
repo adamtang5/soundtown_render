@@ -1,18 +1,13 @@
-import React from "react";
 import { useSelector } from "react-redux";
-import { NavLink, Switch, useHistory } from "react-router-dom";
+import { Redirect, Switch } from "react-router-dom";
 import ProtectedRoute from "../auth/ProtectedRoute";
-import ShowcaseSongs from "../SongFolders/SongList/ShowcaseSongs"
-import ShowcasePlaylists from "./ShowcasePlaylists";
+import StickyNav from "../Modules/StickyNav";
+import ShowcaseSongs from "../Modules/ShowcaseSongs"
+import ShowcasePlaylists from "../Modules/ShowcasePlaylists";
 
 const ExplorePage = () => {
-  const history = useHistory();
   const songsArr = useSelector(state => Object.values(state.songs));
   const playlistsArr = useSelector(state => Object.values(state.playlists));
-
-  if (history.location.pathname === `/explore`) {
-    history.push(`/explore/songs`);
-  }
 
   const navData = [
     {
@@ -28,29 +23,28 @@ const ExplorePage = () => {
   const routes = [
     {
       path: "/explore/songs",
-      component: <ShowcaseSongs songs={songsArr} h3="Every song from every user!" />,
+      component: <ShowcaseSongs
+        songs={songsArr}
+        h3="Every song from every user!"
+      />,
     },
     {
       path: "/explore/playlists",
-      component: <ShowcasePlaylists playlists={playlistsArr} h3="Check out playlists from around the town!" />,
+      component: <ShowcasePlaylists
+        playlists={playlistsArr}
+        h3="Check out playlists from around the town!"
+      />,
     },
-  ]
+  ];
 
   return (
     <main className="page-container">
-      <nav className="sticky-nav">
-        <ul className="flex-row">
-          {navData.map(data => (
-            <li key={data.label}>
-              <NavLink to={data.to} activeClassName="active">
-                {data.label}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <StickyNav navData={navData} />
       <section className="showcase">
         <Switch>
+          <ProtectedRoute path="/explore" exact={true}>
+            <Redirect to="/explore/songs" />
+          </ProtectedRoute>
           {routes.map((route, idx) => (
             <ProtectedRoute path={route.path} key={idx}>
               {route.component}
