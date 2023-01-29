@@ -1,5 +1,4 @@
-import React from 'react'
-import SongTile from '../../GalleryCard/SongTile';
+import SongTile from '../GalleryCard/SongTile';
 
 const ShowcaseSongs = ({ songs, h3, setShowLoginModal }) => {
   return (

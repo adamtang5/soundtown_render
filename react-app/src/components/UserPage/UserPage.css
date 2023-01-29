@@ -4,6 +4,10 @@
   position: relative;
 }
 
+.user-page-banner.placeholder {
+  background-image: linear-gradient(135deg, rgba(204, 112, 55, 0.8), rgb(214, 199, 188));
+}
+
 .banner-bg {
   position: absolute;
   top: 0;

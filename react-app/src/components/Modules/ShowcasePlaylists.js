@@ -1,4 +1,3 @@
-import React from "react";
 import PlaylistTile from "../GalleryCard/PlaylistTile"
 
 const ShowcasePlaylists = ({ playlists, h3 }) => {

@@ -1,22 +1,17 @@
-import React from "react";
 import { useSelector } from "react-redux";
-import { NavLink, Switch, useHistory } from "react-router-dom";
+import { Redirect, Switch } from "react-router-dom";
 import ProtectedRoute from "../auth/ProtectedRoute";
-import ShowcaseSongs from "../SongFolders/SongList/ShowcaseSongs";
-import ShowcasePlaylists from "../ExplorePage/ShowcasePlaylists";
+import StickyNav from "../Modules/StickyNav";
+import ShowcaseSongs from "../Modules/ShowcaseSongs";
+import ShowcasePlaylists from "../Modules/ShowcasePlaylists";
 
 const LibraryPage = () => {
-  const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
   const songsArr = useSelector(state => Object.values(state.songs));
   const userSongs = songsArr.filter(song => song.user_id === sessionUser.id);
   const userLikes = songsArr.filter(song => song.likes.includes(sessionUser.id));
   const playlistsArr = useSelector(state => Object.values(state.playlists));
   const userPlaylists = playlistsArr.filter(playlist => playlist.user_id === sessionUser.id);
-
-  if (history.location.pathname === `/library`) {
-    history.push(`/library/songs`);
-  }
 
   const navData = [
     {
@@ -46,23 +41,16 @@ const LibraryPage = () => {
       path: "/library/playlists",
       component: <ShowcasePlaylists playlists={userPlaylists} h3="Hear your own playlists:" />,
     },
-  ]
+  ];
 
   return (
     <main className="page-container">
-      <nav className="sticky-nav">
-        <ul className="flex-row">
-          {navData.map(data => (
-            <li key={data.label}>
-              <NavLink to={data.to} activeClassName="active">
-                {data.label}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <StickyNav navData={navData} />
       <section className="showcase">
         <Switch>
+          <ProtectedRoute path="/library" exact={true}>
+            <Redirect to="/library/songs" />
+          </ProtectedRoute>
           {routes.map((route, idx) => (
             <ProtectedRoute path={route.path} key={idx}>
               {route.component}

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, NavLink, useHistory } from "react-router-dom";
-import { editUserDetails, getAllUsers } from "../../store/user";
-import DropdownButton from "../Buttons/DropdownButton";
-import DynamicAvatar from "./DynamicAvatar";
+import { useParams, Redirect, useHistory, Switch } from "react-router-dom";
+import { getAllUsers } from "../../store/user";
+import UserPageHeader from "./UserPageHeader";
 import "./UserPage.css";
+import ShowcaseSongs from "../Modules/ShowcaseSongs";
+import ShowcasePlaylists from "../Modules/ShowcasePlaylists";
+import StickyNav from "../Modules/StickyNav";
+import ProtectedRoute from "../auth/ProtectedRoute";
 
 const UserPage = () => {
   const dispatch = useDispatch();
@@ -12,7 +15,23 @@ const UserPage = () => {
   const { userId } = useParams();
   const sessionUser = useSelector(state => state.session.user);
   const user = useSelector(state => state.users[userId]);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const userSongsArr = useSelector(state => Object.values(state.songs).filter(song => song.user_id === +userId));
+  const userPlaylistsArr = useSelector(state => Object.values(state.playlists).filter(pl => pl.user_id === +userId));
+
+  const sortKey = (a, b) => {
+    if (a.title.toLowerCase() < b.title.toLowerCase()) {
+      return -1;
+    } else if (a.title.toLowerCase() > b.title.toLowerCase()) {
+      return 1;
+    } else if (a.description.toLowerCase() !== b.description.toLowerCase()) {
+      return a.description.toLowerCase() < b.description.toLowerCase() ? -1 : 1;
+    } else {
+      return 0;
+    }
+  };
+
+  userSongsArr.sort(sortKey);
+  userPlaylistsArr.sort(sortKey);
 
   if (history.location.pathname === `/users/${userId}`) {
     history.push(`/users/${userId}/songs`);
@@ -22,115 +41,54 @@ const UserPage = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (!showDropdown) return;
-
-    const closeDropdown = () => {
-      if (!showDropdown) return;
-      setShowDropdown(false);
-    };
-
-    document.addEventListener("click", closeDropdown);
-
-    return () => document.removeEventListener("click", closeDropdown);
-  }, [showDropdown]);
-
-  const deleteBannerUrl = async (e) => {
-    const formData = new FormData();
-    formData.append('banner_url', '');
-    dispatch(editUserDetails(+userId, formData));
-  };
-
-  const updateBannerUrl = async (e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      const formData = new FormData();
-      formData.append('banner_url', file);
-      dispatch(editUserDetails(+userId, formData));
-    }
-  };
-
-  const updateImageToggleLabel = (
-    <>
-      <div className="upload-image-camera" />
-      <span>Update header image</span>
-    </>
-  );
-
-  const handleImageButtonClick = e => {
-    e.preventDefault();
-    document.getElementById('banner-url').click();
-  };
-
-  const dropdownItems = [
+  const navData = [
     {
-      onClick: handleImageButtonClick,
-      label: "Replace header image",
+      to: `/users/${userId}/songs`,
+      label: "Songs",
     },
     {
-      onClick: deleteBannerUrl,
-      label: "Delete header image",
+      to: `/users/${userId}/playlists`,
+      label: "Playlists",
     },
   ];
 
-  const bannerStyle = {
-    backgroundImage: `url(${user?.banner_url})`,
-  };
+  const routes = [
+    {
+      path: `/users/${userId}/songs`,
+      component: <ShowcaseSongs
+        songs={userSongsArr}
+        h3={sessionUser.id === +userId ? "Songs you uploaded"
+          : (user?.display_name ? `Check out ${user?.display_name}'s tracks!` : '')}
+      />,
+    },
+    {
+      path: `/users/${userId}/playlists`,
+      component: <ShowcasePlaylists
+        playlists={userPlaylistsArr}
+        h3={sessionUser.id === +userId ? "Your playlists"
+          : (user?.display_name ? `Check out ${user?.display_name}'s playlists!` : '')}
+      />,
+    },
+  ];
 
   return (
     <>
-      <header className="user-page-banner placeholder">
-        <div
-          className="banner-bg"
-          style={bannerStyle}
-        />
-        <div
-          className="banner-content flex-row"
-        >
-          <div className="user-page-banner-left flex-row">
-            <DynamicAvatar />
-            <h2>{user?.display_name}</h2>
-          </div>
-          {sessionUser.id === +userId && (
-            <>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={updateBannerUrl}
-                name="banner-url"
-                id="banner-url"
-                hidden
-              />
-              {user?.banner_url ? (
-                <DropdownButton
-                  toggleLabel={updateImageToggleLabel}
-                  toggleClasses={['cursor-pointer', 'flex-row', 'update-banner-button']}
-                  showDropdown={showDropdown}
-                  setShowDropdown={setShowDropdown}
-                  dropdownUlClasses={['menu', 'update-banner-menu']}
-                  dropdownItems={dropdownItems}
-                />
-              ) : (
-                <button
-                  className="cursor-pointer flex-row upload-banner-button"
-                  onClick={handleImageButtonClick}
-                >
-                  <div className="upload-image-camera" />
-                  <span>Upload header image</span>
-                </button>
-              )}
-            </>
-          )}
-        </div>
-      </header>
+      <UserPageHeader />
       <div className="page-container flex-row">
-        <main className="user-page-main flex-row">
-          <nav className="sticky-nav">
-            <ul className="flex-row">
-              {/* TODO: Tracks, Playlists */}
-            </ul>
-          </nav>
+        <main className="user-page-main">
+          <StickyNav navData={navData} />
+          <section className="showcase">
+            <Switch>
+              <ProtectedRoute path={`/users/${userId}`} exact={true}>
+                <Redirect to={`/users/${userId}/songs`} />
+              </ProtectedRoute>
+              {routes.map((route, idx) => (
+                <ProtectedRoute path={route.path} key={idx}>
+                  {route.component}
+                </ProtectedRoute>
+              ))}
+            </Switch>
+          </section>
         </main>
         <aside className="user-page-summary">
           {/* TODO: Stats */}

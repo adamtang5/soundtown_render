@@ -73,11 +73,10 @@ const App = () => {
           <Route path="/songs/:id/edit" exact={true}>
             <EditSongForm />
           </Route> */}
-          <ProtectedRoute path="/users-future/:userId">
+          <ProtectedRoute path="/users/:userId">
             <UserPage />
           </ProtectedRoute>
-          <ProtectedRoute path="/users/:userId">
-            {/* <UserPage />  noels users page */}
+          <ProtectedRoute path="/users-old/:userId">
             <NewUsersPage />
           </ProtectedRoute>
           <ProtectedRoute path="/playlists/:id" exact={true}>
