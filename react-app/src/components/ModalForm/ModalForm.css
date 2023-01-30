@@ -1,0 +1,59 @@
+.label-required:after {
+  content: "*";
+  color: var(--color-warning);
+  display: inline-block;
+  margin-left: 2px;
+}
+
+.modal-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  padding: 20px;
+}
+
+.image-button {
+  z-index: 1;
+}
+
+.replace-image-button {
+  width: 125px;
+  /* right: 20px; */
+}
+
+.upload-image-button {
+  width: 135px;
+  /* left: 57.5px; */
+}
+
+.audio-button {
+  width: 200px;
+}
+
+.image-button,
+.audio-button {
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px 4px;
+}
+
+.upload-image-camera {
+  background-image: url(https://a-v2.sndcdn.com/assets/images/camera-2d93bb05.svg);
+}
+
+.upload-audio-note {
+  background-image: url(../../static/images/logo/music-solid.svg);
+}
+
+.upload-image-camera,
+.upload-audio-note {
+  width: 15px;
+  height: 12px;
+  background-size: 15px 12px;
+}
