@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import { IoCloseOutline } from "react-icons/io5";
 import "./Modal.css";
 
 const ModalContext = React.createContext();
@@ -20,18 +21,36 @@ export function ModalProvider({ children }) {
   );
 }
 
-export function Modal({ onClose, children }) {
+export function Modal({ onClose, position, children }) {
   const modalNode = useContext(ModalContext);
   if (!modalNode) return null;
+  const classes = {
+    'top': ['modal-top', 'sharp-corners'],
+    'center': ['modal-center', 'rounded-corners'],
+  }
 
   return ReactDOM.createPortal(
-    <div id="modal">
-      {/* <span id="modal-x" onClick={onClose}>
-        X
-      </span> */}
-      <div id="modal-background" onClick={onClose} />
+    <div
+      id="modal"
+      className={classes[position][0]}
+    >
+      <div
+        id="modal-background"
+        onClick={onClose}
+      />
 
-      <div id="modal-content">{children}</div>
+      <div
+        id="modal-content"
+        className={classes[position][1]}
+      >
+        {position === 'top' && (
+          <IoCloseOutline
+            className="close-icon cursor-pointer"
+            onClick={onClose}
+          />
+        )}
+        {children}
+      </div>
     </div>,
     modalNode
   );

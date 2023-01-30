@@ -62,7 +62,10 @@ const LoginForm = ({ setShowLoginModal, setShowSignUpModal }) => {
     <div className="flex-row">
       <div className="">
         <form className="login_form flex-column" onSubmit={onLogin}>
-          <IoCloseOutline className="close-login-icon" onClick={() => setShowLoginModal(false)} />
+          <IoCloseOutline
+            className="close-login-icon"
+            onClick={() => setShowLoginModal(false)}
+          />
 
           <button
             className="login_form_btn cursor-pointer or-shdw-hov"

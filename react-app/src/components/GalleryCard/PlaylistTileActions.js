@@ -61,7 +61,10 @@ const PlaylistTitleActions = ({ songs }) => {
           )}
         </div>
         {showPlaylistModal && (
-          <Modal onClose={() => setShowPlaylistModal(false)}>
+          <Modal
+            onClose={() => setShowPlaylistModal(false)}
+            position="center"
+          >
             <div className="add_to_playlist_modal_container">
               <AddToPlaylist song={songs} />
             </div>
