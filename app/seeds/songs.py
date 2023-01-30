@@ -6,22 +6,19 @@ from app.models import db, Song
 
 
 def seed_songs():
-  f = open(os.getcwd()+"/app/seeds/songs.json")
+  with open(os.getcwd()+"/app/seeds/songs.json") as f:
+    data = json.load(f)
 
-  data = json.load(f)
+    for song_dict in data['songs']:
+      new_song = Song(
+        user_id=random.randint(1,3),
+        title=song_dict["title"],
+        audio_url=song_dict["audio_url"],
+        description=song_dict["description"],
+        image_url=song_dict["image_url"])
+      db.session.add(new_song)
 
-  for song_dict in data['songs']:
-    new_song = Song(
-      user_id=random.randint(1,3),
-      title=song_dict["title"],
-      audio_url=song_dict["audio_url"],
-      description=song_dict["description"],
-      image_url=song_dict["image_url"])
-    db.session.add(new_song)
-
-  db.session.commit()
-
-  f.close()
+    db.session.commit()
 
 
 def undo_songs():
