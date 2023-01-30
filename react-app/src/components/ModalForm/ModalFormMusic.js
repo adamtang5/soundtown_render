@@ -1,3 +1,5 @@
+import './ModalForm.css';
+
 const ModalFormMusic = ({
   audioUrl,
   updateAudioFile,
