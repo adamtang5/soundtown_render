@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSong } from "../../../store/song";
-import ModalFormDescription from "../../ModalForm/ModalFormDescription";
+import ModalFormTextarea from "../../ModalForm/ModalFormTextarea";
 import ModalFormImage from "../../ModalForm/ModalFormImage";
 import ModalFormMusic from "../../ModalForm/ModalFormMusic";
-import ModalFormTitle from "../../ModalForm/ModalFormTitle";
+import ModalFormInput from "../../ModalForm/ModalFormInput";
+import { ImSpinner3 } from "react-icons/im";
 
 const UploadSongForm = ({ setShowUploadModal }) => {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ const UploadSongForm = ({ setShowUploadModal }) => {
 
     setAudioLoading(true);
 
-    const res = dispatch(createSong(formData));
+    const res = await dispatch(createSong(formData));
     if (res) {
       if (res.errors) {
         setErrors(res.errors);
@@ -98,68 +99,80 @@ const UploadSongForm = ({ setShowUploadModal }) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      id="upload-song"
-      className="modal-form"
-    >
-      <h2>Upload Song</h2>
-      <fieldset className="upload-form-container flex-row">
-        <div className="upload-song-left flex-column">
-          <ModalFormImage
-            imageUrl={imageUrl}
-            updateImageFile={updateImageFile}
-            newImage={newImage}
-            handleImageButtonClick={handleImageButtonClick}
-            imageMissing={imageMissing}
-          />
-        </div>
-        <div className="upload-song-right flex-column">
-          <ModalFormTitle
-            title={title}
-            setTitle={setTitle}
-          />
+    <>
+      <form
+        onSubmit={handleSubmit}
+        id="upload-song"
+        className="modal-form"
+      >
+        <h2>Upload Song</h2>
+        <fieldset className="upload-form-container flex-row">
+          <div className="upload-song-left flex-column">
+            <ModalFormImage
+              imageUrl={imageUrl}
+              updateImageFile={updateImageFile}
+              newImage={newImage}
+              handleImageButtonClick={handleImageButtonClick}
+              imageMissing={imageMissing}
+            />
+          </div>
+          <div className="upload-song-right flex-column">
+            <ModalFormInput
+              label="Title"
+              value={title}
+              setValue={setTitle}
+            />
 
-          <ModalFormDescription
-            description={description}
-            setDescription={setDescription}
-          />
+            <ModalFormTextarea
+              label="Description"
+              value={description}
+              setValue={setDescription}
+            />
 
-          <ModalFormMusic
-            audioUrl={audioUrl}
-            updateAudioFile={updateAudioFile}
-            newAudio={newAudio}
-            handleAudioButtonClick={handleAudioButtonClick}
-            audioMissing={audioMissing}
-          />
-
-          {audioLoading && <p>Uploading music file...</p>}
-
-        </div>
-      </fieldset>
-      <footer>
-        <div className="error-block">
-          {errors?.map((error, ind) => (
-            <div className="error-text" key={ind}>
-              {error}
+            <ModalFormMusic
+              audioUrl={audioUrl}
+              updateAudioFile={updateAudioFile}
+              newAudio={newAudio}
+              handleAudioButtonClick={handleAudioButtonClick}
+              audioMissing={audioMissing}
+            />
+          </div>
+        </fieldset>
+        <footer>
+          <div className="error-block">
+            {errors?.map((error, ind) => (
+              <div className="error-text" key={ind}>
+                {error}
+              </div>
+            ))}
+          </div>
+          <div className="form-action flex-row">
+            <div className="legend-required">Required fields</div>
+            <div className="form-action-buttons flex-row">
+              <button
+                className="cursor-pointer modal-button button-cancel"
+                onClick={handleCancel}
+              >Cancel</button>
+              <button
+                className="cursor-pointer modal-button button-submit"
+                type="submit"
+              >Submit</button>
             </div>
-          ))}
-        </div>
-        <div className="form-action flex-row">
-          <div className="legend-required">Required fields</div>
-          <div className="form-action-buttons flex-row">
-            <button
-              className="cursor-pointer modal-button button-cancel"
-              onClick={handleCancel}
-            >Cancel</button>
-            <button
-              className="cursor-pointer modal-button button-submit"
-              type="submit"
-            >Submit</button>
+          </div>
+        </footer>
+      </form>
+
+      {audioLoading && (
+        <div id="loading-modal">
+          <div id="loading-modal-bg" />
+          <div id="loading-modal-content">
+            <div className="loading">
+              <ImSpinner3 className="spinning pinwheel" />
+            </div>
           </div>
         </div>
-      </footer>
-    </form>
+      )}
+    </>
   );
 };
 
