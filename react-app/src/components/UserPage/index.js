@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, Redirect, useHistory, Switch } from "react-router-dom";
 import { getAllUsers } from "../../store/user";
 import UserPageHeader from "./UserPageHeader";
-import "./UserPage.css";
 import ShowcaseSongs from "../Modules/ShowcaseSongs";
 import ShowcasePlaylists from "../Modules/ShowcasePlaylists";
 import StickyNav from "../Modules/StickyNav";
 import ProtectedRoute from "../auth/ProtectedRoute";
+import "./UserPage.css";
+import UserPageButtonGroup from "./UserPageButtonGroup";
 
 const UserPage = () => {
   const dispatch = useDispatch();
@@ -76,7 +77,10 @@ const UserPage = () => {
       <UserPageHeader />
       <div className="page-container flex-row">
         <main className="user-page-main">
-          <StickyNav navData={navData} />
+          <StickyNav
+            navData={navData}
+            optComp={<UserPageButtonGroup />}
+          />
           <section className="showcase">
             <Switch>
               <ProtectedRoute path={`/users/${userId}`} exact={true}>
