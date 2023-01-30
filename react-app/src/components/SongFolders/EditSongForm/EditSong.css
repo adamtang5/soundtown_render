@@ -71,61 +71,11 @@
   position: relative;
 }
 
-.image-button {
-  position: absolute;
-  bottom: 20px;
-  z-index: 1;
-}
-
-.replace-image-button {
-  width: 125px;
-  right: 20px;
-}
-
-.upload-image-button {
-  width: 135px;
-  left: 57.5px;
-}
-
-.audio-button {
-  width: 200px;
-}
-
-.image-button,
-.audio-button {
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 10px 4px;
-}
-
 .inner-button {
   justify-content: center;
   align-items: center;
   gap: 5px;
   margin: 5px 10px 4px;
-}
-
-.upload-image-camera {
-  background-image: url(https://a-v2.sndcdn.com/assets/images/camera-2d93bb05.svg);
-}
-
-.upload-audio-note {
-  background-image: url(../../../static/images/logo/music-solid.svg);
-}
-
-.upload-image-camera,
-.upload-audio-note {
-  width: 15px;
-  height: 12px;
-  background-size: 15px 12px;
-}
-
-.label-required:after {
-  content: "*";
-  color: var(--color-warning);
-  display: inline-block;
-  margin-left: 2px;
 }
 
 .modal-form>footer {

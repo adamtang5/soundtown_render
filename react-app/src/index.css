@@ -214,3 +214,43 @@ fieldset {
   font-size: 13.3333px;
   padding: 5px 10px 3px;
 } */
+
+#loading-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 13;
+}
+
+#loading-modal-bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(200, 200, 200, 0.7);
+}
+
+#loading-modal-content {
+  position: absolute;
+  background-color: transparent;
+}
+
+.loading {
+  height: 600px;
+  width: 600px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#loading-modal .pinwheel {
+  height: 100px;
+  width: 100px;
+}
