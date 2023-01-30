@@ -5,9 +5,21 @@
   left: 0;
   bottom: 0;
   display: flex;
+  flex-direction: column;
+  z-index: 3;
+  height: 100%;
+  width: 100%;
+}
+
+.modal-top {
+  padding-top: 100px;
+  justify-content: top;
+  align-items: center;
+}
+
+.modal-center {
   justify-content: center;
   align-items: center;
-  z-index: 3;
 }
 
 #modal-background {
@@ -22,20 +34,22 @@
 #modal-content {
   position: absolute;
   background-color: white;
-  border-radius: 30px;
   padding: 25px;
 }
 
-#modal-x {
-  /* position: relative; */
-  /* top: -92px;
-  left: 920px; */
-  color: white;
-  z-index: 30;
+.sharp-corners {
+  border-radius: 2px;
 }
 
-#modal-x:hover {
-  color: #f50;
+.rounded-corners {
+  border-radius: 30px;
+}
+
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 25px;
 }
 
 .form-container-model {

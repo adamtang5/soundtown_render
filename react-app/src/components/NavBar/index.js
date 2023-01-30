@@ -16,7 +16,10 @@ const NavBar = () => {
         setShowUploadModal={setShowUploadModal}
       />
       {showUploadModal && (
-        <Modal onClose={() => setShowUploadModal(false)}>
+        <Modal
+          onClose={() => setShowUploadModal(false)}
+          position="center"
+        >
           <UploadSongForm setShowUploadModal={setShowUploadModal} />
         </Modal>
       )}

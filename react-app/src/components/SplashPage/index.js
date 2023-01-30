@@ -58,7 +58,10 @@ const SplashPage = () => {
               </li>
             </ul>
             {showLoginModal && (
-              <Modal onClose={() => setShowLoginModal(false)}>
+              <Modal
+                onClose={() => setShowLoginModal(false)}
+                position="top"
+              >
                 <div className="login_modal_container">
                   <LoginForm
                     setShowLoginModal={setShowLoginModal}
@@ -68,7 +71,10 @@ const SplashPage = () => {
               </Modal>
             )}
             {showSignUpModal && (
-              <Modal onClose={() => setShowSignUpModal(false)}>
+              <Modal
+                onClose={() => setShowSignUpModal(false)}
+                position="top"
+              >
                 <div className="login_modal_container">
                   <SignUpForm
                     setShowSignUpModal={setShowSignUpModal}

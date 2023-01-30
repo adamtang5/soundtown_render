@@ -140,7 +140,10 @@ const PlaylistMainFeed = ({ songsId, playlist }) => {
             )}
           </div>
           {showDeleteModal && (
-            <Modal onClose={() => setShowDeleteModal(false)}>
+            <Modal
+              onClose={() => setShowDeleteModal(false)}
+              position="top"
+            >
               <div className="flex-column playlist_delete_modal">
                 <div className="flex-column inner_playlist_delete_modal">
                   <h3>Delete playlist</h3>

@@ -13,7 +13,10 @@ const EditButton = ({
         className={buttonClasses.join(' ')}
       >Edit</button>
       {showModal && (
-        <Modal onClose={() => setShowModal(false)}>{modalForm}</Modal>
+        <Modal
+          onClose={() => setShowModal(false)}
+          position="center"
+        >{modalForm}</Modal>
       )}
     </>
   );

@@ -30,7 +30,10 @@ const Playlist = () => {
         </button>
       </div>
       {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
+        <Modal
+          onClose={() => setShowModal(false)}
+          position="center"
+        >
           <AddEditPlaylistModal modalMode="add" modalFunction={setShowModal} />
         </Modal>
       )}

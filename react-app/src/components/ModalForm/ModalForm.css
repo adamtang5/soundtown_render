@@ -57,3 +57,10 @@
   height: 12px;
   background-size: 15px 12px;
 }
+
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 25px;
+}

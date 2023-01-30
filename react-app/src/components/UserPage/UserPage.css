@@ -55,6 +55,18 @@
   border-radius: 50%;
 }
 
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  padding: 20px;
+}
+
 .update-image-button,
 .upload-image-button {
   left: 33px;

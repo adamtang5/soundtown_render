@@ -6,6 +6,12 @@ const DropdownButton = ({
   dropdownUlClasses,
   dropdownItems,
 }) => {
+  const ulStyle = {
+    position: "absolute",
+    top: "29px",
+    left: "1px",
+  };
+
   return (
     <div style={{ position: "relative" }}>
       <button
@@ -16,7 +22,7 @@ const DropdownButton = ({
       {showDropdown && (
         <ul
           className={dropdownUlClasses.join(' ')}
-          style={{ position: "absolute" }}
+          style={ulStyle}
         >
           {dropdownItems.map(item => (
             <li

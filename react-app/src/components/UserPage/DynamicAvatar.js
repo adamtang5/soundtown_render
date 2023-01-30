@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { editUserDetails } from "../../store/user";
 import DropdownButton from "../Buttons/DropdownButton";
+import { Modal } from "../Context/Modal";
+import DeleteConfirmModal from "./DeleteConfirmModal";
 import "./UserPage.css";
 
 const DynamicAvatar = () => {
@@ -11,6 +13,7 @@ const DynamicAvatar = () => {
   const sessionUser = useSelector(state => state.session.user);
   const user = useSelector(state => state.users[+userId]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   useEffect(() => {
     if (!showDropdown) return;
@@ -35,7 +38,12 @@ const DynamicAvatar = () => {
   const deleteAvatarUrl = async (e) => {
     const formData = new FormData();
     formData.append('avatar_url', '');
-    dispatch(editUserDetails(+userId, formData));
+    await dispatch(editUserDetails(+userId, formData));
+    setShowConfirmModal(false);
+  };
+
+  const confirmDelete = e => {
+    setShowConfirmModal(true);
   };
 
   const updateAvatarUrl = async (e) => {
@@ -59,7 +67,7 @@ const DynamicAvatar = () => {
       label: "Replace image",
     },
     {
-      onClick: deleteAvatarUrl,
+      onClick: confirmDelete,
       label: "Delete image",
     },
   ];
@@ -73,7 +81,7 @@ const DynamicAvatar = () => {
           alt=""
         />
         {sessionUser.id === +userId && (
-          <>
+          <div className="image-overlay">
             <input
               type="file"
               accept="image/*"
@@ -100,7 +108,18 @@ const DynamicAvatar = () => {
                 <span>Upload image</span>
               </button>
             )}
-          </>
+          </div>
+        )}
+        {showConfirmModal && (
+          <Modal
+            onClose={() => setShowConfirmModal(false)}
+            position="top"
+          >
+            <DeleteConfirmModal
+              setShowModal={setShowConfirmModal}
+              handleDelete={deleteAvatarUrl}
+            />
+          </Modal>
         )}
       </div>
     </>
