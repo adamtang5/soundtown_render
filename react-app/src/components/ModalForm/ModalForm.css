@@ -1,3 +1,103 @@
+.modal-song-form {
+  height: 550px;
+}
+
+.modal-user-form {
+  height: 400px;
+}
+
+.modal-form {
+  position: relative;
+}
+
+.song-form-container,
+.user-form-container {
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.song-form-container {
+  width: 700px;
+}
+
+.user-form-container {
+  width: 730px;
+}
+
+.modal-form h2 {
+  border-bottom: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  font-size: 24px;
+  width: fit-content;
+  margin: 0 10px;
+}
+
+.song-form-left,
+.user-form-left {
+  align-items: center;
+  position: relative;
+  padding: 0 10px;
+}
+
+.song-form-left {
+  width: 270px;
+}
+
+.user-form-left {
+  width: 280px;
+}
+
+.song-form-right {
+  width: 400px;
+}
+
+.user-form-right {
+  width: 420px;
+}
+
+.modal-form label {
+  font-size: 12px;
+  margin-bottom: 10px;
+  align-self: flex-start;
+}
+
+.modal-form input,
+.modal-form textarea {
+  margin-bottom: 20px;
+}
+
+.modal-form input:focus,
+.modal-form textarea:focus {
+  outline: none;
+}
+
+.modal-form textarea {
+  height: 130px;
+}
+
+.modal-form>footer {
+  position: absolute;
+  bottom: 20px;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.modal-form .info-text {
+  color: var(--color-info);
+}
+
+.modal-form .info-text,
+.modal-form .error-text {
+  align-self: flex-start;
+  margin: 10px 5px;
+  font-size: 12px;
+}
+
+.error-block {
+  padding: 20px 0;
+  font-size: 12px;
+}
+
 .label-required:after {
   content: "*";
   color: var(--color-warning);
@@ -56,4 +156,25 @@
   width: 15px;
   height: 12px;
   background-size: 15px 12px;
+}
+
+.legend-required {
+  font-size: 12px;
+}
+
+.legend-required:before {
+  content: "*";
+  color: var(--color-warning);
+  display: inline-block;
+  margin-right: 2px;
+}
+
+.form-action {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-action-buttons {
+  align-items: center;
+  gap: 10px;
 }

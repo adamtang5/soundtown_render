@@ -6,7 +6,8 @@ import ModalFormImage from "../../ModalForm/ModalFormImage";
 import ModalFormInput from "../../ModalForm/ModalFormInput";
 import ModalFormTextarea from "../../ModalForm/ModalFormTextarea";
 import ModalFormMusic from "../../ModalForm/ModalFormMusic";
-import { ImSpinner3 } from "react-icons/im";
+import ModalForm from "../../ModalForm/ModalForm";
+import LoadingModal from "../../Modules/LoadingModal";
 import "./EditSong.css";
 
 const EditSongForm = ({ setShowEditSongModal }) => {
@@ -110,25 +111,40 @@ const EditSongForm = ({ setShowEditSongModal }) => {
     document.getElementById("audio-url").click();
   };
 
+  const buttonGroupData = [
+    {
+      label: "Delete Song",
+      onClick: handleDelete,
+      type: "delete",
+    },
+    {
+      label: "Save Changes",
+      type: "submit",
+    },
+    {
+      label: "Cancel",
+      onClick: handleCancel,
+      type: "cancel",
+    },
+  ]
+
   return (
     <>
-      <form
-        onSubmit={handleSubmit}
-        id="edit-song"
-        className="modal-form"
-      >
-        <h2>Edit Song</h2>
-        <fieldset className="edit-form-container flex-row">
-          <div className="edit-song-left flex-column">
-            <ModalFormImage
-              imageUrl={imageUrl}
-              updateImageFile={updateImageFile}
-              newImage={newImage}
-              handleImageButtonClick={handleImageButtonClick}
-              imageMissing={imageMissing}
-            />
-          </div>
-          <div className="edit-song-right flex-column">
+      <ModalForm
+        entity="song"
+        handleSubmit={handleSubmit}
+        h2="Edit Song"
+        formLeft={
+          <ModalFormImage
+            imageUrl={imageUrl}
+            updateImageFile={updateImageFile}
+            newImage={newImage}
+            handleImageButtonClick={handleImageButtonClick}
+            imageMissing={imageMissing}
+          />
+        }
+        formRight={
+          <>
             <ModalFormInput
               label="Title"
               value={title}
@@ -148,46 +164,13 @@ const EditSongForm = ({ setShowEditSongModal }) => {
               handleAudioButtonClick={handleAudioButtonClick}
               audioMissing={audioMissing}
             />
-          </div>
-        </fieldset>
-        <footer>
-          <div className="error-block">
-            {errors?.map((error, idx) => (
-              <div className="error-text" key={idx}>
-                {error}
-              </div>
-            ))}
-          </div>
-          <div className="form-action flex-row">
-            <div className="legend-required">Required fields</div>
-            <div className="form-action-buttons flex-row">
-              <button
-                className="cursor-pointer simple-button button-cancel"
-                onClick={handleCancel}
-              >Cancel</button>
-              <button
-                className="cursor-pointer simple-button button-submit"
-                type="submit"
-              >Save Changes</button>
-              <button
-                className="cursor-pointer simple-button button-delete"
-                onClick={handleDelete}
-              >Delete Song</button>
-            </div>
-          </div>
-        </footer>
-      </form>
+          </>
+        }
+        errors={errors}
+        buttonGroupData={buttonGroupData}
+      />
 
-      {audioLoading && (
-        <div id="loading-modal">
-          <div id="loading-modal-bg" />
-          <div id="loading-modal-content">
-            <div className="loading">
-              <ImSpinner3 className="spinning pinwheel" />
-            </div>
-          </div>
-        </div>
-      )}
+      <LoadingModal showModal={audioLoading} />
     </>
   );
 };
