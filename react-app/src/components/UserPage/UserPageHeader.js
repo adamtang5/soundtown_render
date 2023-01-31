@@ -78,7 +78,9 @@ const UserPageHeader = () => {
         className="banner-content flex-row"
       >
         <div className="user-page-banner-left flex-row">
-          <DynamicAvatar />
+          <div style={{ height: "200px", width: "200px" }}>
+            <DynamicAvatar />
+          </div>
           <h2>{user?.display_name}</h2>
         </div>
         {sessionUser.id === +userId && (

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { editUserDetails } from "../../store/user";
 import DropdownButton from "../Buttons/DropdownButton";
 import { Modal } from "../Context/Modal";
-import DeleteConfirmModal from "./DeleteConfirmModal";
+import ConfirmModal from "../ConfirmModal";
 import "./UserPage.css";
 
 const DynamicAvatar = () => {
@@ -115,9 +115,13 @@ const DynamicAvatar = () => {
             onClose={() => setShowConfirmModal(false)}
             position="top"
           >
-            <DeleteConfirmModal
+            <ConfirmModal
               setShowModal={setShowConfirmModal}
               handleDelete={deleteAvatarUrl}
+              body={<p>
+                Please confirm that you want to delete this image.<br />
+                This action cannot be reversed.
+              </p>}
             />
           </Modal>
         )}

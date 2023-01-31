@@ -1,6 +1,10 @@
-import './DeleteConfirmModal.css';
+import './ConfirmModal.css';
 
-const DeleteConfirmModal = ({ setShowModal, handleDelete }) => {
+const ConfirmModal = ({
+  setShowModal,
+  handleDelete,
+  body,
+}) => {
   const handleCancel = e => {
     e.preventDefault();
     setShowModal(false);
@@ -10,10 +14,7 @@ const DeleteConfirmModal = ({ setShowModal, handleDelete }) => {
     <article className="confirm-delete flex-column">
       <main>
         <h2>Are you sure?</h2>
-        <p>
-          Please confirm that you want to delete this image.<br />
-          This action cannot be reversed.
-        </p>
+        {body}
       </main>
       <footer>
         <div className="confirm-form-action">
@@ -31,4 +32,4 @@ const DeleteConfirmModal = ({ setShowModal, handleDelete }) => {
   );
 };
 
-export default DeleteConfirmModal;
+export default ConfirmModal;
