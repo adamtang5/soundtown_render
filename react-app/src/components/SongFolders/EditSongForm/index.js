@@ -162,15 +162,15 @@ const EditSongForm = ({ setShowEditSongModal }) => {
             <div className="legend-required">Required fields</div>
             <div className="form-action-buttons flex-row">
               <button
-                className="cursor-pointer modal-button button-cancel"
+                className="cursor-pointer simple-button button-cancel"
                 onClick={handleCancel}
               >Cancel</button>
               <button
-                className="cursor-pointer modal-button button-submit"
+                className="cursor-pointer simple-button button-submit"
                 type="submit"
               >Save Changes</button>
               <button
-                className="cursor-pointer modal-button button-delete"
+                className="cursor-pointer simple-button button-delete"
                 onClick={handleDelete}
               >Delete Song</button>
             </div>
