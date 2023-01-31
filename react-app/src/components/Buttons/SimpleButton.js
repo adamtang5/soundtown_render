@@ -3,6 +3,7 @@ const SimpleButton = ({
   onClick,
   type,
   classes = [],
+  disabled = false,
 }) => {
   const defaultClasses = ['cursor-pointer', 'simple-button'];
 
@@ -12,6 +13,7 @@ const SimpleButton = ({
       className={[...defaultClasses, ...classes].join(' ')}
       onClick={onClick}
       type={type === 'submit' ? type : ''}
+      disabled={disabled}
     >{label}</button>
   );
 };
