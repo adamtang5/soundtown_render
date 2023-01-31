@@ -1,3 +1,4 @@
+/* Base Styles */
 * {
   --page-container-bottom-margin: 75px;
   --color-border-dark: #333;
@@ -43,21 +44,31 @@ fieldset {
   flex-direction: row;
 }
 
+.flex-row-rev {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 .flex-column {
   display: flex;
   flex-direction: column;
 }
 
-.flex-col-center {
+.flex-column-rev {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column-reverse;
 }
 
 .flex-row-center {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -74,6 +85,7 @@ fieldset {
   visibility: hidden;
 }
 
+/* Layouts */
 .page-container {
   background-color: white;
   margin: 0px var(--x-margin) var(--page-container-bottom-margin);
@@ -102,10 +114,7 @@ fieldset {
   width: 300px;
 }
 
-.spinning {
-  animation: spin 1.5s linear infinite;
-}
-
+/* Spinning Pinwheel */
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -114,6 +123,10 @@ fieldset {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.spinning {
+  animation: spin 1.5s linear infinite;
 }
 
 .pinwheel {
@@ -131,6 +144,8 @@ fieldset {
   border-bottom: 1px solid var(--color-border);
 }
 
+/* ---- Reuseables ---- */
+/* StickyNav */
 .sticky-nav ul {
   gap: 30px;
   font-size: 24px;
@@ -151,6 +166,7 @@ fieldset {
   border-bottom: 2px solid;
 }
 
+/* Showcase */
 .showcase {
   margin-top: 16px;
 }
@@ -167,6 +183,7 @@ fieldset {
   gap: 50px;
 }
 
+/* Color Schemes */
 .placeholder {
   background-image: linear-gradient(135deg, #8e8485, #70929c);
 }
@@ -190,31 +207,7 @@ fieldset {
   justify-self: center;
 }
 
-.song-button {
-  border: 1px solid var(--color-info);
-  background-color: transparent;
-  border-radius: 4px;
-  padding: 3px 10px;
-}
-
-.song-button:hover {
-  border: 1.1px solid var(--color-border-dark);
-}
-
-.song-button.highlighted {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
-
-.song-button.highlighted:hover {
-  border-width: 1.1px;
-}
-
-/* .cool_div {
-  font-size: 13.3333px;
-  padding: 5px 10px 3px;
-} */
-
+/* LoadingModal */
 #loading-modal {
   position: fixed;
   top: 0;
@@ -253,4 +246,74 @@ fieldset {
 #loading-modal .pinwheel {
   height: 100px;
   width: 100px;
+}
+
+/* Motifs: Buttons */
+/* Composite Buttons */
+.composite-button {
+  align-items: center;
+  gap: 5px;
+  border-radius: 2px;
+}
+
+.button-action {
+  color: var(--color-border-dark);
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--color-border);
+  box-shadow: none;
+  transition: all 0.2s ease 0s;
+}
+
+.button-action:hover {
+  background-color: white;
+  border: 1px solid var(--color-border-dark);
+  box-shadow: 0px 0px 2px var(--color-border);
+}
+
+.button-acted {
+  background-color: white;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+/* Simple Buttons */
+.simple-button {
+  border: none;
+  padding: 5px 10px 3px;
+  border-radius: 3px;
+}
+
+.button-submit {
+  background-color: var(--color-primary);
+  color: var(--color-border-light);
+}
+
+.button-cancel {
+  background-color: var(--color-border-light);
+  color: var(--color-border-dark);
+}
+
+.button-delete {
+  background-color: var(--color-warning);
+  color: var(--color-border-light);
+}
+
+.song-button {
+  border: 1px solid var(--color-info);
+  background-color: transparent;
+  border-radius: 4px;
+  padding: 3px 10px;
+}
+
+.song-button:hover {
+  border: 1.1px solid var(--color-border-dark);
+}
+
+.song-button.highlighted {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.song-button.highlighted:hover {
+  border-width: 1.1px;
 }

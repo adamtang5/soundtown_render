@@ -130,23 +130,3 @@
   align-items: center;
   gap: 10px;
 }
-
-.modal-button {
-  border: 0;
-  padding: 5px 10px 3px;
-  border-radius: 3px;
-}
-
-.button-cancel {
-  color: var(--color-border-dark);
-}
-
-.button-submit {
-  background-color: var(--color-primary);
-  color: var(--color-border-light);
-}
-
-.button-delete {
-  background-color: var(--color-warning);
-  color: var(--color-border-light);
-}
