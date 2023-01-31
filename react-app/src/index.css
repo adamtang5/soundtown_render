@@ -270,7 +270,7 @@ fieldset {
   box-shadow: 0px 0px 2px var(--color-border);
 }
 
-.button-acted {
+.button-toggle {
   background-color: white;
   color: var(--color-primary);
   border: 1px solid var(--color-primary);
@@ -296,6 +296,17 @@ fieldset {
 .button-delete {
   background-color: var(--color-warning);
   color: var(--color-border-light);
+}
+
+/* Button Sizes */
+.b2 {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.b3 {
+  font-size: 11px;
+  line-height: 16px;
 }
 
 .song-button {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { editUserDetails } from "../../store/user";
+import ModalForm from "../ModalForm/ModalForm";
 import ModalFormInput from "../ModalForm/ModalFormInput";
 import DynamicAvatar from "./DynamicAvatar";
 
@@ -39,47 +40,33 @@ const EditUserForm = ({ setShowEditUserModal }) => {
     }
   };
 
+  const buttonGroupData = [
+    {
+      label: "Save Changes",
+      type: "submit",
+    },
+    {
+      label: "Cancel",
+      type: handleCancel,
+    },
+  ];
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      id="edit-user"
-      className="modal-form"
-    >
-      <h2>Edit Your Profile</h2>
-      <fieldset className="edit-form-container flex-row">
-        <div className="edit-user-left flex-column">
-          <DynamicAvatar />
-        </div>
-        <div className="edit-song-left flex-column">
-          <ModalFormInput
-            label="Display name"
-            value={displayName}
-            setValue={setDisplayName}
-          />
-        </div>
-      </fieldset>
-      <footer>
-        <div className="error-block">
-          {errors?.map((error, idx) => (
-            <div className="error-text" key={idx}>{error}</div>
-          ))}
-        </div>
-        <div className="form-action flex-row">
-          <div className="legend-required">Required fields</div>
-          <div className="form-action-buttons flex-row">
-            <button
-              className="cursor-pointer simple-button button-cancel"
-              onClick={handleCancel}
-            >Cancel</button>
-            <button
-              className="cursor-pointer simple-button button-submit"
-              type="submit"
-            >Save Changes</button>
-          </div>
-        </div>
-      </footer>
-    </form>
+    <>
+      <ModalForm
+        entity="user"
+        handleSubmit={handleSubmit}
+        h2="Edit Your Profile"
+        formLeft={<DynamicAvatar />}
+        formRight={<ModalFormInput
+          label="Display name"
+          value={displayName}
+          setValue={setDisplayName}
+        />}
+        errors={errors}
+        buttonGroupData={buttonGroupData}
+      />
+    </>
   );
 };
 
