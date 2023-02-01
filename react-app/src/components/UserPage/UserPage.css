@@ -4,7 +4,7 @@
   position: relative;
 }
 
-.user-page-banner.placeholder {
+.banner-bg.placeholder {
   background-image: linear-gradient(135deg, rgba(204, 112, 55, 0.8), rgb(214, 199, 188));
 }
 
@@ -110,10 +110,9 @@
 .upload-banner-button {
   justify-content: center;
   align-items: center;
-  width: 240px;
+  /* width: 240px; */
 }
 
-.update-banner-button,
 .update-banner-menu {
-  width: 200px;
+  width: 186px;
 }
