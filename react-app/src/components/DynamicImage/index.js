@@ -116,7 +116,7 @@ const DynamicImage = ({
         >
           {standalone ? (
             <img
-              alt="preview"
+              alt=""
               className={`${[...entities[entity].styleClasses, "preview"].join(' ')}${imageUrl ? ' white-bg' : ''}`}
               src={imageUrl}
             />
@@ -124,7 +124,7 @@ const DynamicImage = ({
             <>
               {(imageUrl || stagedFile) && <img
                 id={previewId}
-                alt="preview"
+                alt=""
                 className={`${[...entities[entity].styleClasses, "preview"].join(' ')}${imageUrl ? ' white-bg' : ''}`}
                 src={imageUrl}
               />}
