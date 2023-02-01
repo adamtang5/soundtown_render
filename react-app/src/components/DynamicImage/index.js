@@ -45,6 +45,7 @@ const DynamicImage = ({
   entity,
   imageUrl,
   stagedFile,
+  previewId,
   hiddenInput,
   isAuthorized,
   clickHidden,
@@ -122,7 +123,7 @@ const DynamicImage = ({
           ) : (
             <>
               {(imageUrl || stagedFile) && <img
-                id="preview"
+                id={previewId}
                 alt="preview"
                 className={`${[...entities[entity].styleClasses, "preview"].join(' ')}${imageUrl ? ' white-bg' : ''}`}
                 src={imageUrl}
@@ -133,7 +134,7 @@ const DynamicImage = ({
             className="overlay flex-column-rev"
           >
             {hiddenInput}
-            {stagedFile || imageUrl ? (
+            {imageUrl || stagedFile ? (
               <>
                 {entities[entity].nullable ? (
                   <DropdownButton

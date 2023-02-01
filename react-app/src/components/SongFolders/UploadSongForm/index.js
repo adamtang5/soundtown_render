@@ -23,6 +23,7 @@ const UploadSongForm = ({ setShowUploadModal }) => {
   const [audioLoading, setAudioLoading] = useState(false);
   const [newAudio, setNewAudio] = useState();
   const [newImage, setNewImage] = useState();
+  const previewId = "form-preview";
 
   const handleCancel = e => {
     e.preventDefault();
@@ -84,7 +85,7 @@ const UploadSongForm = ({ setShowUploadModal }) => {
       fr.readAsDataURL(file);
       setNewImage(file);
       setImageMissing(false);
-      const img = document.getElementById("preview");
+      const img = document.getElementById(previewId);
       fr.onload = () => img.src = fr.result;
     }
   };
@@ -121,6 +122,7 @@ const UploadSongForm = ({ setShowUploadModal }) => {
             dimension={250}
             entity="song"
             imageUrl={imageUrl}
+            previewId={previewId}
             updateImageFile={updateImageFile}
             newImage={newImage}
             handleImageButtonClick={handleImageButtonClick}

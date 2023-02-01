@@ -76,6 +76,7 @@
 .update-banner-menu {
   background-color: white;
   box-shadow: 0px 0px 4px var(--color-border);
+  z-index: 10;
 }
 
 .update-image-menu {
