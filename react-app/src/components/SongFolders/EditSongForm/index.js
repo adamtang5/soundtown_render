@@ -127,7 +127,7 @@ const EditSongForm = ({ setShowEditSongModal }) => {
       onClick: handleCancel,
       type: "cancel",
     },
-  ]
+  ];
 
   return (
     <>
