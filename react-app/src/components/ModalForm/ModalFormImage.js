@@ -5,6 +5,7 @@ const ModalFormImage = ({
   dimension,
   entity,
   imageUrl,
+  previewId,
   updateImageFile,
   newImage,
   handleImageButtonClick,
@@ -21,6 +22,7 @@ const ModalFormImage = ({
         entity={entity}
         imageUrl={imageUrl}
         stagedFile={newImage}
+        previewId={previewId}
         hiddenInput={<input
           type="file"
           accept="image/*"

@@ -25,6 +25,7 @@ const EditSongForm = ({ setShowEditSongModal }) => {
   const [audioLoading, setAudioLoading] = useState(false);
   const [newAudio, setNewAudio] = useState();
   const [newImage, setNewImage] = useState();
+  const previewId = "form-preview";
 
   const handleCancel = e => {
     e.preventDefault();
@@ -96,7 +97,7 @@ const EditSongForm = ({ setShowEditSongModal }) => {
       const fr = new FileReader();
       fr.readAsDataURL(file);
       setNewImage(file);
-      const img = document.getElementById("preview");
+      const img = document.getElementById(previewId);
       fr.onload = () => img.src = fr.result;
     }
   };
@@ -139,6 +140,7 @@ const EditSongForm = ({ setShowEditSongModal }) => {
             dimension={250}
             entity="song"
             imageUrl={imageUrl}
+            previewId={previewId}
             updateImageFile={updateImageFile}
             newImage={newImage}
             handleImageButtonClick={handleImageButtonClick}

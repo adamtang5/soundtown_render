@@ -13,13 +13,19 @@ const DropdownButton = ({
     left: "1px",
   };
 
+  const handleDropdownClick = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowDropdown(true);
+  };
+
   const toggleBaseClasses = ['cursor-pointer', 'composite-button'];
   const toggleLabelBaseClasses = ['logo-before'];
 
   return (
     <div style={{ position: "relative" }}>
       <button
-        onClick={() => setShowDropdown(true)}
+        onClick={handleDropdownClick}
         className={[...toggleBaseClasses, ...toggleClasses].join(' ')}
       >
         <div

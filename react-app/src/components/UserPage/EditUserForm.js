@@ -15,6 +15,7 @@ const EditUserForm = ({ setShowEditUserModal }) => {
   const [displayName, setDisplayName] = useState(user?.display_name);
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar_url);
   const [newAvatar, setNewAvatar] = useState();
+  const previewId = "form-preview";
 
   const handleCancel = e => {
     e.preventDefault();
@@ -51,12 +52,13 @@ const EditUserForm = ({ setShowEditUserModal }) => {
       const fr = new FileReader();
       fr.readAsDataURL(file);
       setNewAvatar(file);
-      const img = document.getElementById("preview");
+      const img = document.getElementById(previewId);
       fr.onload = () => img.src = fr.result;
     }
   };
 
   const deleteImageFile = e => {
+    setNewAvatar();
     setAvatarUrl('');
   };
 
@@ -72,7 +74,8 @@ const EditUserForm = ({ setShowEditUserModal }) => {
     },
     {
       label: "Cancel",
-      type: handleCancel,
+      onClick: handleCancel,
+      type: "cancel",
     },
   ];
 
@@ -86,8 +89,9 @@ const EditUserForm = ({ setShowEditUserModal }) => {
           dimension={260}
           standalone={false}
           entity="user"
-          imageUrl={user?.avatar_url}
+          imageUrl={avatarUrl}
           stagedFile={newAvatar}
+          previewId={previewId}
           hiddenInput={<input
             type="file"
             accept="image/*"
