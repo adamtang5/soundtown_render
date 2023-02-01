@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { editUserDetails } from "../../store/user";
+import DynamicImage from "../DynamicImage";
 import ModalForm from "../ModalForm/ModalForm";
 import ModalFormInput from "../ModalForm/ModalFormInput";
-import DynamicAvatar from "./DynamicAvatar";
 
 const EditUserForm = ({ setShowEditUserModal }) => {
   const dispatch = useDispatch();
@@ -13,6 +13,8 @@ const EditUserForm = ({ setShowEditUserModal }) => {
   const user = useSelector(state => state.users[+userId]);
   const [errors, setErrors] = useState([]);
   const [displayName, setDisplayName] = useState(user?.display_name);
+  const [avatarUrl, setAvatarUrl] = useState(user?.avatar_url);
+  const [newAvatar, setNewAvatar] = useState();
 
   const handleCancel = e => {
     e.preventDefault();
@@ -20,6 +22,7 @@ const EditUserForm = ({ setShowEditUserModal }) => {
 
     setErrors([]);
     setDisplayName(user?.display_name);
+    setAvatarUrl(user?.avatar_url);
     setShowEditUserModal(false);
   };
 
@@ -28,6 +31,7 @@ const EditUserForm = ({ setShowEditUserModal }) => {
 
     const formData = new FormData();
     formData.append("display_name", displayName);
+    formData.append("avatar_url", newAvatar || avatarUrl);
 
     const res = dispatch(editUserDetails(+userId, formData));
     if (res) {
@@ -38,6 +42,27 @@ const EditUserForm = ({ setShowEditUserModal }) => {
         history.push(`/users/${userId}`);
       }
     }
+  };
+
+  const updateImageFile = async (e) => {
+    const file = await e.target.files[0];
+
+    if (file) {
+      const fr = new FileReader();
+      fr.readAsDataURL(file);
+      setNewAvatar(file);
+      const img = document.getElementById("preview");
+      fr.onload = () => img.src = fr.result;
+    }
+  };
+
+  const deleteImageFile = e => {
+    setAvatarUrl('');
+  };
+
+  const handleImageButtonClick = e => {
+    e.preventDefault();
+    document.getElementById("image-url").click();
   };
 
   const buttonGroupData = [
@@ -57,7 +82,30 @@ const EditUserForm = ({ setShowEditUserModal }) => {
         entity="user"
         handleSubmit={handleSubmit}
         h2="Edit Your Profile"
-        formLeft={<DynamicAvatar />}
+        formLeft={<DynamicImage
+          dimension={260}
+          standalone={false}
+          entity="user"
+          imageUrl={user?.avatar_url}
+          stagedFile={newAvatar}
+          hiddenInput={<input
+            type="file"
+            accept="image/*"
+            onChange={updateImageFile}
+            name="image-url"
+            id="image-url"
+            hidden
+          />}
+          isAuthorized={true}
+          clickHidden={handleImageButtonClick}
+          styleClasses={['button-action', 'b2']}
+          uploadLabel="Upload image"
+          replaceLabel="Replace Image"
+          updateLabel="Update image"
+          deleteLabel="Delete image"
+          beforeLabel="camera-label"
+          handleDelete={deleteImageFile}
+        />}
         formRight={<ModalFormInput
           label="Display name"
           value={displayName}
