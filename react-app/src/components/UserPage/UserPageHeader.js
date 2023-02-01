@@ -94,9 +94,9 @@ const UserPageHeader = () => {
   };
 
   return (
-    <header className="user-page-banner placeholder">
+    <header className="user-page-banner">
       <div
-        className="banner-bg"
+        className="banner-bg placeholder"
         style={bannerStyle}
       />
       <div
@@ -131,7 +131,10 @@ const UserPageHeader = () => {
           <h2>{user?.display_name}</h2>
         </div>
         {sessionUser.id === +userId && (
-          <>
+          <div
+            className="hover-animated"
+            style={{ width: "200px", height: "200px" }}
+          >
             <input
               type="file"
               accept="image/*"
@@ -142,8 +145,9 @@ const UserPageHeader = () => {
             />
             {user?.banner_url ? (
               <DropdownButton
-                toggleLabel={updateImageToggleLabel}
-                toggleClasses={['cursor-pointer', 'flex-row', 'update-banner-button']}
+                toggleLabel="Update header image"
+                toggleClasses={['update-banner-button', 'button-action', 'b2']}
+                beforeLabel="camera-label"
                 showDropdown={showDropdown}
                 setShowDropdown={setShowDropdown}
                 dropdownUlClasses={['menu', 'update-banner-menu']}
@@ -158,7 +162,7 @@ const UserPageHeader = () => {
                 <span>Upload header image</span>
               </button>
             )}
-          </>
+          </div>
         )}
       </div>
       {showConfirmModal && (

@@ -131,7 +131,7 @@ const DynamicImage = ({
             </>
           )}
           {isAuthorized && <div
-            className="overlay flex-column-rev"
+            className={`overlay flex-column-rev${standalone ? ' hover-animated' : ''}`}
           >
             {hiddenInput}
             {imageUrl || stagedFile ? (
