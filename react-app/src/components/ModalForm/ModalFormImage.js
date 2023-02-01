@@ -1,16 +1,46 @@
+import DynamicImage from '../DynamicImage';
 import './ModalForm.css';
 
 const ModalFormImage = ({
+  dimension,
+  entity,
   imageUrl,
   updateImageFile,
   newImage,
   handleImageButtonClick,
+  handleDelete,
   imageMissing,
 }) => {
   return (
     <>
       <label className="label-required">Image</label>
-      <div className="upload-song-placeholder">
+
+      <DynamicImage
+        dimension={dimension}
+        standalone={false}
+        entity={entity}
+        imageUrl={imageUrl}
+        stagedFile={newImage}
+        hiddenInput={<input
+          type="file"
+          accept="image/*"
+          onChange={updateImageFile}
+          name="image-url"
+          id="image-url"
+          hidden
+        />}
+        isAuthorized={true}
+        clickHidden={handleImageButtonClick}
+        styleClasses={['button-action', 'b2']}
+        uploadLabel="Upload image"
+        replaceLabel="Replace Image"
+        updateLabel="Update image"
+        deleteLabel="Delete image"
+        beforeLabel="camera-label"
+        handleDelete={handleDelete}
+      />
+
+      {/* <div className="upload-song-placeholder">
         <img
           id="upload-image"
           alt=''
@@ -44,7 +74,8 @@ const ModalFormImage = ({
           )}
         </div>
       </div>
-      {newImage && <div className="info-text">{newImage.name}</div>}
+      {newImage && <div className="info-text">{newImage.name}</div>} */}
+
       {imageMissing && <div className="error-text">Image file is required</div>}
     </>
   );

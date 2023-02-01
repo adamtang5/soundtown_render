@@ -1,6 +1,7 @@
 const DropdownButton = ({
   toggleLabel,
-  toggleClasses,
+  toggleClasses = [],
+  beforeLabel,
   showDropdown,
   setShowDropdown,
   dropdownUlClasses,
@@ -8,17 +9,23 @@ const DropdownButton = ({
 }) => {
   const ulStyle = {
     position: "absolute",
-    top: "29px",
+    top: "28px",
     left: "1px",
   };
+
+  const toggleBaseClasses = ['cursor-pointer', 'composite-button'];
+  const toggleLabelBaseClasses = ['logo-before'];
 
   return (
     <div style={{ position: "relative" }}>
       <button
         onClick={() => setShowDropdown(true)}
-        className={toggleClasses.join(' ')}
-        style={{ justifyContent: "center", alignItems: "center" }}
-      >{toggleLabel}</button>
+        className={[...toggleBaseClasses, ...toggleClasses].join(' ')}
+      >
+        <div
+          className={[...toggleLabelBaseClasses, beforeLabel].join(' ')}
+        >{toggleLabel}</div>
+      </button>
       {showDropdown && (
         <ul
           className={dropdownUlClasses.join(' ')}
