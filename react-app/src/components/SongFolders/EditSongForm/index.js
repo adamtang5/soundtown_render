@@ -96,7 +96,7 @@ const EditSongForm = ({ setShowEditSongModal }) => {
       const fr = new FileReader();
       fr.readAsDataURL(file);
       setNewImage(file);
-      const img = document.getElementById("upload-image");
+      const img = document.getElementById("preview");
       fr.onload = () => img.src = fr.result;
     }
   };
@@ -136,6 +136,8 @@ const EditSongForm = ({ setShowEditSongModal }) => {
         h2="Edit Song"
         formLeft={
           <ModalFormImage
+            dimension={250}
+            entity="song"
             imageUrl={imageUrl}
             updateImageFile={updateImageFile}
             newImage={newImage}

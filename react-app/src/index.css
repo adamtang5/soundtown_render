@@ -260,7 +260,7 @@ fieldset {
   align-items: center;
   gap: 5px;
   border-radius: 2px;
-  padding: 5px 10px 3px;
+  padding: 3px 8px 2px;
 }
 
 .button-action {
@@ -317,11 +317,14 @@ fieldset {
 }
 
 /* Button Pseudo-Elements */
-.camera-label::before {
-  content: url(https://a-v2.sndcdn.com/assets/images/camera-2d93bb05.svg);
+.b2 .logo-before::before {
   height: 16px;
   width: 20px;
   margin-right: 5px;
+}
+
+.camera-label::before {
+  content: url(./static/svgs/camera.svg);
 }
 
 .song-button {

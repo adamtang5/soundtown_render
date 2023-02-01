@@ -92,8 +92,9 @@ const DynamicAvatar = () => {
             />
             {user?.avatar_url ? (
               <DropdownButton
-                toggleLabel={updateImageToggleLabel}
-                toggleClasses={['cursor-pointer', 'image-button', 'flex-row', 'update-image-button']}
+                toggleLabel="Update image"
+                toggleClasses={['button-action', 'b2']}
+                beforeLabel="camera-label"
                 showDropdown={showDropdown}
                 setShowDropdown={setShowDropdown}
                 dropdownUlClasses={['menu', 'update-image-menu']}
