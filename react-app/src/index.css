@@ -261,6 +261,7 @@ fieldset {
   gap: 5px;
   border-radius: 2px;
   padding: 3px 8px 2px;
+  width: max-content;
 }
 
 .button-action {

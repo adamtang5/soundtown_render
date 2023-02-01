@@ -110,10 +110,9 @@
 .upload-banner-button {
   justify-content: center;
   align-items: center;
-  width: 240px;
+  /* width: 240px; */
 }
 
-.update-banner-button,
 .update-banner-menu {
-  width: 200px;
+  width: 186px;
 }

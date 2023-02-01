@@ -9,8 +9,8 @@ const DropdownButton = ({
 }) => {
   const ulStyle = {
     position: "absolute",
-    top: "28px",
-    left: "1px",
+    top: "29px",
+    left: "0",
   };
 
   const handleDropdownClick = e => {

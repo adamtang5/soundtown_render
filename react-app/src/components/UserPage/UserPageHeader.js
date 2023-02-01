@@ -13,8 +13,10 @@ const UserPageHeader = () => {
   const sessionUser = useSelector(state => state.session.user);
   const user = useSelector(state => state.users[userId]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showAvatarConfirmModal, setShowAvatarConfirmModal] = useState(false);
+  const [showBannerConfirmModal, setShowBannerConfirmModal] = useState(false);
   const avatarInputId = "avatar-url";
+  const bannerInputId = "banner-url";
 
   useEffect(() => {
     if (!showDropdown) return;
@@ -39,21 +41,18 @@ const UserPageHeader = () => {
     }
   };
 
-  const confirmDelete = e => {
-    setShowConfirmModal(true);
-  };
-
   const deleteAvatarUrl = async (e) => {
     const formData = new FormData();
     formData.append('avatar_url', '');
     await dispatch(editUserDetails(+userId, formData));
-    setShowConfirmModal(false);
+    setShowAvatarConfirmModal(false);
   };
 
   const deleteBannerUrl = async (e) => {
     const formData = new FormData();
     formData.append('banner_url', '');
-    dispatch(editUserDetails(+userId, formData));
+    await dispatch(editUserDetails(+userId, formData));
+    setShowBannerConfirmModal(false);
   };
 
   const updateBannerUrl = async (e) => {
@@ -66,13 +65,6 @@ const UserPageHeader = () => {
     }
   };
 
-  const updateImageToggleLabel = (
-    <>
-      <div className="upload-image-camera" />
-      <span>Update header image</span>
-    </>
-  );
-
   const handleImageButtonClick = e => {
     e.preventDefault();
     document.getElementById('banner-url').click();
@@ -84,7 +76,7 @@ const UserPageHeader = () => {
       label: "Replace header image",
     },
     {
-      onClick: deleteBannerUrl,
+      onClick: () => setShowBannerConfirmModal(true),
       label: "Delete header image",
     },
   ];
@@ -93,11 +85,34 @@ const UserPageHeader = () => {
     backgroundImage: `url(${user?.banner_url})`,
   };
 
+  const ConfirmDeleteModal = ({
+    showModal,
+    setShowModal,
+    handleDelete,
+    entity,
+  }) => {
+    return showModal && (
+      <Modal
+        onClose={() => setShowModal(false)}
+        position="top"
+      >
+        <ConfirmModal
+          setShowModal={setShowModal}
+          handleDelete={handleDelete}
+          body={<p>
+            Please confirm that you want to delete this {entity}.<br />
+            This action cannot be reversed.
+          </p>}
+        />
+      </Modal>
+    );
+  };
+
   return (
     <header className="user-page-banner">
       <div
         className="banner-bg placeholder"
-        style={bannerStyle}
+        style={user?.banner_url ? bannerStyle : {}}
       />
       <div
         className="banner-content flex-row"
@@ -126,7 +141,7 @@ const UserPageHeader = () => {
             updateLabel="Update image"
             deleteLabel="Delete image"
             beforeLabel="camera-label"
-            confirmDelete={confirmDelete}
+            confirmDelete={() => setShowAvatarConfirmModal(true)}
           />
           <h2>{user?.display_name}</h2>
         </div>
@@ -155,31 +170,27 @@ const UserPageHeader = () => {
               />
             ) : (
               <button
-                className="cursor-pointer flex-row upload-banner-button"
+                className="cursor-pointer composite-button upload-banner-button button-action b2"
                 onClick={handleImageButtonClick}
               >
-                <div className="upload-image-camera" />
-                <span>Upload header image</span>
+                <div className="logo-before camera-label">Upload header image</div>
               </button>
             )}
           </div>
         )}
       </div>
-      {showConfirmModal && (
-        <Modal
-          onClose={() => setShowConfirmModal(false)}
-          position="top"
-        >
-          <ConfirmModal
-            setShowModal={setShowConfirmModal}
-            handleDelete={deleteAvatarUrl}
-            body={<p>
-              Please confirm that you want to delete this image.<br />
-              This action cannot be reversed.
-            </p>}
-          />
-        </Modal>
-      )}
+      <ConfirmDeleteModal
+        showModal={showAvatarConfirmModal}
+        setShowModal={setShowAvatarConfirmModal}
+        handleDelete={deleteAvatarUrl}
+        entity="image"
+      />
+      <ConfirmDeleteModal
+        showModal={showBannerConfirmModal}
+        setShowModal={setShowBannerConfirmModal}
+        handleDelete={deleteBannerUrl}
+        entity="image"
+      />
     </header>
   );
 };
