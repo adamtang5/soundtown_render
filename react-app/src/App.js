@@ -19,6 +19,7 @@ import Audio from "./components/AudioPlayer/Audio";
 import PlaylistsPage from "./components/PlaylistFolders/PlaylistsPage";
 import NewUsersPage from "./components/NewUserPage";
 import UserPage from "./components/UserPage";
+import Sandbox from "./components/Sandbox";
 
 const App = () => {
   const [loaded, setLoaded] = useState(false);
@@ -78,6 +79,9 @@ const App = () => {
           </ProtectedRoute>
           <ProtectedRoute path="/users-old/:userId">
             <NewUsersPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/sandbox">
+            <Sandbox />
           </ProtectedRoute>
           <ProtectedRoute path="/playlists/:id" exact={true}>
             <PlaylistsPage />
