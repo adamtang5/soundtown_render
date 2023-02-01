@@ -84,7 +84,7 @@ const UploadSongForm = ({ setShowUploadModal }) => {
       fr.readAsDataURL(file);
       setNewImage(file);
       setImageMissing(false);
-      const img = document.getElementById("upload-image");
+      const img = document.getElementById("preview");
       fr.onload = () => img.src = fr.result;
     }
   };
@@ -118,6 +118,8 @@ const UploadSongForm = ({ setShowUploadModal }) => {
         h2="Upload Song"
         formLeft={
           <ModalFormImage
+            dimension={250}
+            entity="song"
             imageUrl={imageUrl}
             updateImageFile={updateImageFile}
             newImage={newImage}
