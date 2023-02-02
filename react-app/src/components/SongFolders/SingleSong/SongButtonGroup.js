@@ -121,7 +121,8 @@ const SongButtonGroup = ({ song }) => {
 
       <DropdownButton
         toggleLabel="More"
-        toggleClasses={['song-button', 'cursor-pointer']}
+        toggleClasses={styleClasses}
+        beforeLabel="ellipses-label"
         showDropdown={showDropdown}
         setShowDropdown={setShowDropdown}
         dropdownUlClasses={['menu', 'button-group-menu']}

@@ -379,6 +379,14 @@ fieldset {
   content: url(./static/svgs/trash.svg);
 }
 
+.ellipses-label::before {
+  content: url(./static/svgs/ellipses.svg);
+}
+
+.b2 .logo-before.ellipses-label::before {
+  top: -3px;
+}
+
 /* Hover Animation */
 .hover-animated {
   opacity: 0;
