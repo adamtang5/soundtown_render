@@ -27,6 +27,7 @@ const DropdownButton = ({
       <button
         onClick={handleDropdownClick}
         className={[...toggleBaseClasses, ...toggleClasses].join(' ')}
+        style={{ height: "100%" }}
       >
         <div
           className={[...toggleLabelBaseClasses, beforeLabel].join(' ')}
