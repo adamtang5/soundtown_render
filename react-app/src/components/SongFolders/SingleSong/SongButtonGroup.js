@@ -114,7 +114,7 @@ const SongButtonGroup = ({ song }) => {
         <EditButton
           showModal={showEditSongModal}
           setShowModal={setShowEditSongModal}
-          buttonClasses={['song-button', 'cursor-pointer']}
+          buttonClasses={[...baseClasses, ...styleClasses]}
           modalForm={<EditSongForm setShowEditSongModal={setShowEditSongModal} />}
         />
       )}
