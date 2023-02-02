@@ -11,7 +11,11 @@ const EditButton = ({
       <button
         onClick={() => setShowModal(true)}
         className={buttonClasses.join(' ')}
-      >Edit</button>
+      >
+        <div
+          className="logo-before pencil-label"
+        >Edit</div>
+      </button>
       {showModal && (
         <Modal
           onClose={() => setShowModal(false)}
