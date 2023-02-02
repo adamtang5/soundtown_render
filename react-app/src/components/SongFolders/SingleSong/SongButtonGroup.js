@@ -4,7 +4,7 @@ import { likeSong, unlikeSong } from "../../../store/song";
 import { loadSong, queueSong } from "../../../store/player";
 import { Modal } from "../../Context/Modal";
 import AddToPlaylist from "../../PlaylistFolders/AddToPlaylist";
-import LikeButton from "../../Buttons/LikeButton";
+import ToggleButton from "../../Buttons/ToggleButton";
 import CopyLinkButton from "../../Buttons/CopyLinkButton";
 import EditButton from "../../Buttons/EditButton";
 import DropdownButton from "../../Buttons/DropdownButton";
@@ -18,6 +18,9 @@ const SongButtonGroup = ({ song }) => {
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [showEditSongModal, setShowEditSongModal] = useState(false);
+  const baseClasses = ['cursor-pointer', 'composite-button'];
+  const styleClasses = ['button-action', 'b2'];
+  const labelBaseClasses = ['logo-before'];
 
   useEffect(() => {
     if (!showNotification) return;
@@ -90,15 +93,21 @@ const SongButtonGroup = ({ song }) => {
 
   return (
     <div className="song-button-group flex-row">
-      <LikeButton
-        isLiked={song?.likes.includes(sessionUser.id)}
-        handleUnlike={handleUnlike}
-        handleLike={handleLike}
+      <ToggleButton
+        condition={song?.likes.includes(sessionUser.id)}
+        buttonClasses={[...baseClasses, 'b2']}
+        labelClasses={['heart-label']}
+        handleOff={handleUnlike}
+        onLabel="Liked"
+        handleOn={handleLike}
+        offLabel="Like"
       />
 
       <CopyLinkButton
+        buttonClasses={[...baseClasses, ...styleClasses]}
         handleCopy={addToClipBoard}
         showNotification={showNotification}
+        setShowNotification={setShowNotification}
       />
 
       {sessionUser?.id === song?.user_id && (

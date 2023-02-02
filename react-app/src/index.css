@@ -114,6 +114,21 @@ fieldset {
   width: 300px;
 }
 
+.notification {
+  position: fixed;
+  background-color: white;
+  box-shadow: 0px 0px 10px var(--color-info);
+  z-index: 100;
+  font-size: 14px;
+  color: var(--color-border-dark);
+  padding: 5px;
+}
+
+.top-right {
+  top: 60px;
+  right: 50px;
+}
+
 /* Spinning Pinwheel */
 @keyframes spin {
   0% {
@@ -284,6 +299,10 @@ fieldset {
   border: 1px solid var(--color-primary);
 }
 
+.label-toggle::before {
+  filter: invert(43%) sepia(42%) saturate(6441%) hue-rotate(2deg) brightness(104%) contrast(105%);
+}
+
 /* Simple Buttons */
 .simple-button {
   border: none;
@@ -307,9 +326,15 @@ fieldset {
 }
 
 /* Button Sizes */
-.b2 {
+.b1 {
   font-size: 14px;
   line-height: 20px;
+}
+
+.b2 {
+  font-size: 13px;
+  line-height: 20px;
+  padding: 3px 10px;
 }
 
 .b3 {
@@ -318,14 +343,40 @@ fieldset {
 }
 
 /* Button Pseudo-Elements */
+.b1 .logo-before::before,
 .b2 .logo-before::before {
-  height: 16px;
+  height: 20px;
   width: 20px;
   margin-right: 5px;
 }
 
+.b2 .logo-before::before {
+  position: relative;
+  top: 3px;
+}
+
 .camera-label::before {
   content: url(./static/svgs/camera.svg);
+}
+
+.heart-label::before {
+  content: url(./static/svgs/heart.svg);
+}
+
+.chain-label::before {
+  content: url(./static/svgs/chain.svg);
+}
+
+.pencil-label::before {
+  content: url(./static/svgs/pencil.svg);
+}
+
+.add-to-list-label::before {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMGgyMHYyMEgweiIvPgogICAgICAgIDxwYXRoIGZpbGw9InJnYigzNCwgMzQsIDM0KSIgZmlsbC1ydWxlPSJub256ZXJvIiBkPSJNNCA5aDEwdjJINFY5em0wIDRoMTB2Mkg0di0yem0wLThoOHYySDRWNXptMTAtNGw0IDMtNCAzVjF6Ii8+CiAgICA8L2c+Cjwvc3ZnPgo=);
+}
+
+.trash-label::before {
+  content: url(./static/svgs/trash.svg);
 }
 
 /* Hover Animation */

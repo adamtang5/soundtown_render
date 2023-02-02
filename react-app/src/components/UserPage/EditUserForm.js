@@ -102,7 +102,7 @@ const EditUserForm = ({ setShowEditUserModal }) => {
           />}
           isAuthorized={true}
           clickHidden={handleImageButtonClick}
-          styleClasses={['button-action', 'b2']}
+          styleClasses={['button-action', 'b1']}
           uploadLabel="Upload image"
           replaceLabel="Replace Image"
           updateLabel="Update image"

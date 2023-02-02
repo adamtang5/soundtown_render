@@ -135,7 +135,7 @@ const UserPageHeader = () => {
             }
             isAuthorized={sessionUser.id === +userId}
             clickHidden={() => document.getElementById(avatarInputId).click()}
-            styleClasses={['button-action', 'b2']}
+            styleClasses={['button-action', 'b1']}
             uploadLabel="Upload image"
             replaceLabel="Replace image"
             updateLabel="Update image"
@@ -161,7 +161,7 @@ const UserPageHeader = () => {
             {user?.banner_url ? (
               <DropdownButton
                 toggleLabel="Update header image"
-                toggleClasses={['update-banner-button', 'button-action', 'b2']}
+                toggleClasses={['update-banner-button', 'button-action', 'b1']}
                 beforeLabel="camera-label"
                 showDropdown={showDropdown}
                 setShowDropdown={setShowDropdown}
@@ -170,7 +170,7 @@ const UserPageHeader = () => {
               />
             ) : (
               <button
-                className="cursor-pointer composite-button upload-banner-button button-action b2"
+                className="cursor-pointer composite-button upload-banner-button button-action b1"
                 onClick={handleImageButtonClick}
               >
                 <div className="logo-before camera-label">Upload header image</div>
