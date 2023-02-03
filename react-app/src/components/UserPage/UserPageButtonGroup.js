@@ -8,6 +8,8 @@ const UserPageButtonGroup = () => {
   const sessionUser = useSelector(state => state.session.user);
   const { userId } = useParams();
   const [showEditUserModal, setShowEditUserModal] = useState(false);
+  const baseClasses = ['cursor-pointer', 'composite-button'];
+  const styleClasses = ['button-action', 'b2'];
 
   return (
     <div className="user-page-button-group flex-row">
@@ -15,7 +17,7 @@ const UserPageButtonGroup = () => {
         <EditButton
           showModal={showEditUserModal}
           setShowModal={setShowEditUserModal}
-          buttonClasses={['user-page-button', 'cursor-pointer']}
+          buttonClasses={[...baseClasses, ...styleClasses]}
           modalForm={<EditUserForm setShowEditUserModal={setShowEditUserModal} />}
         />
       ) : (
