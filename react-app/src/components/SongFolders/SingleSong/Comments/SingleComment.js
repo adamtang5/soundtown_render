@@ -12,26 +12,39 @@ const SingleComment = ({ comment }) => {
   const sessionUser = useSelector(state => state.session.user);
   const [showActions, setShowActions] = useState(false);
   const [showContentDisplay, setShowContentDisplay] = useState(true);
-  const [showContentEdit, setShowContentEdit] = useState(false);
+  const [showContentEditForm, setShowContentEditForm] = useState(false);
   const [content, setContent] = useState(comment?.content);
   const [errors, setErrors] = useState([]);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const editButtonClasses = [
+    'cursor-pointer',
+    'button-action',
+    'composite-button',
+    'b3',
+  ];
+
+  const deleteButtonClasses = [
+    'cursor-pointer',
+    'button-attention',
+    'composite-button',
+    'b3',
+  ];
 
   const commentCardMouseOver = (e) => {
-    if (!showContentEdit) {
+    if (!showContentEditForm) {
       setShowActions(true);
     }
   };
 
   const commentCardMouseOut = (e) => {
-    if (!showContentEdit && !showDeleteConfirm) {
+    if (!showContentEditForm && !showConfirmDelete) {
       setShowActions(false);
     }
   };
 
   const clickEdit = (e) => {
     setShowContentDisplay(false);
-    setShowContentEdit(true);
+    setShowContentEditForm(true);
     setShowActions(false);
   };
 
@@ -46,7 +59,7 @@ const SingleComment = ({ comment }) => {
     if (data.errors) {
       setErrors(data.errors);
     } else {
-      setShowContentEdit(false);
+      setShowContentEditForm(false);
       setShowContentDisplay(true);
     }
   };
@@ -54,13 +67,13 @@ const SingleComment = ({ comment }) => {
   const handleEscape = (e) => {
     if (e.key === "Escape") {
       setShowContentDisplay(true);
-      setShowContentEdit(false);
+      setShowContentEditForm(false);
       setContent(comment?.content);
     }
   };
 
   const cancelDelete = (e) => {
-    setShowDeleteConfirm(false);
+    setShowConfirmDelete(false);
   };
 
   const confirmDelete = async (ev) => {
@@ -76,16 +89,18 @@ const SingleComment = ({ comment }) => {
       onMouseOut={commentCardMouseOut}
       className="comment-card flex-row"
     >
-      <article className="comment-body flex-row">
-        <aside className="comment-avatar">
-          <Avatar user={comment.user} isLink={true} />
-        </aside>
-        <div className="comment-text flex-column">
+      <aside className="comment-avatar">
+        <Avatar user={comment.user} isLink={true} />
+      </aside>
+      <article className="comment-body flex-column">
+        <header
+          className="flex-row"
+        >
           <div className="comment-info">
-            {comment.user_id === sessionUser.id ? (
+            {comment?.user_id === sessionUser.id ? (
               <span className="commenter-name">You</span>
             ) : (
-              <a className="commenter-name" href={`/users/${comment.user_id}`}>
+              <a className="commenter-name" href={`/users/${comment?.user_id}`}>
                 {comment?.user.display_name}
               </a>
             )}
@@ -98,6 +113,11 @@ const SingleComment = ({ comment }) => {
               </span>
             ) : null}
           </div>
+          <Moment fromNow>{comment?.updated_at}</Moment>
+        </header>
+        <div
+          className="comment-main flex-row"
+        >
           <div className="comment-content">
             <div
               className={`content-display${showContentDisplay ? "" : " hidden"
@@ -107,7 +127,7 @@ const SingleComment = ({ comment }) => {
             </div>
             <form
               onSubmit={handleEdit}
-              className={`content-edit${showContentEdit ? "" : " hidden"}`}
+              className={`content-edit${showContentEditForm ? "" : " hidden"}`}
             >
               <input
                 className="content-field"
@@ -124,51 +144,28 @@ const SingleComment = ({ comment }) => {
               ))}
             </div>
           </div>
+          <div
+            className={`comment-actions flex-row${showActions ? "" : " hidden"}`}
+          >
+            {comment?.user_id === sessionUser.id && (
+              <>
+                <EditCommentButton
+                  handleClick={clickEdit}
+                  buttonClasses={editButtonClasses}
+                />
+
+                <DeleteCommentButton
+                  handleClick={() => setShowConfirmDelete(true)}
+                  buttonClasses={deleteButtonClasses}
+                  showConfirm={showConfirmDelete}
+                  cancelDelete={cancelDelete}
+                  confirmDelete={confirmDelete}
+                />
+              </>
+            )}
+          </div>
         </div>
       </article>
-      <aside className="comment-meta flex-column">
-        <Moment fromNow>{comment?.updated_at}</Moment>
-        <div
-          className={`comment-actions flex-row${showActions ? "" : " hidden"}`}
-        >
-          {comment?.user_id === sessionUser?.id && (
-            <>
-              <div onClick={clickEdit} className="comment-edit-button">
-                <EditCommentButton />
-              </div>
-              <div className="comment-delete-button">
-                <div
-                  className="delete-confirm"
-                  onClick={() => setShowDeleteConfirm(true)}
-                >
-                  <DeleteCommentButton />
-                </div>
-                <div className="confirm-delete">
-                  {showDeleteConfirm && (
-                    <div className="confirm-delete-form">
-                      <p>Do you really want to remove this comment?</p>
-                      <div className="confirm-delete-buttons flex-row">
-                        <div
-                          className="cancel-delete button"
-                          onClick={cancelDelete}
-                        >
-                          Cancel
-                        </div>
-                        <div
-                          className="yes-delete button"
-                          onClick={confirmDelete}
-                        >
-                          Yes
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </>
-          )}
-        </div>
-      </aside>
     </li>
   );
 };

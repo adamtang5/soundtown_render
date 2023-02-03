@@ -1,11 +1,8 @@
 .comment-card {
   padding: 10px 10px 10px 0;
-  justify-content: space-between;
-}
-
-.comment-body {
+  /* justify-content: space-between; */
   width: 100%;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
 }
 
@@ -26,7 +23,15 @@
   font-weight: 900;
 }
 
-.comment-text {
+.comment-body {
+  width: 100%;
+  padding-top: 2px;
+  gap: 2px;
+}
+
+.comment-body header,
+.comment-main {
+  justify-content: space-between;
   width: 100%;
 }
 
@@ -53,6 +58,11 @@
 .comment-meta {
   align-items: flex-end;
   min-width: 150px;
+  gap: 5px;
+}
+
+.comment-actions {
+  align-items: center;
   gap: 5px;
 }
 
@@ -93,10 +103,6 @@
 .delete-confirm .button:hover,
 .yes-delete.button:hover {
   border-color: #e30;
-}
-
-.confirm-delete {
-  position: relative;
 }
 
 .confirm-delete-form {

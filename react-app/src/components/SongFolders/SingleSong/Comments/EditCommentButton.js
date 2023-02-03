@@ -1,14 +1,15 @@
-import EditIcon from '../../../Icons/EditIcon';
-
-const EditCommentButton = ({ comment }) => {
-    return (
-        <div className="button flex-row">
-            <div className="edit-icon">
-                <EditIcon />
-            </div>
-            <div className="action-text">Edit</div>
-        </div>
-    )
+const EditCommentButton = ({
+  handleClick,
+  buttonClasses,
+}) => {
+  return (
+    <button
+      onClick={handleClick}
+      className={buttonClasses.join(' ')}
+    >
+      <div className="logo-before pencil-label">Edit</div>
+    </button>
+  )
 };
 
 export default EditCommentButton;
