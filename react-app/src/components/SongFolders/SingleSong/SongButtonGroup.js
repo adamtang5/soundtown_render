@@ -91,7 +91,7 @@ const SongButtonGroup = ({ song }) => {
   };
 
   return (
-    <div className="song-button-group flex-row">
+    <div className="asset-button-group flex-row">
       <ToggleButton
         condition={song?.likes.includes(sessionUser.id)}
         buttonClasses={[...baseClasses, 'b2']}

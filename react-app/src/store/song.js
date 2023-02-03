@@ -20,9 +20,10 @@ const removeSong = (songId) => {
     songId,
   };
 };
-//! like a song
+
+// like a song
 export const likeSong = (data) => async (dispatch) => {
-  const response = await fetch("/api/likes/song/", {
+  const response = await fetch("/api/likes/song", {
     method: "POST",
     body: data,
   });
@@ -40,9 +41,10 @@ export const likeSong = (data) => async (dispatch) => {
     return ["An error occurred. Please try again."];
   }
 };
-//! unlike a song
+
+// unlike a song
 export const unlikeSong = (data) => async (dispatch) => {
-  const response = await fetch("/api/likes/song/", {
+  const response = await fetch("/api/likes/song", {
     method: "DELETE",
     body: data,
   });

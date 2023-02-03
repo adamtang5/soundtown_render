@@ -1,3 +1,4 @@
+// constants
 const LOAD_PLAYLISTS = "playlist/LOAD_PLAYLISTS";
 const NEW_PLAYLIST = "playlist/NEW_PLAYLIST";
 const REMOVE_PLAYLIST = "playlsit/REMOVE_PLAYLIST";
@@ -7,15 +8,58 @@ const loadPlaylists = (playlists) => ({
   playlists,
 });
 
+// for create and edit
 const newPlaylist = (playlist) => ({
   type: NEW_PLAYLIST,
   playlist,
 });
 
-const removeSong = (playlistId) => ({
+const removePlaylist = (playlistId) => ({
   type: REMOVE_PLAYLIST,
   playlistId,
 });
+
+// like a playlist
+export const likePlaylist = (data) => async (dispatch) => {
+  const res = await fetch("/api/likes/playlist", {
+    method: 'POST',
+    body: data,
+  });
+
+  if (res.ok) {
+    const playlist = await res.json();
+    dispatch(newPlaylist(playlist));
+    return playlist;
+  } else if (res.status < 500) {
+    const data = await res.json();
+    if (data.errors) {
+      return data.errors;
+    }
+  } else {
+    return ["An error occurred. Please try again."];
+  }
+};
+
+// unlike a playlist
+export const unlikePlaylist = (data) => async (dispatch) => {
+  const res = await fetch("/api/likes/playlist", {
+    method: 'DELETE',
+    body: data,
+  });
+
+  if (res.ok) {
+    const playlist = await res.json();
+    dispatch(newPlaylist(playlist));
+    return playlist;
+  } else if (res.status < 500) {
+    const data = await res.json();
+    if (data.errors) {
+      return data.errors;
+    }
+  } else {
+    return ["An error occurred. Please try again."];
+  }
+};
 
 export const addSongtoPlaylist = (data) => async (dispatch) => {
   const response = await fetch("/api/playlistsongs/", {
@@ -106,7 +150,7 @@ export const deletePlaylist = (playlistId) => async (dispatch) => {
   });
   if (response.ok) {
     await response.json();
-    dispatch(removeSong(playlistId));
+    dispatch(removePlaylist(playlistId));
     return playlistId;
   }
 };

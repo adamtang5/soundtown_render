@@ -481,6 +481,13 @@ fieldset {
   width: 70%;
 }
 
+.asset-button-group {
+  padding: 0 0 12px;
+  border-bottom: 1px solid grey;
+  width: 100%;
+  gap: 5px;
+}
+
 .song-button {
   border: 1px solid var(--color-info);
   background-color: transparent;
