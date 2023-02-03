@@ -279,7 +279,8 @@ fieldset {
   width: max-content;
 }
 
-.button-action {
+.button-action,
+.button-attention {
   color: var(--color-border-dark);
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid var(--color-border);
@@ -287,10 +288,18 @@ fieldset {
   transition: all 0.2s ease 0s;
 }
 
-.button-action:hover {
+.button-action:hover,
+.button-attention:hover {
   background-color: white;
-  border: 1px solid var(--color-border-dark);
   box-shadow: 0px 0px 2px var(--color-border);
+}
+
+.button-action:hover {
+  border: 1px solid var(--color-border-dark);
+}
+
+.button-attention:hover {
+  border: 1px solid var(--color-primary);
 }
 
 .button-toggle {
@@ -342,6 +351,11 @@ fieldset {
   line-height: 16px;
 }
 
+.b3.composite-button {
+  padding: 0 5px 3px;
+  scale: 0.9;
+}
+
 /* Button Pseudo-Elements */
 .b1 .logo-before::before,
 .b2 .logo-before::before {
@@ -353,6 +367,11 @@ fieldset {
 .b2 .logo-before::before {
   position: relative;
   top: 3px;
+}
+
+.b3 .logo-before::before {
+  position: relative;
+  top: 5px;
 }
 
 .camera-label::before {

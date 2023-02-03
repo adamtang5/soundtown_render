@@ -12,7 +12,7 @@ const SongComments = ({ song }) => {
           {song?.comments?.length > 1 ? " comments" : " comment"}
         </span>
       </header>
-      <ul className="comment-cards-list">
+      <ul>
         {song?.comments.map(comment => (
           <SingleComment key={comment.id} comment={comment} />
         ))}
