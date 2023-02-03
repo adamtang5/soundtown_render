@@ -46,7 +46,7 @@ const Sandbox = () => {
       }
       isAuthorized={true}
       clickHidden={() => document.getElementById("avatar-url").click()}
-      styleClasses={['button-action', 'b2']}
+      styleClasses={['button-action', 'b1']}
       uploadLabel="Upload image"
       replaceLabel="Replace image"
       updateLabel="Update image"

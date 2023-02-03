@@ -1,13 +1,27 @@
 import Moment from "react-moment";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loadSong } from "../../../store/player";
+import { editSong } from "../../../store/song";
+import DynamicImage from "../../DynamicImage";
 
 const SingleSongHeader = ({ song }) => {
   const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state.session.user);
+  const inputId = "standalone-input";
 
   const handlePlayButtonClick = (e) => {
     e.preventDefault();
     dispatch(loadSong(song.id));
+  };
+
+  const updateImage = async (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append('image_url', file);
+      await dispatch(editSong(song?.id, formData));
+    }
   };
 
   return (
@@ -28,10 +42,27 @@ const SingleSongHeader = ({ song }) => {
         </div>
         <p>{/* WaveForms go here */}</p>
       </div>
-      <img
-        className="song-image"
-        src={song?.image_url}
-        alt={song?.title}
+
+      <DynamicImage
+        dimension={340}
+        standalone={true}
+        entity="song"
+        imageUrl={song?.image_url}
+        hiddenInput={
+          <input
+            type="file"
+            accept="image/*"
+            onChange={updateImage}
+            name={inputId}
+            id={inputId}
+            hidden
+          />
+        }
+        isAuthorized={sessionUser.id === song?.user_id}
+        clickHidden={() => document.getElementById(inputId).click()}
+        styleClasses={['button-action', 'b1']}
+        replaceLabel="Replace image"
+        beforeLabel="camera-label"
       />
     </header>
   );
