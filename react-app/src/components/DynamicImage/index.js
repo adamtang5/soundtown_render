@@ -107,7 +107,7 @@ const DynamicImage = ({
       <div
         style={{
           height: `${dimension}px`,
-          width: `${dimension}px`,
+          minWidth: `${dimension}px`,
         }}
       >
         <div
@@ -131,7 +131,7 @@ const DynamicImage = ({
             </>
           )}
           {isAuthorized && <div
-            className={`overlay flex-column-rev${standalone ? ' hover-animated' : ''}`}
+            className={`overlay flex-column-rev${standalone && entities[entity].nullable ? ' hover-animated' : ''}`}
           >
             {hiddenInput}
             {imageUrl || stagedFile ? (
