@@ -67,7 +67,7 @@ const UserPageHeader = () => {
 
   const handleImageButtonClick = e => {
     e.preventDefault();
-    document.getElementById('banner-url').click();
+    document.getElementById(bannerInputId).click();
   };
 
   const dropdownItems = [
@@ -154,8 +154,8 @@ const UserPageHeader = () => {
               type="file"
               accept="image/*"
               onChange={updateBannerUrl}
-              name="banner-url"
-              id="banner-url"
+              name={bannerInputId}
+              id={bannerInputId}
               hidden
             />
             {user?.banner_url ? (

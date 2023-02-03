@@ -20,7 +20,6 @@ const SongButtonGroup = ({ song }) => {
   const [showEditSongModal, setShowEditSongModal] = useState(false);
   const baseClasses = ['cursor-pointer', 'composite-button'];
   const styleClasses = ['button-action', 'b2'];
-  const labelBaseClasses = ['logo-before'];
 
   useEffect(() => {
     if (!showNotification) return;
