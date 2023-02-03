@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ToggleButton from "../../Buttons/ToggleButton";
 import { likePlaylist, unlikePlaylist } from "../../../store/playlist";
 import { Modal } from "../../Context/Modal";
+import CopyLinkButton from "../../Buttons/CopyLinkButton";
 
 const PlaylistButtonGroup = ({ playlist }) => {
   const dispatch = useDispatch();
@@ -35,6 +36,10 @@ const PlaylistButtonGroup = ({ playlist }) => {
         onLabel="Liked"
         handleOn={handleLike}
         offLabel="Like"
+      />
+
+      <CopyLinkButton
+        buttonClasses={[...baseClasses, ...styleClasses]}
       />
     </div>
   );

@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 const CopyLinkButton = ({
   buttonClasses,
-  handleCopy,
-  showNotification,
-  setShowNotification,
 }) => {
+  const [showNotification, setShowNotification] = useState(false);
+
   useEffect(() => {
     if (!showNotification) return;
 
@@ -15,10 +14,16 @@ const CopyLinkButton = ({
 
   }, [showNotification]);
 
+  const addToClipBoard = () => {
+    if (showNotification) return;
+    navigator.clipboard.writeText(window.location.href);
+    setShowNotification(true);
+  };
+
   return (
     <>
       <button
-        onClick={handleCopy}
+        onClick={addToClipBoard}
         className={buttonClasses.join(' ')}
       >
         <div
