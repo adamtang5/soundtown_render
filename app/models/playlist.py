@@ -6,6 +6,7 @@ from .playlist_song import playlist_song
 
 class Playlist(db.Model):
   __tablename__ = 'playlists'
+
   id = db.Column(db.Integer, primary_key=True)
   user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   title = db.Column(db.String(75), nullable=False)
@@ -41,4 +42,5 @@ class Playlist(db.Model):
       'created_at': self.created_at,
       'updated_at': self.updated_at,
       'songs': [song.id for song in self.songs],
+      'likes': [like.id for like in self.pl_likes]
     }

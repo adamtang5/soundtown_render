@@ -6,9 +6,11 @@ import Moment from "react-moment";
 import "moment-timezone";
 import PlaylistMainFeed from "./PlaylistMainFeed";
 import PlaylistSideBar from "./PlaylistSideBar";
-import "./PlaylistSongs.css";
 import { editPlaylist } from "../../../store/playlist";
 import AssetHeader from "../../Banners/AssetHeader";
+import "./PlaylistSongs.css";
+import '../../LibraryPage/Playlist/Playlist.css';
+import PlaylistButtonGroup from "./PlaylistButtonGroup";
 
 const PlaylistsPage = () => {
   const dispatch = useDispatch()
@@ -40,6 +42,11 @@ const PlaylistsPage = () => {
         updateImage={updateImage}
         isAuthorized={sessionUser.id === playlist?.user_id}
       />
+      <div className="page-container asset-secondary flex-row">
+        <main className="asset-main">
+          <PlaylistButtonGroup playlist={playlist} />
+        </main>
+      </div>
 
 
       {/* <div className="playlist_container_main">

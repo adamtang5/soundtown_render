@@ -14,7 +14,10 @@ const AssetHeader = ({
       bottomLeft: <div>{/* WaveForms go here */}</div>,
     },
     'playlist': {
-      bottomLeft: <div>{/* Playlist Summary goes here */}</div>,
+      bottomLeft: <div className="playlist-summary flex-column">
+        <div>{asset?.songs?.length || 0}</div>
+        <div>tracks</div>
+      </div>,
     },
   };
 
