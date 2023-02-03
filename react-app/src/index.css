@@ -391,7 +391,7 @@ fieldset {
 }
 
 .add-to-list-label::before {
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMGgyMHYyMEgweiIvPgogICAgICAgIDxwYXRoIGZpbGw9InJnYigzNCwgMzQsIDM0KSIgZmlsbC1ydWxlPSJub256ZXJvIiBkPSJNNCA5aDEwdjJINFY5em0wIDRoMTB2Mkg0di0yem0wLThoOHYySDRWNXptMTAtNGw0IDMtNCAzVjF6Ii8+CiAgICA8L2c+Cjwvc3ZnPgo=);
+  content: url(./static/svgs/enqueue.svg);
 }
 
 .trash-label::before {
@@ -404,6 +404,10 @@ fieldset {
 
 .b2 .logo-before.ellipses-label::before {
   top: -3px;
+}
+
+.b2 .logo-before.add-to-list-label::before {
+  top: 5px;
 }
 
 /* Hover Animation */
