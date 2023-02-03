@@ -51,6 +51,14 @@ const SongButtonGroup = ({ song }) => {
     dispatch(unlikeSong(formData));
   };
 
+  const addSongToQueue = (id) => {
+    if (!playingId) {
+      dispatch(loadSong(id));
+    } else {
+      dispatch(queueSong(id));
+    }
+  };
+
   const dropdownItems = [
     {
       onClick: () => addSongToQueue(song.id),
@@ -61,14 +69,6 @@ const SongButtonGroup = ({ song }) => {
       label: "Add to playlist",
     },
   ];
-
-  const addSongToQueue = (id) => {
-    if (!playingId) {
-      dispatch(loadSong(id));
-    } else {
-      dispatch(queueSong(id));
-    }
-  };
 
   return (
     <div className="asset-button-group flex-row">

@@ -4,8 +4,7 @@ import { useParams } from "react-router-dom";
 import { editUserDetails } from "../../store/user";
 import DropdownButton from "../Buttons/DropdownButton";
 import DynamicImage from "../DynamicImage";
-import { Modal } from "../Context/Modal";
-import ConfirmModal from "../ConfirmModal";
+import ConfirmDeleteModal from "../ConfirmModal/ConfirmDeleteModal";
 
 const UserPageHeader = () => {
   const dispatch = useDispatch();
@@ -83,29 +82,6 @@ const UserPageHeader = () => {
 
   const bannerStyle = {
     backgroundImage: `url(${user?.banner_url})`,
-  };
-
-  const ConfirmDeleteModal = ({
-    showModal,
-    setShowModal,
-    handleDelete,
-    entity,
-  }) => {
-    return showModal && (
-      <Modal
-        onClose={() => setShowModal(false)}
-        position="top"
-      >
-        <ConfirmModal
-          setShowModal={setShowModal}
-          handleDelete={handleDelete}
-          body={<p>
-            Please confirm that you want to delete this {entity}.<br />
-            This action cannot be reversed.
-          </p>}
-        />
-      </Modal>
-    );
   };
 
   return (
