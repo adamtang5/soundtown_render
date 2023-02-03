@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { loadSong } from "../../../store/player";
+import { editSong } from "../../../store/song";
 import { createComment } from "../../../store/comment";
-import SingleSongHeader from "./SingleSongHeader";
+import AssetHeader from "../../Banners/AssetHeader";
 import NewCommentForm from "./Comments/NewCommentForm";
 import SongButtonGroup from "./SongButtonGroup";
 import Avatar from "../../Icons/Avatar";
@@ -16,6 +18,21 @@ const SingleSong = () => {
   const sessionUser = useSelector(state => state.session.user);
   const [content, setContent] = useState("");
   const [errors, setErrors] = useState([]);
+
+  const handlePlayButtonClick = (e) => {
+    e.preventDefault();
+    dispatch(loadSong(song.id));
+  };
+
+  const updateImage = async (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append('image_url', file);
+      await dispatch(editSong(song?.id, formData));
+    }
+  };
 
   const handleNewCommentSubmit = async (e) => {
     e.preventDefault();
@@ -35,9 +52,15 @@ const SingleSong = () => {
 
   return (
     <>
-      <SingleSongHeader song={song} />
-      <div className="page-container single-song-secondary flex-row">
-        <main className="single-song-main">
+      <AssetHeader
+        entity="song"
+        asset={song}
+        handlePlayButtonClick={handlePlayButtonClick}
+        updateImage={updateImage}
+        isAuthorized={sessionUser.id === song?.user_id}
+      />
+      <div className="page-container asset-secondary flex-row">
+        <main className="asset-main">
           <NewCommentForm
             handleNewCommentSubmit={handleNewCommentSubmit}
             content={content}
