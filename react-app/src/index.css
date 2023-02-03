@@ -416,6 +416,71 @@ fieldset {
   opacity: 1;
 }
 
+
+/* Asset (songs, playlists) Banners */
+.asset-banner {
+  background: linear-gradient(135deg, rgb(185, 172, 182) 0%, rgb(107, 108, 108) 100%);
+  position: relative;
+  margin: 0 var(--x-margin);
+  align-items: center;
+  padding: 30px 20px 20px 30px;
+  gap: 30px;
+  height: 390px;
+}
+
+.asset-banner-left {
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.asset-banner-top-left {
+  align-items: flex-start;
+  width: 100%;
+  gap: 20px;
+}
+
+.asset-banner-play {
+  font-size: 3em;
+  color: var(--color-primary);
+  transition: color 0.15s;
+}
+
+.asset-banner-play:hover {
+  color: rgb(255, 47, 0);
+}
+
+.asset-banner-info {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.asset-banner-info time {
+  color: white;
+  font-weight: 200;
+}
+
+.asset-banner-ident {
+  gap: 5px;
+}
+
+.asset-banner-ident h2,
+.asset-banner-ident p {
+  background-color: var(--color-border-dark);
+  color: white;
+  padding: 4px 8px;
+  font-weight: 300;
+}
+
+.asset-secondary {
+  gap: 30px;
+  padding-top: 20px;
+}
+
+.asset-main {
+  width: 70%;
+}
+
 .song-button {
   border: 1px solid var(--color-info);
   background-color: transparent;

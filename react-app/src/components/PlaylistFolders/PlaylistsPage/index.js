@@ -7,18 +7,42 @@ import "moment-timezone";
 import PlaylistMainFeed from "./PlaylistMainFeed";
 import PlaylistSideBar from "./PlaylistSideBar";
 import "./PlaylistSongs.css";
+import { editPlaylist } from "../../../store/playlist";
+import AssetHeader from "../../Banners/AssetHeader";
 
 const PlaylistsPage = () => {
   const dispatch = useDispatch()
   const { id } = useParams();
-  const playlist = useSelector((state) => state.playlists[+id]);
+  const playlist = useSelector(state => state.playlists[+id]);
+  const sessionUser = useSelector(state => state.session.user);
 
   const handlePlayButtonClick = (e) => {
     e.preventDefault();
     dispatch(loadPlaylist(playlist));
   };
+
+  const updateImage = async (e) => {
+    const file = e.target.file[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append('image_url', file);
+      await dispatch(editPlaylist(playlist?.id, formData));
+    }
+  };
+
   return (
-    <div className="playlist_container_main">
+    <>
+      <AssetHeader
+        entity="playlist"
+        asset={playlist}
+        handlePlayButtonClick={handlePlayButtonClick}
+        updateImage={updateImage}
+        isAuthorized={sessionUser.id === playlist?.user_id}
+      />
+
+
+      {/* <div className="playlist_container_main">
       <div className="Pl_S_banner flex-row">
         <div className="left_box_banner flex-column">
           <div className="title_banner flex-row">
@@ -48,7 +72,8 @@ const PlaylistsPage = () => {
         <PlaylistMainFeed songsId={playlist?.songs} playlist={playlist} />
         <PlaylistSideBar />
       </div>
-    </div>
+    </div> */}
+    </>
   );
 };
 

@@ -99,7 +99,8 @@ const DynamicImage = ({
       onClick: standalone ? confirmDelete : handleDelete,
       label: deleteLabel,
     },
-  ]
+  ];
+
   return !entities[entity] ? (
     <p>Invalid Entity</p>
   ) : (
