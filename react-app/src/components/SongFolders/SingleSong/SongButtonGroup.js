@@ -16,23 +16,9 @@ const SongButtonGroup = ({ song }) => {
   const playingId = useSelector(state => state.player.playingId);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
   const [showEditSongModal, setShowEditSongModal] = useState(false);
   const baseClasses = ['cursor-pointer', 'composite-button'];
   const styleClasses = ['button-action', 'b2'];
-
-  useEffect(() => {
-    if (!showNotification) return;
-
-    const closeNotification = () => {
-      if (!showNotification) return;
-      setShowNotification(false);
-    };
-
-    document.addEventListener("click", closeNotification);
-
-    return () => document.removeEventListener("click", closeNotification);
-  }, [showNotification]);
 
   useEffect(() => {
     if (!showDropdown) return;
@@ -84,12 +70,6 @@ const SongButtonGroup = ({ song }) => {
     }
   };
 
-  const addToClipBoard = () => {
-    if (showNotification) return;
-    navigator.clipboard.writeText(window.location.href);
-    setShowNotification(true);
-  };
-
   return (
     <div className="asset-button-group flex-row">
       <ToggleButton
@@ -104,9 +84,6 @@ const SongButtonGroup = ({ song }) => {
 
       <CopyLinkButton
         buttonClasses={[...baseClasses, ...styleClasses]}
-        handleCopy={addToClipBoard}
-        showNotification={showNotification}
-        setShowNotification={setShowNotification}
       />
 
       {sessionUser?.id === song?.user_id && (
