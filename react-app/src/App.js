@@ -17,7 +17,6 @@ import SingleSong from "./components/SongFolders/SingleSong";
 // import EditSongForm from "./components/SongFolders/EditSongForm";
 import Audio from "./components/AudioPlayer/Audio";
 import PlaylistsPage from "./components/PlaylistFolders/PlaylistsPage";
-import NewUsersPage from "./components/NewUserPage";
 import UserPage from "./components/UserPage";
 import Sandbox from "./components/Sandbox";
 
@@ -76,9 +75,6 @@ const App = () => {
           </Route> */}
           <ProtectedRoute path="/users/:userId">
             <UserPage />
-          </ProtectedRoute>
-          <ProtectedRoute path="/users-old/:userId">
-            <NewUsersPage />
           </ProtectedRoute>
           <ProtectedRoute path="/sandbox">
             <Sandbox />
