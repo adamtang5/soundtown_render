@@ -65,6 +65,7 @@ const PlaylistButtonGroup = ({ playlist }) => {
 
       <CopyLinkButton
         buttonClasses={[...baseClasses, ...styleClasses]}
+        label="Copy Link"
       />
 
       {sessionUser?.id === playlist?.user_id && (
@@ -87,7 +88,7 @@ const PlaylistButtonGroup = ({ playlist }) => {
         onClick={() => addPlaylistToQueue(playlist)}
       >
         <div
-          className="logo-before add-to-list-label"
+          className="logo-before enqueue-label"
         >Add to Queue</div>
       </button>
 

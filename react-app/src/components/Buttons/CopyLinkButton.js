@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 const CopyLinkButton = ({
   buttonClasses,
+  label,
+  link = window.location.href,
 }) => {
   const [showNotification, setShowNotification] = useState(false);
 
@@ -14,9 +16,11 @@ const CopyLinkButton = ({
 
   }, [showNotification]);
 
-  const addToClipBoard = () => {
+  const addToClipBoard = e => {
+    e.stopPropagation();
+
     if (showNotification) return;
-    navigator.clipboard.writeText(window.location.href);
+    navigator.clipboard.writeText(link);
     setShowNotification(true);
   };
 
@@ -28,7 +32,7 @@ const CopyLinkButton = ({
       >
         <div
           className="logo-before chain-label"
-        >Copy Link</div>
+        >{label}</div>
       </button>
       {showNotification && (
         <div className="notification top-right">Link has been copied to the clipboard!</div>

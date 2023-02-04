@@ -8,8 +8,8 @@ const SongComments = ({ song }) => {
       <header className="comments-count flex-row">
         <SpeechBubble classes={['comment-icon', 'small-icon']} />
         <span className="comments-count-text">
-          {song?.comments?.length}
-          {song?.comments?.length > 1 ? " comments" : " comment"}
+          {song?.comments?.length} comment
+          {song?.comments?.length > 1 ? "s" : ""}
         </span>
       </header>
       <ul>

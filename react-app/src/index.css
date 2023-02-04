@@ -10,6 +10,7 @@
   --color-info: #999;
   --height-navbar: 46px;
   --x-margin: 5vw;
+  --dim-song-row-thumb: 30px;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -213,21 +214,6 @@ fieldset {
   border-radius: 50%;
 }
 
-.Pl_S_banner {
-  background-color: grey;
-  height: 380px;
-  /* width: 1240px; */
-  /* padding: 30px 30px 30px 30px; */
-  justify-content: space-between;
-}
-
-.error_message {
-  color: var(--color-warning);
-  font-size: 20px;
-  align-self: center;
-  justify-self: center;
-}
-
 /* LoadingModal */
 #loading-modal {
   position: fixed;
@@ -357,6 +343,10 @@ fieldset {
 }
 
 /* Button Pseudo-Elements */
+.logo-before::before {
+  position: relative;
+}
+
 .b1 .logo-before::before,
 .b2 .logo-before::before {
   height: 20px;
@@ -365,12 +355,10 @@ fieldset {
 }
 
 .b2 .logo-before::before {
-  position: relative;
   top: 3px;
 }
 
 .b3 .logo-before::before {
-  position: relative;
   top: 5px;
 }
 
@@ -390,8 +378,12 @@ fieldset {
   content: url(./static/svgs/pencil.svg);
 }
 
-.add-to-list-label::before {
+.enqueue-label::before {
   content: url(./static/svgs/enqueue.svg);
+}
+
+.enlist-label::before {
+  content: url(./static/svgs/enlist.svg);
 }
 
 .trash-label::before {
@@ -406,8 +398,65 @@ fieldset {
   top: -3px;
 }
 
-.b2 .logo-before.add-to-list-label::before {
+.b3 .logo-before.ellipses-label::before {
+  top: 0;
+}
+
+.b2 .logo-before.enqueue-label::before {
   top: 5px;
+}
+
+.l3 .logo-before {
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.l3 .logo-before.enqueue-label::before {
+  top: 2px;
+  left: -4px;
+}
+
+.l3 .logo-before.enlist-label::before {
+  margin-right: 3px;
+}
+
+/* Dropdown Styles */
+.button-group-menu {
+  background-color: white;
+  box-shadow: 0px 0px 4px var(--color-border);
+  align-items: flex-start;
+}
+
+.button-group-menu li {
+  align-items: center;
+}
+
+.button-group-menu {
+  width: 120px;
+  left: 1;
+  top: 30px;
+}
+
+.button-group-menu.l3 {
+  width: 130px;
+  top: 24px;
+  left: 2px;
+  z-index: 7;
+}
+
+.button-group-menu li {
+  height: 24px;
+  width: 100%;
+  padding-left: 10px;
+  font-size: 14px;
+  align-items: center;
+}
+
+.button-group-menu.l3 li {
+  height: 20px;
+  padding-left: 10px;
+  font-size: 12px;
+  border: none;
 }
 
 /* Hover Animation */

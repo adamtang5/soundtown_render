@@ -81,8 +81,8 @@
 
 .update-image-menu {
   width: 130px;
-  top: -20px;
-  left: 35px;
+  top: 27px;
+  left: 1px;
 }
 
 .update-image-menu li,
@@ -110,9 +110,9 @@
 .upload-banner-button {
   justify-content: center;
   align-items: center;
-  /* width: 240px; */
 }
 
 .update-banner-menu {
   width: 186px;
+  top: 30px;
 }
