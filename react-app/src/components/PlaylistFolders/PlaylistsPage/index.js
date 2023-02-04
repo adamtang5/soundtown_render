@@ -9,7 +9,7 @@ import Avatar from "../../Icons/Avatar";
 import SingleSongRow from "./SingleSongRow";
 import PlaylistSideBar from "./PlaylistSideBar";
 import "./PlaylistSongs.css";
-import '../../LibraryPage/Playlist/Playlist.css';
+import './Playlist.css';
 
 const PlaylistsPage = () => {
   const dispatch = useDispatch()
