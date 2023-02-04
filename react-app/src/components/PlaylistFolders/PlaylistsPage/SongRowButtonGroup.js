@@ -1,24 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { likeSong, unlikeSong } from "../../../store/song";
 import { loadSong, queueSong } from "../../../store/player";
-import { Modal } from "../../Context/Modal";
-import AddToPlaylist from "../../PlaylistFolders/AddToPlaylist";
-import ToggleButton from "../../Buttons/ToggleButton";
+import { likeSong, unlikeSong } from "../../../store/song";
 import CopyLinkButton from "../../Buttons/CopyLinkButton";
-import EditButton from "../../Buttons/EditButton";
 import DropdownButton from "../../Buttons/DropdownButton";
-import EditSongForm from "../EditSongForm";
+import ToggleButton from "../../Buttons/ToggleButton";
 
-const SongButtonGroup = ({ song }) => {
+const SongRowButtonGroup = ({
+  song,
+}) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const playingId = useSelector(state => state.player.playingId);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
-  const [showEditSongModal, setShowEditSongModal] = useState(false);
   const baseClasses = ['cursor-pointer', 'composite-button'];
-  const styleClasses = ['button-action', 'b2'];
+  const styleClasses = ['button-action', 'b3'];
 
   useEffect(() => {
     if (!showDropdown) return;
@@ -34,24 +31,24 @@ const SongButtonGroup = ({ song }) => {
   }, [showDropdown]);
 
   const handleLike = async (e) => {
-    e.preventDefault();
+    e.stopPropagation();
 
     const formData = new FormData();
     formData.append("user_id", sessionUser.id);
     formData.append("song_id", song.id);
-    dispatch(likeSong(formData));
+    await dispatch(likeSong(formData));
   };
 
   const handleUnlike = async (e) => {
-    e.preventDefault();
+    e.stopPropagation();
 
     const formData = new FormData();
     formData.append("user_id", sessionUser.id);
     formData.append("song_id", song.id);
-    dispatch(unlikeSong(formData));
+    await dispatch(unlikeSong(formData));
   };
 
-  const addSongToQueue = (id) => {
+  const addSongToQueue = async (id) => {
     if (!playingId) {
       dispatch(loadSong(id));
     } else {
@@ -62,61 +59,48 @@ const SongButtonGroup = ({ song }) => {
   const dropdownItems = [
     {
       onClick: () => addSongToQueue(song.id),
-      label: "Add to queue",
+      label: <div
+        className="logo-before flex-row enqueue-label"
+      >Add to queue</div>,
     },
-    {
-      onClick: () => setShowPlaylistModal(true),
-      label: "Add to playlist",
-    },
+    // {
+    //   onClick: () => setShowPlaylistModal(true),
+    //   label: <div
+    //     className="logo-before flex-row enlist-label"
+    //   >Add to playlist</div>,
+    // },
   ];
 
   return (
-    <div className="asset-button-group flex-row">
+    <div className="mini-asset-button-group flex-row">
       <ToggleButton
         condition={song?.likes.includes(sessionUser.id)}
-        buttonClasses={[...baseClasses, 'b2']}
+        buttonClasses={[...baseClasses, 'b3']}
         labelClasses={['heart-label']}
         handleOff={handleUnlike}
-        onLabel="Liked"
+        onLabel=""
         handleOn={handleLike}
-        offLabel="Like"
+        offLabel=""
       />
 
       <CopyLinkButton
         buttonClasses={[...baseClasses, ...styleClasses]}
-        label="Copy Link"
+        label=""
+        link={`${window.location.origin}/songs/${song?.id}`}
       />
-
-      {sessionUser?.id === song?.user_id && (
-        <EditButton
-          showModal={showEditSongModal}
-          setShowModal={setShowEditSongModal}
-          buttonClasses={[...baseClasses, ...styleClasses]}
-          modalForm={<EditSongForm setShowEditSongModal={setShowEditSongModal} />}
-        />
-      )}
 
       <DropdownButton
-        toggleLabel="More"
+        toggleLabel=""
         toggleClasses={styleClasses}
         beforeLabel="ellipses-label"
+        labelSize="l3"
         showDropdown={showDropdown}
         setShowDropdown={setShowDropdown}
-        dropdownUlClasses={['menu', 'button-group-menu']}
+        dropdownUlClasses={['menu', 'button-group-menu', 'flex-column']}
         dropdownItems={dropdownItems}
       />
-      {showPlaylistModal && (
-        <Modal
-          onClose={() => setShowPlaylistModal(false)}
-          position="center"
-        >
-          <div className="add_to_playlist_modal_container">
-            <AddToPlaylist song={song} />
-          </div>
-        </Modal>
-      )}
     </div>
   );
 };
 
-export default SongButtonGroup;
+export default SongRowButtonGroup;

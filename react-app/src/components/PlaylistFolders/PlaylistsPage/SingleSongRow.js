@@ -1,34 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { loadSong } from "../../../store/player";
+import SongRowButtonGroup from "./SongRowButtonGroup";
 
 const SingleSongRow = ({ song, idx }) => {
   const dispatch = useDispatch();
-  const handlePlayButtonClick = (e) => {
+
+  const handlePlay = (e) => {
     e.preventDefault();
     dispatch(loadSong(song.id));
   };
 
   return (
-    <div className="flex-row single_song_container_li">
-      <div className="single_song_container_img">
-        <div className="single_row_img_overlay" onClick={handlePlayButtonClick}>
-          <div className="single_row_img_play">&#9658;</div>
+    <article
+      className="song-row flex-row cursor-pointer"
+      onClick={handlePlay}
+    >
+      <div
+        className="song-row-content flex-row"
+      >
+        <div
+          className="song-row-thumb"
+          style={{ backgroundImage: `url(${song?.image_url})` }}
+        />
+        <div className="song-row-idx">{idx + 1}</div>
+        <div className="song-row-title">
+          <Link to={`/songs/${song?.id}`}>{song?.title}</Link>
         </div>
-        <img src={song?.image_url} className="single_row_img" alt="" />
       </div>
-      <div className="single_song_container_idx">
-        <span>{idx + 1}</span>
+      <div
+        className="song-row-overlay flex-row"
+      >
+        <div className="song-row-square flex-row">
+          <button
+            className="song-row-play cursor-pointer"
+          >&#9654;</button>
+        </div>
+        <SongRowButtonGroup song={song} />
       </div>
-      <div className="single_song_container_title">
-        <NavLink to={`/songs/${song?.id}`}>{song?.title}</NavLink>
-        {/* <a href={`/songs/${song?.id}`}>{song?.title}</a> */}
-        <span> - </span>
-        <NavLink to={`/songs/${song?.id}`}>{song?.description}</NavLink>
-        {/* <a href={`/songs/${song?.id}`}>{song?.description}</a> */}
-      </div>
-    </div>
+    </article>
   );
 };
 

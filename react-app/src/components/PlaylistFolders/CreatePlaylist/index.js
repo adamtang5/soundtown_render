@@ -41,36 +41,6 @@ const NewPlaylistForm = ({ modalFunction }) => {
   };
 
   return (
-    // <div>
-    //   <h2>Make a new Playlist</h2>
-    //   <form onSubmit={handleSubmit}>
-    //     <div>
-    //       {errors.map((error, ind) => (
-    //         <div className="error_message" key={ind}>
-    //           {error}
-    //         </div>
-    //       ))}
-    //     </div>
-    //     <label>title </label>
-    //     <input
-    //       type="text"
-    //       required
-    //       onChange={(e) => {
-    //         setTitle(e.target.value);
-    //       }}
-    //     />
-    //     <label>playlist image </label>
-    //     <input type="file" accept="image/*" onChange={updateImageFile} />
-    //     <label>decription </label>
-    //     <input
-    //       type="description"
-    //       onChange={(e) => {
-    //         setDescription(e.target.value);
-    //       }}
-    //     />
-    //     <button>Submit</button>
-    //   </form>
-    // </div>
     <div className="flex-row AEP_conatiner">
       <div className="AEP_left">
         {urlImageFile !== '' ? (

@@ -51,6 +51,14 @@
   color: orangered;
 }
 
+.mini .overlay-play {
+  font-size: 1em;
+}
+
+.mini .overlay-play:hover {
+  font-size: 1.1em;
+}
+
 .overlay-group .overlay-play {
   padding-left: 25px;
 }

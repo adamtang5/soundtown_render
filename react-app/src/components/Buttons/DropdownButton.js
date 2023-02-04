@@ -1,6 +1,7 @@
 const DropdownButton = ({
   toggleLabel,
   toggleClasses = [],
+  labelSize = "",
   beforeLabel,
   showDropdown,
   setShowDropdown,
@@ -9,14 +10,12 @@ const DropdownButton = ({
 }) => {
   const ulStyle = {
     position: "absolute",
-    top: "29px",
-    left: "0",
   };
 
   const handleDropdownClick = e => {
     e.preventDefault();
     e.stopPropagation();
-    setShowDropdown(true);
+    setShowDropdown(!showDropdown);
   };
 
   const toggleBaseClasses = ['cursor-pointer', 'composite-button'];
@@ -35,13 +34,13 @@ const DropdownButton = ({
       </button>
       {showDropdown && (
         <ul
-          className={dropdownUlClasses.join(' ')}
+          className={[...dropdownUlClasses, labelSize].join(' ')}
           style={ulStyle}
         >
-          {dropdownItems.map(item => (
+          {dropdownItems.map((item, idx) => (
             <li
-              key={item.label}
-              className="flex-row cursor-pointer"
+              key={idx}
+              className={`flex-row cursor-pointer`}
               onClick={item.onClick}
             >{item.label}</li>
           ))}
