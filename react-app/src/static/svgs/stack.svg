@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_playlist_18</title>
+    <desc>Created with Sketch.</desc>
+    <defs/>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ic_playlist" fill="rgb(153, 153, 153)">
+            <g transform="translate(2.000000, 2.000000)">
+                <rect id="Rectangle-2" x="0" y="4" width="10" height="10"/>
+                <polygon id="Path-2" fill-opacity="0.7" points="3 0 14 0 14 10 12 10 12 2 3 2"/>
+            </g>
+        </g>
+    </g>
+</svg>

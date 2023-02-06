@@ -67,20 +67,20 @@ const App = () => {
           <ProtectedRoute path="/songs/:id" exact={true}>
             <SingleSong />
           </ProtectedRoute>
+          <ProtectedRoute path="/users/:userId">
+            <UserPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/playlists/:id" exact={true}>
+            <PlaylistsPage />
+          </ProtectedRoute>
           {/* <Route path="/upload-song" exact={true}>
             <UploadSong />
           </Route>
           <Route path="/songs/:id/edit" exact={true}>
             <EditSongForm />
           </Route> */}
-          <ProtectedRoute path="/users/:userId">
-            <UserPage />
-          </ProtectedRoute>
           <ProtectedRoute path="/sandbox">
             <Sandbox />
-          </ProtectedRoute>
-          <ProtectedRoute path="/playlists/:id" exact={true}>
-            <PlaylistsPage />
           </ProtectedRoute>
           <Route>
             <p>not found</p>

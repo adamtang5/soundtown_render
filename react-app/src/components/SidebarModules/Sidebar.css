@@ -1,0 +1,62 @@
+.asset-sidebar header {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.sidebar-header {
+  color: var(--color-info);
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.sidebar-header:hover .no-animation {
+  color: unset;
+}
+
+.sidebar-header:hover .hover-animation {
+  color: var(--color-border-dark);
+}
+
+.sidebar-header,
+.sidebar-header h3,
+.sidebar-details,
+.sidebar-details h3 {
+  font-weight: 100;
+  font-size: 14px;
+}
+
+.sidebar-list li {
+  width: 100%;
+  margin: 5px 0;
+}
+
+.sidebar-cover-bg {
+  background-image: url(../../static/images/playlist-bg-small.png);
+  height: 60px;
+  width: 62px;
+  padding: 5px 6px;
+  margin-right: 4px;
+}
+
+.sidebar-cover {
+  width: 50px;
+  height: 50px;
+}
+
+.sidebar-details h3,
+.sidebar-details footer {
+  color: var(--color-info);
+}
+
+.sidebar-details {
+  color: var(--color-border-dark);
+  gap: 3px;
+}
+
+.sidebar-details .heart-label::before {
+  top: 2px;
+  margin-right: 2px;
+  filter: invert(61%) sepia(0%) saturate(17%) hue-rotate(139deg) brightness(97%) contrast(89%);
+}
