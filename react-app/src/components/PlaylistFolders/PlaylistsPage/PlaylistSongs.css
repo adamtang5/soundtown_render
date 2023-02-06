@@ -95,37 +95,3 @@
   gap: 5px;
   z-index: 6;
 }
-
-.playlist_sidebar_conatiner {
-  width: 30%;
-  border-left: 1px solid grey;
-  padding: 0px 0px 0px 10px;
-}
-
-.playlist_sidebar_a_group_div {
-  padding: 0px 0px 9px 0px;
-  border-bottom: 1px solid grey;
-}
-
-.playlist_sidebar_a_group {
-  justify-content: space-between;
-}
-
-.playlist_sidebar_image {
-  width: 60px;
-  margin-right: 10px;
-}
-
-.sidebar_playlist_list {
-  margin: 5px 0px 15px 0px;
-  padding-bottom: 5px;
-  border-bottom: 1.5px solid lightgrey;
-}
-
-.playlist_sidebar_user_text {
-  color: grey;
-}
-
-.playlist_sidebar_user_text:hover {
-  color: black;
-}

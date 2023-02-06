@@ -394,6 +394,12 @@ fieldset {
   content: url(./static/svgs/ellipses.svg);
 }
 
+.stack-label::before {
+  content: url(./static/svgs/stack.svg);
+  margin-right: 5px;
+  top: 2px;
+}
+
 .b2 .logo-before.ellipses-label::before {
   top: -3px;
 }
@@ -538,6 +544,10 @@ fieldset {
   border-bottom: 1px solid grey;
   width: 100%;
   gap: 5px;
+}
+
+.asset-sidebar {
+  width: 30%;
 }
 
 .song-button {

@@ -7,9 +7,11 @@ import AssetHeader from "../../Banners/AssetHeader";
 import PlaylistButtonGroup from "./PlaylistButtonGroup";
 import Avatar from "../../Icons/Avatar";
 import SingleSongRow from "./SingleSongRow";
-import PlaylistSideBar from "./PlaylistSideBar";
+import SidebarCollection from "../../SidebarModules/SidebarCollection";
+import SidebarPlaylist from "../../SidebarModules/SidebarPlaylist";
 import "./PlaylistSongs.css";
-import './Playlist.css';
+import "./Playlist.css";
+import "../../SidebarModules/Sidebar.css";
 
 const PlaylistsPage = () => {
   const dispatch = useDispatch()
@@ -18,6 +20,8 @@ const PlaylistsPage = () => {
   const stateSongs = useSelector(state => state.songs);
   const songs = playlist?.songs?.map(id => stateSongs[+id]);
   const sessionUser = useSelector(state => state.session.user);
+  const userPlaylists = useSelector(state => Object.values(state.playlists)
+    .filter(pl => pl.user_id === playlist?.user_id));
 
   const handlePlayButtonClick = (e) => {
     e.preventDefault();
@@ -68,8 +72,18 @@ const PlaylistsPage = () => {
             </section>
           </section>
         </main>
-        <aside>
-          <PlaylistSideBar />
+        <aside className="asset-sidebar">
+          <SidebarCollection
+            collectionLink={`/users/${playlist?.user_id}/playlists`}
+            styleClasses={['stack-label']}
+            h3="Playlists from this user"
+            collection={userPlaylists?.slice(0, 3).map(pl => (
+              <SidebarPlaylist
+                key={pl?.id}
+                playlist={pl}
+              />
+            ))}
+          />
         </aside>
       </div>
     </>
