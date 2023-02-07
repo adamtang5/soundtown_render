@@ -2,6 +2,7 @@ from .db import db
 from datetime import datetime
 from .playlist_like import playlist_likes
 from .playlist_song import playlist_song
+import json
 
 
 class Playlist(db.Model):
@@ -10,7 +11,7 @@ class Playlist(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   title = db.Column(db.String(75), nullable=False)
-  songs_order = db.Column(db.Text)
+  songs_order = db.Column(db.Text, default="[]")
   image_url = db.Column(db.String)
   description = db.Column(db.String)
   created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
@@ -36,7 +37,7 @@ class Playlist(db.Model):
       'user_id': self.user_id,
       'user': self.user.to_dict(),
       'title': self.title,
-      'songs_order': self.songs_order,
+      'songs_order': json.loads(f'[{self.songs_order}]'),
       'image_url': self.image_url,
       'description': self.description,
       'created_at': self.created_at,
