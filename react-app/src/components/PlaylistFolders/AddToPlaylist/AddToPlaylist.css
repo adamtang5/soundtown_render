@@ -1,15 +1,78 @@
+.playlist-modal-container {
+  width: 550px;
+  max-height: 650px;
+  overflow: hidden;
+  padding: 0 10px 10px;
+}
+
+.playlist-modal-container header {
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 30px;
+}
+
+.playlist-modal-container nav {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.playlist-modal-container .nav-header {
+  gap: 20px;
+}
+
+.nav-header li {
+  padding-bottom: 5px;
+}
+
+.nav-header li.active {
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.nav-header li:not(.active):hover {
+  border-bottom: 2px solid;
+}
+
+.playlist-modal-search {
+  border: 1px solid var(--color-border);
+  margin-bottom: 10px;
+}
+
+.playlist-modal-search:focus {
+  outline: none;
+}
+
+.playlist-modal-results {
+  height: 550px;
+  overflow-y: scroll;
+  gap: 10px;
+}
+
+.playlist-modal-results li {
+  gap: 10px;
+}
+
+.modal-results-left {
+  height: 50px;
+  width: 50px;
+  border: 1px solid var(--color-border);
+}
+
+.modal-results-right {
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.modal-results-data {
+  justify-content: center;
+  font-size: 12px;
+  gap: 5px;
+}
+
 .add_to_playlist_img {
   width: 60px;
 }
 
-.inner_add_to_playlist_conatiner {
-  width: 100%;
-  padding: 15px 35px 15px 35px;
-}
-.div_row_add_to_playlist_container {
-  overflow-y: scroll;
-  height: 550px;
-}
 .div_row_add_to_playlist {
   justify-content: space-between;
   margin: 15px 0px 15px 0px;
@@ -24,6 +87,7 @@
   border: 1px solid lightgrey;
   border-radius: 4px;
 }
+
 .remove_song_to_playlist_button {
   width: 65px;
   height: 30px;
@@ -32,9 +96,11 @@
   border: 1px solid grey;
   border-radius: 4px;
 }
+
 .add_song_to_playlist_button:hover {
   border: 1.3px solid grey;
 }
+
 .remove_song_to_playlist_button:hover {
   border: 1.3px solid #f50;
 }
@@ -53,10 +119,6 @@
   /* padding: 10px; */
   margin-bottom: 25px;
 }
-.add_song_to_playlist_mode_title:hover {
-  border-bottom: 3px solid #f50;
-  color: #f50;
-}
 
 .adtp_selected {
   border-bottom: 3px solid #f50;
@@ -66,6 +128,7 @@
 .atp_p_l {
   margin-right: 5px;
 }
+
 .atp_p_r {
   margin-left: 5px;
 }
@@ -94,6 +157,7 @@
   border-radius: 4px;
   padding: 4px;
 }
+
 .atp_bsp {
   border: 1px solid #f50;
   color: #f50;

@@ -13,8 +13,6 @@ import HomePage from "./components/HomePage";
 import ExplorePage from "./components/ExplorePage";
 import LibraryPage from "./components/LibraryPage";
 import SingleSong from "./components/SongFolders/SingleSong";
-// import UploadSong from "./components/SongFolders/UploadSongForm";
-// import EditSongForm from "./components/SongFolders/EditSongForm";
 import Audio from "./components/AudioPlayer/Audio";
 import PlaylistsPage from "./components/PlaylistFolders/PlaylistsPage";
 import UserPage from "./components/UserPage";
@@ -73,12 +71,6 @@ const App = () => {
           <ProtectedRoute path="/playlists/:id" exact={true}>
             <PlaylistsPage />
           </ProtectedRoute>
-          {/* <Route path="/upload-song" exact={true}>
-            <UploadSong />
-          </Route>
-          <Route path="/songs/:id/edit" exact={true}>
-            <EditSongForm />
-          </Route> */}
           <ProtectedRoute path="/sandbox">
             <Sandbox />
           </ProtectedRoute>

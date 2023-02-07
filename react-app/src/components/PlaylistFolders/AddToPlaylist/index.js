@@ -1,139 +1,81 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import {
-  addSongtoPlaylist,
-  deleteSongtoPlaylist,
-} from "../../../store/playlist";
-
-import "./AddToPlaylist.css";
+import { addSongToPlaylist, removeSongFromPlaylist } from "../../../store/playlist";
 import CreatePlaylistAddSong from "./CreatePlaylistAddSong";
+import "./AddToPlaylist.css";
+import ExistingPlaylist from "../Forms/ExistingPlaylist";
 
 const AddToPlaylist = ({ song }) => {
   const dispatch = useDispatch();
-  const [filter, setFilter] = useState("");
+  const [term, setTerm] = useState("");
   const [mode, setMode] = useState("add");
-  const user = useSelector((state) => state.session.user);
-  const playlistsObj = useSelector((state) => state.playlists);
-  const raw_playlists = Object.values(playlistsObj);
-  const playlists = raw_playlists.filter(
-    (playlist) => playlist.user_id === user.id
-  );
+  const sessionUser = useSelector(state => state.session.user);
+  const playlists = useSelector(state => Object.values(state.playlists)
+    .filter(pl => pl?.user_id === sessionUser.id));
 
-  const handleAddSongToPlaylist = (playlistId, songId) => async (e) => {
+  const handleEnlist = (playlistId, songId) => async (e) => {
     e.preventDefault();
-    const formData = new FormData();
+    console.log(playlistId, songId);
 
+    const formData = new FormData();
     formData.append("playlist_id", playlistId);
     formData.append("song_id", songId);
 
-    const playlist = await dispatch(addSongtoPlaylist(formData));
-
-    if (playlist) {
-      return playlist;
-    }
+    const playlist = await dispatch(addSongToPlaylist(formData));
+    if (playlist) return playlist;
   };
-  const handleDeleteSongToPlaylist = (playlistId, songId) => async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
 
+  const handleDelist = (playlistId, songId) => async (e) => {
+    e.preventDefault();
+    console.log(playlistId, songId);
+
+    const formData = new FormData();
     formData.append("playlist_id", playlistId);
     formData.append("song_id", songId);
 
-    dispatch(deleteSongtoPlaylist(formData));
-
-    // if (playlist) {
-    //   return playlist;
-    // }
-
-    // const playlist = await dispatch(addSongtoPlaylist(formData));
-
-    // if (playlist) {
-    //   return playlist;
-    // }
+    await dispatch(removeSongFromPlaylist(formData));
   };
+
+  const navData = [
+    {
+      mode: 'add',
+      label: 'Add to playlist',
+    },
+    {
+      mode: 'create',
+      label: 'Create a playlist',
+    },
+  ];
 
   return (
-    <div className="flex-column inner_add_to_playlist_conatiner">
-      <div className="flex-row add_song_to_playlist_mode_container ">
-        <p
-          onClick={() => setMode("add")}
-          className={
-            mode === "add"
-              ? "add_song_to_playlist_mode_title atp_p_l adtp_selected"
-              : "add_song_to_playlist_mode_title atp_p_l"
-          }
-        >
-          Add to playlist
-        </p>
-        <p
-          onClick={() => setMode("create")}
-          className={
-            mode === "create"
-              ? "add_song_to_playlist_mode_title atp_p_l adtp_selected"
-              : "add_song_to_playlist_mode_title atp_p_l"
-          }
-        >
-          Create a playlist
-        </p>
-      </div>
+    <>
+      <header>
+        <nav>
+          <ul className="nav-header flex-row">
+            {navData.map((data, idx) => (
+              <li
+                key={idx}
+                onClick={() => setMode(data.mode)}
+                className={mode === data.mode ? "active" : "cursor-pointer"}
+              >{data.label}</li>
+            ))}
+          </ul>
+        </nav>
+      </header>
 
       {mode === "add" ? (
-        <>
-          <input
-            value={filter}
-            placeholder="Filter playlist"
-            onChange={(e) => setFilter(e.target.value.toLowerCase())}
-          />
-          <div className="div_row_add_to_playlist_container">
-            {playlists
-              .filter((playlist) =>
-                playlist?.title.toLowerCase().includes(filter)
-              )
-              .map((playlist) => (
-                <div
-                  key={playlist?.id}
-                  className="flex-row div_row_add_to_playlist"
-                >
-                  <div className="flex-row">
-                    <img
-                      alt=''
-                      src={playlist?.image_url}
-                      className="add_to_playlist_img"
-                    />
-                    <div>
-                      <NavLink to={`/playlists/${playlist?.id}`}>
-                        {playlist?.title}
-                      </NavLink>
-                      <p>{playlist?.songs.length}</p>
-                    </div>
-                  </div>
-                  {!playlist?.songs.includes(song?.id) ? (
-                    <button
-                      onClick={handleAddSongToPlaylist(playlist?.id, song?.id)}
-                      className="add_song_to_playlist_button"
-                    >
-                      Add to playlist
-                    </button>
-                  ) : (
-                    <button
-                      onClick={handleDeleteSongToPlaylist(
-                        playlist?.id,
-                        song?.id
-                      )}
-                      className="remove_song_to_playlist_button"
-                    >
-                      Added
-                    </button>
-                  )}
-                </div>
-              ))}
-          </div>
-        </>
+        <ExistingPlaylist
+          term={term}
+          setTerm={setTerm}
+          playlists={playlists}
+          song={song}
+          handleDelist={handleDelist}
+          handleEnlist={handleEnlist}
+        />
       ) : (
         <CreatePlaylistAddSong songsArr={[song?.id]} />
       )}
-    </div>
+    </>
   );
 };
 

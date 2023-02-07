@@ -19,6 +19,7 @@ const NavBar = () => {
         <Modal
           onClose={() => setShowUploadModal(false)}
           position="center"
+          paddingTop={0}
         >
           <UploadSongForm setShowUploadModal={setShowUploadModal} />
         </Modal>

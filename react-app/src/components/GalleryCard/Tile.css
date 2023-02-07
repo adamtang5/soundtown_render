@@ -182,9 +182,3 @@
   opacity: .95;
   color: rgba(128, 128, 128, 0.686);
 }
-
-.add_to_playlist_modal_container {
-  width: 550px;
-  height: 650px;
-  overflow: hidden;
-}

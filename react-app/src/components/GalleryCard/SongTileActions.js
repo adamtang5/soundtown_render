@@ -67,7 +67,7 @@ const SongTileActions = ({ song }) => {
             {dropdownItems.map((item, idx) => (
               <li
                 key={idx}
-                className="flex-row"
+                className="flex-row cursor-pointer"
                 onClick={item.onClick}
               >
                 {item.leftIcon}{item.label}
@@ -80,9 +80,10 @@ const SongTileActions = ({ song }) => {
         showPlaylistModal && (
           <Modal
             onClose={() => setShowPlaylistModal(false)}
-            position="center"
+            position="top"
+            paddingTop={50}
           >
-            <div className="add_to_playlist_modal_container">
+            <div className="playlist-modal-container">
               <AddToPlaylist song={song} />
             </div>
           </Modal>

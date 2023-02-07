@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
-import { deleteSongtoPlaylist } from "../../../store/playlist";
+import { removeSongFromPlaylist } from "../../../store/playlist";
 
 const AllTracksModal = ({ songArr }) => {
   const { id } = useParams();
@@ -15,7 +15,7 @@ const AllTracksModal = ({ songArr }) => {
     formData.append("playlist_id", playlistId);
     formData.append("song_id", songId);
 
-    dispatch(deleteSongtoPlaylist(formData));
+    dispatch(removeSongFromPlaylist(formData));
   };
   return (
     <div className="AEP_track_container">

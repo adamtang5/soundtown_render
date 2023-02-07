@@ -78,8 +78,21 @@ fieldset {
   cursor: pointer;
 }
 
+.full-width {
+  width: 100%;
+}
+
+.full-box {
+  height: 100%;
+  width: 100%;
+}
+
 .error-text {
   color: var(--color-warning);
+}
+
+.info-text {
+  color: var(--color-info);
 }
 
 .hidden {
@@ -202,8 +215,6 @@ fieldset {
 /* Color Schemes */
 .placeholder {
   background-image: linear-gradient(135deg, #8e8485, #70929c);
-  height: 100%;
-  width: 100%;
 }
 
 .white-bg {
@@ -296,6 +307,10 @@ fieldset {
 
 .label-toggle::before {
   filter: invert(43%) sepia(42%) saturate(6441%) hue-rotate(2deg) brightness(104%) contrast(105%);
+}
+
+.info-text .logo-before::before {
+  filter: invert(63%) sepia(6%) saturate(15%) hue-rotate(352deg) brightness(95%) contrast(91%);
 }
 
 /* Simple Buttons */
@@ -400,6 +415,10 @@ fieldset {
   top: 2px;
 }
 
+.waveform-label::before {
+  content: url(./static/svgs/waveform.svg);
+}
+
 .b2 .logo-before.ellipses-label::before {
   top: -3px;
 }
@@ -424,6 +443,15 @@ fieldset {
 
 .l3 .logo-before.enlist-label::before {
   margin-right: 3px;
+}
+
+.info-text.l3 .waveform-label {
+  max-height: 12px;
+  margin-left: -5px;
+}
+
+.info-text.l3 .waveform-label::before {
+  scale: 0.7;
 }
 
 /* Dropdown Styles */

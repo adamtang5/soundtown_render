@@ -1,7 +1,7 @@
 const ToggleButton = ({
   condition,
   buttonClasses,
-  labelClasses,
+  labelClasses = [],
   handleOff,
   onLabel,
   handleOn,

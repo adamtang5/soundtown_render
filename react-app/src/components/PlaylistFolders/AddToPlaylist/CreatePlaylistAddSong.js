@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { createPlaylist, addSongtoPlaylist } from "../../../store/playlist";
+import { createPlaylist, addSongToPlaylist } from "../../../store/playlist";
 
 const CreatePlaylistAddSong = ({ songsArr }) => {
   const songs = useSelector((state) => state.songs);
@@ -35,7 +35,7 @@ const CreatePlaylistAddSong = ({ songsArr }) => {
 
       formData.append("playlist_id", playlist?.id);
       formData.append("song_id", songId);
-      dispatch(addSongtoPlaylist(formData));
+      dispatch(addSongToPlaylist(formData));
     }
 
     setLoading(false);

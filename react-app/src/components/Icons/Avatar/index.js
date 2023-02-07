@@ -6,7 +6,7 @@ const Avatar = ({ user, isLink }) => {
     return user?.avatar_url ? (
       <img src={user?.avatar_url} alt={user?.display_name} />
     ) : (
-      <div className="avatar-placeholder" />
+      <div className="avatar-placeholder full-box" />
     );
   };
 

@@ -87,7 +87,7 @@ const UserPageHeader = () => {
   return (
     <header className="user-page-banner">
       <div
-        className="banner-bg placeholder"
+        className="banner-bg placeholder full-box"
         style={user?.banner_url ? bannerStyle : {}}
       />
       <div
