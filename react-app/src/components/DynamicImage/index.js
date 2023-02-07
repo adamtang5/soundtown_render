@@ -112,7 +112,7 @@ const DynamicImage = ({
         }}
       >
         <div
-          className={[...entities[entity].styleClasses, "placeholder"].join(' ')}
+          className={[...entities[entity].styleClasses, "placeholder", "full-box"].join(' ')}
           style={{ position: "relative" }}
         >
           {standalone ? (

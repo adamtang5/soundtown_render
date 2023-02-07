@@ -20,6 +20,7 @@ const EditButton = ({
         <Modal
           onClose={() => setShowModal(false)}
           position="center"
+          paddingTop={0}
         >{modalForm}</Modal>
       )}
     </>

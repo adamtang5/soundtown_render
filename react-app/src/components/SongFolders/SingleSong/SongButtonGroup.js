@@ -108,9 +108,10 @@ const SongButtonGroup = ({ song }) => {
       {showPlaylistModal && (
         <Modal
           onClose={() => setShowPlaylistModal(false)}
-          position="center"
+          position="top"
+          paddingTop={50}
         >
-          <div className="add_to_playlist_modal_container">
+          <div className="playlist-modal-container">
             <AddToPlaylist song={song} />
           </div>
         </Modal>

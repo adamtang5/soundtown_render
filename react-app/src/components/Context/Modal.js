@@ -21,7 +21,12 @@ export function ModalProvider({ children }) {
   );
 }
 
-export function Modal({ onClose, position, children }) {
+export function Modal({
+  onClose,
+  position,
+  paddingTop = 100,
+  children,
+}) {
   const modalNode = useContext(ModalContext);
   if (!modalNode) return null;
   const classes = {
@@ -33,6 +38,7 @@ export function Modal({ onClose, position, children }) {
     <div
       id="modal"
       className={classes[position][0]}
+      style={{ paddingTop: `${paddingTop}px` }}
     >
       <div
         id="modal-background"

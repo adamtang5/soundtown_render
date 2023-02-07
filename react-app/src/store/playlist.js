@@ -61,7 +61,7 @@ export const unlikePlaylist = (data) => async (dispatch) => {
   }
 };
 
-export const addSongtoPlaylist = (data) => async (dispatch) => {
+export const addSongToPlaylist = (data) => async (dispatch) => {
   const response = await fetch("/api/playlistsongs/", {
     method: "POST",
     body: data,
@@ -81,7 +81,7 @@ export const addSongtoPlaylist = (data) => async (dispatch) => {
   }
 };
 
-export const deleteSongtoPlaylist = (data) => async (dispatch) => {
+export const removeSongFromPlaylist = (data) => async (dispatch) => {
   const response = await fetch("/api/playlistsongs/", {
     method: "DELETE",
     body: data,
