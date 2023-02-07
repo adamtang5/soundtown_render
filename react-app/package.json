@@ -2,7 +2,6 @@
   "name": "react-app",
   "version": "0.1.0",
   "private": true,
-  "build": "CI=false && react-scripts build && cp -R ../app/static/* build/static",
   "dependencies": {
     "@chakra-ui/icons": "^1.1.7",
     "@chakra-ui/react": "^1.8.8",
