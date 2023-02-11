@@ -24,18 +24,18 @@ This is a clone of [Soundcloud](https://soundcloud.com/). Access the [Sound Town
 
 1. Clone this repo.
 
-  * ```git clone git@github.com:adamtang5/soundtown_heroku.git```
+    * ```git clone git@github.com:adamtang5/soundtown_heroku.git```
 
 2. Install dependencies.
 
-  * ```pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt```
+    * ```pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt```
 
 3. Create a `.env` file based on `.env.example*` with proper settings required for the development environment.
 
 4. Create a POSTGRESQL user with CREATEDB and PASSWORD in PSQL.
 
-  * ```CREATE USER <db_username> WITH CREATEDB PASSWORD <'db_password'>;```
-  * ```CREATE DATABASE <db_name> WITH OWNER <db_username>;```
+    * ```CREATE USER <db_username> WITH CREATEDB PASSWORD <'db_password'>;```
+    * ```CREATE DATABASE <db_name> WITH OWNER <db_username>;```
 
 5. Follow [these instructions](https://github.com/jamesurobertson/aws-s3-pern-demo#create-your-aws-user-and-bucket) to create your aws user and bucket, and obtain your credentials (stop after the __Create your AWS User and Bucket__ section). You will need these credentials in subsequent steps to set up your environment.
 
@@ -43,18 +43,18 @@ This is a clone of [Soundcloud](https://soundcloud.com/). Access the [Sound Town
 
 7. Get into pipenv, migrate the database, seed the database, and run the flask app using the following commands:
 
-  * ```pipenv shell```
-  * ```flask db migrate```
-  * ```flask seed all```
-  * ```flask run```
+    * ```pipenv shell```
+    * ```flask db migrate```
+    * ```flask seed all```
+    * ```flask run```
 
 8. Install frontend dependencies in the `react-app` directory.
 
-  * ```npm install```
+    * ```npm install```
 
 9. Start the frontend React app.
 
-  * ```npm start```
+    * ```npm start```
 
 10. You can use the Demo user or create an account to begin using **Sound Town**.
 
@@ -62,5 +62,5 @@ This is a clone of [Soundcloud](https://soundcloud.com/). Access the [Sound Town
 
 Logged in users can perform the following actions.
 
-- Add/View/Edit/Delete Songs
-- Add/View/Edit/Delete Comments
+ - Add/View/Edit/Delete Songs
+ - Add/View/Edit/Delete Comments
