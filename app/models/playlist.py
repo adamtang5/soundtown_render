@@ -11,7 +11,7 @@ class Playlist(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   title = db.Column(db.String(75), nullable=False)
-  songs_order = db.Column(db.Text, default="[]")
+  songs_order = db.Column(db.Text, nullable=False, default="[]")
   image_url = db.Column(db.String)
   description = db.Column(db.String)
   created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
