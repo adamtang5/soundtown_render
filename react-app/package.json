@@ -4,17 +4,13 @@
   "private": true,
   "build": "CI=false && react-scripts build",
   "dependencies": {
-    "@chakra-ui/icons": "^1.1.7",
-    "@chakra-ui/react": "^1.8.8",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "get-audio-duration": "^3.1.0",
     "http-proxy-middleware": "^1.0.5",
-    "icons": "^1.0.0",
     "moment": "^2.29.3",
     "moment-timezone": "^0.5.34",
-    "randomcolor": "^0.6.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-h5-audio-player": "^3.8.4",
@@ -29,14 +25,13 @@
     "redux": "^4.1.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "sass": "^1.51.0",
     "slick-carousel": "^1.8.1",
     "wavesurfer-react": "^2.1.3",
     "wavesurfer.js": "^6.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=false && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
