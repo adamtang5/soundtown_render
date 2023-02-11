@@ -4,6 +4,6 @@ from wtforms.validators import DataRequired, URL
 
 
 class EditSongForm(FlaskForm):
-    id = IntegerField('id', validators=[DataRequired()])
-    title = StringField('title', validators=[DataRequired()])
-    description = StringField('description')
+  id = IntegerField('id', validators=[DataRequired()])
+  title = StringField('title', validators=[DataRequired()])
+  description = StringField('description')
