@@ -71,7 +71,7 @@ const AddToPlaylist = ({ song }) => {
           handleEnlist={handleEnlist}
         />
       ) : (
-        <CreatePlaylistAddSong songsArr={[song?.id]} />
+        <CreatePlaylistAddSong song={song} />
       )}
     </>
   );
