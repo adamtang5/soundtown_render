@@ -69,7 +69,7 @@ export const addSongToPlaylist = (data) => async (dispatch) => {
 
   if (response.ok) {
     const playlist = await response.json();
-    dispatch(newPlaylist(playlist));
+    await dispatch(newPlaylist(playlist));
     return playlist;
   } else if (response.status < 500) {
     const data = await response.json();
@@ -89,7 +89,7 @@ export const removeSongFromPlaylist = (data) => async (dispatch) => {
 
   if (response.ok) {
     const playlist = await response.json();
-    dispatch(newPlaylist(playlist));
+    await dispatch(newPlaylist(playlist));
     return playlist;
   } else if (response.status < 500) {
     const data = await response.json();

@@ -37,7 +37,7 @@ class Playlist(db.Model):
       'user_id': self.user_id,
       'user': self.user.to_dict(),
       'title': self.title,
-      'songs_order': json.loads(f'[{self.songs_order}]'),
+      'songs_order': json.loads(self.songs_order),
       'image_url': self.image_url,
       'description': self.description,
       'created_at': self.created_at,

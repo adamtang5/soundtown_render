@@ -44,7 +44,7 @@ const ExistingPlaylist = ({
                 </div>
                 <div className="modal-results-action">
                   <ToggleButton
-                    condition={pl?.songs.includes(song?.id)}
+                    condition={pl?.songs_order.includes(song?.id)}
                     buttonClasses={[...baseClasses, 'b2']}
                     handleOff={() => handleDelist(pl?.id, song?.id)}
                     onLabel="Added"

@@ -13,8 +13,7 @@ const AddToPlaylist = ({ song }) => {
   const playlists = useSelector(state => Object.values(state.playlists)
     .filter(pl => pl?.user_id === sessionUser.id));
 
-  const handleEnlist = (playlistId, songId) => async (e) => {
-    e.preventDefault();
+  const handleEnlist = async (playlistId, songId) => {
     console.log(playlistId, songId);
 
     const formData = new FormData();
@@ -25,8 +24,7 @@ const AddToPlaylist = ({ song }) => {
     if (playlist) return playlist;
   };
 
-  const handleDelist = (playlistId, songId) => async (e) => {
-    e.preventDefault();
+  const handleDelist = async (playlistId, songId) => {
     console.log(playlistId, songId);
 
     const formData = new FormData();
