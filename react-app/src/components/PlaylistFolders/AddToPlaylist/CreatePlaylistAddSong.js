@@ -34,7 +34,7 @@ const CreatePlaylistAddSong = ({ song }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="modal-form"
+      className="modal-form flex-column"
     >
       <ModalFormInput
         label="Playlist title"
