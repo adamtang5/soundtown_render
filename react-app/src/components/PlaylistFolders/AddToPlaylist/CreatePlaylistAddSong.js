@@ -2,78 +2,56 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { createPlaylist, addSongToPlaylist } from "../../../store/playlist";
+import SimpleButton from "../../Buttons/SimpleButton";
+import ModalFormInput from "../../ModalForm/ModalFormInput";
 
-const CreatePlaylistAddSong = ({ songsArr }) => {
-  const songs = useSelector((state) => state.songs);
-  const userId = useSelector((state) => state.session.user.id);
-
+const CreatePlaylistAddSong = ({ song }) => {
   const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state.session.user);
 
   const [title, setTitle] = useState("");
-  const [dynSongsArr, setDynSongsArr] = useState(songsArr);
 
   const [newPlaylistId, setNewPlaylistId] = useState("");
 
-  const [loading, setLoading] = useState(false);
   const [playlistBtn, setPlaylistBtn] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("user_id", +userId);
+    let formData = new FormData();
+    formData.append("user_id", sessionUser.id);
     formData.append("title", title);
 
     const playlist = await dispatch(createPlaylist(formData));
 
-    setNewPlaylistId(playlist.id);
+    formData = new FormData();
 
-    setLoading(true);
-
-    for (const songId of dynSongsArr) {
-      const formData = new FormData();
-
-      formData.append("playlist_id", playlist?.id);
-      formData.append("song_id", songId);
-      dispatch(addSongToPlaylist(formData));
-    }
-
-    setLoading(false);
-    setPlaylistBtn(true);
+    formData.append("playlist_id", playlist?.id);
+    formData.append("song_id", song?.id);
+    await dispatch(addSongToPlaylist(formData));
   };
 
   return (
-    <>
-      {!playlistBtn && (
-        <>
-          <div>
-            <p className="atp_tc">Playlist Name</p>
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Enter Title"
+    <form
+      onSubmit={handleSubmit}
+      className="modal-form"
+    >
+      <ModalFormInput
+        label="Playlist title"
+        value={title}
+        setValue={setTitle}
+      />
+      <footer>
+        <div className="form-action flex-row">
+          <div className="legend-required">Required fields</div>
+          <div className="form-action-buttons flex-row-rev">
+            <SimpleButton
+              label="Save"
+              type="submit"
             />
           </div>
-          <div className="atp_bc">
-            <button onClick={handleSubmit} className="cursor-pointer atp_bs">
-              Save
-            </button>
-          </div>
-        </>
-      )}
-      {loading && (
-        // <>
-        //   <div>
-        //     <p>Playlist Name</p>
-        //     <input value={title} onChange={(e) => setTitle(e.target.value)} />
-        //   </div>
-        //   <div>
-        //     <BarLoader height={4} width={100} color={"#4480A6"} />
-        //   </div>
-        // </>
-        // <BarLoader height={4} width={100} color={"#4480A6"} />
-        <p>Loading</p>
-      )}
+        </div>
+      </footer>
 
       {playlistBtn && (
         <NavLink to={`/playlists/${newPlaylistId}`} className="atp_bc atp_bsp">
@@ -83,24 +61,22 @@ const CreatePlaylistAddSong = ({ songsArr }) => {
 
       <div className="atp_ul_conatiner">
         <ul>
-          {dynSongsArr.map((songId, idx) => (
-            <li key={idx} className="atp_li_container">
-              <div className="flex-row inner_create_playlist_song">
-                <div className="flex-row">
-                  <img
-                    src={songs[+songId]?.image_url}
-                    className="create_playlist_song_img"
-                    alt={songs[+songId]?.title}
-                  />
-                  <p>{songs[+songId]?.title}</p>
-                </div>
-                {/* <span onClick={test(idx)}>&#10005;</span> */}
+          <li className="atp_li_container">
+            <div className="flex-row inner_create_playlist_song">
+              <div className="flex-row">
+                <img
+                  src={song?.image_url}
+                  className="create_playlist_song_img"
+                  alt={song?.title}
+                />
+                <p>{song?.title}</p>
               </div>
-            </li>
-          ))}
+              {/* <span onClick={test(idx)}>&#10005;</span> */}
+            </div>
+          </li>
         </ul>
       </div>
-    </>
+    </form>
   );
 };
 
