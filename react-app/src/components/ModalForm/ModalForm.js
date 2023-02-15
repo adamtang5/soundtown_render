@@ -1,4 +1,4 @@
-import SimpleButton from '../Buttons/SimpleButton';
+import ModalFormFooter from './ModalFormFooter';
 import './ModalForm.css';
 
 const ModalForm = ({
@@ -28,28 +28,10 @@ const ModalForm = ({
           {formRight}
         </div>
       </fieldset>
-      <footer>
-        <div className="error-block">
-          {errors?.map((error, idx) => (
-            <div className="error-text" key={idx}>
-              {error}
-            </div>
-          ))}
-        </div>
-        <div className="form-action flex-row">
-          <div className="legend-required">Required fields</div>
-          <div className="form-action-buttons flex-row-rev">
-            {buttonGroupData.map(data => (
-              <SimpleButton
-                key={data.type}
-                label={data.label}
-                onClick={data.onClick}
-                type={data.type}
-              />
-            ))}
-          </div>
-        </div>
-      </footer>
+      <ModalFormFooter
+        errors={errors}
+        buttonGroupData={buttonGroupData}
+      />
     </form>
   );
 };

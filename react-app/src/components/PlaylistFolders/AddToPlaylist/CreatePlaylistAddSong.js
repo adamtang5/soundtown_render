@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { createPlaylist, addSongToPlaylist } from "../../../store/playlist";
-import SimpleButton from "../../Buttons/SimpleButton";
+import ModalFormFooter from "../../ModalForm/ModalFormFooter";
 import ModalFormInput from "../../ModalForm/ModalFormInput";
 
 const CreatePlaylistAddSong = ({ song }) => {
@@ -31,27 +31,30 @@ const CreatePlaylistAddSong = ({ song }) => {
     await dispatch(addSongToPlaylist(formData));
   };
 
+  const buttonGroupData = [
+    {
+      label: "Save",
+      type: "submit",
+    },
+  ];
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="modal-form flex-column"
-    >
-      <ModalFormInput
-        label="Playlist title"
-        value={title}
-        setValue={setTitle}
-      />
-      <footer>
-        <div className="form-action flex-row">
-          <div className="legend-required">Required fields</div>
-          <div className="form-action-buttons flex-row-rev">
-            <SimpleButton
-              label="Save"
-              type="submit"
-            />
-          </div>
-        </div>
-      </footer>
+    <>
+      <form
+        onSubmit={handleSubmit}
+        className="modal-form flex-column"
+        style={{ minHeight: "100px" }}
+      >
+        <ModalFormInput
+          label="Playlist title"
+          value={title}
+          setValue={setTitle}
+        />
+        <ModalFormFooter
+          buttonGroupData={buttonGroupData}
+          xPadding={0}
+        />
+      </form>
 
       {playlistBtn && (
         <NavLink to={`/playlists/${newPlaylistId}`} className="atp_bc atp_bsp">
@@ -76,7 +79,7 @@ const CreatePlaylistAddSong = ({ song }) => {
           </li>
         </ul>
       </div>
-    </form>
+    </>
   );
 };
 
