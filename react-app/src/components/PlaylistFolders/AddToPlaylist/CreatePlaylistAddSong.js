@@ -115,6 +115,13 @@ const CreatePlaylistAddSong = ({ song }) => {
           </li>
         ))}
       </ul>
+
+      <footer className="recommendation">
+        <p>Looking for more tracks? Add some from your likes.</p>
+        <ul className="new-playlist-recommendation">
+
+        </ul>
+      </footer>
     </>
   );
 };
