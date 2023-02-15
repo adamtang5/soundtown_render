@@ -8,6 +8,8 @@
   --color-warning: #cf0000;
   --color-off-white-bg: #f2f2f2;
   --color-info: #999;
+  --filter-primary: invert(43%) sepia(42%) saturate(6441%) hue-rotate(2deg) brightness(104%) contrast(105%);
+  --filter-info: invert(63%) sepia(6%) saturate(15%) hue-rotate(352deg) brightness(95%) contrast(91%);
   --height-navbar: 46px;
   --x-margin: 5vw;
   --dim-song-row-thumb: 30px;
@@ -306,12 +308,13 @@ fieldset {
 }
 
 .label-toggle::before {
-  filter: invert(43%) sepia(42%) saturate(6441%) hue-rotate(2deg) brightness(104%) contrast(105%);
+  filter: var(--filter-primary);
 }
 
 .info-text .logo-before::before {
-  filter: invert(63%) sepia(6%) saturate(15%) hue-rotate(352deg) brightness(95%) contrast(91%);
+  filter: var(--filter-info);
 }
+
 
 /* Simple Buttons */
 .simple-button {

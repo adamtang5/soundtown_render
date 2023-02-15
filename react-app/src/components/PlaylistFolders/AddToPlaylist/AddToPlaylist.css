@@ -95,6 +95,10 @@
   color: var(--color-info);
 }
 
+.song-row-actions {
+  filter: var(--filter-info);
+}
+
 .recommendation {
   margin-top: 50px;
   font-size: 14px;
