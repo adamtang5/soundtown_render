@@ -5,7 +5,6 @@ import { signUp } from "../../store/session";
 import { createDetail } from "../../store/user-details";
 import { FaUserAlt } from 'react-icons/fa';
 import { IoLogOutSharp } from 'react-icons/io5';
-import { IoCloseOutline } from 'react-icons/io5';
 import { login } from "../../store/session";
 import "./auth.css";
 
@@ -88,8 +87,6 @@ const SignUpForm = ({ setShowSignUpModal, setShowLoginModal }) => {
       <div className="auth_contaner flex-row">
         <div className="auth_form_wrapper">
           <form className="signup_form flex-column " onSubmit={onSignUp}>
-            <IoCloseOutline className="close-login-icon" onClick={() => setShowSignUpModal(false)} />
-
             <button
               className="login_form_btn cursor-pointer or-shdw-hov"
               type="submit"

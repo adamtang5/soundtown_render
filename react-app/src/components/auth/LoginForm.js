@@ -4,7 +4,6 @@ import { Redirect, useHistory } from "react-router-dom";
 import { login } from "../../store/session";
 import { FaUserAlt } from 'react-icons/fa';
 import { IoLogOutSharp } from 'react-icons/io5';
-import { IoCloseOutline } from 'react-icons/io5';
 import "./auth.css";
 
 const LoginForm = ({ setShowLoginModal, setShowSignUpModal }) => {
@@ -62,11 +61,6 @@ const LoginForm = ({ setShowLoginModal, setShowSignUpModal }) => {
     <div className="flex-row">
       <div className="">
         <form className="login_form flex-column" onSubmit={onLogin}>
-          <IoCloseOutline
-            className="close-login-icon"
-            onClick={() => setShowLoginModal(false)}
-          />
-
           <button
             className="login_form_btn cursor-pointer or-shdw-hov"
             type="submit"
