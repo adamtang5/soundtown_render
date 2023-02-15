@@ -69,6 +69,32 @@
   gap: 5px;
 }
 
+.new-playlist-staging {
+  border: 1px solid var(--color-border-light);
+}
+
+.new-playlist-staging li {
+  gap: 10px;
+  border-top: 1px solid var(--color-border-light);
+  padding: 5px;
+  font-size: 13px;
+  align-items: center;
+  height: 32px;
+}
+
+.new-playlist-staging li:first-child {
+  border-top: none;
+}
+
+.song-row-right {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.song-row-artist {
+  color: var(--color-info);
+}
+
 .add_to_playlist_img {
   width: 60px;
 }
