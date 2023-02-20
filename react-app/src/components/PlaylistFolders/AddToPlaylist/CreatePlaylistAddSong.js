@@ -5,11 +5,15 @@ import { NavLink } from "react-router-dom";
 import { createPlaylist, addSongToPlaylist } from "../../../store/playlist";
 import ModalFormFooter from "../../ModalForm/ModalFormFooter";
 import ModalFormInput from "../../ModalForm/ModalFormInput";
+import AssetCard from "../../Modules/AssetCard";
 
 const CreatePlaylistAddSong = ({ song }) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
+  const stateUsers = useSelector(state => state.users);
   const stateSongs = useSelector(state => state.songs);
+  const likedSongs = stateUsers[sessionUser.id].likes
+    .map(id => stateSongs[id]);
   const [title, setTitle] = useState("");
   const [songsOrder, setSongsOrder] = useState([song?.id]);
   const [stagingList, setStagingList] = useState([song?.id, -3, -2, -1]);
@@ -119,7 +123,19 @@ const CreatePlaylistAddSong = ({ song }) => {
       <footer className="recommendation">
         <p>Looking for more tracks? Add some from your likes.</p>
         <ul className="new-playlist-recommendation">
-
+          {likedSongs?.slice(0, 3).map(song => (
+            <AssetCard
+              key={song?.id}
+              entity="song"
+              asset={song}
+              assetCover={
+                <img
+                  src={song?.image_url}
+                  alt={song?.title}
+                />}
+              user={stateUsers[song?.user_id]}
+            />
+          ))}
         </ul>
       </footer>
     </>
