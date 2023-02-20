@@ -22,7 +22,8 @@ const PlaylistsPage = () => {
   const sessionUser = useSelector(state => state.session.user);
   const playlistUser = useSelector(state => state.users[playlist?.user_id]);
   const userPlaylists = useSelector(state => Object.values(state.playlists)
-    .filter(pl => pl.user_id === playlist?.user_id));
+    .filter(pl => pl.user_id === playlist?.user_id)
+    .filter(pl => pl.id !== +id));
 
   const handlePlayButtonClick = (e) => {
     e.preventDefault();
@@ -80,19 +81,20 @@ const PlaylistsPage = () => {
             h3="Playlists from this user"
             collection={userPlaylists?.slice(0, 3).map(pl => (
               <AssetCard
+                key={pl?.id}
                 entity="playlist"
                 asset={pl}
                 assetCover={
                   <div className="sidebar-cover-bg">
                     <img
-                      src={playlist?.image_url}
+                      src={pl?.image_url}
                       className="sidebar-cover"
                       alt=""
                     />
                   </div>}
                 assetFooter={
                   <footer className="logo-before heart-label">
-                    {playlist?.likes?.length}
+                    {pl?.likes?.length}
                   </footer>}
                 user={playlistUser}
               />
