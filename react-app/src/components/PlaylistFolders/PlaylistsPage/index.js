@@ -8,7 +8,7 @@ import PlaylistButtonGroup from "./PlaylistButtonGroup";
 import Avatar from "../../Icons/Avatar";
 import SingleSongRow from "./SingleSongRow";
 import SidebarCollection from "../../SidebarModules/SidebarCollection";
-import SidebarPlaylist from "../../SidebarModules/SidebarPlaylist";
+import AssetCard from "../../Modules/AssetCard";
 import "./PlaylistSongs.css";
 import "./Playlist.css";
 import "../../SidebarModules/Sidebar.css";
@@ -20,6 +20,7 @@ const PlaylistsPage = () => {
   const stateSongs = useSelector(state => state.songs);
   const songs = playlist?.songs?.map(id => stateSongs[+id]);
   const sessionUser = useSelector(state => state.session.user);
+  const playlistUser = useSelector(state => state.users[playlist?.user_id]);
   const userPlaylists = useSelector(state => Object.values(state.playlists)
     .filter(pl => pl.user_id === playlist?.user_id));
 
@@ -78,9 +79,22 @@ const PlaylistsPage = () => {
             styleClasses={['stack-label']}
             h3="Playlists from this user"
             collection={userPlaylists?.slice(0, 3).map(pl => (
-              <SidebarPlaylist
-                key={pl?.id}
-                playlist={pl}
+              <AssetCard
+                entity="playlist"
+                asset={pl}
+                assetCover={
+                  <div className="sidebar-cover-bg">
+                    <img
+                      src={playlist?.image_url}
+                      className="sidebar-cover"
+                      alt=""
+                    />
+                  </div>}
+                assetFooter={
+                  <footer className="logo-before heart-label">
+                    {playlist?.likes?.length}
+                  </footer>}
+                user={playlistUser}
               />
             ))}
           />
