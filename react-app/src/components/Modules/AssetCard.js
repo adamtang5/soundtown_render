@@ -14,7 +14,7 @@ const AssetCard = ({
         {assetCover}
       </div>
       <div className="asset-li-right full-width flex-row">
-        <div className="asset-li-details flex-column">
+        <div className="asset-li-details full-box flex-column">
           <Link to={`/users/${user?.id}`}>
             <h3>{user?.display_name}</h3>
           </Link>
