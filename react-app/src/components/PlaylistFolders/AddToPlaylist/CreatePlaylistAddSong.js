@@ -6,17 +6,19 @@ import { createPlaylist, addSongToPlaylist } from "../../../store/playlist";
 import ModalFormFooter from "../../ModalForm/ModalFormFooter";
 import ModalFormInput from "../../ModalForm/ModalFormInput";
 import AssetCard from "../../Modules/AssetCard";
+import PlayCover from "../../Modules/PlayCover";
 
 const CreatePlaylistAddSong = ({ song }) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const stateUsers = useSelector(state => state.users);
   const stateSongs = useSelector(state => state.songs);
-  const likedSongs = stateUsers[sessionUser.id].likes
-    .map(id => stateSongs[id]);
   const [title, setTitle] = useState("");
   const [songsOrder, setSongsOrder] = useState([song?.id]);
   const [stagingList, setStagingList] = useState([song?.id, -3, -2, -1]);
+  const likedSongs = stateUsers[sessionUser.id].likes
+    .filter(id => !songsOrder.includes(id))
+    .map(id => stateSongs[id]);
 
   const [newPlaylistId, setNewPlaylistId] = useState("");
 
@@ -38,17 +40,23 @@ const CreatePlaylistAddSong = ({ song }) => {
     await dispatch(addSongToPlaylist(formData));
   };
 
+  const addSong = id => {
+    const newSongsOrder = [...songsOrder, id];
+    setSongsOrder(newSongsOrder);
+    convertSongsOrder2StagingList(newSongsOrder);
+  };
+
   const removeSong = id => {
     const newSongsOrder = songsOrder.filter(songId => songId !== id);
     setSongsOrder(newSongsOrder);
-    convertSongsOrder2StagingList(convertSongsOrder2StagingList(newSongsOrder));
+    convertSongsOrder2StagingList(newSongsOrder);
   };
 
   const convertSongsOrder2StagingList = songsOrder => {
     const stagingList = [-4, -3, -2, -1];
     songsOrder.forEach((songId, idx) => stagingList[idx] = songId);
     setStagingList(stagingList);
-  }
+  };
 
   const buttonGroupData = [
     {
@@ -122,18 +130,24 @@ const CreatePlaylistAddSong = ({ song }) => {
 
       <footer className="recommendation">
         <p>Looking for more tracks? Add some from your likes.</p>
-        <ul className="new-playlist-recommendation">
+        <ul className="asset-ul">
           {likedSongs?.slice(0, 3).map(song => (
             <AssetCard
               key={song?.id}
               entity="song"
               asset={song}
               assetCover={
-                <img
-                  src={song?.image_url}
-                  alt={song?.title}
+                <PlayCover
+                  entity="song"
+                  asset={song}
+                  dimension={50}
+                  isOverlay={false}
                 />}
               user={stateUsers[song?.user_id]}
+              buttonGroupData={[{
+                label: "Add to playlist",
+                onClick: () => addSong(song?.id),
+              }]}
             />
           ))}
         </ul>

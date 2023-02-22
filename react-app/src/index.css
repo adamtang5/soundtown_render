@@ -582,8 +582,14 @@ fieldset {
 }
 
 /* Asset LI cards */
+.asset-ul {
+  margin: 15px 0;
+}
+
 .asset-ul li {
-  margin: 5px 0;
+  padding: 10px 0;
+  border-top: 1px solid var(--color-border-light);
+  gap: 10px;
 }
 
 .asset-li-left {}
