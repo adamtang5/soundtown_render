@@ -3,6 +3,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { createPlaylist, addSongToPlaylist } from "../../../store/playlist";
+import { randomSample } from "../../../util";
 import ModalFormFooter from "../../ModalForm/ModalFormFooter";
 import ModalFormInput from "../../ModalForm/ModalFormInput";
 import AssetCard from "../../Modules/AssetCard";
@@ -16,9 +17,10 @@ const CreatePlaylistAddSong = ({ song }) => {
   const [title, setTitle] = useState("");
   const [songsOrder, setSongsOrder] = useState([song?.id]);
   const [stagingList, setStagingList] = useState([song?.id, -3, -2, -1]);
-  const likedSongs = stateUsers[sessionUser.id].likes
-    .filter(id => !songsOrder.includes(id))
-    .map(id => stateSongs[id]);
+  const [likedSamples, setLikedSamples] = useState(
+    randomSample(stateUsers[sessionUser.id].likes
+      .filter(id => !songsOrder.includes(id))
+      .map(id => stateSongs[id]), 3));
 
   const [newPlaylistId, setNewPlaylistId] = useState("");
 
@@ -44,12 +46,16 @@ const CreatePlaylistAddSong = ({ song }) => {
     const newSongsOrder = [...songsOrder, id];
     setSongsOrder(newSongsOrder);
     convertSongsOrder2StagingList(newSongsOrder);
+    setLikedSamples(orig => orig.filter(song => song.id !== id));
   };
 
   const removeSong = id => {
     const newSongsOrder = songsOrder.filter(songId => songId !== id);
     setSongsOrder(newSongsOrder);
     convertSongsOrder2StagingList(newSongsOrder);
+    if (stateUsers[sessionUser.id].likes.includes(id)) {
+      setLikedSamples(orig => [...orig, stateSongs[id]]);
+    }
   };
 
   const convertSongsOrder2StagingList = songsOrder => {
@@ -131,7 +137,7 @@ const CreatePlaylistAddSong = ({ song }) => {
       <footer className="recommendation">
         <p>Looking for more tracks? Add some from your likes.</p>
         <ul className="asset-ul">
-          {likedSongs?.slice(0, 3).map(song => (
+          {likedSamples?.slice(0, 3).map(song => (
             <AssetCard
               key={song?.id}
               entity="song"
