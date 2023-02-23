@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import SimpleButton from "../Buttons/SimpleButton";
 
 const AssetCard = ({
   entity,
@@ -27,11 +28,12 @@ const AssetCard = ({
         </div>
         <ul className="asset-li-actions flex-row">
           {buttonGroupData.map((data, idx) => (
-            <li
-              key={idx}
-              onClick={data.onClick}
-            >
-              {data.label}
+            <li key={idx}>
+              <SimpleButton
+                label={data.label}
+                onClick={data.onClick}
+                classes={['single-line', 'button-action']}
+              />
             </li>
           ))}
         </ul>
