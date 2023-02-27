@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { createPlaylist, addSongToPlaylist } from "../../../store/playlist";
+import { useHistory } from "react-router-dom";
+import { createPlaylist } from "../../../store/playlist";
 import { randomSample } from "../../../util";
 import ModalFormFooter from "../../ModalForm/ModalFormFooter";
 import ModalFormInput from "../../ModalForm/ModalFormInput";
 import AssetCard from "../../Modules/AssetCard";
 import PlayCover from "../../Modules/PlayCover";
 
-const CreatePlaylistAddSong = ({ song }) => {
+const CreatePlaylistAddSong = ({ song, setShowModal }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
   const stateUsers = useSelector(state => state.users);
   const stateSongs = useSelector(state => state.songs);
+  const [errors, setErrors] = useState([]);
   const [title, setTitle] = useState("");
   const [songsOrder, setSongsOrder] = useState([song?.id]);
   const [stagingList, setStagingList] = useState([song?.id, -3, -2, -1]);
@@ -22,24 +24,23 @@ const CreatePlaylistAddSong = ({ song }) => {
       .filter(id => !songsOrder.includes(id))
       .map(id => stateSongs[id]), 3));
 
-  const [newPlaylistId, setNewPlaylistId] = useState("");
-
-  const [playlistBtn, setPlaylistBtn] = useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     let formData = new FormData();
     formData.append("user_id", sessionUser.id);
     formData.append("title", title);
+    formData.append("songs_order", JSON.stringify(songsOrder));
 
-    const playlist = await dispatch(createPlaylist(formData));
-
-    formData = new FormData();
-
-    formData.append("playlist_id", playlist?.id);
-    formData.append("song_id", song?.id);
-    await dispatch(addSongToPlaylist(formData));
+    const res = await dispatch(createPlaylist(formData));
+    if (res) {
+      if (res.errors) {
+        setErrors(res.erros);
+      } else {
+        setShowModal(false);
+        history.push(`/playlists/${res.id}`);
+      }
+    }
   };
 
   const addSong = id => {
@@ -76,7 +77,7 @@ const CreatePlaylistAddSong = ({ song }) => {
       <form
         onSubmit={handleSubmit}
         className="modal-form flex-column"
-        style={{ minHeight: "100px" }}
+        style={{ minHeight: "130px" }}
       >
         <ModalFormInput
           label="Playlist title"
@@ -86,14 +87,9 @@ const CreatePlaylistAddSong = ({ song }) => {
         <ModalFormFooter
           buttonGroupData={buttonGroupData}
           xPadding={0}
+          errors={errors}
         />
       </form>
-
-      {playlistBtn && (
-        <NavLink to={`/playlists/${newPlaylistId}`} className="atp_bc atp_bsp">
-          Go to playlist
-        </NavLink>
-      )}
 
       <ul className="new-playlist-staging">
         {stagingList?.map(songId => (

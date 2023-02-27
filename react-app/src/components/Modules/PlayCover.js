@@ -15,6 +15,7 @@ const PlayCover = ({
         width: `${dimension}px`,
         height: `${dimension}px`,
         backgroundImage: `url(${asset?.image_url})`,
+        backgroundSize: 'cover',
       }}
     >
       {isOverlay && (

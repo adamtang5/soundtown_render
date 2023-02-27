@@ -5,7 +5,7 @@ import CreatePlaylistAddSong from "./CreatePlaylistAddSong";
 import ExistingPlaylist from "../Forms/ExistingPlaylist";
 import "./AddToPlaylist.css";
 
-const AddToPlaylist = ({ song }) => {
+const AddToPlaylist = ({ song, setShowModal }) => {
   const dispatch = useDispatch();
   const [term, setTerm] = useState("");
   const [mode, setMode] = useState("add");
@@ -71,7 +71,10 @@ const AddToPlaylist = ({ song }) => {
           handleEnlist={handleEnlist}
         />
       ) : (
-        <CreatePlaylistAddSong song={song} />
+        <CreatePlaylistAddSong
+          song={song}
+          setShowModal={setShowModal}
+        />
       )}
     </>
   );
