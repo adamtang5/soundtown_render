@@ -1,84 +1,101 @@
-from flask import Blueprint,jsonify,request
-from app.models import Playlist, db,Song
+from flask import Blueprint, jsonify, request
+from flask_login import current_user, login_required
+from sqlalchemy import text
+from app.models import db, User, Playlist, Song, playlist_song
 from datetime import datetime
 from app.forms import NewPlaylistForm, EditPlaylistForm
-from app.api.utils import validation_errors_to_error_messages
-from sqlalchemy.orm import relationship, sessionmaker, joinedload
+from app.api.utils import (
+  validation_errors_to_error_messages, FILE_TYPE_ERROR, UNAUTHORIZED_ERROR
+)
 from app.s3_helpers import (
-  upload_file_to_s3, allowed_file, get_unique_filename)
+  upload_file_to_s3, allowed_file, get_unique_filename
+)
+from sqlalchemy.orm import relationship, sessionmaker, joinedload
+import json
 
 playlist_routes = Blueprint('playlist',__name__)
 
 # POST or PUT /api/playlists/
-@playlist_routes.route("/", methods=["POST","PUT"])
+@playlist_routes.route('/', methods=['POST'])
+@login_required
 def new_playlist():
-  if request.method == 'POST':
-    """
-    Create a New Playlist
-    """
+  """
+  Create a New Playlist
+  """
+  form = NewPlaylistForm()
+  form['csrf_token'].data = request.cookies['csrf_token']
+  if form.validate_on_submit():
+    playlist = Playlist(
+      user_id=request.form['user_id'],
+      title=request.form['title'],
+      songs_order=request.form['songs_order']
+    )
+    db.session.add(playlist)
 
-    form = NewPlaylistForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-      if not any(request.files):
-        if len(request.form) == 2:
-          playlist = Playlist(
-          user_id =  request.form['user_id'],
-          image_url="https://soundtownbucket.s3.us-west-1.amazonaws.com/SoundTown-icon-with-text-black-bg.png",
-          title= request.form['title'])
-        else:
-          playlist = Playlist(
-          user_id =  request.form['user_id'],
-          image_url="https://soundtownbucket.s3.us-west-1.amazonaws.com/SoundTown-icon-with-text-black-bg.png",
-          title= request.form['title'],
-          description= request.form["description"])
-      else:
-        raw_image_url = request.files["image_url"]
+    playlist = Playlist.query.order_by(text("id desc")).limit(1).one()
+    for song_id in json.loads(request.form['songs_order']):
+      song = Song.query.get(song_id)
+      playlist.songs.append(song)
 
-        if not allowed_file(raw_image_url.filename):
-          return {"errors": "file type not permitted"}, 400
-
-        raw_image_url.filename = get_unique_filename(raw_image_url.filename)
-
-        image_upload = upload_file_to_s3(raw_image_url)
-        image_url = image_upload["url"]
-
-        playlist = Playlist(
-          user_id =  request.form['user_id'],
-          title= request.form['title'],
-          image_url= image_url,
-          description= request.form['description']
-        )
-      db.session.add(playlist)
-    else:
-      return {'errors': ["please fill out the title and description"]}, 401
+    db.session.commit()
+    return playlist.to_dict()
   else:
-    form = EditPlaylistForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-      if not any(request.files):
-        playlist = Playlist.query.get(int(request.form["id"]))
-        playlist.title= request.form["title"]
-        playlist.description= request.form["description"]
-      else:
-        raw_image_url = request.files["image_url"]
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
-        if not allowed_file(raw_image_url.filename):
-          return {"errors": "file type not permitted"}, 400
 
-        raw_image_url.filename = get_unique_filename(raw_image_url.filename)
+# PUT /api/playlists/:id
+@playlist_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+def edit_playlist(id):
+  """
+  Edit Playlist
+  """
+  form = EditPlaylistForm()
+  form['csrf_token'].data = request.cookies['csrf_token']
+  if form.validate_on_submit():
+    playlist = Playlist.query.get(id)
+    if not playlist:
+      return jsonify({"errors": ["playlist not found"]}), 404
 
-        image_upload = upload_file_to_s3(raw_image_url)
-        image_url = image_upload["url"]
+    if current_user.id != playlist.user_id:
+      return UNAUTHORIZED_ERROR
 
-        playlist = Playlist.query.get(int(request.form["id"]))
-        playlist.title= request.form["title"]
-        playlist.image_url= image_url,
-        playlist.description= request.form["description"]
-    else:
-      return {'errors': validation_errors_to_error_messages(form.errors)}, 401
-  db.session.commit()
-  return playlist.to_dict()
+    raw_image_url = request.form.get('image_url')
+    raw_image_file = request.files.get('image_url')
+
+    if raw_image_url == '':
+      playlist.image_url = ''
+    elif raw_image_file:
+      if not allowed_file(raw_image_file.filename):
+        return FILE_TYPE_ERROR
+      raw_image_file.filename = get_unique_filename(raw_image_file.filename)
+      playlist.image_url = upload_file_to_s3(raw_image_file)['url']
+
+    playlist.title = request.form["title"]
+    playlist.songs_order = request.form["songs_order"]
+
+    orig = set(playlist.songs)
+    new = set([Song.query.get(id) for id in json.loads(songs_order)])
+    ids_to_remove = [song.id for song in (orig - new)]
+    songs_to_add = new - orig
+
+    playlist_song.query.filter_by(playlist_id=id).filter(playlist_song.user_id.in_(ids_to_remove)).delete()
+    db.session.commit()
+
+    def add_song(song):
+      db.session.add(playlist_song(playlist_id=id, song_id=song.id))
+
+    for song in songs_to_add:
+      add_song(song)
+    db.session.commit()
+
+    playlist.description = request.form["description"]
+    playlist.updated_at = datetime.now()
+    db.session.commit()
+    return playlist.to_dict()
+  else:
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
 
 # GET /api/playlists/
 @playlist_routes.route('/')

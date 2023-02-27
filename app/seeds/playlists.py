@@ -24,9 +24,9 @@ def seed_playlists():
         description=playlist_dict["description"])
       db.session.add(new_playlist)
 
+      playlist = Playlist.query.order_by(text("id desc")).limit(1).one()
       for song_id in songs_order:
         song = Song.query.get(song_id)
-        playlist = Playlist.query.order_by(text("id desc")).limit(1).one()
         playlist.songs.append(song)
 
     db.session.commit()

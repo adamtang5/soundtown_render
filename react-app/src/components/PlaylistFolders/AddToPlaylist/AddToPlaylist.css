@@ -103,16 +103,3 @@
   margin-top: 50px;
   font-size: 14px;
 }
-
-.atp_bc {
-  margin-top: 12px;
-}
-
-.atp_bsp {
-  border: 1px solid #f50;
-  color: #f50;
-  border-radius: 4px;
-  padding: 4px;
-  text-decoration: none;
-  width: 125px;
-}
