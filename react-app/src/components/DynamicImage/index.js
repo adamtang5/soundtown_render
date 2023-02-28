@@ -43,6 +43,7 @@ const DynamicImage = ({
   dimension = 200,
   standalone = false,
   entity,
+  placeholderImg,
   imageUrl,
   stagedFile,
   previewId,
@@ -113,7 +114,13 @@ const DynamicImage = ({
       >
         <div
           className={[...entities[entity].styleClasses, "placeholder", "full-box"].join(' ')}
-          style={{ position: "relative" }}
+          style={entity === 'playlist' ?
+            {
+              position: "relative",
+              backgroundImage: `url(${placeholderImg})`,
+              backgroundSize: "cover",
+            } :
+            { position: "relative" }}
         >
           {standalone ? (
             <img

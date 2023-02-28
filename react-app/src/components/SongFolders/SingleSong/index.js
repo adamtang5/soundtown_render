@@ -55,6 +55,7 @@ const SingleSong = () => {
       <AssetHeader
         entity="song"
         asset={song}
+        h3={song?.description}
         handlePlayButtonClick={handlePlayButtonClick}
         updateImage={updateImage}
         isAuthorized={sessionUser.id === song?.user_id}

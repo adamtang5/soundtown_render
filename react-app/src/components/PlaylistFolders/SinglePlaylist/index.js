@@ -13,12 +13,12 @@ import "./PlaylistSongs.css";
 import "./Playlist.css";
 import "../../SidebarModules/Sidebar.css";
 
-const PlaylistsPage = () => {
+const SinglePlaylist = () => {
   const dispatch = useDispatch()
   const { id } = useParams();
   const playlist = useSelector(state => state.playlists[+id]);
   const stateSongs = useSelector(state => state.songs);
-  const songs = playlist?.songs?.map(id => stateSongs[+id]);
+  const songs = playlist?.songs_order?.map(id => stateSongs[+id]);
   const sessionUser = useSelector(state => state.session.user);
   const playlistUser = useSelector(state => state.users[playlist?.user_id]);
   const userPlaylists = useSelector(state => Object.values(state.playlists)
@@ -45,6 +45,8 @@ const PlaylistsPage = () => {
       <AssetHeader
         entity="playlist"
         asset={playlist}
+        h3={playlistUser?.display_name}
+        placeholderImg={stateSongs[playlist?.songs_order[0]]?.image_url}
         handlePlayButtonClick={handlePlayButtonClick}
         updateImage={updateImage}
         isAuthorized={sessionUser.id === playlist?.user_id}
@@ -106,4 +108,4 @@ const PlaylistsPage = () => {
   );
 };
 
-export default PlaylistsPage;
+export default SinglePlaylist;

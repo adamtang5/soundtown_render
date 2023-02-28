@@ -4,6 +4,8 @@ import DynamicImage from "../DynamicImage";
 const AssetHeader = ({
   entity,
   asset,
+  h3,
+  placeholderImg,
   handlePlayButtonClick,
   updateImage,
   isAuthorized,
@@ -15,7 +17,7 @@ const AssetHeader = ({
     },
     'playlist': {
       bottomLeft: <div className="playlist-summary flex-column">
-        <div>{asset?.songs?.length || 0}</div>
+        <h1>{asset?.songs?.length || 0}</h1>
         <div>tracks</div>
       </div>,
     },
@@ -34,7 +36,7 @@ const AssetHeader = ({
           <div className="asset-banner-info flex-row">
             <div className="asset-banner-ident flex-column">
               <h2>{asset?.title}</h2>
-              <p>{asset?.description}</p>
+              <h3>{h3}</h3>
             </div>
             <Moment fromNow>{asset?.created_at}</Moment>
           </div>
@@ -46,6 +48,7 @@ const AssetHeader = ({
         dimension={340}
         standalone={true}
         entity={entity}
+        placeholderImg={placeholderImg}
         imageUrl={asset?.image_url}
         hiddenInput={
           <input
@@ -61,6 +64,7 @@ const AssetHeader = ({
         clickHidden={() => document.getElementById(inputId).click()}
         styleClasses={['button-action', 'b1']}
         replaceLabel="Replace image"
+        uploadLabel="Upload image"
         beforeLabel="camera-label"
       />
     </header>

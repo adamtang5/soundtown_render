@@ -556,11 +556,12 @@ fieldset {
 }
 
 .asset-banner-ident h2,
-.asset-banner-ident p {
+.asset-banner-ident h3 {
   background-color: var(--color-border-dark);
   color: white;
   padding: 4px 8px;
   font-weight: 300;
+  max-width: max-content;
 }
 
 .asset-secondary {
