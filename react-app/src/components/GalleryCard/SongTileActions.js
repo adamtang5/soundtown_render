@@ -84,7 +84,10 @@ const SongTileActions = ({ song }) => {
             paddingTop={50}
           >
             <div className="playlist-modal-container">
-              <AddToPlaylist song={song} />
+              <AddToPlaylist
+                song={song}
+                setShowModal={setShowPlaylistModal}
+              />
             </div>
           </Modal>
         )

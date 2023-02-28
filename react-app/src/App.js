@@ -13,8 +13,8 @@ import HomePage from "./components/HomePage";
 import ExplorePage from "./components/ExplorePage";
 import LibraryPage from "./components/LibraryPage";
 import SingleSong from "./components/SongFolders/SingleSong";
+import SinglePlaylist from "./components/PlaylistFolders/SinglePlaylist";
 import Audio from "./components/AudioPlayer/Audio";
-import PlaylistsPage from "./components/PlaylistFolders/PlaylistsPage";
 import UserPage from "./components/UserPage";
 import Sandbox from "./components/Sandbox";
 
@@ -69,7 +69,7 @@ const App = () => {
             <UserPage />
           </ProtectedRoute>
           <ProtectedRoute path="/playlists/:id" exact={true}>
-            <PlaylistsPage />
+            <SinglePlaylist />
           </ProtectedRoute>
           <ProtectedRoute path="/sandbox">
             <Sandbox />
