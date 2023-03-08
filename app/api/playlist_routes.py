@@ -15,7 +15,7 @@ import json
 
 playlist_routes = Blueprint('playlist',__name__)
 
-# POST or PUT /api/playlists/
+# POST /api/playlists/
 @playlist_routes.route('/', methods=['POST'])
 @login_required
 def new_playlist():
