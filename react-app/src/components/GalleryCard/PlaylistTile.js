@@ -1,10 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { loadPlaylist } from "../../store/player";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import './Tile.css';
 
 const PlaylistTile = ({ playlist }) => {
+  const firstSong = useSelector(state => state.songs[playlist.songs_order[0]]);
   const dispatch = useDispatch();
 
   const handlePlay = (e) => {
@@ -12,7 +13,7 @@ const PlaylistTile = ({ playlist }) => {
   };
 
   const coverStyle = {
-    backgroundImage: `url(${playlist.image_url})`,
+    backgroundImage: `url(${playlist.image_url || firstSong.image_url})`,
     backgroundSize: "cover",
   }
 
