@@ -131,8 +131,8 @@ export const getAllPlaylists = () => async (dispatch) => {
 };
 
 //!Edit playlist in the database
-export const editPlaylist = (data) => async (dispatch) => {
-  const response = await fetch("/api/playlists/", {
+export const editPlaylist = (id, data) => async (dispatch) => {
+  const response = await fetch(`/api/playlists/${id}`, {
     method: "PUT",
     body: data,
   });
