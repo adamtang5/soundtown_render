@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ToggleButton from "../../Buttons/ToggleButton";
 
@@ -9,6 +10,7 @@ const ExistingPlaylist = ({
   handleDelist,
   handleEnlist,
 }) => {
+  const stateSongs = useSelector(state => state.songs);
   const baseClasses = ['cursor-pointer', 'composite-button'];
 
   return (
@@ -25,7 +27,7 @@ const ExistingPlaylist = ({
             <li key={idx} className="full-width flex-row">
               <img
                 className="modal-results-left"
-                src={pl?.image_url}
+                src={pl?.image_url || stateSongs[pl?.songs_order[0]]?.image_url}
                 alt={pl?.title}
               />
               <div className="modal-results-right flex-row full-width">
