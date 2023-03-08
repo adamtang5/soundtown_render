@@ -76,7 +76,7 @@ const UserPage = () => {
     <>
       <UserPageHeader />
       <div className="page-container flex-row">
-        <main className="user-page-main">
+        <main className="user-page-main full-width">
           <StickyNav
             navData={navData}
             optComp={<UserPageButtonGroup />}
