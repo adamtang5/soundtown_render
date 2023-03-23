@@ -75,7 +75,6 @@ const PlaylistButtonGroup = ({ playlist }) => {
           buttonClasses={[...baseClasses, ...styleClasses]}
           modalForm={
             <EditPlaylistModal
-              modalMode="edit"
               modalFunction={setShowEditModal}
               songArr={songsArr}
             />
