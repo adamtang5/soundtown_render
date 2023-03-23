@@ -13,7 +13,7 @@ class Playlist(db.Model):
   title = db.Column(db.String(75), nullable=False)
   songs_order = db.Column(db.Text, nullable=False, default="[]")
   image_url = db.Column(db.String)
-  description = db.Column(db.String)
+  description = db.Column(db.Text)
   created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
   updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
