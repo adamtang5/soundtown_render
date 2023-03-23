@@ -5,7 +5,7 @@ import EditPlaylistForm from "../EditPlaylist";
 import AllTracksModal from "./AllTracksModal";
 import NewPlaylistForm from "../CreatePlaylist";
 
-const AddEditPlaylistModal = ({ modalMode, modalFunction, songArr }) => {
+const EditPlaylistModal = ({ modalMode, modalFunction, songArr }) => {
   const [mode, setMode] = useState("basic");
   return (
     <div className="AEP_modal">
@@ -48,4 +48,4 @@ const AddEditPlaylistModal = ({ modalMode, modalFunction, songArr }) => {
   );
 };
 
-export default AddEditPlaylistModal;
+export default EditPlaylistModal;
