@@ -6,7 +6,7 @@ import { likePlaylist, unlikePlaylist, deletePlaylist } from "../../../store/pla
 import { loadPlaylist, queuePlaylist } from "../../../store/player";
 import CopyLinkButton from "../../Buttons/CopyLinkButton";
 import EditButton from "../../Buttons/EditButton";
-import AddEditPlaylistModal from "../AddEditPlaylistModal";
+import EditPlaylistModal from "../EditPlaylistModal";
 import ConfirmDeleteModal from "../../ConfirmModal/ConfirmDeleteModal";
 
 const PlaylistButtonGroup = ({ playlist }) => {
@@ -74,7 +74,7 @@ const PlaylistButtonGroup = ({ playlist }) => {
           setShowModal={setShowEditModal}
           buttonClasses={[...baseClasses, ...styleClasses]}
           modalForm={
-            <AddEditPlaylistModal
+            <EditPlaylistModal
               modalMode="edit"
               modalFunction={setShowEditModal}
               songArr={songsArr}
