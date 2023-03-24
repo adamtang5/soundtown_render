@@ -9,7 +9,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { ModalProvider } from "./components/Context/Modal";
 import NavBar from "./components/NavBar";
 import SplashPage from "./components/SplashPage";
-import HomePage from "./components/HomePage";
+import HomePage from "./pages/Home";
 import ExplorePage from "./components/ExplorePage";
 import LibraryPage from "./components/LibraryPage";
 import SingleSong from "./components/SongFolders/SingleSong";
