@@ -1,6 +1,6 @@
 /* Base Styles */
 * {
-  --page-container-bottom-margin: 75px;
+  --container-bottom-margin: 75px;
   --color-border-dark: #333;
   --color-border: #e5e5e5;
   --color-border-light: #f2f2f2;
@@ -105,9 +105,10 @@ fieldset {
 }
 
 /* Layouts */
-.page-container {
+.container {
   background-color: white;
-  margin: 0px var(--x-margin) var(--page-container-bottom-margin);
+  max-width: var(--container-max-width);
+  margin: 0 auto var(--container-bottom-margin);
   padding: 0 25px;
 }
 
@@ -649,4 +650,23 @@ fieldset {
 
 .song-button.highlighted:hover {
   border-width: 1.1px;
+}
+
+/* Responsive Design */
+@media screen and (min-width: 1240px) {
+  * {
+    --container-max-width: 1240px;
+  }
+}
+
+@media screen and (max-width: 1239px) {
+  * {
+    --container-max-width: 1080px;
+  }
+}
+
+@media screen and (max-width: 1079px) {
+  * {
+    --container-max-width: 960px;
+  }
 }

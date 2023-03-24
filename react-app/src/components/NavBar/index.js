@@ -9,21 +9,23 @@ const NavBar = () => {
   const [showUploadModal, setShowUploadModal] = useState(false);
 
   return (
-    <header className="navbar flex-row">
-      <NavBarLeft />
-      <NavBarRight
-        showUploadModal={showUploadModal}
-        setShowUploadModal={setShowUploadModal}
-      />
-      {showUploadModal && (
-        <Modal
-          onClose={() => setShowUploadModal(false)}
-          position="center"
-          paddingTop={0}
-        >
-          <UploadSongForm setShowUploadModal={setShowUploadModal} />
-        </Modal>
-      )}
+    <header className="navbar-bg">
+      <div className="navbar flex-row">
+        <NavBarLeft />
+        <NavBarRight
+          showUploadModal={showUploadModal}
+          setShowUploadModal={setShowUploadModal}
+        />
+        {showUploadModal && (
+          <Modal
+            onClose={() => setShowUploadModal(false)}
+            position="center"
+            paddingTop={0}
+          >
+            <UploadSongForm setShowUploadModal={setShowUploadModal} />
+          </Modal>
+        )}
+      </div>
     </header>
   );
 };

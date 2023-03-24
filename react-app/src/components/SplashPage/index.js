@@ -35,7 +35,7 @@ const SplashPage = () => {
   }, [dispatch]);
 
   return (
-    <main className="page-container one-column flex-column">
+    <main className="container one-column flex-column">
       <header className="splash-banner flex-column">
         <header className="splash-banner-header flex-row">
           <div className="splash-banner-header-logo flex-row">

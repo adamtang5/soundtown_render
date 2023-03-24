@@ -75,7 +75,7 @@ const UserPage = () => {
   return (
     <>
       <UserPageHeader />
-      <div className="page-container flex-row">
+      <div className="container flex-row">
         <main className="user-page-main full-width">
           <StickyNav
             navData={navData}

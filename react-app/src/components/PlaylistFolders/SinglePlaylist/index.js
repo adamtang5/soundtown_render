@@ -51,7 +51,7 @@ const SinglePlaylist = () => {
         updateImage={updateImage}
         isAuthorized={sessionUser.id === playlist?.user_id}
       />
-      <div className="page-container asset-secondary flex-row">
+      <div className="container asset-secondary flex-row">
         <main className="asset-main">
           <PlaylistButtonGroup playlist={playlist} />
           <section className="playlist-two-columns flex-row">

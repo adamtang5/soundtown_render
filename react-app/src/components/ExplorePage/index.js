@@ -38,7 +38,7 @@ const ExplorePage = () => {
   ];
 
   return (
-    <main className="page-container">
+    <main className="container">
       <StickyNav navData={navData} />
       <section className="showcase">
         <Switch>
