@@ -6,7 +6,7 @@ import UserPageHeader from "./UserPageHeader";
 import ShowcaseSongs from "../Modules/ShowcaseSongs";
 import ShowcasePlaylists from "../Modules/ShowcasePlaylists";
 import StickyNav from "../Modules/StickyNav";
-import ProtectedRoute from "../auth/ProtectedRoute";
+import ProtectedRoute from "../../utilities/ProtectedRoute";
 import "./UserPage.css";
 import UserPageButtonGroup from "./UserPageButtonGroup";
 
