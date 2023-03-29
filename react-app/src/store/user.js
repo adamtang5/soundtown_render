@@ -1,6 +1,8 @@
+// constants
 const LOAD_USERS = "user/LOAD_USERS";
 const EDIT_USER = "user/EDIT_USER";
 
+// for create and edit
 const loadUsers = (users) => ({
   type: LOAD_USERS,
   users,
