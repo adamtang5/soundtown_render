@@ -5,7 +5,7 @@ import { authenticate } from "./store/session";
 import { getAllUsers } from "./store/user";
 import { getAllSongs } from "./store/song";
 import { getAllPlaylists } from "./store/playlist";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
+import ProtectedRoute from "./utilities/ProtectedRoute";
 import { ModalProvider } from "./components/Context/Modal";
 import NavBar from "./components/NavBar";
 import SplashPage from "./components/SplashPage";
