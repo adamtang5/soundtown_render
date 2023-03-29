@@ -513,7 +513,8 @@ fieldset {
 .asset-banner {
   background: linear-gradient(135deg, rgb(185, 172, 182) 0%, rgb(107, 108, 108) 100%);
   position: relative;
-  margin: 0 var(--x-margin);
+  max-width: var(--container-max-width);
+  margin: 0 auto;
   align-items: center;
   padding: 30px 20px 20px 30px;
   gap: 30px;
