@@ -8,15 +8,6 @@
   align-items: center;
 }
 
-.auth_contaner {
-  align-items: center;
-  justify-content: center;
-  width: 450px;
-  height: 100%;
-  height: fit-content;
-
-}
-
 .login_form {
   margin-top: 15px;
   align-items: center;
@@ -54,14 +45,6 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-}
-
-.auth_form_wrapper {
-  margin: 25px 0;
-  width: 90%;
-  height: 90%;
-  background-color: white;
-  height: fit-content;
 }
 
 .form_field {
