@@ -111,12 +111,10 @@ const SongButtonGroup = ({ song }) => {
           position="top"
           paddingTop={50}
         >
-          <div className="playlist-modal-container">
-            <AddToPlaylist
-              song={song}
-              setShowModal={setShowPlaylistModal}
-            />
-          </div>
+          <AddToPlaylist
+            song={song}
+            setShowModal={setShowPlaylistModal}
+          />
         </Modal>
       )}
     </div>

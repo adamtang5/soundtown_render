@@ -46,7 +46,7 @@ const AddToPlaylist = ({ song, setShowModal }) => {
   ];
 
   return (
-    <>
+    <div className="playlist-modal-container">
       <header>
         <nav>
           <ul className="nav-header flex-row">
@@ -76,7 +76,7 @@ const AddToPlaylist = ({ song, setShowModal }) => {
           setShowModal={setShowModal}
         />
       )}
-    </>
+    </div>
   );
 };
 
