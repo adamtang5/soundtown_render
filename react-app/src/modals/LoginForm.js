@@ -4,7 +4,27 @@ import { Redirect, useHistory } from "react-router-dom";
 import { login } from "../store/session";
 import { FaUserAlt } from 'react-icons/fa';
 import { IoLogOutSharp } from 'react-icons/io5';
+import SimpleButton from "../components/Buttons/SimpleButton";
 import "./auth.css";
+
+const AuthFormInput = ({
+  name,
+  type = "text",
+  placeholder,
+  value,
+  setValue,
+}) => {
+  return (
+    <input
+      name={name}
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={e => setValue(e.target.value)}
+      required
+    />
+  );
+};
 
 const LoginForm = ({ setShowLoginModal, setShowSignUpModal }) => {
   const dispatch = useDispatch();
@@ -49,81 +69,78 @@ const LoginForm = ({ setShowLoginModal, setShowSignUpModal }) => {
     return <Redirect to="/" />;
   }
 
+  const buttonData = {
+    demo: {
+      label: (<><FaUserAlt /> Continue with Demo User</>),
+      onClick: demoLogin,
+      classes: ['demo'],
+    },
+    toggle: {
+      label: (<><IoLogOutSharp className="proF-icon" /> Create Account Here</>),
+      onClick: toggleModals,
+      classes: ['toggle'],
+    },
+    login: {
+      label: "Continue to SoundTown",
+      type: "submit",
+      classes: ['submit'],
+    },
+  }
+
   return (
-    <div className="flex-row">
-      <form className="login_form flex-column" onSubmit={onLogin}>
-        <button
-          className="login_form_btn cursor-pointer or-shdw-hov"
-          type="submit"
-          onClick={demoLogin}
-        >
-          <FaUserAlt /> Continue with Demo User
-        </button>
-        <button
-          className="login_form_btn cursor-pointer toggle-sign-up or-shdw-hov "
-          type="submit"
-          onClick={toggleModals}
-        >
-          <IoLogOutSharp className="proF-icon" /> Create Account Here
-        </button>
+    <form className="flex-column" onSubmit={onLogin}>
+      <SimpleButton
+        label={buttonData.demo.label}
+        onClick={buttonData.demo.onClick}
+        classes={buttonData.demo.classes}
+      />
 
-        <div className="half-Div">
-          <div className="half-line"></div>
-          <h3>or</h3>
-          <div className="half-line"></div>
-        </div>
+      <SimpleButton
+        label={buttonData.toggle.label}
+        onClick={buttonData.toggle.onClick}
+        classes={buttonData.toggle.classes}
+      />
 
-        <div className="form_field">
-          <input
-            className="field"
-            name="email"
-            type="text"
-            placeholder="Your email address "
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            style={{ marginBottom: '10px' }}
-            required
-          />
-        </div>
-        <div className="form_field">
-          <input
-            className="field"
-            name="password"
-            type="password"
-            placeholder="Your password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-          />
-        </div>
+      <div className="divider flex-column">
+        <div className="div-line" />
+        <h3>or</h3>
+      </div>
 
-        <div>
-          {errors.map((error, ind) => (
-            <div key={ind} className="error-text" >{error}</div>
-          ))}
-        </div>
+      <AuthFormInput
+        name="email"
+        placeholder="Your email address"
+        value={email}
+        setValue={setEmail}
+      />
 
-        <div className="form_button flex-row">
-          <button
-            className="login_form_btn cursor-pointer or-shdw-hov cnt-login"
-            type="submit">
-            Continue to SoundTown
-          </button>
-        </div>
-        <div className="form_button flex-row">
+      <AuthFormInput
+        name="password"
+        type="password"
+        placeholder="Your password"
+        value={password}
+        setValue={setPassword}
+      />
 
-        </div>
-        <div className="priv-tag-div">
-          <p className="priv-tag">
-            When registering, you agree that we will not use your provided
-            data from the registration and we won't send you notifications on
-            our products and services. You can not unsubscribe from our non-existent
-            notifications at this time in your settings. For non-existent additional
-            info please do not refer to our fake <span style={{ color: 'blue', cursor: 'not-allowed' }}>Privacy Policy</span>.
-          </p>
-        </div>
-      </form>
-    </div>
+      <div>
+        {errors.map((error, ind) => (
+          <div key={ind} className="error-text" >{error}</div>
+        ))}
+      </div>
+
+      <SimpleButton
+        label={buttonData.login.label}
+        type={buttonData.login.type}
+        classes={buttonData.login.classes}
+      />
+
+      <p className="legal">
+        When registering, you agree that we will not use your provided
+        data from the registration and we won't send you notifications on
+        our products and services. You can not unsubscribe from our non-existent
+        notifications at this time in your settings. For non-existent additional
+        info please do not refer to our fake <span style={{ color: 'blue', cursor: 'not-allowed' }}>Privacy Policy</span>.
+      </p>
+    </form>
   );
 };
 
