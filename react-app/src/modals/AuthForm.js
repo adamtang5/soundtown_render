@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
-import { login } from "../store/session";
+import { login, signUp } from "../store/session";
 import { FaUserAlt } from 'react-icons/fa';
 import { IoLogOutSharp } from 'react-icons/io5';
 import SimpleButton from "../components/Buttons/SimpleButton";
@@ -26,13 +26,14 @@ const AuthFormInput = ({
   );
 };
 
-const LoginForm = ({ setShowLoginModal, setShowSignUpModal }) => {
+const AuthForm = ({ mode, setMode, setShowModal }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector(state => state.session.user);
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
 
   const onLogin = async (e) => {
     e.preventDefault();
@@ -45,8 +46,26 @@ const LoginForm = ({ setShowLoginModal, setShowSignUpModal }) => {
 
     return () => {
       history.push("/");
-      setShowLoginModal(false);
+      setShowModal(false);
     };
+  };
+
+  const onSignUp = async (e) => {
+    e.preventDefault();
+    if (password === repeatPassword) {
+      const data = await dispatch(signUp(email, password));
+      if (!data.sucess) {
+        setErrors(data);
+        return;
+      }
+
+      return () => {
+        history.push("/");
+        setShowModal(false);
+      };
+    } else {
+      setErrors(['Passwords must match.']);
+    }
   };
 
   const demoLogin = async (e) => {
@@ -57,12 +76,23 @@ const LoginForm = ({ setShowLoginModal, setShowSignUpModal }) => {
       return;
     }
     history.push("/");
-    setShowLoginModal(false);
+    setShowModal(false);
   };
 
-  const toggleModals = () => {
-    setShowLoginModal(false);
-    setShowSignUpModal(true);
+  const clearAll = () => {
+    setErrors([]);
+    setEmail("");
+    setPassword("");
+    setRepeatPassword("");
+  };
+
+  const toggleModes = () => {
+    if (mode === "login") {
+      setMode("signup");
+    } else {
+      setMode("login");
+    }
+    clearAll();
   };
 
   if (user) {
@@ -76,8 +106,12 @@ const LoginForm = ({ setShowLoginModal, setShowSignUpModal }) => {
       classes: ['demo'],
     },
     toggle: {
-      label: (<><IoLogOutSharp className="proF-icon" /> Create Account Here</>),
-      onClick: toggleModals,
+      label: (<>
+        <IoLogOutSharp className="proF-icon" /> {
+          mode === "login" ? "Create Account Here" : "Continue to Log In"
+        }
+      </>),
+      onClick: toggleModes,
       classes: ['toggle'],
     },
     login: {
@@ -88,7 +122,7 @@ const LoginForm = ({ setShowLoginModal, setShowSignUpModal }) => {
   }
 
   return (
-    <form className="flex-column" onSubmit={onLogin}>
+    <form className="flex-column" onSubmit={mode === "login" ? onLogin : onSignUp}>
       <SimpleButton
         label={buttonData.demo.label}
         onClick={buttonData.demo.onClick}
@@ -121,6 +155,14 @@ const LoginForm = ({ setShowLoginModal, setShowSignUpModal }) => {
         setValue={setPassword}
       />
 
+      {mode === "signup" && <AuthFormInput
+        name="repeat-password"
+        type="password"
+        placeholder="Confirm password"
+        value={password}
+        setValue={setPassword}
+      />}
+
       <div>
         {errors.map((error, ind) => (
           <div key={ind} className="error-text" >{error}</div>
@@ -144,4 +186,4 @@ const LoginForm = ({ setShowLoginModal, setShowSignUpModal }) => {
   );
 };
 
-export default LoginForm;
+export default AuthForm;

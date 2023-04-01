@@ -7,7 +7,7 @@ import { loadSong } from "../../store/player";
 import { likeSong, unlikeSong } from "../../store/song";
 import "./Tile.css";
 
-const SongTile = ({ song, setShowLoginModal }) => {
+const SongTile = ({ song, setShowModal }) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
 
@@ -34,7 +34,7 @@ const SongTile = ({ song, setShowLoginModal }) => {
   };
 
   const openLoginModal = () => {
-    setShowLoginModal(true);
+    setShowModal(true);
   };
 
   const coverStyle = {
@@ -71,7 +71,7 @@ const SongTile = ({ song, setShowLoginModal }) => {
         ) : (
           <div className="overlay-single flex-row">
             <div
-              onClick={openLoginModal}
+              onClick={() => setShowModal(true)}
               className="overlay-play"
             >&#9654;</div>
           </div>

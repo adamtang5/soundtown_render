@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAllSongs } from "../../store/song";
-import LoginForm from "../../modals/LoginForm";
-import SignUpForm from "../../modals/SignUpForm";
+import AuthForm from "../../modals/AuthForm";
 import { Modal } from "../Context/Modal";
 import Logo from "../Icons/Logo";
 import ShowcaseSongs from "../Modules/ShowcaseSongs";
@@ -13,22 +12,13 @@ const SplashPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const [authMode, setAuthMode] = useState("login");
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const songsArr = useSelector(state => Object.values(state.songs));
 
   useEffect(() => {
     if (sessionUser) history.push('/home');
   }, []);
-
-  const openLoginModal = () => {
-    if (showLoginModal) return;
-    setShowLoginModal(true);
-  };
-  const openSignUpModal = () => {
-    if (showSignUpModal) return;
-    setShowSignUpModal(true);
-  };
 
   useEffect(() => {
     dispatch(getAllSongs());
@@ -47,38 +37,32 @@ const SplashPage = () => {
               <li>
                 <button
                   className="login-button cursor-pointer"
-                  onClick={openLoginModal}
+                  onClick={() => {
+                    setAuthMode("login")
+                    setShowAuthModal(true)
+                  }}
                 >Sign In</button>
               </li>
               <li>
                 <button
                   className="signup-button cursor-pointer"
-                  onClick={openSignUpModal}
+                  onClick={() => {
+                    setAuthMode("signup")
+                    setShowAuthModal(true)
+                  }}
                 >Create account</button>
               </li>
             </ul>
-            {showLoginModal && (
+            {showAuthModal && (
               <Modal
-                onClose={() => setShowLoginModal(false)}
+                onClose={() => setShowAuthModal(false)}
                 position="top"
               >
                 <div className="login_modal_container">
-                  <LoginForm
-                    setShowLoginModal={setShowLoginModal}
-                    setShowSignUpModal={setShowSignUpModal}
-                  />
-                </div>
-              </Modal>
-            )}
-            {showSignUpModal && (
-              <Modal
-                onClose={() => setShowSignUpModal(false)}
-                position="top"
-              >
-                <div className="login_modal_container">
-                  <SignUpForm
-                    setShowSignUpModal={setShowSignUpModal}
-                    setShowLoginModal={setShowLoginModal}
+                  <AuthForm
+                    mode={authMode}
+                    setMode={setAuthMode}
+                    setShowModal={setShowAuthModal}
                   />
                 </div>
               </Modal>
@@ -98,7 +82,10 @@ const SplashPage = () => {
         <ShowcaseSongs
           songs={songsArr}
           h3="Hear what's trending for free in the SoundTown community"
-          setShowLoginModal={setShowLoginModal}
+          setShowModal={() => {
+            setAuthMode("login")
+            setShowAuthModal(true)
+          }}
         />
       </section>
     </main>

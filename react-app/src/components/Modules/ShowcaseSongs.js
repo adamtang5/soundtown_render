@@ -1,6 +1,6 @@
 import SongTile from '../GalleryCard/SongTile';
 
-const ShowcaseSongs = ({ songs, h3, setShowLoginModal }) => {
+const ShowcaseSongs = ({ songs, h3, setShowModal }) => {
   return (
     <>
       <h3>{h3}</h3>
@@ -8,7 +8,7 @@ const ShowcaseSongs = ({ songs, h3, setShowLoginModal }) => {
         {songs.map(song => (
           <SongTile
             song={song}
-            setShowLoginModal={setShowLoginModal}
+            setShowModal={setShowModal}
             key={song.id}
           />
         ))}
