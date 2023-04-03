@@ -25,7 +25,7 @@ const SplashPage = () => {
   }, [dispatch]);
 
   return (
-    <main className="container one-column flex-column">
+    <>
       <header className="splash-banner flex-column">
         <header className="splash-banner-header flex-row">
           <div className="splash-banner-header-logo flex-row">
@@ -78,17 +78,20 @@ const SplashPage = () => {
           <Logo />
         </section>
       </header>
-      <section className="splash-showcase flex-column">
-        <ShowcaseSongs
-          songs={songsArr}
-          h3="Hear what's trending for free in the SoundTown community"
-          setShowModal={() => {
-            setAuthMode("login")
-            setShowAuthModal(true)
-          }}
-        />
-      </section>
-    </main>
+
+      <main className="container flex-column">
+        <section className="splash-showcase flex-column">
+          <ShowcaseSongs
+            songs={songsArr}
+            h3="Hear what's trending for free in the SoundTown community"
+            setShowModal={() => {
+              setAuthMode("login")
+              setShowAuthModal(true)
+            }}
+          />
+        </section>
+      </main>
+    </>
   );
 };
 

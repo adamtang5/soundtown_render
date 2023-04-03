@@ -1,6 +1,6 @@
 /* Base Styles */
 * {
-  --container-bottom-margin: 75px;
+  --container-bottom-margin: 60px;
   --color-border-dark: #333;
   --color-border: #e5e5e5;
   --color-border-light: #f2f2f2;
@@ -110,10 +110,6 @@ fieldset {
   max-width: var(--container-max-width);
   margin: 0 auto var(--container-bottom-margin);
   padding: 0 25px;
-}
-
-.one-column {
-  align-items: center;
 }
 
 .two-columns {
