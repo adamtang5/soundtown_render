@@ -191,7 +191,7 @@ const AuthForm = ({ mode, setMode, setShowModal }) => {
         data from the registration and we won't send you notifications on
         our products and services. You can not unsubscribe from our non-existent
         notifications at this time in your settings. For non-existent additional
-        info please do not refer to our fake <span style={{ color: 'blue', cursor: 'not-allowed' }}>Privacy Policy</span>.
+        info please do not refer to our fake <span className="legal-link cursor-pointer">Privacy Policy</span>.
       </p>
     </form>
   );

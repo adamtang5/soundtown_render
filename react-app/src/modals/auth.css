@@ -1,6 +1,7 @@
 * {
   --common-width: 400px;
   --common-margin-bottom: 15px;
+  --color-blue: #3578e5;
 }
 
 .login_modal_container {
@@ -44,7 +45,7 @@ button.demo {
 }
 
 button.toggle {
-  background-color: #3578e5;
+  background-color: var(--color-blue);
 }
 
 .divider {
@@ -108,4 +109,8 @@ button.toggle {
   color: #999;
   font-weight: 100;
   font-size: 12px;
+}
+
+.legal-link {
+  color: var(--color-blue);
 }
