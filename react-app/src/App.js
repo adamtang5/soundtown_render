@@ -8,7 +8,7 @@ import { getAllPlaylists } from "./store/playlist";
 import ProtectedRoute from "./utilities/ProtectedRoute";
 import { ModalProvider } from "./components/Context/Modal";
 import NavBar from "./components/NavBar";
-import SplashPage from "./components/SplashPage";
+import SplashPage from "./pages/SplashPage";
 import HomePage from "./pages/Home";
 import ExplorePage from "./components/ExplorePage";
 import LibraryPage from "./components/LibraryPage";

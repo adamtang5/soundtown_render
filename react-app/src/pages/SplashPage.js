@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getAllSongs } from "../../store/song";
-import AuthForm from "../../modals/AuthForm";
-import { Modal } from "../Context/Modal";
-import Logo from "../Icons/Logo";
-import ShowcaseSongs from "../Modules/ShowcaseSongs";
+import { getAllSongs } from "../store/song";
+import AuthForm from "../modals/AuthForm";
+import { Modal } from "../components/Context/Modal";
+import Logo from "../components/Icons/Logo";
+import ShowcaseSongs from "../components/Modules/ShowcaseSongs";
 import "./SplashPage.css";
 
 const SplashPage = () => {
