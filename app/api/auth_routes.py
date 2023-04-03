@@ -4,6 +4,7 @@ from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.api.utils import validation_errors_to_error_messages
+import random, string
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -53,9 +54,13 @@ def sign_up():
   form = SignUpForm()
   form['csrf_token'].data = request.cookies['csrf_token']
   if form.validate_on_submit():
+    random_display_name = ''
+    while not random_display_name or User.query.filter(User.display_name == random_display_name).all():
+      random_display_name = 'user_' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
     user = User(
       email=form.data['email'],
-      password=form.data['password']
+      password=form.data['password'],
+      display_name=form.data['display_name'] or random_display_name
     )
     db.session.add(user)
     db.session.commit()

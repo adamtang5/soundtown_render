@@ -13,6 +13,7 @@ const AuthFormInput = ({
   placeholder,
   value,
   setValue,
+  required = true,
 }) => {
   return (
     <input
@@ -21,7 +22,7 @@ const AuthFormInput = ({
       placeholder={placeholder}
       value={value}
       onChange={e => setValue(e.target.value)}
-      required
+      required={required}
     />
   );
 };
@@ -32,12 +33,13 @@ const AuthForm = ({ mode, setMode, setShowModal }) => {
   const user = useSelector(state => state.session.user);
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
 
   const onLogin = async (e) => {
     e.preventDefault();
-    const data = await dispatch(login(email, password));
+    const data = await dispatch(login(email, password, displayName));
 
     if (data) {
       setErrors(data);
@@ -53,7 +55,7 @@ const AuthForm = ({ mode, setMode, setShowModal }) => {
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
-      const data = await dispatch(signUp(email, password));
+      const data = await dispatch(signUp(email, password, displayName));
       if (!data.sucess) {
         setErrors(data);
         return;
@@ -82,6 +84,7 @@ const AuthForm = ({ mode, setMode, setShowModal }) => {
   const clearAll = () => {
     setErrors([]);
     setEmail("");
+    setDisplayName("");
     setPassword("");
     setRepeatPassword("");
   };
@@ -147,6 +150,14 @@ const AuthForm = ({ mode, setMode, setShowModal }) => {
         setValue={setEmail}
       />
 
+      {mode === "signup" && <AuthFormInput
+        name="display-name"
+        placeholder="Your display name. If left blank, SoundTown will randomly generate it."
+        value={displayName}
+        setValue={setDisplayName}
+        required={false}
+      />}
+
       <AuthFormInput
         name="password"
         type="password"
@@ -159,8 +170,8 @@ const AuthForm = ({ mode, setMode, setShowModal }) => {
         name="repeat-password"
         type="password"
         placeholder="Confirm password"
-        value={password}
-        setValue={setPassword}
+        value={repeatPassword}
+        setValue={setRepeatPassword}
       />}
 
       <div>
