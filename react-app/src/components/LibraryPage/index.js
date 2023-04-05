@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import { Redirect, Switch } from "react-router-dom";
 import ProtectedRoute from "../../utilities/ProtectedRoute";
-import StickyNav from "../Modules/StickyNav";
-import ShowcaseSongs from "../Modules/ShowcaseSongs";
-import ShowcasePlaylists from "../Modules/ShowcasePlaylists";
+import StickyNav from "../StickyNav";
+import ShowcaseSongs from "../ShowcaseSongs";
+import ShowcasePlaylists from "../ShowcasePlaylists";
 
 const LibraryPage = () => {
   const sessionUser = useSelector(state => state.session.user);
