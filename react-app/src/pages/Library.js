@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 import { Redirect, Switch } from "react-router-dom";
-import ProtectedRoute from "../../utilities/ProtectedRoute";
-import StickyNav from "../StickyNav";
-import ShowcaseSongs from "../ShowcaseSongs";
-import ShowcasePlaylists from "../ShowcasePlaylists";
+import ProtectedRoute from "../utilities/ProtectedRoute";
+import StickyNav from "../components/StickyNav";
+import ShowcaseSongs from "../components/ShowcaseSongs";
+import ShowcasePlaylists from "../components/ShowcasePlaylists";
 
-const LibraryPage = () => {
+const Library = () => {
   const sessionUser = useSelector(state => state.session.user);
   const songsArr = useSelector(state => Object.values(state.songs));
   const userSongs = songsArr.filter(song => song.user_id === sessionUser.id);
@@ -62,4 +62,4 @@ const LibraryPage = () => {
   );
 };
 
-export default LibraryPage;
+export default Library;
