@@ -96,7 +96,7 @@ const Sidebar = () => {
 
 const Home = () => {
   return (
-    <main className="container two-columns">
+    <main className="container flex-row two-columns">
       <div className="mainfeed">
         <MainFeed />
       </div>
