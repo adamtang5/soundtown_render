@@ -9,7 +9,7 @@ import ProtectedRoute from "./utilities/ProtectedRoute";
 import { ModalProvider } from "./components/Context/Modal";
 import NavBar from "./components/NavBar";
 import SplashPage from "./pages/SplashPage";
-import HomePage from "./pages/Home";
+import Home from "./pages/Home";
 import ExplorePage from "./components/ExplorePage";
 import LibraryPage from "./components/LibraryPage";
 import SingleSong from "./components/SongFolders/SingleSong";
@@ -54,7 +54,7 @@ const App = () => {
             <SplashPage />
           </Route>
           <ProtectedRoute path="/home">
-            <HomePage />
+            <Home />
           </ProtectedRoute>
           <ProtectedRoute path="/explore">
             <ExplorePage />

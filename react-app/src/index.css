@@ -113,21 +113,17 @@ fieldset {
 }
 
 .two-columns {
-  position: relative;
+  flex-wrap: nowrap;
 }
 
 .mainfeed {
-  padding: 0;
-  margin: 0 330px 0 0;
-  position: relative;
+  flex: 1 1 70%;
+  max-width: calc(var(--container-max-width) * .7);
 }
 
 .sidebar {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 300px;
+  flex: 1 1 30%;
+  max-width: calc(var(--container-max-width) * .25);
 }
 
 .notification {
