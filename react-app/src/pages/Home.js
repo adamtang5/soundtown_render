@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { ImSpinner3 } from 'react-icons/im';
-import ResponsiveSlider from "../components/GalleryCard/ResponsiveSlider";
+import Slider from "react-slick";
+import SongTile from "../components/GalleryCard/SongTile";
 import CreatorCard from "../components/CreatorCard";
 import creatorData from '../components/CreatorCard/creators.json';
 import TechCard from "../components/TechCard";
 import techs from '../components/TechCard/techs.json';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 
 const MainFeed = () => {
@@ -38,9 +41,59 @@ const MainFeed = () => {
     <>
       {data.map((grp, idx) => (
         <section className="mainfeed-section" key={idx}>
-          <ResponsiveSlider key={idx} {...grp} />
+          <SliderCard key={idx} {...grp} />
         </section>
       ))}
+    </>
+  );
+};
+
+const SliderCard = ({ title, description, songs }) => {
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1240,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+  return (
+    <>
+      <h2>{title}</h2>
+      <h3>{description}</h3>
+      <div className="carousel-wrapper">
+        <Slider {...settings}>
+          {songs?.map((song) => (
+            <SongTile song={song} key={song.id} />
+          ))}
+        </Slider>
+      </div>
     </>
   );
 };
