@@ -12,10 +12,10 @@ import SplashPage from "./pages/SplashPage";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
 import Library from "./pages/Library";
+import UserPage from "./pages/UserPage";
 import SingleSong from "./components/SongFolders/SingleSong";
 import SinglePlaylist from "./components/PlaylistFolders/SinglePlaylist";
 import Audio from "./components/AudioPlayer/Audio";
-import UserPage from "./components/UserPage";
 import Sandbox from "./components/Sandbox";
 
 const App = () => {

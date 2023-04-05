@@ -1,6 +1,7 @@
 .user-page-banner {
   height: 260px;
-  margin: 0 var(--x-margin);
+  width: var(--container-max-width);
+  margin: 0 auto;
   position: relative;
 }
 

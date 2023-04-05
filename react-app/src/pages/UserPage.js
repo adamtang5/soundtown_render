@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { editUserDetails } from "../../store/user";
-import DropdownButton from "../Buttons/DropdownButton";
-import DynamicImage from "../DynamicImage";
-import ConfirmDeleteModal from "../ConfirmModal/ConfirmDeleteModal";
+import { useParams, Redirect, useHistory, Switch } from "react-router-dom";
+import { getAllUsers, editUserDetails } from "../store/user";
+import DropdownButton from "../components/Buttons/DropdownButton";
+import DynamicImage from "../components/DynamicImage";
+import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
+import ShowcaseSongs from "../components/ShowcaseSongs";
+import ShowcasePlaylists from "../components/ShowcasePlaylists";
+import StickyNav from "../components/StickyNav";
+import ProtectedRoute from "../utilities/ProtectedRoute";
+import EditButton from "../components/Buttons/EditButton";
+import EditUserForm from "../components/UserPage/EditUserForm";
+import "./UserPage.css";
 
-const UserPageHeader = () => {
+const Header = () => {
   const dispatch = useDispatch();
   const { userId } = useParams();
   const sessionUser = useSelector(state => state.session.user);
@@ -171,4 +178,125 @@ const UserPageHeader = () => {
   );
 };
 
-export default UserPageHeader;
+const ButtonGroup = () => {
+  const sessionUser = useSelector(state => state.session.user);
+  const { userId } = useParams();
+  const [showEditUserModal, setShowEditUserModal] = useState(false);
+  const baseClasses = ['cursor-pointer', 'composite-button'];
+  const styleClasses = ['button-action', 'b2'];
+
+  return (
+    <div className="user-page-button-group flex-row">
+      {sessionUser?.id === +userId ? (
+        <EditButton
+          showModal={showEditUserModal}
+          setShowModal={setShowEditUserModal}
+          buttonClasses={[...baseClasses, ...styleClasses]}
+          modalForm={<EditUserForm setShowEditUserModal={setShowEditUserModal} />}
+        />
+      ) : (
+        <>
+          {/* TODO: FollowButton */}
+        </>
+      )}
+    </div>
+  );
+};
+
+const UserPage = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { userId } = useParams();
+  const sessionUser = useSelector(state => state.session.user);
+  const user = useSelector(state => state.users[userId]);
+  const userSongsArr = useSelector(state => Object.values(state.songs).filter(song => song.user_id === +userId));
+  const userPlaylistsArr = useSelector(state => Object.values(state.playlists).filter(pl => pl.user_id === +userId));
+
+  const sortKey = (a, b) => {
+    if (a.title.toLowerCase() < b.title.toLowerCase()) {
+      return -1;
+    } else if (a.title.toLowerCase() > b.title.toLowerCase()) {
+      return 1;
+    } else if (a.description.toLowerCase() !== b.description.toLowerCase()) {
+      return a.description.toLowerCase() < b.description.toLowerCase() ? -1 : 1;
+    } else {
+      return 0;
+    }
+  };
+
+  userSongsArr.sort(sortKey);
+  userPlaylistsArr.sort(sortKey);
+
+  if (history.location.pathname === `/users/${userId}`) {
+    history.push(`/users/${userId}/songs`);
+  }
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
+
+  const navData = [
+    {
+      to: `/users/${userId}/songs`,
+      label: "Songs",
+    },
+    {
+      to: `/users/${userId}/playlists`,
+      label: "Playlists",
+    },
+  ];
+
+  const routes = [
+    {
+      path: `/users/${userId}/songs`,
+      component: <ShowcaseSongs
+        songs={userSongsArr}
+        h3={sessionUser.id === +userId ? "Songs you uploaded"
+          : (user?.display_name ? `Check out ${user?.display_name}'s tracks!` : '')}
+      />,
+    },
+    {
+      path: `/users/${userId}/playlists`,
+      component: <ShowcasePlaylists
+        playlists={userPlaylistsArr}
+        h3={sessionUser.id === +userId ? "Your playlists"
+          : (user?.display_name ? `Check out ${user?.display_name}'s playlists!` : '')}
+      />,
+    },
+  ];
+
+  return (
+    <>
+      <Header />
+      <div className="container flex-row">
+        <main className="user-page-main full-width">
+          <StickyNav
+            navData={navData}
+            optComp={<ButtonGroup />}
+          />
+          <section className="showcase">
+            <Switch>
+              <ProtectedRoute path={`/users/${userId}`} exact={true}>
+                <Redirect to={`/users/${userId}/songs`} />
+              </ProtectedRoute>
+              {routes.map((route, idx) => (
+                <ProtectedRoute path={route.path} key={idx}>
+                  {route.component}
+                </ProtectedRoute>
+              ))}
+            </Switch>
+          </section>
+        </main>
+        <aside className="user-page-summary">
+          {/* TODO: Stats */}
+          {/* TODO: Likes */}
+          {/* TODO: Following */}
+          {/* TODO: Comments */}
+          {/* TODO: Legal */}
+        </aside>
+      </div>
+    </>
+  );
+};
+
+export default UserPage;
