@@ -5,7 +5,7 @@ import { getAllSongs } from "../store/song";
 import AuthForm from "../modals/AuthForm";
 import { Modal } from "../components/Context/Modal";
 import Logo from "../components/Icons/Logo";
-import ShowcaseSongs from "../components/Modules/ShowcaseSongs";
+import ShowcaseSongs from "../components/ShowcaseSongs";
 import "./SplashPage.css";
 
 const SplashPage = () => {

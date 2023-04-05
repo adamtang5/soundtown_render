@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 import { Redirect, Switch } from "react-router-dom";
-import ProtectedRoute from "../../utilities/ProtectedRoute";
-import StickyNav from "../Modules/StickyNav";
-import ShowcaseSongs from "../Modules/ShowcaseSongs"
-import ShowcasePlaylists from "../Modules/ShowcasePlaylists";
+import ProtectedRoute from "../utilities/ProtectedRoute";
+import StickyNav from "../components/StickyNav";
+import ShowcaseSongs from "../components/ShowcaseSongs"
+import ShowcasePlaylists from "../components/ShowcasePlaylists";
 
-const ExplorePage = () => {
+const Explore = () => {
   const songsArr = useSelector(state => Object.values(state.songs));
   const playlistsArr = useSelector(state => Object.values(state.playlists));
 
@@ -56,4 +56,4 @@ const ExplorePage = () => {
   );
 };
 
-export default ExplorePage;
+export default Explore;

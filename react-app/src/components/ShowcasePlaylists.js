@@ -1,4 +1,4 @@
-import PlaylistTile from "../GalleryCard/PlaylistTile"
+import PlaylistTile from "./GalleryCard/PlaylistTile"
 
 const ShowcasePlaylists = ({ playlists, h3 }) => {
   return (
