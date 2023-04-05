@@ -11,7 +11,7 @@ import NavBar from "./components/NavBar";
 import SplashPage from "./pages/SplashPage";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
-import LibraryPage from "./components/LibraryPage";
+import Library from "./pages/Library";
 import SingleSong from "./components/SongFolders/SingleSong";
 import SinglePlaylist from "./components/PlaylistFolders/SinglePlaylist";
 import Audio from "./components/AudioPlayer/Audio";
@@ -60,7 +60,7 @@ const App = () => {
             <Explore />
           </ProtectedRoute>
           <ProtectedRoute path="/library">
-            <LibraryPage />
+            <Library />
           </ProtectedRoute>
           <ProtectedRoute path="/songs/:id" exact={true}>
             <SingleSong />
