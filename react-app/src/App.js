@@ -14,7 +14,7 @@ import Explore from "./pages/Explore";
 import Library from "./pages/Library";
 import UserPage from "./pages/UserPage";
 import SingleSong from "./pages/SingleSong";
-import SinglePlaylist from "./components/PlaylistFolders/SinglePlaylist";
+import SinglePlaylist from "./pages/SinglePlaylist";
 import Audio from "./components/AudioPlayer/Audio";
 import Sandbox from "./components/Sandbox";
 
