@@ -5,7 +5,7 @@ import { deleteComment, editComment } from "../../store/comment";
 import Avatar from "../Icons/Avatar";
 import EditCommentButton from "./EditCommentButton";
 import DeleteCommentButton from "./DeleteCommentButton";
-import "./SingleComment.css";
+import "./Comments.css";
 
 const SingleComment = ({ comment }) => {
   const dispatch = useDispatch();
