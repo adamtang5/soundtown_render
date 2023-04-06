@@ -1,8 +1,8 @@
 import Moment from "react-moment";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteComment, editComment } from "../../../../store/comment";
-import Avatar from "../../../Icons/Avatar";
+import { deleteComment, editComment } from "../../store/comment";
+import Avatar from "../Icons/Avatar";
 import EditCommentButton from "./EditCommentButton";
 import DeleteCommentButton from "./DeleteCommentButton";
 import "./SingleComment.css";

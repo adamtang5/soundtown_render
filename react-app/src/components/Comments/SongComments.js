@@ -1,5 +1,5 @@
-import SpeechBubble from "../../Icons/SpeechBubble";
-import SingleComment from "./Comments/SingleComment";
+import SpeechBubble from "../Icons/SpeechBubble";
+import SingleComment from "./SingleComment";
 
 const SongComments = ({ song }) => {
 
