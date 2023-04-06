@@ -14,8 +14,8 @@ import CopyLinkButton from "../components/Buttons/CopyLinkButton";
 import EditButton from "../components/Buttons/EditButton";
 import EditPlaylistModal from "../components/PlaylistFolders/EditPlaylistModal";
 import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
-import "./Songs.css";
-import "../../SidebarModules/Sidebar.css";
+import "../components/PlaylistFolders/SinglePlaylist/Songs.css";
+import "../components/SidebarModules/Sidebar.css";
 
 const ButtonGroup = ({ playlist }) => {
   const dispatch = useDispatch();
