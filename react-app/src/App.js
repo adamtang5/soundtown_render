@@ -16,7 +16,7 @@ import UserPage from "./pages/UserPage";
 import SingleSong from "./pages/SingleSong";
 import SinglePlaylist from "./pages/SinglePlaylist";
 import Audio from "./components/AudioPlayer/Audio";
-import Sandbox from "./components/Sandbox";
+import Sandbox from "./pages/Sandbox";
 
 const App = () => {
   const [loaded, setLoaded] = useState(false);
