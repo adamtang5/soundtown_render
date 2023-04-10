@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editUserDetails } from "../store/user";
-import DynamicImage from "./DynamicImage";
+import DynamicImage from "../components/DynamicImage";
 
 const Sandbox = () => {
   const dispatch = useDispatch();
