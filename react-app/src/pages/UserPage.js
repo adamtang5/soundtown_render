@@ -10,7 +10,7 @@ import ShowcasePlaylists from "../components/ShowcasePlaylists";
 import StickyNav from "../components/StickyNav";
 import ProtectedRoute from "../utilities/ProtectedRoute";
 import EditButton from "../components/Buttons/EditButton";
-import EditUserForm from "../components/UserPage/EditUserForm";
+import EditUserForm from "../modals/EditUserForm";
 import "./UserPage.css";
 
 const Header = () => {

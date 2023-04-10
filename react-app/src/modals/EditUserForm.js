@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { editUserDetails } from "../../store/user";
-import DynamicImage from "../DynamicImage";
-import ModalForm from "../ModalForm/ModalForm";
-import ModalFormInput from "../ModalForm/ModalFormInput";
+import { editUserDetails } from "../store/user";
+import DynamicImage from "../components/DynamicImage";
+import ModalForm from "../components/ModalForm/ModalForm";
+import ModalFormInput from "../components/ModalForm/ModalFormInput";
 
 const EditUserForm = ({ setShowEditUserModal }) => {
   const dispatch = useDispatch();
