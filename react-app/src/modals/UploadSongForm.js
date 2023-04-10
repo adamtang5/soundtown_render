@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createSong } from "../../../store/song";
-import ModalFormTextarea from "../../ModalForm/ModalFormTextarea";
-import ModalFormImage from "../../ModalForm/ModalFormImage";
-import ModalFormMusic from "../../ModalForm/ModalFormMusic";
-import ModalFormInput from "../../ModalForm/ModalFormInput";
-import ModalForm from "../../ModalForm/ModalForm";
-import LoadingModal from "../../Modules/LoadingModal";
+import { createSong } from "../store/song";
+import ModalFormTextarea from "../components/ModalForm/ModalFormTextarea";
+import ModalFormImage from "../components/ModalForm/ModalFormImage";
+import ModalFormMusic from "../components/ModalForm/ModalFormMusic";
+import ModalFormInput from "../components/ModalForm/ModalFormInput";
+import ModalForm from "../components/ModalForm/ModalForm";
+import LoadingModal from "../components/Modules/LoadingModal";
 
 const UploadSongForm = ({ setShowUploadModal }) => {
   const dispatch = useDispatch();
