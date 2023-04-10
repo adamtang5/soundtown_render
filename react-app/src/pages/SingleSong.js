@@ -5,7 +5,7 @@ import { editSong, likeSong, unlikeSong } from "../store/song";
 import { loadSong, queueSong } from "../store/player";
 import { createComment } from "../store/comment";
 import { Modal } from "../components/Context/Modal";
-import AssetHeader from "../components/Banners/AssetHeader";
+import AssetHeader from "../components/AssetHeader";
 import NewCommentForm from "../components/Comments/NewCommentForm";
 import Avatar from "../components/Icons/Avatar";
 import SongComments from "../components/Comments/SongComments";

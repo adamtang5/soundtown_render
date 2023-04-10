@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 import { loadPlaylist, queuePlaylist } from "../store/player";
 import { editPlaylist, likePlaylist, unlikePlaylist, deletePlaylist } from "../store/playlist";
-import AssetHeader from "../components/Banners/AssetHeader";
+import AssetHeader from "../components/AssetHeader";
 import Avatar from "../components/Icons/Avatar";
 import SingleSongRow from "../components/PlaylistFolders/SinglePlaylist/SingleSongRow";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";

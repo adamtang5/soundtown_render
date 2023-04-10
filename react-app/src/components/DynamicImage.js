@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import DropdownButton from '../Buttons/DropdownButton';
+import DropdownButton from './Buttons/DropdownButton';
 import './DynamicImage.css';
 
 /*
