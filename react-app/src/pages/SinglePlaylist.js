@@ -1,21 +1,156 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
-import { loadPlaylist, queuePlaylist } from "../store/player";
+import { loadPlaylist, queuePlaylist, loadSong, queueSong } from "../store/player";
+import { likeSong, unlikeSong } from "../store/song";
 import { editPlaylist, likePlaylist, unlikePlaylist, deletePlaylist } from "../store/playlist";
 import AssetHeader from "../components/AssetHeader";
 import Avatar from "../components/Icons/Avatar";
-import SingleSongRow from "../components/PlaylistFolders/SinglePlaylist/SingleSongRow";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";
 import AssetCard from "../components/Modules/AssetCard";
 import ToggleButton from "../components/Buttons/ToggleButton";
 import CopyLinkButton from "../components/Buttons/CopyLinkButton";
+import DropdownButton from "../components/Buttons/DropdownButton";
 import EditButton from "../components/Buttons/EditButton";
 import EditPlaylistModal from "../components/PlaylistFolders/EditPlaylistModal";
 import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
-import "../components/PlaylistFolders/SinglePlaylist/Songs.css";
+import "./SinglePlaylist.css";
 import "../components/SidebarModules/Sidebar.css";
+
+const SingleSongRow = ({ song, idx }) => {
+  const dispatch = useDispatch();
+
+  const handlePlay = (e) => {
+    e.preventDefault();
+    dispatch(loadSong(song.id));
+  };
+
+  return (
+    <article
+      className="song-row flex-row cursor-pointer"
+      onClick={handlePlay}
+    >
+      <div
+        className="song-row-content flex-row"
+      >
+        <div
+          className="song-row-thumb"
+          style={{ backgroundImage: `url(${song?.image_url})` }}
+        />
+        <div className="song-row-idx">{idx + 1}</div>
+        <div className="song-row-title">
+          <Link to={`/songs/${song?.id}`}>{song?.title}</Link>
+        </div>
+      </div>
+      <div
+        className="song-row-overlay flex-row"
+      >
+        <div className="song-row-square flex-row">
+          <button
+            className="song-row-play cursor-pointer"
+          >&#9654;</button>
+        </div>
+        <SongRowButtonGroup song={song} />
+      </div>
+    </article>
+  );
+};
+
+const SongRowButtonGroup = ({ song }) => {
+  const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state.session.user);
+  const playingId = useSelector(state => state.player.playingId);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [showPlaylistModal, setShowPlaylistModal] = useState(false);
+  const baseClasses = ['cursor-pointer', 'composite-button'];
+  const styleClasses = ['button-action', 'b3'];
+
+  useEffect(() => {
+    if (!showDropdown) return;
+
+    const closeDropdown = () => {
+      if (!showDropdown) return;
+      setShowDropdown(false);
+    };
+
+    document.addEventListener("click", closeDropdown);
+
+    return () => document.removeEventListener("click", closeDropdown);
+  }, [showDropdown]);
+
+  const handleLike = async (e) => {
+    e.stopPropagation();
+
+    const formData = new FormData();
+    formData.append("user_id", sessionUser.id);
+    formData.append("song_id", song.id);
+    await dispatch(likeSong(formData));
+  };
+
+  const handleUnlike = async (e) => {
+    e.stopPropagation();
+
+    const formData = new FormData();
+    formData.append("user_id", sessionUser.id);
+    formData.append("song_id", song.id);
+    await dispatch(unlikeSong(formData));
+  };
+
+  const addSongToQueue = async (id) => {
+    if (!playingId) {
+      dispatch(loadSong(id));
+    } else {
+      dispatch(queueSong(id));
+    }
+  };
+
+  const dropdownItems = [
+    {
+      onClick: () => addSongToQueue(song.id),
+      label: <div
+        className="logo-before flex-row enqueue-label"
+      >Add to queue</div>,
+    },
+    // {
+    //   onClick: () => setShowPlaylistModal(true),
+    //   label: <div
+    //     className="logo-before flex-row enlist-label"
+    //   >Add to playlist</div>,
+    // },
+  ];
+
+  return (
+    <div className="mini-asset-button-group flex-row">
+      <ToggleButton
+        condition={song?.likes.includes(sessionUser.id)}
+        buttonClasses={[...baseClasses, 'b3']}
+        labelClasses={['heart-label']}
+        handleOff={handleUnlike}
+        onLabel=""
+        handleOn={handleLike}
+        offLabel=""
+      />
+
+      <CopyLinkButton
+        buttonClasses={[...baseClasses, ...styleClasses]}
+        label=""
+        link={`${window.location.origin}/songs/${song?.id}`}
+      />
+
+      <DropdownButton
+        toggleLabel=""
+        toggleClasses={styleClasses}
+        beforeLabel="ellipses-label"
+        labelSize="l3"
+        showDropdown={showDropdown}
+        setShowDropdown={setShowDropdown}
+        dropdownUlClasses={['menu', 'button-group-menu', 'flex-column']}
+        dropdownItems={dropdownItems}
+      />
+    </div>
+  );
+};
 
 const ButtonGroup = ({ playlist }) => {
   const dispatch = useDispatch();
