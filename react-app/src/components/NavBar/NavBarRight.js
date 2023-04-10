@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Modal } from "../Context/Modal";
 import UploadButton from "./UploadButton";
-import UploadSongForm from "../SongFolders/UploadSongForm";
+import UploadSongForm from "../../modals/UploadSongForm";
 import UserProfile from "./UserProfile";
 
 const NavBarRight = () => {
