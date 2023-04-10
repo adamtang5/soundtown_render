@@ -1,5 +1,5 @@
 import Moment from "react-moment";
-import DynamicImage from "../DynamicImage";
+import DynamicImage from "./DynamicImage";
 
 const AssetHeader = ({
   entity,
