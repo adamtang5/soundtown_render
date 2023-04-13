@@ -14,7 +14,7 @@ import ToggleButton from "../components/Buttons/ToggleButton";
 import CopyLinkButton from "../components/Buttons/CopyLinkButton";
 import EditButton from "../components/Buttons/EditButton";
 import DropdownButton from "../components/Buttons/DropdownButton";
-import EditSongForm from "../components/SongFolders/EditSongForm";
+import EditSongForm from "../modals/EditSongForm";
 
 const ButtonGroup = ({ song }) => {
   const dispatch = useDispatch();
