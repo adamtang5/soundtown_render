@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Modal } from "../Context/Modal";
 import { loadSong, queueSong } from "../../store/player";
-import AddToPlaylist from "../PlaylistFolders/AddToPlaylist";
+import AddSongToPlaylist from "../../modals/AddSongToPlaylist";
 import { ImMenu3 } from 'react-icons/im';
 import { CgPlayList } from 'react-icons/cg';
 import { MdOutlinePlaylistAdd } from 'react-icons/md';
@@ -84,7 +84,7 @@ const SongTileActions = ({ song }) => {
             paddingTop={50}
           >
             <div className="playlist-modal-container">
-              <AddToPlaylist
+              <AddSongToPlaylist
                 song={song}
                 setShowModal={setShowPlaylistModal}
               />

@@ -9,7 +9,7 @@ import AssetHeader from "../components/AssetHeader";
 import NewCommentForm from "../components/Comments/NewCommentForm";
 import Avatar from "../components/Icons/Avatar";
 import SongComments from "../components/Comments/SongComments";
-import AddToPlaylist from "../components/PlaylistFolders/AddToPlaylist";
+import AddSongToPlaylist from "../modals/AddSongToPlaylist";
 import ToggleButton from "../components/Buttons/ToggleButton";
 import CopyLinkButton from "../components/Buttons/CopyLinkButton";
 import EditButton from "../components/Buttons/EditButton";
@@ -117,7 +117,7 @@ const ButtonGroup = ({ song }) => {
           position="top"
           paddingTop={50}
         >
-          <AddToPlaylist
+          <AddSongToPlaylist
             song={song}
             setShowModal={setShowPlaylistModal}
           />
