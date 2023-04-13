@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { deleteSong, editSong } from "../../../store/song";
-import ModalFormImage from "../../ModalForm/ModalFormImage";
-import ModalFormInput from "../../ModalForm/ModalFormInput";
-import ModalFormTextarea from "../../ModalForm/ModalFormTextarea";
-import ModalFormMusic from "../../ModalForm/ModalFormMusic";
-import ModalForm from "../../ModalForm/ModalForm";
-import LoadingModal from "../../Modules/LoadingModal";
-import "./EditSong.css";
+import { deleteSong, editSong } from "../store/song";
+import ModalFormImage from "../components/ModalForm/ModalFormImage";
+import ModalFormInput from "../components/ModalForm/ModalFormInput";
+import ModalFormTextarea from "../components/ModalForm/ModalFormTextarea";
+import ModalFormMusic from "../components/ModalForm/ModalFormMusic";
+import ModalForm from "../components/ModalForm/ModalForm";
+import LoadingModal from "../components/Modules/LoadingModal";
+import "./EditSongForm.css";
 
 const EditSongForm = ({ setShowEditSongModal }) => {
   const dispatch = useDispatch();
