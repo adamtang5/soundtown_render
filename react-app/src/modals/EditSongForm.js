@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { deleteSong, editSong } from "../store/song";
+import { editSong } from "../store/song";
 import ModalFormImage from "../components/ModalForm/ModalFormImage";
 import ModalFormInput from "../components/ModalForm/ModalFormInput";
 import ModalFormTextarea from "../components/ModalForm/ModalFormTextarea";
@@ -74,17 +74,6 @@ const EditSongForm = ({ setShowEditSongModal }) => {
     }
   };
 
-  const handleDelete = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const res = dispatch(deleteSong(+id));
-    if (res) {
-      setShowEditSongModal(false);
-      history.push("/");
-    }
-  };
-
   const updateAudioFile = async (e) => {
     const file = await e.target.files[0];
     if (file) setNewAudio(file);
@@ -113,11 +102,6 @@ const EditSongForm = ({ setShowEditSongModal }) => {
   };
 
   const buttonGroupData = [
-    {
-      label: "Delete Song",
-      onClick: handleDelete,
-      type: "delete",
-    },
     {
       label: "Save Changes",
       type: "submit",
