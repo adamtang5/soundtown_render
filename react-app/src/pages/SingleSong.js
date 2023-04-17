@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { editSong, likeSong, unlikeSong } from "../store/song";
+import { editSong, deleteSong, likeSong, unlikeSong } from "../store/song";
 import { loadSong, queueSong } from "../store/player";
 import { createComment } from "../store/comment";
 import { Modal } from "../components/Context/Modal";
@@ -15,14 +15,17 @@ import CopyLinkButton from "../components/Buttons/CopyLinkButton";
 import EditButton from "../components/Buttons/EditButton";
 import DropdownButton from "../components/Buttons/DropdownButton";
 import EditSongForm from "../modals/EditSongForm";
+import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
 
 const ButtonGroup = ({ song }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
   const playingId = useSelector(state => state.player.playingId);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
   const [showEditSongModal, setShowEditSongModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const baseClasses = ['cursor-pointer', 'composite-button'];
   const styleClasses = ['button-action', 'b2'];
 
@@ -65,6 +68,17 @@ const ButtonGroup = ({ song }) => {
     }
   };
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const res = dispatch(deleteSong(song?.id));
+    if (res) {
+      setShowConfirmModal(false);
+      history.push("/");
+    }
+  };
+
   const dropdownItems = [
     {
       onClick: () => addSongToQueue(song.id),
@@ -73,6 +87,11 @@ const ButtonGroup = ({ song }) => {
     {
       onClick: () => setShowPlaylistModal(true),
       label: "Add to playlist",
+    },
+    {
+      cond: sessionUser?.id === song?.user_id,
+      onClick: () => setShowConfirmModal(true),
+      label: "Delete song",
     },
   ];
 
@@ -123,6 +142,12 @@ const ButtonGroup = ({ song }) => {
           />
         </Modal>
       )}
+      <ConfirmDeleteModal
+        showModal={showConfirmModal}
+        setShowModal={setShowConfirmModal}
+        handleDelete={handleDelete}
+        entity="song"
+      />
     </div>
   );
 };
