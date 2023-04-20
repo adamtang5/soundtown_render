@@ -37,13 +37,14 @@ const DropdownButton = ({
           className={[...dropdownUlClasses, labelSize].join(' ')}
           style={ulStyle}
         >
-          {dropdownItems.map((item, idx) => (
-            <li
-              key={idx}
-              className={`flex-row cursor-pointer`}
-              onClick={item.onClick}
-            >{item.label}</li>
-          ))}
+          {dropdownItems.map((item, idx) =>
+            (item.cond === undefined || item.cond) ? (
+              <li
+                key={idx}
+                className={`flex-row cursor-pointer`}
+                onClick={item.onClick}
+              >{item.label}</li>
+            ) : null)}
         </ul>
       )}
     </div>
