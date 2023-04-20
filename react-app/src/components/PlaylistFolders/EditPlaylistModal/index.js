@@ -18,7 +18,7 @@ const EditPlaylistModal = ({ setShowModal, songArr }) => {
   ];
 
   return (
-    <div className="playlist-modal-container">
+    <div className="modal-playlist-form">
       <header>
         <nav>
           <ul className="nav-header flex-row">

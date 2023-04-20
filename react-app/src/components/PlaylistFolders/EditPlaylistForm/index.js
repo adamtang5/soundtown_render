@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { deletePlaylist, editPlaylist } from "../../../store/playlist";
+import { editPlaylist } from "../../../store/playlist";
 import ModalForm from "../../ModalForm/ModalForm";
 import ModalFormImage from "../../ModalForm/ModalFormImage";
 import ModalFormInput from "../../ModalForm/ModalFormInput";
@@ -17,6 +17,7 @@ const EditPlaylistForm = ({ setShowModal }) => {
   const [description, setDescription] = useState(playlist?.description);
   const [imageUrl, setImageUrl] = useState(playlist?.image_url || '');
   const [newImage, setNewImage] = useState();
+  const [songsOrder, setSongsOrder] = useState(playlist?.songs_order);
   const previewId = "form-preview";
 
   const handleCancel = e => {
@@ -38,6 +39,7 @@ const EditPlaylistForm = ({ setShowModal }) => {
     formData.append("id", +id);
     formData.append("title", title);
     formData.append("description", description);
+    formData.append("songs_order", songsOrder);
 
     const res = await dispatch(editPlaylist(+id, formData));
     if (res) {
@@ -47,17 +49,6 @@ const EditPlaylistForm = ({ setShowModal }) => {
         setShowModal(false);
         history.push(`/playlists/${id}`);
       }
-    }
-  };
-
-  const handleDelete = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const res = dispatch(deletePlaylist(+id));
-    if (res) {
-      setShowModal(false);
-      history.push("/library/playlists");
     }
   };
 
@@ -79,11 +70,6 @@ const EditPlaylistForm = ({ setShowModal }) => {
   }
 
   const buttonGroupData = [
-    {
-      label: 'Delete Playlist',
-      onClick: handleDelete,
-      type: 'delete',
-    },
     {
       label: 'Save Changes',
       type: 'submit',

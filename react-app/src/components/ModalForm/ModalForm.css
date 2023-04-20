@@ -6,11 +6,16 @@
   height: 400px;
 }
 
+.modal-playlist-form {
+  max-height: 800px;
+}
+
 .modal-form {
   position: relative;
 }
 
 .song-form-container,
+.playlist-form-container,
 .user-form-container {
   gap: 20px;
   padding: 20px 0;
@@ -24,6 +29,10 @@
   width: 730px;
 }
 
+.playlist-form-container {
+  width: 800px;
+}
+
 .modal-form h2 {
   border-bottom: 2px solid var(--color-primary);
   color: var(--color-primary);
@@ -33,6 +42,7 @@
 }
 
 .song-form-left,
+.playlist-form-left,
 .user-form-left {
   align-items: center;
   position: relative;
@@ -43,12 +53,17 @@
   width: 270px;
 }
 
+.playlist-form-left,
 .user-form-left {
   width: 280px;
 }
 
 .song-form-right {
   width: 400px;
+}
+
+.playlist-form-right {
+  width: 490px;
 }
 
 .user-form-right {
