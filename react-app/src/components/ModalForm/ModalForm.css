@@ -18,6 +18,11 @@
 .playlist-form-container,
 .user-form-container {
   gap: 20px;
+}
+
+.song-form-container,
+.user-form-container,
+.playlist-form-container .modal-form {
   padding: 20px 0;
 }
 
