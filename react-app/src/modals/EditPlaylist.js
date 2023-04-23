@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { editPlaylist } from "../../../store/playlist";
-import ModalForm from "../../ModalForm/ModalForm";
-import ModalFormImage from "../../ModalForm/ModalFormImage";
-import ModalFormInput from "../../ModalForm/ModalFormInput";
-import ModalFormTextarea from "../../ModalForm/ModalFormTextarea";
+import { editPlaylist } from "../store/playlist";
+import ModalForm from "../components/ModalForm/ModalForm";
+import ModalFormImage from "../components/ModalForm/ModalFormImage";
+import ModalFormInput from "../components/ModalForm/ModalFormInput";
+import ModalFormTextarea from "../components/ModalForm/ModalFormTextarea";
+import AllTracksModal from "../components/PlaylistFolders/EditPlaylistModal/AllTracksModal";
+import "../components/ModalForm/ModalForm.css";
+import "./ModalNav.css";
+// import "./AddEditPlaylist.css";
 
-const EditPlaylistForm = ({ setShowModal }) => {
+const BasicInfoForm = ({ setShowModal }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
@@ -120,4 +124,43 @@ const EditPlaylistForm = ({ setShowModal }) => {
   );
 };
 
-export default EditPlaylistForm;
+const EditPlaylist = ({ setShowModal, songArr }) => {
+  const [mode, setMode] = useState("basic");
+
+  const navData = [
+    {
+      mode: 'basic',
+      label: 'Basic info',
+    },
+    {
+      mode: 'tracks',
+      label: 'Tracks',
+    },
+  ];
+
+  return (
+    <div className="playlist-form-container">
+      <header>
+        <nav>
+          <ul className="nav-header flex-row">
+            {navData.map((data, idx) => (
+              <li
+                key={idx}
+                onClick={() => setMode(data.mode)}
+                className={mode === data.mode ? "active" : "cursor-pointer"}
+              >{data.label}</li>
+            ))}
+          </ul>
+        </nav>
+      </header>
+
+      {mode === "basic" ? (
+        <BasicInfoForm setShowModal={setShowModal} />
+      ) : (
+        <AllTracksModal songArr={songArr} />
+      )}
+    </div>
+  );
+};
+
+export default EditPlaylist;

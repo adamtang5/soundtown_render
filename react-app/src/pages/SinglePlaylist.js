@@ -13,7 +13,7 @@ import ToggleButton from "../components/Buttons/ToggleButton";
 import CopyLinkButton from "../components/Buttons/CopyLinkButton";
 import DropdownButton from "../components/Buttons/DropdownButton";
 import EditButton from "../components/Buttons/EditButton";
-import EditPlaylistModal from "../components/PlaylistFolders/EditPlaylistModal";
+import EditPlaylist from "../modals/EditPlaylist";
 import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
 import "./SinglePlaylist.css";
 import "../components/SidebarModules/Sidebar.css";
@@ -217,7 +217,7 @@ const ButtonGroup = ({ playlist }) => {
           setShowModal={setShowEditModal}
           buttonClasses={[...baseClasses, ...styleClasses]}
           modalForm={
-            <EditPlaylistModal
+            <EditPlaylist
               setShowModal={setShowEditModal}
               songArr={songsArr}
             />
