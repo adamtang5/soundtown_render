@@ -5,12 +5,12 @@
   padding: 0 10px 10px;
 }
 
-.playlist-form-container {
-  height: 400px;
+.combo-form-container {
+  height: 450px;
 }
 
 .playlist-modal-container header,
-.playlist-form-container header {
+.combo-form-container header {
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -19,13 +19,13 @@
 }
 
 .playlist-modal-container nav,
-.playlist-form-container nav {
+.combo-form-container nav {
   font-size: 24px;
   font-weight: 400;
 }
 
 .playlist-modal-container .nav-header,
-.playlist-form-container .nav-header {
+.combo-form-container .nav-header {
   gap: 20px;
 }
 

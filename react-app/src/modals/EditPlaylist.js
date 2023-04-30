@@ -139,7 +139,7 @@ const EditPlaylist = ({ setShowModal, songArr }) => {
   ];
 
   return (
-    <div className="playlist-form-container">
+    <div className="combo-form-container">
       <header>
         <nav>
           <ul className="nav-header flex-row">
