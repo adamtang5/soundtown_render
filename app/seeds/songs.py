@@ -13,7 +13,7 @@ def seed_songs():
 
     for song_dict in data['songs']:
       new_song = Song(
-        user_id=user_ids[random.randint(1, num_users)],
+        user_id=user_ids[random.randint(0, num_users-1)],
         title=song_dict["title"],
         audio_url=song_dict["audio_url"],
         description=song_dict["description"],
