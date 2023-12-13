@@ -36,16 +36,14 @@ def seed_nested_comments():
     math.floor(len(root_comments)*PCT_ROOT_COMMENTS_WITH_NESTED_COMMENTS)
   )
   for comment in random_root_comments:
-    print("------------")
-    print(comment.id)
-    print("------------")
     for _ in range(random.randint(1, MAX_INITIAL_NESTED_COMMENTS)):
       new_comment = Comment(
         user_id=random.choice(user_ids),
         song_id=comment.song_id,
+        parent_id=comment.id,
         message=faker.sentence(),
       )
-      comment.children.append(new_comment)
+      db.session.add(new_comment)
 
   db.session.commit()
 
