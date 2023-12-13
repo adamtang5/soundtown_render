@@ -1,15 +1,17 @@
 from .db import db
+from sqlalchemy.dialect.postgresql import UUID
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from .song_like import song_likes
 from .playlist_like import playlist_likes
 from datetime import datetime
+import uuid
 
 
 class User(db.Model, UserMixin):
   __tablename__ = 'users'
 
-  id = db.Column(db.Integer, primary_key=True)
+  id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
   email = db.Column(db.String(255), nullable=False, unique=True)
   hashed_password = db.Column(db.String(255), nullable=False)
   display_name = db.Column(db.String(50))
