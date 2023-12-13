@@ -1,4 +1,4 @@
-import random
+import math, random
 
 from app.models import db, Song, User
 
@@ -10,7 +10,13 @@ def seed_likes():
   songs = Song.query.all()
 
   for user in users:
-    random_songs = random.sample(songs, random.randint(len(songs) * MIN_PCT_SONGS_LIKED_BY_USER, len(songs) * MAX_PCT_SONGS_LIKED_BY_USER))
+    random_songs = random.sample(
+      songs,
+      random.randint(
+        math.floor(len(songs)*MIN_PCT_SONGS_LIKED_BY_USER),
+        math.ceil(len(songs)*MAX_PCT_SONGS_LIKED_BY_USER)
+      )
+    )
     for song in random_songs:
       song.likes.append(user)
 

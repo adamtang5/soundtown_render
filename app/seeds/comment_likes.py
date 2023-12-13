@@ -1,4 +1,4 @@
-import random
+import math, random
 
 from app.models import db, Comment, User
 
@@ -11,7 +11,13 @@ def seed_comment_likes():
   comments = Comment.query.all()
 
   for user in users:
-    random_comments = random.sample(comments, random.randint(len(comments) * MIN_PCT_COMMENTS_LIKED_BY_USER, len(comments) * MAX_PCT_COMMENTS_LIKED_BY_USER))
+    random_comments = random.sample(
+      comments,
+      random.randint(
+        math.floor(len(comments)*MIN_PCT_COMMENTS_LIKED_BY_USER),
+        math.ceil(len(comments) * MAX_PCT_COMMENTS_LIKED_BY_USER)
+      )
+    )
     for comment in random_comments:
       comment.comment_likes.append(user)
 
