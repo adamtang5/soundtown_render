@@ -8,17 +8,18 @@ faker = Faker('en_US')
 
 
 def seed_comments():
-  users = User.query.all()
-  num_users = len(users)
-  num_songs = len(Song.query.all())
+  user_ids = [user.id for user in User.query.all()]
+  song_ids = [song.id for song in Song.query.all()]
+  num_songs = len(song_ids)
 
-  random_song_ids = random.sample(range(1, num_songs+1), math.floor(num_songs * 0.75))
+  random_indices = random.sample(range(0, num_songs), math.floor(num_songs * 0.75))
+  random_song_ids = [song_ids[idx] for idx in random_indices]
   for song_id in random_song_ids:
     for _ in range(random.randint(1, 10)):
       new_comment = Comment(
-        user_id=random.randint(1, num_users),
+        user_id=user_ids[random.randint(0, len(user_ids)-1)],
         song_id=song_id,
-        content=faker.sentence(),
+        message=faker.sentence(),
       )
       db.session.add(new_comment)
 
