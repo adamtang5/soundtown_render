@@ -2,16 +2,19 @@ import random
 
 from app.models import db, Playlist, User
 
+MIN_PCT_PL_LIKED_BY_USER = 0.3
+MAX_PCT_PL_LIKED_BY_USER = 0.5
 
 def seed_pl_likes():
+  users = User.query.all()
+  playlists = Playlist.query.all()
+
   num_playlists = len(Playlist.query.all())
   num_users = len(User.query.all())
-  for user_id in range(1, num_users+1):
-    user = User.query.get(user_id)
-    pl_ids = random.sample(range(1, num_playlists+1), num_playlists // (user_id+1))
-    for pl_id in pl_ids:
-      playlist = Playlist.query.get(pl_id)
-      playlist.pl_likes.append(user)
+  for user in users:
+    random_pls = random.sample(playlists, random.randint(len(playlists) * MIN_PCT_PL_LIKED_BY_USER, len(playlists) * MAX_PCT_PL_LIKED_BY_USER))
+    for pl in random_pls:
+      pl.pl_likes.append(user)
 
     db.session.commit()
 
