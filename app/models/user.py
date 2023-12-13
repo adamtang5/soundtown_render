@@ -1,5 +1,5 @@
 from .db import db
-from sqlalchemy.dialect.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from .song_like import song_likes

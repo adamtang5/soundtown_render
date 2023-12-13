@@ -1,5 +1,5 @@
 from .db import db
-from sqlalchemy.dialect.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
 from .playlist_like import playlist_likes
 from .playlist_song import playlist_song

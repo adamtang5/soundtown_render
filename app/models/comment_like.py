@@ -1,5 +1,5 @@
 from .db import db
-from sqlalchemy.dialect.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID
 
 
 comment_likes = db.Table(
