@@ -5,19 +5,21 @@ import random
 from sqlalchemy import text
 from app.models import db, Playlist, User, Song
 
+MIN_PL_LEN = 4
+MAX_PL_LEN = 15
 
 def seed_playlists():
-  num_users = len(User.query.all())
-  num_songs = len(Song.query.all())
+  user_ids = [user.id for user in User.query.all()]
+  song_ids = [song.id for song in Song.query.all()]
 
   with open(os.getcwd()+"/app/seeds/playlists.json") as f:
     data = json.load(f)
 
     for playlist_dict in data:
-      songs_order = random.sample(range(1, num_songs+1), random.randint(4, 15))
+      songs_order = random.sample(song_ids, random.randint(MIN_PL_LEN, MAX_PL_LEN))
 
       new_playlist = Playlist(
-        user_id=random.randint(1, num_users),
+        user_id=random.choice(user_ids),
         title=playlist_dict["title"],
         songs_order=json.dumps(songs_order),
         image_url=playlist_dict["image_url"],
