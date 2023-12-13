@@ -6,13 +6,13 @@ from app.models import db, Song, User
 
 
 def seed_songs():
-  num_users = len(User.query.all())
+  user_ids = [user.id for user in User.query.all()]
   with open(os.getcwd()+"/app/seeds/songs.json") as f:
     data = json.load(f)
 
     for song_dict in data['songs']:
       new_song = Song(
-        user_id=random.randint(1, num_users),
+        user_id=random.choice(user_ids),
         title=song_dict["title"],
         audio_url=song_dict["audio_url"],
         description=song_dict["description"],

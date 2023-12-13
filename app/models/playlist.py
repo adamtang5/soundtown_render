@@ -1,15 +1,17 @@
 from .db import db
+from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
 from .playlist_like import playlist_likes
 from .playlist_song import playlist_song
 import json
+import uuid
 
 
 class Playlist(db.Model):
   __tablename__ = 'playlists'
 
-  id = db.Column(db.Integer, primary_key=True)
-  user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+  id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+  user_id = db.Column(UUID(as_uuid=True), db.ForeignKey("users.id"), nullable=False)
   title = db.Column(db.String(75), nullable=False)
   songs_order = db.Column(db.Text, nullable=False, default="[]")
   image_url = db.Column(db.String)

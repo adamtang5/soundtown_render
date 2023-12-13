@@ -1,15 +1,18 @@
 from .db import db
+from sqlalchemy.dialects.postgresql import UUID
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from .song_like import song_likes
 from .playlist_like import playlist_likes
+from .comment_like import comment_likes
 from datetime import datetime
+import uuid
 
 
 class User(db.Model, UserMixin):
   __tablename__ = 'users'
 
-  id = db.Column(db.Integer, primary_key=True)
+  id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
   email = db.Column(db.String(255), nullable=False, unique=True)
   hashed_password = db.Column(db.String(255), nullable=False)
   display_name = db.Column(db.String(50))
@@ -18,14 +21,20 @@ class User(db.Model, UserMixin):
   created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
   updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
-  songs = db.relationship("Song", back_populates="user")
-  playlists = db.relationship("Playlist", back_populates="user")
-  comments = db.relationship("Comment", back_populates="user")
+  songs = db.relationship("Song", back_populates="user", cascade="all, delete")
+  playlists = db.relationship("Playlist", back_populates="user", cascade="all, delete")
+  comments = db.relationship("Comment", back_populates="user", cascade="all, delete")
 
   pl_likes = db.relationship(
     "Playlist",
     secondary=playlist_likes,
     back_populates="pl_likes"
+  )
+
+  comment_likes = db.relationship(
+    "Comment",
+    secondary=comment_likes,
+    back_populates="comment_likes"
   )
 
   likes = db.relationship(
@@ -55,5 +64,7 @@ class User(db.Model, UserMixin):
       'created_at': self.created_at,
       'updated_at': self.updated_at,
       "comment_amount": len(self.comments),
-      "likes": [song.id for song in self.likes]
+      "likes": [song.id for song in self.likes],
+      "pl_likes": [pl.id for pl in self.pl_likes],
+      "comment_likes": [comment.id for comment in self.comment_likes]
     }
