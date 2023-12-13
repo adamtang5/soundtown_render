@@ -10,7 +10,7 @@ MAX_PL_LEN = 15
 
 def seed_playlists():
   user_ids = [user.id for user in User.query.all()]
-  song_ids = [song.id for song in Song.query.all()]
+  song_ids = [str(song.id) for song in Song.query.all()]
 
   with open(os.getcwd()+"/app/seeds/playlists.json") as f:
     data = json.load(f)
