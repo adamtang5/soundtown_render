@@ -9,8 +9,6 @@ def seed_pl_likes():
   users = User.query.all()
   playlists = Playlist.query.all()
 
-  num_playlists = len(Playlist.query.all())
-  num_users = len(User.query.all())
   for user in users:
     random_pls = random.sample(playlists, random.randint(len(playlists) * MIN_PCT_PL_LIKED_BY_USER, len(playlists) * MAX_PCT_PL_LIKED_BY_USER))
     for pl in random_pls:
