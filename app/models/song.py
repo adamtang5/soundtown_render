@@ -1,14 +1,16 @@
 from .db import db
+from sqlalchemy.dialect.postgresql import UUID
 from datetime import datetime
 from .song_like import song_likes
 from .playlist_song import playlist_song
+import uuid
 
 
 class Song(db.Model):
   __tablename__ = 'songs'
 
-  id = db.Column(db.Integer, primary_key=True)
-  user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+  id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+  user_id = db.Column(UUID(as_uuid=True), db.ForeignKey("users.id"), nullable=False)
   title = db.Column(db.String(75), nullable=False)
   audio_url = db.Column(db.String, nullable=False)
   description = db.Column(db.Text)
