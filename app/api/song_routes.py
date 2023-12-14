@@ -102,6 +102,7 @@ def get_all_songs():
   return jsonify([song.to_dict() for song in songs])
 
 
+# DELETE /api/songs/:id
 @song_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_song(id):
