@@ -33,7 +33,7 @@ class Song(db.Model):
     back_populates="songs"
   )
 
-  def to_dict(self):
+  def to_extended_dict(self):
     return {
       'id': self.id,
       'user_id': self.user_id,
@@ -46,4 +46,16 @@ class Song(db.Model):
       'created_at': self.created_at,
       'updated_at': self.updated_at,
       'likes': [like.id for like in self.likes]
+    }
+
+  def to_dict(self):
+    return {
+      'id': self.id,
+      'user_id': self.user_id,
+      'title': self.title,
+      'audio_url': self.audio_url,
+      'description': self.description,
+      'image_url': self.image_url,
+      'created_at': self.created_at,
+      'updated_at': self.updated_at
     }

@@ -54,7 +54,7 @@ class User(db.Model, UserMixin):
   def check_password(self, password):
     return check_password_hash(self.password, password)
 
-  def to_dict(self):
+  def to_extended_dict(self):
     return {
       'id': self.id,
       'email': self.email,
@@ -63,8 +63,19 @@ class User(db.Model, UserMixin):
       'banner_url': self.banner_url,
       'created_at': self.created_at,
       'updated_at': self.updated_at,
-      "comment_amount": len(self.comments),
-      "likes": [song.id for song in self.likes],
-      "pl_likes": [pl.id for pl in self.pl_likes],
-      "comment_likes": [comment.id for comment in self.comment_likes]
+      'songs': [song.to_dict() for song in self.songs],
+      'playlists': [pl.to_dict() for pl in self.playlists],
+      'likes': [song.id for song in self.likes],
+      'pl_likes': [pl.id for pl in self.pl_likes],
+      'comment_likes': [comment.id for comment in self.comment_likes]
+    }
+  
+  def to_dict(self):
+    return {
+      'id': self.id,
+      'display_name': self.display_name,
+      'avatar_url': self.avatar_url,
+      'banner_url': self.banner_url,
+      'created_at': self.created_at,
+      'updated_at': self.updated_at
     }
