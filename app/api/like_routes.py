@@ -6,6 +6,7 @@ from sqlalchemy.orm import relationship, sessionmaker, joinedload
 
 like_routes = Blueprint('like', __name__)
 
+
 # POST /api/likes/song
 @like_routes.route('/song', methods=['POST'])
 @login_required
@@ -16,13 +17,14 @@ def like_song():
   user_id = request.form["user_id"]
   song_id = request.form["song_id"]
 
-  song = Song.query.get(int(song_id))
-  user = User.query.get(int(user_id))
+  song = Song.query.get(song_id)
+  user = User.query.get(user_id)
 
   song.likes.append(user)
 
   db.session.commit()
   return song.to_dict()
+
 
 # DELETE /api/likes/song
 @like_routes.route('/song', methods=['DELETE'])
@@ -35,12 +37,13 @@ def unlike_song():
   user_id = request.form["user_id"]
   song_id = request.form["song_id"]
 
-  song = Song.query.get(int(song_id))
-  user = User.query.get(int(user_id))
+  song = Song.query.get(song_id)
+  user = User.query.get(user_id)
 
   song.likes = [like for like in song.likes if user.id != like.id]
   db.session.commit()
   return song.to_dict()
+
 
 # POST /api/likes/playlist
 @like_routes.route('/playlist', methods=['POST'])
@@ -52,13 +55,14 @@ def like_playlist():
   user_id = request.form["user_id"]
   playlist_id = request.form["playlist_id"]
 
-  playlist = Playlist.query.get(int(playlist_id))
-  user = User.query.get(int(user_id))
+  playlist = Playlist.query.get(playlist_id)
+  user = User.query.get(user_id)
 
   playlist.pl_likes.append(user)
 
   db.session.commit()
   return playlist.to_dict()
+
 
 # DELETE /api/likes/playlist
 @like_routes.route('/playlist', methods=['DELETE'])
@@ -70,8 +74,8 @@ def unlike_playlist():
   user_id = request.form["user_id"]
   playlist_id = request.form["playlist_id"]
 
-  playlist = Playlist.query.get(int(playlist_id))
-  user = User.query.get(int(user_id))
+  playlist = Playlist.query.get(playlist_id)
+  user = User.query.get(user_id)
 
   playlist.pl_likes = [like for like in playlist.pl_likes if user.id != like.id]
   db.session.commit()

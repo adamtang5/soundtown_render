@@ -11,6 +11,7 @@ from app.s3_helpers import (
 
 user_routes = Blueprint('users', __name__)
 
+
 # GET /api/users/
 @user_routes.route('/')
 # @login_required
@@ -18,15 +19,17 @@ def users():
   users = User.query.all()
   return jsonify([user.to_dict() for user in users])
 
+
 # GET /api/users/:id
-@user_routes.route('/<int:id>')
+@user_routes.route('/<uuid:id>')
 @login_required
 def user(id):
   user = User.query.get(id)
   return user.to_dict()
 
+
 # PUT /api/users/:id
-@user_routes.route('/<int:id>', methods=['PUT'])
+@user_routes.route('/<uuid:id>', methods=['PUT'])
 @login_required
 def edit_user(id):
   """

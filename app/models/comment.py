@@ -27,7 +27,7 @@ class Comment(db.Model):
     back_populates="comment_likes"
   )
 
-  def to_dict(self):
+  def to_extended_dict(self):
     return {
       'id': self.id,
       'user_id': self.user_id,
@@ -39,5 +39,17 @@ class Comment(db.Model):
       'created_at': self.created_at,
       'updated_at': self.updated_at,
       'children': [comment.id for comment in self.children],
+      'likes': [like.id for like in self.comment_likes]
+    }
+
+  def to_dict(self):
+    return {
+      'id': self.id,
+      'user': self.user.to_dict(),
+      'message': self.message,
+      'parent_id': self.parent_id,
+      'song_timestamp': self.song_timestamp,
+      'created_at': self.created_at,
+      'updated_at': self.updated_at,
       'likes': [like.id for like in self.comment_likes]
     }

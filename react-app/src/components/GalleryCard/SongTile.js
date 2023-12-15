@@ -153,7 +153,7 @@ const SongTile = ({ song, setShowModal }) => {
                   className="liked"
                 >&#10084;</div>
               )}
-              {!song.likes.includes(sessionUser.id) && (
+              {!song?.likes?.includes(sessionUser.id) && (
                 <div
                   onClick={handleLike}
                   className="not-liked"

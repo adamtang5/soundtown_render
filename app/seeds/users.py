@@ -12,7 +12,7 @@ def seed_users():
   marnie = User(
     email='marnie@aa.io',
     display_name='Marnie Bernard',
-    avatar_url='https://avatarfiles.alphacoders.com/126/thumb-126015.png',
+    avatar_url='https://avatarfiles.alphacoders.com/368/thumb-368605.jpg',
     banner_url='https://images.unsplash.com/photo-1551193541-5937ec516252?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2067&q=80',
     password='password')
   bobbie = User(

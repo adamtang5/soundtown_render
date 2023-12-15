@@ -103,16 +103,9 @@ def get_all_playlists():
   """
   Get All Playlists
   """
-  playlists = db.session.query(Playlist).options(joinedload(Playlist.songs)).all()
-  mainDict = {}
+  playlists = Playlist.query.all()
+  return jsonify([playlist.to_dict() for playlist in playlists])
 
-  for playlist in playlists:
-    mainDict[playlist.id] = playlist.to_dict()
-    mainDict[playlist.id]["songs"] = []
-    for song in playlist.songs:
-      mainDict[playlist.id]["songs"].append(song.id)
-
-  return jsonify(mainDict)
 
 # DELETE /api/playlists/:id
 @playlist_routes.route('/<int:id>',methods=['DELETE'])
