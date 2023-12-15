@@ -16,8 +16,9 @@ def authenticate():
   Authenticates a user.
   """
   if current_user.is_authenticated:
-    return current_user.to_dict()
+    return current_user.to_extended_dict()
   return {'errors': ['Unauthorized']}
+
 
 # POST /api/auth/login
 @auth_routes.route('/login', methods=['POST'])
@@ -33,10 +34,11 @@ def login():
     # Add the user to the session, we are logged in!
     user = User.query.filter(User.email == form.data['email']).first()
     login_user(user)
-    return user.to_dict()
+    return user.to_extended_dict()
   return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
-# POST /api/auth/logout
+
+# GET /api/auth/logout
 @auth_routes.route('/logout')
 def logout():
   """
@@ -44,6 +46,7 @@ def logout():
   """
   logout_user()
   return {'message': 'User logged out'}
+
 
 # POST /api/auth/signup
 @auth_routes.route('/signup', methods=['POST'])
@@ -65,8 +68,9 @@ def sign_up():
     db.session.add(user)
     db.session.commit()
     login_user(user)
-    return user.to_dict()
+    return user.to_extended_dict()
   return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
 
 # GET /api/auth/unauthorized
 @auth_routes.route('/unauthorized')

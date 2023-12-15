@@ -4,7 +4,10 @@ from app.models import db, Song, User
 from datetime import datetime
 from app.forms import NewSongForm, EditSongForm
 from app.api.utils import (
-  validation_errors_to_error_messages, FILE_TYPE_ERROR, UNAUTHORIZED_ERROR
+  validation_errors_to_error_messages,
+  not_found_error,
+  FILE_TYPE_ERROR,
+  UNAUTHORIZED_ERROR
 )
 from app.s3_helpers import (
   upload_file_to_s3, allowed_file, get_unique_filename
@@ -12,6 +15,7 @@ from app.s3_helpers import (
 from sqlalchemy.orm import relationship, sessionmaker, joinedload
 
 song_routes = Blueprint('song', __name__)
+
 
 # POST /api/songs/
 @song_routes.route('/', methods=['POST'])
@@ -46,7 +50,7 @@ def new_song():
 
 
 #PUT /api/songs/:id
-@song_routes.route('/<int:id>', methods=['PUT'])
+@song_routes.route('/<uuid:id>', methods=['PUT'])
 @login_required
 def edit_song(id):
   """
@@ -102,8 +106,18 @@ def get_all_songs():
   return jsonify([song.to_dict() for song in songs])
 
 
+# GET /api/songs/:id
+@song_routes.route('/<uuid:id>')
+def get_song(id):
+  """
+  Get song by id
+  """
+  song = Song.query.get(id)
+  return song.to_extended_dict()
+
+
 # DELETE /api/songs/:id
-@song_routes.route('/<int:id>', methods=['DELETE'])
+@song_routes.route('/<uuid:id>', methods=['DELETE'])
 @login_required
 def delete_song(id):
   """
@@ -111,22 +125,21 @@ def delete_song(id):
   """
   song = Song.query.get(id)
   if song:
-
-      db.session.delete(song)
-      db.session.commit()
-      return {'id': id}
+    db.session.delete(song)
+    db.session.commit()
+    return {'id': id}
   else:
-      return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return not_found_error('song')
 
 
 # GET /api/songs/:id/comments
-@song_routes.route('/<int:id>/comments')
+@song_routes.route('/<uuid:id>/comments')
 def get_comments_by_song_id(id):
   """
   Get all comments of song ID
   """
   song = Song.query.get(id)
   if song:
-      return jsonify([comment.to_dict() for comment in song.comments])
+    return jsonify([comment.to_dict() for comment in song.comments])
   else:
-      return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return not_found_error('song')
