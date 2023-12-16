@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import './Tile.css';
 
 const PlaylistTile = ({ playlist }) => {
-  const firstSong = useSelector(state => state.songs[playlist.songs_order[0]]);
+  const firstSong = useSelector(state => state.songs[playlist?.songs_order[0]]);
   const dispatch = useDispatch();
 
   const handlePlay = (e) => {
