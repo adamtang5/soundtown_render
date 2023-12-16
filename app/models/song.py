@@ -55,7 +55,5 @@ class Song(db.Model):
       'title': self.title,
       'audio_url': self.audio_url,
       'description': self.description,
-      'image_url': self.image_url,
-      'created_at': self.created_at,
-      'updated_at': self.updated_at
+      'image_url': self.image_url
     }

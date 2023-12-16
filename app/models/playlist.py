@@ -33,7 +33,7 @@ class Playlist(db.Model):
     back_populates="playlists"
   )
 
-  def to_dict(self):
+  def to_extended_dict(self):
     return {
       'id': self.id,
       'user_id': self.user_id,
@@ -44,6 +44,16 @@ class Playlist(db.Model):
       'description': self.description,
       'created_at': self.created_at,
       'updated_at': self.updated_at,
-      'songs': [song.id for song in self.songs],
+      'songs': [song.to_dict() for song in self.songs],
       'likes': [like.id for like in self.pl_likes]
+    }
+
+  def to_dict(self):
+    return {
+      'id': self.id,
+      'user_id': self.user_id,
+      'title': self.title,
+      'songs_order': json.loads(self.songs_order),
+      'image_url': self.image_url,
+      'description': self.description
     }
