@@ -123,7 +123,7 @@ const SongRowButtonGroup = ({ song }) => {
   return (
     <div className="mini-asset-button-group flex-row">
       <ToggleButton
-        condition={song?.likes.includes(sessionUser.id)}
+        condition={song?.likes?.includes(sessionUser.id)}
         buttonClasses={[...baseClasses, 'b3']}
         labelClasses={['heart-label']}
         handleOff={handleUnlike}
@@ -197,7 +197,7 @@ const ButtonGroup = ({ playlist }) => {
   return (
     <div className="asset-button-group flex-row">
       <ToggleButton
-        condition={playlist?.likes.includes(sessionUser.id)}
+        condition={playlist?.likes?.includes(sessionUser.id)}
         buttonClasses={[...baseClasses, 'b2']}
         labelClasses={['heart-label']}
         handleOff={handleUnlike}
@@ -259,14 +259,14 @@ const ButtonGroup = ({ playlist }) => {
 const SinglePlaylist = () => {
   const dispatch = useDispatch()
   const { id } = useParams();
-  const playlist = useSelector(state => state.playlists[+id]);
+  const playlist = useSelector(state => state.playlists[id]);
   const stateSongs = useSelector(state => state.songs);
-  const songs = playlist?.songs_order?.map(id => stateSongs[+id]);
+  const songs = playlist?.songs_order?.map(id => stateSongs[id]);
   const sessionUser = useSelector(state => state.session.user);
   const playlistUser = useSelector(state => state.users[playlist?.user_id]);
   const userPlaylists = useSelector(state => Object.values(state.playlists)
     .filter(pl => pl.user_id === playlist?.user_id)
-    .filter(pl => pl.id !== +id));
+    .filter(pl => pl.id !== id));
 
   const handlePlayButtonClick = (e) => {
     e.preventDefault();
