@@ -5,7 +5,10 @@ from app.models import db, User, Playlist, Song, playlist_song
 from datetime import datetime
 from app.forms import NewPlaylistForm, EditPlaylistForm
 from app.api.utils import (
-  validation_errors_to_error_messages, FILE_TYPE_ERROR, UNAUTHORIZED_ERROR
+  validation_errors_to_error_messages,
+  not_found_error,
+  FILE_TYPE_ERROR,
+  UNAUTHORIZED_ERROR
 )
 from app.s3_helpers import (
   upload_file_to_s3, allowed_file, get_unique_filename
@@ -14,6 +17,7 @@ from sqlalchemy.orm import relationship, sessionmaker, joinedload
 import json
 
 playlist_routes = Blueprint('playlist',__name__)
+
 
 # POST /api/playlists/
 @playlist_routes.route('/', methods=['POST'])
@@ -44,7 +48,7 @@ def new_playlist():
 
 
 # PUT /api/playlists/:id
-@playlist_routes.route('/<int:id>', methods=['PUT'])
+@playlist_routes.route('/<uuid:id>', methods=['PUT'])
 @login_required
 def edit_playlist(id):
   """
@@ -75,7 +79,7 @@ def edit_playlist(id):
     playlist.songs_order = request.form["songs_order"]
 
     orig = set(playlist.songs)
-    new = set([Song.query.get(id) for id in json.loads(songs_order)])
+    new = set([Song.query.get(id) for id in json.loads(playlist.songs_order)])
     ids_to_remove = [song.id for song in (orig - new)]
     songs_to_add = new - orig
 
@@ -107,17 +111,27 @@ def get_all_playlists():
   return jsonify([playlist.to_dict() for playlist in playlists])
 
 
+# GET /api/playlists/:id
+@playlist_routes.route('/<uuid:id>')
+def get_playlist(id):
+  """
+  Get playlist by id
+  """
+  playlist = Playlist.query.get(id)
+  return playlist.to_extended_dict()
+
+
 # DELETE /api/playlists/:id
-@playlist_routes.route('/<int:id>',methods=['DELETE'])
+@playlist_routes.route('/<uuid:id>',methods=['DELETE'])
+@login_required
 def delete_playlist(id):
   """
   Delete playlist by id
   """
-
   playlist = Playlist.query.get(id)
   if playlist:
     db.session.delete(playlist)
     db.session.commit()
     return {"id":id}
   else:
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return not_found_error('playlist')
