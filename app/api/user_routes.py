@@ -3,7 +3,10 @@ from flask_login import current_user, login_required
 from app.models import User, db
 from datetime import datetime
 from app.api.utils import (
-  validation_errors_to_error_messages, FILE_TYPE_ERROR, UNAUTHORIZED_ERROR
+  validation_errors_to_error_messages,
+  not_found_error,
+  FILE_TYPE_ERROR,
+  UNAUTHORIZED_ERROR
 )
 from app.s3_helpers import (
   upload_file_to_s3, allowed_file, get_unique_filename
@@ -25,7 +28,10 @@ def users():
 @login_required
 def user(id):
   user = User.query.get(id)
-  return user.to_dict()
+  if user:
+    return user.to_extended_dict()
+  else:
+    return not_found_error('user')
 
 
 # PUT /api/users/:id

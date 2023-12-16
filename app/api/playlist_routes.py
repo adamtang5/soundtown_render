@@ -59,7 +59,7 @@ def edit_playlist(id):
   if form.validate_on_submit():
     playlist = Playlist.query.get(id)
     if not playlist:
-      return jsonify({"errors": ["playlist not found"]}), 404
+      return not_found_error('playlist')
 
     if current_user.id != playlist.user_id:
       return UNAUTHORIZED_ERROR
@@ -118,7 +118,10 @@ def get_playlist(id):
   Get playlist by id
   """
   playlist = Playlist.query.get(id)
-  return playlist.to_extended_dict()
+  if playlist:
+    return playlist.to_extended_dict()
+  else:
+    return not_found_error('playlist')
 
 
 # DELETE /api/playlists/:id

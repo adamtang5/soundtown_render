@@ -113,7 +113,10 @@ def get_song(id):
   Get song by id
   """
   song = Song.query.get(id)
-  return song.to_extended_dict()
+  if song:
+    return song.to_extended_dict()
+  else:
+    return not_found_error('song')
 
 
 # DELETE /api/songs/:id

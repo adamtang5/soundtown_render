@@ -12,4 +12,4 @@ def validation_errors_to_error_messages(validation_errors):
   return errorMessages
 
 def not_found_error(entity):
-  return {"errors": [f'{entity} not found']}, 401
+  return {"errors": [f'{entity} not found']}, 404
