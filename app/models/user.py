@@ -74,8 +74,5 @@ class User(db.Model, UserMixin):
     return {
       'id': self.id,
       'display_name': self.display_name,
-      'avatar_url': self.avatar_url,
-      'banner_url': self.banner_url,
-      'created_at': self.created_at,
-      'updated_at': self.updated_at
+      'avatar_url': self.avatar_url
     }

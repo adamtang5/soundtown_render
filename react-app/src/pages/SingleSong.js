@@ -162,7 +162,7 @@ const SingleSong = () => {
 
   const handlePlayButtonClick = (e) => {
     e.preventDefault();
-    dispatch(loadSong(song.id));
+    dispatch(loadSong(song?.id));
   };
 
   const updateImage = async (e) => {

@@ -17,16 +17,16 @@ def seed_playlists():
 
     for playlist_dict in data:
       songs_order = random.sample(song_ids, random.randint(MIN_PL_LEN, MAX_PL_LEN))
-
       new_playlist = Playlist(
         user_id=random.choice(user_ids),
         title=playlist_dict["title"],
         songs_order=json.dumps(songs_order),
         image_url=playlist_dict["image_url"],
-        description=playlist_dict["description"])
+        description=playlist_dict["description"]
+      )
       db.session.add(new_playlist)
 
-      playlist = Playlist.query.order_by(text("id desc")).limit(1).one()
+      playlist = Playlist.query.order_by(text("created_at desc")).limit(1).one()
       for song_id in songs_order:
         song = Song.query.get(song_id)
         playlist.songs.append(song)
