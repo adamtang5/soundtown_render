@@ -62,7 +62,7 @@ const App = () => {
           <ProtectedRoute path="/library">
             <Library />
           </ProtectedRoute>
-          <ProtectedRoute path="/users/:userId">
+          <ProtectedRoute path="/users/:id">
             <UserPage />
           </ProtectedRoute>
           <ProtectedRoute path="/songs/:id" exact={true}>

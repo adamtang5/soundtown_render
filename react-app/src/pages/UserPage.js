@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Redirect, useHistory, Switch } from "react-router-dom";
-import { getAllUsers, editUserDetails } from "../store/user";
+import { editUserDetails, getUser } from "../store/user";
 import DropdownButton from "../components/Buttons/DropdownButton";
 import DynamicImage from "../components/DynamicImage";
 import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
@@ -15,9 +15,9 @@ import "./UserPage.css";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { userId } = useParams();
+  const { id } = useParams();
   const sessionUser = useSelector(state => state.session.user);
-  const user = useSelector(state => state.users[userId]);
+  const user = useSelector(state => state.users[id]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showAvatarConfirmModal, setShowAvatarConfirmModal] = useState(false);
   const [showBannerConfirmModal, setShowBannerConfirmModal] = useState(false);
@@ -43,21 +43,21 @@ const Header = () => {
     if (file) {
       const formData = new FormData();
       formData.append('avatar_url', file);
-      await dispatch(editUserDetails(+userId, formData));
+      await dispatch(editUserDetails(id, formData));
     }
   };
 
   const deleteAvatarUrl = async (e) => {
     const formData = new FormData();
     formData.append('avatar_url', '');
-    await dispatch(editUserDetails(+userId, formData));
+    await dispatch(editUserDetails(id, formData));
     setShowAvatarConfirmModal(false);
   };
 
   const deleteBannerUrl = async (e) => {
     const formData = new FormData();
     formData.append('banner_url', '');
-    await dispatch(editUserDetails(+userId, formData));
+    await dispatch(editUserDetails(id, formData));
     setShowBannerConfirmModal(false);
   };
 
@@ -67,7 +67,7 @@ const Header = () => {
     if (file) {
       const formData = new FormData();
       formData.append('banner_url', file);
-      dispatch(editUserDetails(+userId, formData));
+      dispatch(editUserDetails(id, formData));
     }
   };
 
@@ -116,7 +116,7 @@ const Header = () => {
                 hidden
               />
             }
-            isAuthorized={sessionUser.id === +userId}
+            isAuthorized={sessionUser.id === id}
             clickHidden={() => document.getElementById(avatarInputId).click()}
             styleClasses={['button-action', 'b1']}
             uploadLabel="Upload image"
@@ -128,7 +128,7 @@ const Header = () => {
           />
           <h2>{user?.display_name}</h2>
         </div>
-        {sessionUser.id === +userId && (
+        {sessionUser.id === id && (
           <div
             className="hover-animated"
             style={{ width: "200px", height: "200px" }}
@@ -180,14 +180,14 @@ const Header = () => {
 
 const ButtonGroup = () => {
   const sessionUser = useSelector(state => state.session.user);
-  const { userId } = useParams();
+  const { id } = useParams();
   const [showEditUserModal, setShowEditUserModal] = useState(false);
   const baseClasses = ['cursor-pointer', 'composite-button'];
   const styleClasses = ['button-action', 'b2'];
 
   return (
     <div className="user-page-button-group flex-row">
-      {sessionUser?.id === +userId ? (
+      {sessionUser?.id === id ? (
         <EditButton
           showModal={showEditUserModal}
           setShowModal={setShowEditUserModal}
@@ -206,11 +206,17 @@ const ButtonGroup = () => {
 const UserPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { userId } = useParams();
+  const { id } = useParams();
   const sessionUser = useSelector(state => state.session.user);
-  const user = useSelector(state => state.users[userId]);
-  const userSongsArr = useSelector(state => Object.values(state.songs).filter(song => song.user_id === +userId));
-  const userPlaylistsArr = useSelector(state => Object.values(state.playlists).filter(pl => pl.user_id === +userId));
+  const user = useSelector(state => state.users[id]);
+  const userSongsArr = useSelector(state => Object.values(state.songs).filter(song => song.user_id === id));
+  const userPlaylistsArr = useSelector(state => Object.values(state.playlists).filter(pl => pl.user_id === id));
+
+  useEffect(() => {
+    (async () => {
+      await dispatch(getUser(id));
+    })();
+  }, [dispatch]);
 
   const sortKey = (a, b) => {
     if (a.title.toLowerCase() < b.title.toLowerCase()) {
@@ -221,45 +227,41 @@ const UserPage = () => {
       return a.description.toLowerCase() < b.description.toLowerCase() ? -1 : 1;
     } else {
       return 0;
-    }
-  };
+    }  
+  };  
 
   userSongsArr.sort(sortKey);
   userPlaylistsArr.sort(sortKey);
 
-  if (history.location.pathname === `/users/${userId}`) {
-    history.push(`/users/${userId}/songs`);
-  }
-
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
+  if (history.location.pathname === `/users/${id}`) {
+    history.push(`/users/${id}/songs`);
+  }  
 
   const navData = [
     {
-      to: `/users/${userId}/songs`,
+      to: `/users/${id}/songs`,
       label: "Songs",
     },
     {
-      to: `/users/${userId}/playlists`,
+      to: `/users/${id}/playlists`,
       label: "Playlists",
     },
   ];
 
   const routes = [
     {
-      path: `/users/${userId}/songs`,
+      path: `/users/${id}/songs`,
       component: <ShowcaseSongs
         songs={userSongsArr}
-        h3={sessionUser.id === +userId ? "Songs you uploaded"
+        h3={sessionUser.id === id ? "Songs you uploaded"
           : (user?.display_name ? `Check out ${user?.display_name}'s tracks!` : '')}
       />,
     },
     {
-      path: `/users/${userId}/playlists`,
+      path: `/users/${id}/playlists`,
       component: <ShowcasePlaylists
         playlists={userPlaylistsArr}
-        h3={sessionUser.id === +userId ? "Your playlists"
+        h3={sessionUser.id === id ? "Your playlists"
           : (user?.display_name ? `Check out ${user?.display_name}'s playlists!` : '')}
       />,
     },
@@ -276,8 +278,8 @@ const UserPage = () => {
           />
           <section className="showcase">
             <Switch>
-              <ProtectedRoute path={`/users/${userId}`} exact={true}>
-                <Redirect to={`/users/${userId}/songs`} />
+              <ProtectedRoute path={`/users/${id}`} exact={true}>
+                <Redirect to={`/users/${id}/songs`} />
               </ProtectedRoute>
               {routes.map((route, idx) => (
                 <ProtectedRoute path={route.path} key={idx}>
