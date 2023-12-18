@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { editSong, deleteSong, likeSong, unlikeSong } from "../store/song";
+import { editSong, deleteSong, likeSong, unlikeSong, getSong } from "../store/song";
 import { loadSong, queueSong } from "../store/player";
 import { createComment } from "../store/comment";
 import { Modal } from "../components/Context/Modal";
@@ -98,7 +98,7 @@ const ButtonGroup = ({ song }) => {
   return (
     <div className="asset-button-group flex-row">
       <ToggleButton
-        condition={song?.likes.includes(sessionUser.id)}
+        condition={song?.likes?.includes(sessionUser.id)}
         buttonClasses={[...baseClasses, 'b2']}
         labelClasses={['heart-label']}
         handleOff={handleUnlike}
@@ -155,11 +155,17 @@ const ButtonGroup = ({ song }) => {
 const SingleSong = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const song = useSelector(state => state.songs[+id]);
+  const song = useSelector(state => state.songs[id]);
   const sessionUser = useSelector(state => state.session.user);
   const [content, setContent] = useState("");
   const [errors, setErrors] = useState([]);
 
+  useEffect(() => {
+    (async () => {
+      await dispatch(getSong(id));
+    })();
+  }, [dispatch]);
+  
   const handlePlayButtonClick = (e) => {
     e.preventDefault();
     dispatch(loadSong(song?.id));
