@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 import { loadPlaylist, queuePlaylist, loadSong, queueSong } from "../store/player";
 import { likeSong, unlikeSong } from "../store/song";
-import { editPlaylist, likePlaylist, unlikePlaylist, deletePlaylist } from "../store/playlist";
+import { editPlaylist, likePlaylist, unlikePlaylist, deletePlaylist, getPlaylist } from "../store/playlist";
 import AssetHeader from "../components/AssetHeader";
 import Avatar from "../components/Icons/Avatar";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";
@@ -268,6 +268,12 @@ const SinglePlaylist = () => {
     .filter(pl => pl.user_id === playlist?.user_id)
     .filter(pl => pl.id !== id));
 
+  useEffect(() => {
+    (async () => {
+      await dispatch(getPlaylist(id));
+    })();
+  }, [dispatch]);
+  
   const handlePlayButtonClick = (e) => {
     e.preventDefault();
     dispatch(loadPlaylist(playlist));

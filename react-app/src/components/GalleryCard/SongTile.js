@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Modal } from "../Context/Modal";
-import { getAllUsers } from "../../store/user";
 import { loadSong, queueSong } from "../../store/player";
 import { likeSong, unlikeSong } from "../../store/song";
 import AddSongToPlaylist from "../../modals/AddSongToPlaylist";
@@ -114,7 +113,6 @@ const SongTile = ({ song, setShowModal }) => {
     formData.append("song_id", song.id);
 
     dispatch(likeSong(formData));
-    dispatch(getAllUsers());
   };
 
   const handleUnLike = async (e) => {
@@ -123,7 +121,6 @@ const SongTile = ({ song, setShowModal }) => {
     formData.append("song_id", song.id);
 
     dispatch(unlikeSong(formData));
-    dispatch(getAllUsers());
   };
 
   const openLoginModal = () => {
