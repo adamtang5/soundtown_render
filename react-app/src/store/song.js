@@ -1,3 +1,5 @@
+import { GENERIC_ERROR } from "../util";
+
 // constants
 const LOAD_SONGS = "song/LOAD_SONGS";
 const NEW_SONG = "song/NEW_SONG";
@@ -38,7 +40,7 @@ export const likeSong = (data) => async (dispatch) => {
       return data.errors;
     }
   } else {
-    return ["An error occurred. Please try again."];
+    return GENERIC_ERROR;
   }
 };
 
@@ -59,7 +61,7 @@ export const unlikeSong = (data) => async (dispatch) => {
       return data.errors;
     }
   } else {
-    return ["An error occurred. Please try again."];
+    return GENERIC_ERROR;
   }
 };
 
@@ -80,7 +82,7 @@ export const createSong = (data) => async (dispatch) => {
       return data.errors;
     }
   } else {
-    return ["An error occurred. Please try again."];
+    return GENERIC_ERROR;
   }
 };
 
@@ -90,6 +92,23 @@ export const getAllSongs = () => async (dispatch) => {
   if (response.ok) {
     const songs = await response.json();
     dispatch(loadSongs(songs));
+  }
+};
+
+// Get One Song from the Database by id
+export const getSong = (id) => async (dispatch) => {
+  const response = await fetch(`/api/songs/${id}`);
+  if (response.ok) {
+    const song = await response.json();
+    dispatch(newSong(song));
+    return song;
+  } else if (response.status < 500) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+  } else {
+    return GENERIC_ERROR;
   }
 };
 
