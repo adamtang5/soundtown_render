@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
-from app.models import db, Song, User
+from app.models import db, Song
 from datetime import datetime
 from app.forms import NewSongForm, EditSongForm
 from app.api.utils import (
@@ -61,7 +61,7 @@ def edit_song(id):
   if form.validate_on_submit():
     song = Song.query.get(id)
     if not song:
-      return jsonify({"errors": ["song not found"]}), 404
+      return not_found_error('song')
 
     if current_user.id != song.user_id:
       return UNAUTHORIZED_ERROR
@@ -93,7 +93,7 @@ def edit_song(id):
     db.session.commit()
     return song.to_dict()
   else:
-    return {'errors': validation_errors_to_error_messages(form.errors)}
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
 # GET /api/songs/
@@ -127,22 +127,12 @@ def delete_song(id):
   Delete song of id
   """
   song = Song.query.get(id)
-  if song:
-    db.session.delete(song)
-    db.session.commit()
-    return {'id': id}
-  else:
+  if not song:
     return not_found_error('song')
+  
+  if current_user.id != song.user_id:
+    return UNAUTHORIZED_ERROR
 
-
-# GET /api/songs/:id/comments
-@song_routes.route('/<uuid:id>/comments')
-def get_comments_by_song_id(id):
-  """
-  Get all comments of song ID
-  """
-  song = Song.query.get(id)
-  if song:
-    return jsonify([comment.to_dict() for comment in song.comments])
-  else:
-    return not_found_error('song')
+  db.session.delete(song)
+  db.session.commit()
+  return {'id': id}
