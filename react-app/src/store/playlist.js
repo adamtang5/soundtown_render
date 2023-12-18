@@ -1,3 +1,5 @@
+import { GENERIC_ERROR } from "../util";
+
 // constants
 const LOAD_PLAYLISTS = "playlist/LOAD_PLAYLISTS";
 const NEW_PLAYLIST = "playlist/NEW_PLAYLIST";
@@ -8,7 +10,7 @@ const loadPlaylists = (playlists) => ({
   playlists,
 });
 
-// for create and edit
+// for create, edit, and update
 const newPlaylist = (playlist) => ({
   type: NEW_PLAYLIST,
   playlist,
@@ -127,6 +129,23 @@ export const getAllPlaylists = () => async (dispatch) => {
   if (response.ok) {
     const playlists = await response.json();
     dispatch(loadPlaylists(playlists));
+  }
+};
+
+// Get One Playlist from the Database by id
+export const getPlaylist = (id) => async (dispatch) => {
+  const response = await fetch(`/api/playlists/${id}`);
+  if (response.ok) {
+    const pl = await response.json();
+    dispatch(newPlaylist(pl));
+    return pl;
+  } else if (response.status < 500) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+  } else {
+    return GENERIC_ERROR;
   }
 };
 

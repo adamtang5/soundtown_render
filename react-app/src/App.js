@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "./store/session";
-import { getAllUsers } from "./store/user";
 import { getAllSongs } from "./store/song";
 import { getAllPlaylists } from "./store/playlist";
 import ProtectedRoute from "./utilities/ProtectedRoute";
@@ -34,7 +33,6 @@ const App = () => {
     (async () => {
       await dispatch(getAllSongs());
       await dispatch(getAllPlaylists());
-      await dispatch(getAllUsers());
     })();
   }, [dispatch]);
 
