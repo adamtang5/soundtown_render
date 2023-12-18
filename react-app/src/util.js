@@ -9,5 +9,3 @@ export const randomSample = (arr, size) => {
   }
   return copy.slice(0, size);
 };
-
-export const GENERIC_ERROR = ["An error occurred. Please try again."];

@@ -1,4 +1,4 @@
-import { GENERIC_ERROR } from "../util";
+import { actionGenerator } from "./util";
 
 // constants
 const LOAD_PLAYLISTS = "playlist/LOAD_PLAYLISTS";
@@ -22,157 +22,83 @@ const removePlaylist = (playlistId) => ({
 });
 
 // like a playlist
-export const likePlaylist = (data) => async (dispatch) => {
-  const res = await fetch("/api/likes/playlist", {
+export const likePlaylist = (data) => actionGenerator({
+  url: "/api/likes/playlist",
+  options: {
     method: 'POST',
     body: data,
-  });
-
-  if (res.ok) {
-    const playlist = await res.json();
-    dispatch(newPlaylist(playlist));
-    return playlist;
-  } else if (res.status < 500) {
-    const data = await res.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return ["An error occurred. Please try again."];
-  }
-};
+  },
+  action: newPlaylist,
+});
 
 // unlike a playlist
-export const unlikePlaylist = (data) => async (dispatch) => {
-  const res = await fetch("/api/likes/playlist", {
+export const unlikePlaylist = (data) => actionGenerator({
+  url: "/api/likes/playlist",
+  options: {
     method: 'DELETE',
     body: data,
-  });
+  },
+  action: newPlaylist,
+});
 
-  if (res.ok) {
-    const playlist = await res.json();
-    dispatch(newPlaylist(playlist));
-    return playlist;
-  } else if (res.status < 500) {
-    const data = await res.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return ["An error occurred. Please try again."];
-  }
-};
-
-export const addSongToPlaylist = (data) => async (dispatch) => {
-  const response = await fetch("/api/playlistsongs/", {
+export const addSongToPlaylist = (data) => actionGenerator({
+  url: "/api/playlistsongs/",
+  options: {
     method: "POST",
     body: data,
-  });
+  },
+  action: newPlaylist,
+});
 
-  if (response.ok) {
-    const playlist = await response.json();
-    await dispatch(newPlaylist(playlist));
-    return playlist;
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return ["An error occurred. Please try again."];
-  }
-};
-
-export const removeSongFromPlaylist = (data) => async (dispatch) => {
-  const response = await fetch("/api/playlistsongs/", {
+export const removeSongFromPlaylist = (data) => actionGenerator({
+  url: "/api/playlistsongs/",
+  options: {
     method: "DELETE",
     body: data,
-  });
-
-  if (response.ok) {
-    const playlist = await response.json();
-    await dispatch(newPlaylist(playlist));
-    return playlist;
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return ["An error occurred. Please try again."];
-  }
-};
+  },
+  action: newPlaylist,
+});
 
 //!Create playlist in the database
-export const createPlaylist = (playlist) => async (dispatch) => {
-  const response = await fetch("/api/playlists/", {
+export const createPlaylist = (playlist) => actionGenerator({
+  url: "/api/playlists/",
+  options: {
     method: "POST",
     body: playlist,
-  });
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(newPlaylist(data));
-    return data;
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return ["An error occurred. Please try again."];
-  }
-};
+  },
+  action: newPlaylist,
+});
 
 //!Get Songs from the Database
-export const getAllPlaylists = () => async (dispatch) => {
-  const response = await fetch("/api/playlists/");
-  if (response.ok) {
-    const playlists = await response.json();
-    dispatch(loadPlaylists(playlists));
-  }
-};
+export const getAllPlaylists = () => actionGenerator({
+  url: "/api/playlists/",
+  action: loadPlaylists,
+});
 
 // Get One Playlist from the Database by id
-export const getPlaylist = (id) => async (dispatch) => {
-  const response = await fetch(`/api/playlists/${id}`);
-  if (response.ok) {
-    const pl = await response.json();
-    dispatch(newPlaylist(pl));
-    return pl;
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return GENERIC_ERROR;
-  }
-};
+export const getPlaylist = (id) => actionGenerator({
+  url: `/api/playlists/${id}`,
+  action: newPlaylist,
+});
 
 //!Edit playlist in the database
-export const editPlaylist = (id, data) => async (dispatch) => {
-  const response = await fetch(`/api/playlists/${id}`, {
+export const editPlaylist = (id, data) => actionGenerator({
+  url: `/api/playlists/${id}`,
+  options: {
     method: "PUT",
     body: data,
-  });
-  if (response.ok) {
-    const playlist = await response.json();
-    dispatch(newPlaylist(playlist));
-    return playlist;
-  }
-};
+  },
+  action: newPlaylist,
+});
 
 //!Delete Playlist from the database
-export const deletePlaylist = (playlistId) => async (dispatch) => {
-  const response = await fetch(`/api/playlists/${playlistId}`, {
+export const deletePlaylist = (playlistId) => actionGenerator({
+  url: `/api/playlists/${playlistId}`,
+  options: {
     method: "DELETE",
-  });
-  if (response.ok) {
-    await response.json();
-    dispatch(removePlaylist(playlistId));
-    return playlistId;
-  }
-};
+  },
+  action: removePlaylist,
+});
 
 // State shape:
 // state.playlist --> {
