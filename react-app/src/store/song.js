@@ -1,4 +1,4 @@
-import { GENERIC_ERROR } from "../util";
+import { actionGenerator } from "./util";
 
 // constants
 const LOAD_SONGS = "song/LOAD_SONGS";
@@ -16,126 +16,73 @@ export const newSong = (song) => ({
   song,
 });
 
-const removeSong = (songId) => {
+const removeSong = (id) => {
   return {
     type: REMOVE_SONG,
-    songId,
+    id,
   };
 };
 
 // like a song
-export const likeSong = (data) => async (dispatch) => {
-  const response = await fetch("/api/likes/song", {
+export const likeSong = (data) => actionGenerator({
+  url: "/api/likes/song",
+  options: {
     method: "POST",
     body: data,
-  });
-
-  if (response.ok) {
-    const song = await response.json();
-    dispatch(newSong(song));
-    return song;
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return GENERIC_ERROR;
-  }
-};
+  },
+  action: newSong,
+});
 
 // unlike a song
-export const unlikeSong = (data) => async (dispatch) => {
-  const response = await fetch("/api/likes/song", {
+export const unlikeSong = (data) => actionGenerator({
+  url: "/api/likes/song",
+  options: {
     method: "DELETE",
     body: data,
-  });
-
-  if (response.ok) {
-    const song = await response.json();
-    dispatch(newSong(song));
-    return song;
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return GENERIC_ERROR;
-  }
-};
+  },
+  action: newSong
+});
 
 //! Create songs in the database
-export const createSong = (data) => async (dispatch) => {
-  const response = await fetch("/api/songs/", {
+export const createSong = (data) => actionGenerator({
+  url: "/api/songs/",
+  options: {
     method: "POST",
     body: data,
-  });
-
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(newSong(data));
-    return data;
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return GENERIC_ERROR;
-  }
-};
+  },
+  action: newSong,
+});
 
 //! Get Songs from the Database
-export const getAllSongs = () => async (dispatch) => {
-  const response = await fetch("/api/songs/");
-  if (response.ok) {
-    const songs = await response.json();
-    dispatch(loadSongs(songs));
-  }
-};
+export const getAllSongs = () => actionGenerator({
+  url: "/api/songs/",
+  action: loadSongs,
+});
 
 // Get One Song from the Database by id
-export const getSong = (id) => async (dispatch) => {
-  const response = await fetch(`/api/songs/${id}`);
-  if (response.ok) {
-    const song = await response.json();
-    dispatch(newSong(song));
-    return song;
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return GENERIC_ERROR;
-  }
-};
+export const getSong = (id) => actionGenerator({
+  url: `/api/songs/${id}`,
+  action: newSong,
+});
 
 //! Edit/Update Songs from the db
-export const editSong = (id, data) => async (dispatch) => {
-  const response = await fetch(`/api/songs/${id}`, {
+export const editSong = (id, data) => actionGenerator({
+  url: `/api/songs/${id}`,
+  options: {
     method: "PUT",
     body: data,
-  });
-  if (response.ok) {
-    const song = await response.json();
-    dispatch(newSong(song));
-    return song;
-  }
-};
+  },
+  action: newSong,
+});
 
 //!Delete Song from the db
-export const deleteSong = (songId) => async (dispatch) => {
-  const response = await fetch(`/api/songs/${songId}`, {
+export const deleteSong = (id) => actionGenerator({
+  url: `/api/songs/${id}`,
+  options: {
     method: "DELETE",
-  });
-  if (response.ok) {
-    await response.json();
-    dispatch(removeSong(songId));
-    return songId;
-  }
-};
+  },
+  action: removeSong,
+});
 
 // State shape:
 // state.songs --> {
@@ -171,7 +118,7 @@ export default function reducer(state = initialState, action) {
     }
     case REMOVE_SONG: {
       const newState = { ...state };
-      delete newState[action.songId];
+      delete newState[action.id];
       return newState;
     }
     default:

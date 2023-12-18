@@ -1,4 +1,4 @@
-import { GENERIC_ERROR } from "../util";
+import { actionGenerator } from "./util";
 
 // constants
 const LOAD_USERS = "user/LOAD_USERS";
@@ -21,43 +21,26 @@ const editUser = (user) => ({
 })
 
 // Get Users from Database
-export const getAllUsers = () => async (dispatch) => {
-  const response = await fetch("/api/users/");
-  if (response.ok) {
-    const users = await response.json();
-    dispatch(loadUsers(users));
-  }
-};
+export const getAllUsers = () => actionGenerator({
+  url: "/api/users/",
+  action: loadUsers,
+});
 
 // Get One User from the Database by id
-export const getUser = (id) => async (dispatch) => {
-  const response = await fetch(`/api/users/${id}`);
-  if (response.ok) {
-    const user = await response.json();
-    dispatch(newUser(user));
-    return user;
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return GENERIC_ERROR;
-  }
-}
+export const getUser = (id) => actionGenerator({
+  url: `/api/users/${id}`,
+  action: newUser,
+});
 
 // Edit User Details
-export const editUserDetails = (id, data) => async (dispatch) => {
-  const res = await fetch(`/api/users/${id}`, {
+export const editUserDetails = (id, data) => actionGenerator({
+  url: `/api/users/${id}`,
+  options: {
     method: "PUT",
     body: data,
-  });
-  if (res.ok) {
-    const user = await res.json();
-    dispatch(editUser(user));
-    return user;
-  }
-};
+  },
+  action: editUser,
+});
 
 const initialState = {};
 

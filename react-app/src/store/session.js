@@ -1,3 +1,5 @@
+import { actionGenerator } from "./util";
+
 // constants
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
@@ -21,16 +23,14 @@ export const authenticate = () => async (dispatch) => {
   });
   if (response.ok) {
     const data = await response.json();
-    if (data.errors) {
-      return;
-    }
-
+    if (data.errors) return;
     dispatch(setUser(data));
   }
 };
 
-export const login = (email, password) => async (dispatch) => {
-  const response = await fetch("/api/auth/login", {
+export const login = (email, password) => actionGenerator({
+  url: "/api/auth/login",
+  options: {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -39,21 +39,9 @@ export const login = (email, password) => async (dispatch) => {
       email,
       password,
     }),
-  });
-
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(setUser(data));
-    return null;
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return ["An error occurred. Please try again."];
-  }
-};
+  },
+  action: setUser,
+});
 
 export const logout = () => async (dispatch) => {
   const response = await fetch("/api/auth/logout", {
@@ -61,14 +49,12 @@ export const logout = () => async (dispatch) => {
       "Content-Type": "application/json",
     },
   });
-
-  if (response.ok) {
-    dispatch(removeUser());
-  }
+  if (response.ok) dispatch(removeUser());
 };
 
-export const signUp = (email, password, display_name) => async (dispatch) => {
-  const response = await fetch("/api/auth/signup", {
+export const signUp = (email, password, display_name) => actionGenerator({
+  url: "/api/auth/signup",
+  options: {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -78,21 +64,9 @@ export const signUp = (email, password, display_name) => async (dispatch) => {
       password,
       display_name,
     }),
-  });
-
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(setUser(data));
-    return { sucess: data };
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return ["An error occurred. Please try again."];
-  }
-};
+  },
+  action: setUser,
+});
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
