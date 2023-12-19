@@ -15,3 +15,7 @@ class NewCommentForm(FlaskForm):
 class EditCommentForm(FlaskForm):
   message = StringField('message', validators=[DataRequired()])
   submit = SubmitField('submit')
+
+
+class CommentToggleLikeForm(FlaskForm):
+  user_id = StringField('user_id', validators=[DataRequired()])

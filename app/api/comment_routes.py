@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
-from app.models import db, Comment, Song
-from app.forms import NewCommentForm, EditCommentForm
+from app.models import db, Comment, Song, User
+from app.forms import NewCommentForm, EditCommentForm, CommentToggleLikeForm
 from datetime import datetime, time
 from app.api.utils import (
   validation_errors_to_error_messages,
@@ -87,3 +87,36 @@ def delete_comment(id):
 
   song = Song.query.get(song_id)
   return song.to_extended_dict()
+
+
+# POST /api/comments/:id/toggleLike
+@comment_routes.route('/<uuid:id>/toggleLike', methods=['POST'])
+@login_required
+def toggle_like_comment(id):
+  """
+  Toggle Like on a Comment
+  """
+  form = CommentToggleLikeForm()
+  form['csrf_token'].data = request.cookies['csrf_token']
+  if form.validate_on_submit():
+    comment = Comment.query.get(id)
+    user = User.query.get(request.form['user_id'])
+
+    if not comment:
+      return not_found_error('comment')
+    if not user:
+      return not_found_error('user')
+    
+    if current_user.id != user.id:
+      return UNAUTHORIZED_ERROR
+    
+    ans = None
+    if user not in comment.comment_likes:
+      comment.comment_likes.append(user)
+      ans = jsonify({'addLike': True})
+    else:
+      comment.comment_likes.remove(user)
+      ans = jsonify({'addLike': False})
+
+    db.session.commit()
+    return ans
