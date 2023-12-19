@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
-from app.models import db, Song
+from app.models import db, Song, User
 from datetime import datetime
-from app.forms import NewSongForm, EditSongForm
+from app.forms import NewSongForm, EditSongForm, SongToggleLikeForm
 from app.api.utils import (
   validation_errors_to_error_messages,
   not_found_error,
@@ -136,3 +136,36 @@ def delete_song(id):
   db.session.delete(song)
   db.session.commit()
   return {'id': id}
+
+
+# POST /api/songs/:id/toggleLike
+@song_routes.route('/<uuid:id>/toggleLike', methods=['POST'])
+@login_required
+def toggle_like_song(id):
+  """
+  Toggle Like on a Song
+  """
+  form = SongToggleLikeForm()
+  form['csrf_token'].data = request.cookies['csrf_token']
+  if form.validate_on_submit():
+    song = Song.query.get(id)
+    user = User.query.get(request.form['user_id'])
+
+    if not song:
+      return not_found_error('song')
+    if not user:
+      return not_found_error('user')
+    
+    if current_user.id != user.id:
+      return UNAUTHORIZED_ERROR
+    
+    ans = None
+    if user not in song.likes:
+      song.likes.append(user)
+      ans = jsonify({'addLike': True})
+    else:
+      song.likes.remove(user)
+      ans = jsonify({'addLike': False})
+
+    db.session.commit()
+    return ans

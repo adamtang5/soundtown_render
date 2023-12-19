@@ -10,3 +10,8 @@ class NewCommentForm(FlaskForm):
   parent_id = StringField('parent_id')
   song_timestamp = TimeField('song_timestamp')
   submit = SubmitField('submit')
+
+
+class EditCommentForm(FlaskForm):
+  message = StringField('message', validators=[DataRequired()])
+  submit = SubmitField('submit')

@@ -1,8 +1,6 @@
 import imp
 from .login_form import LoginForm
 from .signup_form import SignUpForm
-from .newsong_form import NewSongForm
-from .edit_songform import EditSongForm
-from .new_comment_form import NewCommentForm
-from .edit_comment_form import EditCommentForm
+from .song_form import NewSongForm, EditSongForm
+from .comment_form import NewCommentForm, EditCommentForm
 from .playlist_form import NewPlaylistForm, EditPlaylistForm
