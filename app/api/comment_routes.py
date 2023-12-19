@@ -69,6 +69,7 @@ def edit_comment(id):
 
 # DELETE /api/comments/:id
 @comment_routes.route('/<uuid:id>', methods=['DELETE'])
+@login_required
 def delete_comment(id):
   """
   Delete Comment of id
