@@ -144,7 +144,7 @@ def delete_playlist(id):
 
 
 # POST /api/playlists/:id/toggleLike
-@playlist_routes('/<uuid:id>/toggleLike', methods=['POST'])
+@playlist_routes.route('/<uuid:id>/toggleLike', methods=['POST'])
 @login_required
 def toggle_like_playlist(id):
   """
