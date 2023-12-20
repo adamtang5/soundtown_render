@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from sqlalchemy import text
 from app.models import db, User, Playlist, Song, playlist_song
 from datetime import datetime
-from app.forms import NewPlaylistForm, EditPlaylistForm
+from app.forms import NewPlaylistForm, EditPlaylistForm, PlaylistToggleLikeForm
 from app.api.utils import (
   validation_errors_to_error_messages,
   not_found_error,
@@ -125,16 +125,52 @@ def get_playlist(id):
 
 
 # DELETE /api/playlists/:id
-@playlist_routes.route('/<uuid:id>',methods=['DELETE'])
+@playlist_routes.route('/<uuid:id>', methods=['DELETE'])
 @login_required
 def delete_playlist(id):
   """
-  Delete playlist by id
+  Delete Playlist of id
   """
   playlist = Playlist.query.get(id)
-  if playlist:
-    db.session.delete(playlist)
-    db.session.commit()
-    return {"id":id}
-  else:
+  if not playlist:
     return not_found_error('playlist')
+
+  if current_user.id != playlist.user_id:
+    return UNAUTHORIZED_ERROR
+
+  db.session.delete(playlist)
+  db.session.submit()
+  return jsonify({'id': id})
+
+
+# POST /api/playlists/:id/toggleLike
+@playlist_routes('/<uuid:id>/toggleLike', methods=['POST'])
+@login_required
+def toggle_like_playlist(id):
+  """
+  Toggle Like on a Playlist
+  """
+  form = PlaylistToggleLikeForm()
+  form['csrf_token'].data = request.cookies['csrf_token']
+  if form.validate_on_submit():
+    playlist = Playlist.query.get(id)
+    user = User.query.get(request.form['user_id'])
+
+    if not playlist:
+      return not_found_error('playlist')
+    if not user:
+      return not_found_error('user')
+
+    if current_user.id != user.id:
+      return UNAUTHORIZED_ERROR
+
+    ans = None
+    if user not in playlist.pl_likes:
+      playlist.pl_likes.append(user)
+      ans = jsonify({'addLike': True})
+    else:
+      playlist.pl_likes.remove(user)
+      ans = jsonify({'addLike': False})
+
+    db.session.commit()
+    return ans
