@@ -100,7 +100,6 @@ export default function reducer(state = initialState, action) {
       }
       if (newState.playHistory.length) {
         newState.playingId = newState.playHistory.pop();
-        newState.playHistory = [...newState.playHistory];
       } else {
         newState.playingId = null;
       }
@@ -108,7 +107,7 @@ export default function reducer(state = initialState, action) {
     }
     case QUEUE_PLAYLIST: {
       const newState = { ...state };
-      action.playlist.songs.forEach((songId) => {
+      action.playlist.songs_order.forEach(songId => {
         newState.queue = [...newState.queue, songId];
       });
       return newState;
@@ -118,11 +117,11 @@ export default function reducer(state = initialState, action) {
       if (newState.playingId) {
         newState.playHistory = [...newState.playHistory, newState.playingId];
       }
-      const firstSong = action.playlist.songs[0];
+      const firstSong = action.playlist.songs_order[0];
       newState.playingId = firstSong;
       newState.queue = [];
-      for (let i = 1; i < action.playlist.songs.length; i++) {
-        newState.queue = [...newState.queue, action.playlist.songs[i]];
+      for (let i = 1; i < action.playlist.songs_order.length; i++) {
+        newState.queue = [...newState.queue, action.playlist.songs_order[i]];
       }
       return newState;
     }
