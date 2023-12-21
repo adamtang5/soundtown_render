@@ -80,10 +80,15 @@ def edit_playlist(id):
 
     orig = set(playlist.songs)
     new = set([Song.query.get(id) for id in json.loads(playlist.songs_order)])
-    ids_to_remove = [song.id for song in (orig - new)]
+
+    songs_to_remove = orig - new
     songs_to_add = new - orig
 
-    playlist_song.query.filter_by(playlist_id=id).filter(playlist_song.user_id.in_(ids_to_remove)).delete()
+    def remove_song(song):
+      db.session.remove(playlist_song(playlist_id=id, song_id=song.id))
+    
+    for song in songs_to_remove:
+      remove_song(song)
     db.session.commit()
 
     def add_song(song):

@@ -15,7 +15,7 @@ const BasicInfoForm = ({ setShowModal }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-  const playlist = useSelector(state => state.playlists[+id]);
+  const playlist = useSelector(state => state.playlists[id]);
   const [errors, setErrors] = useState([]);
   const [title, setTitle] = useState(playlist?.title);
   const [description, setDescription] = useState(playlist?.description);
@@ -40,12 +40,12 @@ const BasicInfoForm = ({ setShowModal }) => {
 
     const formData = new FormData();
     formData.append("image_url", newImage || imageUrl);
-    formData.append("id", +id);
+    formData.append("id", id);
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("songs_order", songsOrder);
+    formData.append("songs_order", JSON.stringify(songsOrder));
 
-    const res = await dispatch(editPlaylist(+id, formData));
+    const res = await dispatch(editPlaylist(id, formData));
     if (res) {
       if (res.errors) {
         setErrors(res.errors);
