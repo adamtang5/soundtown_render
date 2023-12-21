@@ -7,11 +7,7 @@ import ShowcasePlaylists from "../components/ShowcasePlaylists";
 
 const Library = () => {
   const sessionUser = useSelector(state => state.session.user);
-  const songsArr = useSelector(state => Object.values(state.songs));
-  const userSongs = songsArr.filter(song => song.user_id === sessionUser.id);
-  const userLikes = songsArr.filter(song => song?.likes?.includes(sessionUser.id));
-  const playlistsArr = useSelector(state => Object.values(state.playlists));
-  const userPlaylists = playlistsArr.filter(playlist => playlist.user_id === sessionUser.id);
+  const userLikes = useSelector(state => sessionUser.likes.map(id => state.songs[id]));
 
   const navData = [
     {
@@ -31,7 +27,7 @@ const Library = () => {
   const routes = [
     {
       path: "/library/songs",
-      component: <ShowcaseSongs songs={userSongs} h3="Hear your uploaded songs:" />,
+      component: <ShowcaseSongs songs={sessionUser.songs} h3="Hear your uploaded songs:" />,
     },
     {
       path: "/library/likes",
@@ -39,7 +35,7 @@ const Library = () => {
     },
     {
       path: "/library/playlists",
-      component: <ShowcasePlaylists playlists={userPlaylists} h3="Hear your own playlists:" />,
+      component: <ShowcasePlaylists playlists={sessionUser.playlists} h3="Hear your own playlists:" />,
     },
   ];
 
