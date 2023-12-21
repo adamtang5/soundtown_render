@@ -209,8 +209,6 @@ const UserPage = () => {
   const { id } = useParams();
   const sessionUser = useSelector(state => state.session.user);
   const user = useSelector(state => state.users[id]);
-  const userSongsArr = useSelector(state => Object.values(state.songs).filter(song => song.user_id === id));
-  const userPlaylistsArr = useSelector(state => Object.values(state.playlists).filter(pl => pl.user_id === id));
 
   useEffect(() => {
     (async () => {
@@ -228,10 +226,10 @@ const UserPage = () => {
     } else {
       return 0;
     }  
-  };  
+  };
 
-  userSongsArr.sort(sortKey);
-  userPlaylistsArr.sort(sortKey);
+  const userSongs = user?.songs?.toSorted(sortKey);
+  const userPlaylists = user?.playlists?.toSorted(sortKey);
 
   if (history.location.pathname === `/users/${id}`) {
     history.push(`/users/${id}/songs`);
@@ -252,7 +250,7 @@ const UserPage = () => {
     {
       path: `/users/${id}/songs`,
       component: <ShowcaseSongs
-        songs={userSongsArr}
+        songs={userSongs}
         h3={sessionUser.id === id ? "Songs you uploaded"
           : (user?.display_name ? `Check out ${user?.display_name}'s tracks!` : '')}
       />,
@@ -260,7 +258,7 @@ const UserPage = () => {
     {
       path: `/users/${id}/playlists`,
       component: <ShowcasePlaylists
-        playlists={userPlaylistsArr}
+        playlists={userPlaylists}
         h3={sessionUser.id === id ? "Your playlists"
           : (user?.display_name ? `Check out ${user?.display_name}'s playlists!` : '')}
       />,

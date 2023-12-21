@@ -5,7 +5,7 @@ const ShowcaseSongs = ({ songs, h3, setShowModal }) => {
     <>
       <h3>{h3}</h3>
       <div className="showcase-grid flex-row">
-        {songs.map(song => (
+        {songs?.map(song => (
           <SongTile
             song={song}
             setShowModal={setShowModal}
