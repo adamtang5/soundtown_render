@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 import { loadPlaylist, queuePlaylist, loadSong, queueSong } from "../store/player";
+import { getUser } from "../store/user";
 import { likeSong, unlikeSong } from "../store/song";
 import { editPlaylist, likePlaylist, unlikePlaylist, deletePlaylist, getPlaylist } from "../store/playlist";
 import AssetHeader from "../components/AssetHeader";
@@ -260,12 +261,11 @@ const SinglePlaylist = () => {
   const dispatch = useDispatch()
   const { id } = useParams();
   const playlist = useSelector(state => state.playlists[id]);
-  const stateSongs = useSelector(state => state.songs);
-  const songs = playlist?.songs_order?.map(id => stateSongs[id]);
+  const songs = useSelector(state => playlist?.songs_order?.map(id => state.songs[id]));
   const sessionUser = useSelector(state => state.session.user);
   const playlistUser = useSelector(state => state.users[playlist?.user_id]);
   const userPlaylists = useSelector(state => Object.values(state.playlists)
-    .filter(pl => pl.user_id === playlist?.user_id)
+    .filter(pl => pl.user_id === playlistUser?.id)
     .filter(pl => pl.id !== id));
 
   useEffect(() => {
@@ -274,6 +274,13 @@ const SinglePlaylist = () => {
     })();
   }, [dispatch]);
   
+  useEffect(() => {
+    (async () => {
+      if (!playlist) return;
+      await dispatch(getUser(playlist?.user_id));
+    })();
+  }, [dispatch, playlist?.user_id]);
+
   const handlePlayButtonClick = (e) => {
     e.preventDefault();
     dispatch(loadPlaylist(playlist));
@@ -294,8 +301,8 @@ const SinglePlaylist = () => {
       <AssetHeader
         entity="playlist"
         asset={playlist}
-        h3={playlistUser?.display_name}
-        placeholderImg={stateSongs[playlist?.songs_order[0]]?.image_url}
+        h3={playlist?.description}
+        placeholderImg={songs?.at(0)?.image_url}
         handlePlayButtonClick={handlePlayButtonClick}
         updateImage={updateImage}
         isAuthorized={sessionUser.id === playlist?.user_id}
