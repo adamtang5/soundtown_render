@@ -59,6 +59,10 @@ def edit_song(id):
   form = EditSongForm()
   form['csrf_token'].data = request.cookies['csrf_token']
   if form.validate_on_submit():
+    print("---------------------")
+    print(request.form)
+    print("---------------------")
+
     song = Song.query.get(id)
     if not song:
       return not_found_error('song')
@@ -87,11 +91,11 @@ def edit_song(id):
       raw_audio_file.filename = get_unique_filename(raw_audio_file.filename)
       song.audio_url = upload_file_to_s3(raw_audio_file)['url']
 
-    song.title = request.form['title']
-    song.description = request.form['description']
+    song.title = request.form.get('title')
+    song.description = request.form.get('description', '')
     song.updated_at = datetime.now()
     db.session.commit()
-    return song.to_dict()
+    return song.to_extended_dict()
   else:
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 

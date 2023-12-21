@@ -176,7 +176,11 @@ const SingleSong = () => {
 
     if (file) {
       const formData = new FormData();
+      formData.append('id', song?.id);
+      formData.append('title', song?.title);
       formData.append('image_url', file);
+      formData.append('audio_url', song?.audio_url);
+      console.log(song?.id, formData);
       await dispatch(editSong(song?.id, formData));
     }
   };
