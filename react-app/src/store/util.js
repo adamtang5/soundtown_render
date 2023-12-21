@@ -7,10 +7,12 @@ export const actionGenerator = ({
     const res = await fetch(url, options);
     if (res.ok) {
       const data = await res.json();
+      console.log(res.status, data);
       dispatch(action(data));
       return data;
     } else if (res.status < 500) {
       const data = await res.json();
+      console.log(res.status, data);
       if (data.errors) {
         return data.errors;
       }

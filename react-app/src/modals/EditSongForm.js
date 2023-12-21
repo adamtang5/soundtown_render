@@ -14,7 +14,7 @@ const EditSongForm = ({ setShowEditSongModal }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-  const song = useSelector(state => state.songs[+id]);
+  const song = useSelector(state => state.songs[id]);
   const [errors, setErrors] = useState([]);
   const [title, setTitle] = useState(song?.title);
   const [audioUrl, setAudioUrl] = useState(song?.audio_url);
@@ -53,14 +53,14 @@ const EditSongForm = ({ setShowEditSongModal }) => {
 
     const formData = new FormData();
     formData.append("audio_url", newAudio || audioUrl);
-    formData.append("id", +id);
+    formData.append("id", id);
     formData.append("title", title);
     formData.append("description", description);
     formData.append("image_url", newImage || imageUrl);
 
     if (newAudio) setAudioLoading(true);
 
-    const res = await dispatch(editSong(+id, formData));
+    const res = await dispatch(editSong(id, formData));
     if (res) {
       if (res.errors) {
         setErrors(res.errors);
