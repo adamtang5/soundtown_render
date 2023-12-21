@@ -36,7 +36,7 @@ def new_playlist():
     )
     db.session.add(playlist)
 
-    playlist = Playlist.query.order_by(text("id desc")).limit(1).one()
+    playlist = Playlist.query.order_by(text("created_at desc")).limit(1).one()
     for song_id in json.loads(request.form['songs_order']):
       song = Song.query.get(song_id)
       playlist.songs.append(song)
