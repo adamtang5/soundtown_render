@@ -3,7 +3,6 @@ import { actionGenerator } from "./util";
 // constants
 const LOAD_USERS = "user/LOAD_USERS";
 const NEW_USER = "user/NEW_USER";
-const EDIT_USER = "user/EDIT_USER";
 
 const loadUsers = (users) => ({
   type: LOAD_USERS,
@@ -12,11 +11,6 @@ const loadUsers = (users) => ({
 
 const newUser = (user) => ({
   type: NEW_USER,
-  user,
-})
-
-const editUser = (user) => ({
-  type: EDIT_USER,
   user,
 })
 
@@ -33,13 +27,13 @@ export const getUser = (id) => actionGenerator({
 });
 
 // Edit User Details
-export const editUserDetails = (id, data) => actionGenerator({
+export const editUser = (id, data) => actionGenerator({
   url: `/api/users/${id}`,
   options: {
     method: "PUT",
     body: data,
   },
-  action: editUser,
+  action: newUser,
 });
 
 const initialState = {};
@@ -58,11 +52,6 @@ export default function reducer(state = initialState, action) {
       action.users.forEach((user) => {
         newState[user.id] = user;
       });
-      return newState;
-    }
-    case EDIT_USER: {
-      const newState = { ...state };
-      newState[action.user.id] = action.user;
       return newState;
     }
     default:

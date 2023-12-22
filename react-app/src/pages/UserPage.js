@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Redirect, useHistory, Switch } from "react-router-dom";
-import { editUserDetails, getUser } from "../store/user";
+import { editUser, getUser } from "../store/user";
 import DropdownButton from "../components/Buttons/DropdownButton";
 import DynamicImage from "../components/DynamicImage";
 import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
@@ -43,21 +43,24 @@ const Header = () => {
     if (file) {
       const formData = new FormData();
       formData.append('avatar_url', file);
-      await dispatch(editUserDetails(id, formData));
+      formData.append('display_name', user?.display_name);
+      await dispatch(editUser(id, formData));
     }
   };
 
   const deleteAvatarUrl = async (e) => {
     const formData = new FormData();
     formData.append('avatar_url', '');
-    await dispatch(editUserDetails(id, formData));
+    formData.append('display_name', user?.display_name);
+    await dispatch(editUser(id, formData));
     setShowAvatarConfirmModal(false);
   };
 
   const deleteBannerUrl = async (e) => {
     const formData = new FormData();
     formData.append('banner_url', '');
-    await dispatch(editUserDetails(id, formData));
+    formData.append('display_name', user?.display_name);
+    await dispatch(editUser(id, formData));
     setShowBannerConfirmModal(false);
   };
 
@@ -66,8 +69,9 @@ const Header = () => {
 
     if (file) {
       const formData = new FormData();
+      formData.append('display_name', user?.display_name);
       formData.append('banner_url', file);
-      dispatch(editUserDetails(id, formData));
+      dispatch(editUser(id, formData));
     }
   };
 

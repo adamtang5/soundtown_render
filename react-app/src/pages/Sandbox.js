@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editUserDetails } from "../store/user";
+import { editUser } from "../store/user";
 import DynamicImage from "../components/DynamicImage";
 
 const Sandbox = () => {
@@ -20,7 +20,7 @@ const Sandbox = () => {
       const fr = new FileReader();
       fr.readAsDataURL(file);
       fr.onload = () => document.getElementById('preview').src = fr.result;
-      // dispatch(editUserDetails(sessionUser?.id, formData));
+      // dispatch(editUser(sessionUser?.id, formData));
     }
   };
 

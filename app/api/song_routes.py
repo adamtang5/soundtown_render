@@ -59,10 +59,6 @@ def edit_song(id):
   form = EditSongForm()
   form['csrf_token'].data = request.cookies['csrf_token']
   if form.validate_on_submit():
-    print("---------------------")
-    print(request.form)
-    print("---------------------")
-
     song = Song.query.get(id)
     if not song:
       return not_found_error('song')
