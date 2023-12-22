@@ -15,7 +15,7 @@ class User(db.Model, UserMixin):
   id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
   email = db.Column(db.String(255), nullable=False, unique=True)
   hashed_password = db.Column(db.String(255), nullable=False)
-  display_name = db.Column(db.String(50))
+  display_name = db.Column(db.String(50), nullable=False)
   avatar_url = db.Column(db.String)
   banner_url = db.Column(db.String)
   created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)

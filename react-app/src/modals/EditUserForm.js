@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { editUserDetails } from "../store/user";
+import { editUser } from "../store/user";
 import DynamicImage from "../components/DynamicImage";
 import ModalForm from "../components/ModalForm/ModalForm";
 import ModalFormInput from "../components/ModalForm/ModalFormInput";
@@ -9,8 +9,8 @@ import ModalFormInput from "../components/ModalForm/ModalFormInput";
 const EditUserForm = ({ setShowEditUserModal }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { userId } = useParams();
-  const user = useSelector(state => state.users[+userId]);
+  const { id } = useParams();
+  const user = useSelector(state => state.users[id]);
   const [errors, setErrors] = useState([]);
   const [displayName, setDisplayName] = useState(user?.display_name);
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar_url);
@@ -34,13 +34,13 @@ const EditUserForm = ({ setShowEditUserModal }) => {
     formData.append("display_name", displayName);
     formData.append("avatar_url", newAvatar || avatarUrl);
 
-    const res = dispatch(editUserDetails(+userId, formData));
+    const res = dispatch(editUser(id, formData));
     if (res) {
       if (res.errors) {
         setErrors(res.errors);
       } else {
         setShowEditUserModal(false);
-        history.push(`/users/${userId}`);
+        history.push(`/users/${id}`);
       }
     }
   };
