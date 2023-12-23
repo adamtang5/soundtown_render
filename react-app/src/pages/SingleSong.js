@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { authenticate } from "../store/session";
 import { editSong, deleteSong, likeSong, unlikeSong, getSong } from "../store/song";
 import { loadSong, queueSong } from "../store/player";
 import { createComment } from "../store/comment";
@@ -72,9 +73,10 @@ const ButtonGroup = ({ song }) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const res = dispatch(deleteSong(song?.id));
+    const res = await dispatch(deleteSong(song?.id));
     if (res) {
       setShowConfirmModal(false);
+      dispatch(authenticate());
       history.push("/");
     }
   };

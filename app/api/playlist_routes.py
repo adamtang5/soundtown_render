@@ -124,6 +124,12 @@ def get_playlist(id):
   """
   playlist = Playlist.query.get(id)
   if playlist:
+    song_ids = [str(song.id) for song in playlist.songs]
+    songs_order = json.loads(playlist.songs_order)
+    songs_order = [id for id in songs_order if id in song_ids]
+    playlist.songs_order = json.dumps(songs_order)
+    db.session.commit()
+
     return playlist.to_extended_dict()
   else:
     return not_found_error('playlist')

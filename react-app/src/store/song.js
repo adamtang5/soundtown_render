@@ -16,10 +16,10 @@ export const newSong = (song) => ({
   song,
 });
 
-const removeSong = (id) => {
+const removeSong = (payload) => {
   return {
     type: REMOVE_SONG,
-    id,
+    payload,
   };
 };
 
@@ -118,7 +118,7 @@ export default function reducer(state = initialState, action) {
     }
     case REMOVE_SONG: {
       const newState = { ...state };
-      delete newState[action.id];
+      delete newState[action.payload.id];
       return newState;
     }
     default:
