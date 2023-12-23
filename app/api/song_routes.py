@@ -44,7 +44,7 @@ def new_song():
     )
     db.session.add(song)
     db.session.commit()
-    return song.to_dict()
+    return song.to_extended_dict()
   else:
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
