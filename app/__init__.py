@@ -38,7 +38,6 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(song_routes, url_prefix='/api/songs')
 app.register_blueprint(playlist_routes, url_prefix='/api/playlists')
 app.register_blueprint(comment_routes, url_prefix='/api/comments')
-app.register_blueprint(like_routes, url_prefix='/api/likes')
 app.register_blueprint(playlistsong_routes, url_prefix='/api/playlistsongs')
 
 db.init_app(app)

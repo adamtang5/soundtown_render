@@ -16,9 +16,19 @@ const newPlaylist = (playlist) => ({
   playlist,
 });
 
-const removePlaylist = (playlistId) => ({
+const removePlaylist = (payload) => ({
   type: REMOVE_PLAYLIST,
-  playlistId,
+  payload,
+});
+
+// toggle like on a playlist
+export const togglePlaylistLike = (id, data) => actionGenerator({
+  url: `/api/playlists/${id}/toggleLike`,
+  options: {
+    method: "POST",
+    body: data,
+  },
+  action: newPlaylist,
 });
 
 // like a playlist
@@ -59,7 +69,7 @@ export const removeSongFromPlaylist = (data) => actionGenerator({
   action: newPlaylist,
 });
 
-//!Create playlist in the database
+// Create playlist in the database
 export const createPlaylist = (playlist) => actionGenerator({
   url: "/api/playlists/",
   options: {
@@ -132,7 +142,7 @@ export default function reducer(state = initialState, action) {
     }
     case REMOVE_PLAYLIST: {
       const newState = { ...state };
-      delete newState[action.playlistId];
+      delete newState[action.payload.playlistId];
       return newState;
     }
     default:
