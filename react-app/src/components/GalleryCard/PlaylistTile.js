@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { loadPlaylist } from "../../store/player";
+import { getPlaylist } from "../../store/playlist";
 import { useDispatch, useSelector } from "react-redux";
 import './Tile.css';
 
@@ -8,8 +9,11 @@ const PlaylistTile = ({ playlist }) => {
   const firstSong = useSelector(state => state.songs[playlist?.songs_order[0]]);
   const dispatch = useDispatch();
 
-  const handlePlay = (e) => {
-    dispatch(loadPlaylist(playlist));
+  const handlePlay = async (e) => {
+    e.stopPropagation();
+
+    await dispatch(getPlaylist(playlist?.id));
+    await dispatch(loadPlaylist(playlist));
   };
 
   const coverStyle = {
