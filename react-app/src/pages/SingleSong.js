@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../store/session";
-import { editSong, deleteSong, likeSong, unlikeSong, getSong } from "../store/song";
+import { editSong, deleteSong, toggleSongLike, getSong } from "../store/song";
 import { loadSong, queueSong } from "../store/player";
 import { createComment } from "../store/comment";
 import { Modal } from "../components/Context/Modal";
@@ -43,22 +43,12 @@ const ButtonGroup = ({ song }) => {
     return () => document.removeEventListener("click", closeDropdown);
   }, [showDropdown]);
 
-  const handleLike = async (e) => {
-    e.preventDefault();
+  const handleSongLikeToggle = async (e) => {
+    e.stopPropagation();
 
     const formData = new FormData();
-    formData.append("user_id", sessionUser.id);
-    formData.append("song_id", song.id);
-    dispatch(likeSong(formData));
-  };
-
-  const handleUnlike = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("user_id", sessionUser.id);
-    formData.append("song_id", song.id);
-    dispatch(unlikeSong(formData));
+    formData.append("user_id", sessionUser?.id);
+    await dispatch(toggleSongLike(song?.id, formData));
   };
 
   const addSongToQueue = (id) => {
@@ -100,12 +90,12 @@ const ButtonGroup = ({ song }) => {
   return (
     <div className="asset-button-group flex-row">
       <ToggleButton
-        condition={song?.likes?.includes(sessionUser.id)}
+        condition={song?.likes?.includes(sessionUser?.id)}
         buttonClasses={[...baseClasses, 'b2']}
         labelClasses={['heart-label']}
-        handleOff={handleUnlike}
+        handleOff={handleSongLikeToggle}
         onLabel="Liked"
-        handleOn={handleLike}
+        handleOn={handleSongLikeToggle}
         offLabel="Like"
       />
 

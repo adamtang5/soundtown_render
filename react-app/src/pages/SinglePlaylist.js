@@ -4,8 +4,8 @@ import { useHistory } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 import { loadPlaylist, queuePlaylist, loadSong, queueSong } from "../store/player";
 import { getUser } from "../store/user";
-import { likeSong, unlikeSong } from "../store/song";
-import { editPlaylist, likePlaylist, unlikePlaylist, deletePlaylist, getPlaylist } from "../store/playlist";
+import { toggleSongLike } from "../store/song";
+import { editPlaylist, likePlaylist, unlikePlaylist, deletePlaylist, getPlaylist, toggleP } from "../store/playlist";
 import AssetHeader from "../components/AssetHeader";
 import Avatar from "../components/Icons/Avatar";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";
@@ -80,22 +80,12 @@ const SongRowButtonGroup = ({ song }) => {
     return () => document.removeEventListener("click", closeDropdown);
   }, [showDropdown]);
 
-  const handleLike = async (e) => {
+  const handleSongLikeToggle = async (e) => {
     e.stopPropagation();
 
     const formData = new FormData();
-    formData.append("user_id", sessionUser.id);
-    formData.append("song_id", song.id);
-    await dispatch(likeSong(formData));
-  };
-
-  const handleUnlike = async (e) => {
-    e.stopPropagation();
-
-    const formData = new FormData();
-    formData.append("user_id", sessionUser.id);
-    formData.append("song_id", song.id);
-    await dispatch(unlikeSong(formData));
+    formData.append("user_id", sessionUser?.id);
+    await dispatch(toggleSongLike(song?.id, formData));
   };
 
   const addSongToQueue = async (id) => {
@@ -124,12 +114,12 @@ const SongRowButtonGroup = ({ song }) => {
   return (
     <div className="mini-asset-button-group flex-row">
       <ToggleButton
-        condition={song?.likes?.includes(sessionUser.id)}
+        condition={song?.likes?.includes(sessionUser?.id)}
         buttonClasses={[...baseClasses, 'b3']}
         labelClasses={['heart-label']}
-        handleOff={handleUnlike}
+        handleOff={handleSongLikeToggle}
         onLabel=""
-        handleOn={handleLike}
+        handleOn={handleSongLikeToggle}
         offLabel=""
       />
 

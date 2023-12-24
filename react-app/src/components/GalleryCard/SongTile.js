@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Modal } from "../Context/Modal";
 import { loadSong, queueSong } from "../../store/player";
-import { likeSong, unlikeSong } from "../../store/song";
+import { toggleSongLike } from "../../store/song";
 import AddSongToPlaylist from "../../modals/AddSongToPlaylist";
 import { ImMenu3 } from "react-icons/im";
 import { CgPlayList } from "react-icons/cg";
@@ -107,20 +107,10 @@ const SongTile = ({ song, setShowModal }) => {
     dispatch(loadSong(song.id));
   };
 
-  const handleLike = async (e) => {
+  const handleSongLikeToggle = async (e) => {
     const formData = new FormData();
-    formData.append("user_id", sessionUser.id);
-    formData.append("song_id", song.id);
-
-    dispatch(likeSong(formData));
-  };
-
-  const handleUnLike = async (e) => {
-    const formData = new FormData();
-    formData.append("user_id", sessionUser.id);
-    formData.append("song_id", song.id);
-
-    dispatch(unlikeSong(formData));
+    formData.append("user_id", sessionUser?.id);
+    await dispatch(toggleSongLike(song?.id, formData));
   };
 
   const openLoginModal = () => {
@@ -144,15 +134,15 @@ const SongTile = ({ song, setShowModal }) => {
             <Actions song={song} />
             <div onClick={handlePlay} className="overlay-play">&#9654;</div>
             <div className="overlay-like">
-              {song?.likes?.includes(sessionUser.id) && (
+              {song?.likes?.includes(sessionUser?.id) && (
                 <div
-                  onClick={handleUnLike}
+                  onClick={handleSongLikeToggle}
                   className="liked"
                 >&#10084;</div>
               )}
-              {!song?.likes?.includes(sessionUser.id) && (
+              {!song?.likes?.includes(sessionUser?.id) && (
                 <div
-                  onClick={handleLike}
+                  onClick={handleSongLikeToggle}
                   className="not-liked"
                 >&#10084;</div>
               )}

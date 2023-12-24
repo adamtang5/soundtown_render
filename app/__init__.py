@@ -11,7 +11,6 @@ from .api.auth_routes import auth_routes
 from .api.song_routes import song_routes
 from .api.playlist_routes import playlist_routes
 from .api.comment_routes import comment_routes
-from .api.like_routes import like_routes
 from .api.playlistsong_routes import playlistsong_routes
 
 from .seeds import seed_commands

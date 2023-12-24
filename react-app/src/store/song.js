@@ -23,27 +23,17 @@ const removeSong = (payload) => {
   };
 };
 
-// like a song
-export const likeSong = (data) => actionGenerator({
-  url: "/api/likes/song",
+// toggle like on a song
+export const toggleSongLike = (id, data) => actionGenerator({
+  url: `/api/songs/${id}/toggleLike`,
   options: {
     method: "POST",
     body: data,
   },
   action: newSong,
-});
+})
 
-// unlike a song
-export const unlikeSong = (data) => actionGenerator({
-  url: "/api/likes/song",
-  options: {
-    method: "DELETE",
-    body: data,
-  },
-  action: newSong
-});
-
-//! Create songs in the database
+// Create songs in the database
 export const createSong = (data) => actionGenerator({
   url: "/api/songs/",
   options: {
