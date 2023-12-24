@@ -32,6 +32,8 @@ const BasicInfoForm = ({ setShowModal }) => {
     setTitle(playlist?.title);
     setDescription(playlist?.description);
     setImageUrl(playlist?.image_url);
+    setNewImage(null);
+    setSongsOrder(playlist?.songs_order);
     setShowModal(false);
   };
 

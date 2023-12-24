@@ -159,13 +159,10 @@ def toggle_like_song(id):
     if current_user.id != user.id:
       return UNAUTHORIZED_ERROR
     
-    ans = None
     if user not in song.likes:
       song.likes.append(user)
-      ans = jsonify({'addLike': True})
     else:
       song.likes.remove(user)
-      ans = jsonify({'addLike': False})
 
     db.session.commit()
-    return ans
+    return song.to_extended_dict()
