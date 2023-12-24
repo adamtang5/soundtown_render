@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { loadPlaylist, queuePlaylist, loadSong, queueSong } from "../store/player";
 import { getUser } from "../store/user";
 import { toggleSongLike } from "../store/song";
-import { editPlaylist, likePlaylist, unlikePlaylist, deletePlaylist, getPlaylist, toggleP } from "../store/playlist";
+import { editPlaylist, deletePlaylist, getPlaylist, togglePlaylistLike } from "../store/playlist";
 import AssetHeader from "../components/AssetHeader";
 import Avatar from "../components/Icons/Avatar";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";
@@ -154,18 +154,24 @@ const ButtonGroup = ({ playlist }) => {
   const baseClasses = ['cursor-pointer', 'composite-button'];
   const styleClasses = ['button-action', 'b2'];
 
-  const handleLike = async (e) => {
-    const formData = new FormData();
-    formData.append("user_id", sessionUser.id);
-    formData.append("playlist_id", playlist.id);
-    dispatch(likePlaylist(formData));
-  };
+  // const handleLike = async (e) => {
+  //   const formData = new FormData();
+  //   formData.append("user_id", sessionUser.id);
+  //   formData.append("playlist_id", playlist.id);
+  //   dispatch(likePlaylist(formData));
+  // };
 
-  const handleUnlike = async (e) => {
+  // const handleUnlike = async (e) => {
+  //   const formData = new FormData();
+  //   formData.append("user_id", sessionUser.id);
+  //   formData.append("playlist_id", playlist.id);
+  //   dispatch(unlikePlaylist(formData));
+  // };
+
+  const handlePlaylistLikeToggle = async (e) => {
     const formData = new FormData();
-    formData.append("user_id", sessionUser.id);
-    formData.append("playlist_id", playlist.id);
-    dispatch(unlikePlaylist(formData));
+    formData.append("user_id", sessionUser?.id);
+    await dispatch(togglePlaylistLike(playlist?.id, formData));
   };
 
   const addPlaylistToQueue = (playlist) => {
@@ -189,12 +195,12 @@ const ButtonGroup = ({ playlist }) => {
   return (
     <div className="asset-button-group flex-row">
       <ToggleButton
-        condition={playlist?.likes?.includes(sessionUser.id)}
+        condition={playlist?.likes?.includes(sessionUser?.id)}
         buttonClasses={[...baseClasses, 'b2']}
         labelClasses={['heart-label']}
-        handleOff={handleUnlike}
+        handleOff={handlePlaylistLikeToggle}
         onLabel="Liked"
-        handleOn={handleLike}
+        handleOn={handlePlaylistLikeToggle}
         offLabel="Like"
       />
 

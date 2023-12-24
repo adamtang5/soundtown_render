@@ -175,13 +175,10 @@ def toggle_like_playlist(id):
     if current_user.id != user.id:
       return UNAUTHORIZED_ERROR
 
-    ans = None
     if user not in playlist.pl_likes:
       playlist.pl_likes.append(user)
-      ans = jsonify({'addLike': True})
     else:
       playlist.pl_likes.remove(user)
-      ans = jsonify({'addLike': False})
 
     db.session.commit()
-    return ans
+    return playlist.to_extended_dict()

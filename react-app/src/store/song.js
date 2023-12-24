@@ -31,7 +31,7 @@ export const toggleSongLike = (id, data) => actionGenerator({
     body: data,
   },
   action: newSong,
-})
+});
 
 // Create songs in the database
 export const createSong = (data) => actionGenerator({
