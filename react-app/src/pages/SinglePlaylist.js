@@ -179,6 +179,7 @@ const ButtonGroup = ({ playlist }) => {
   };
 
   const addPlaylistToQueue = (playlist) => {
+    dispatch(getPlaylist(playlist?.id));
     if (!playingId) {
       dispatch(loadPlaylist(playlist));
     } else {
@@ -283,6 +284,7 @@ const SinglePlaylist = () => {
 
   const handlePlayButtonClick = (e) => {
     e.preventDefault();
+    dispatch(getPlaylist(playlist?.id));
     dispatch(loadPlaylist(playlist));
   };
 
