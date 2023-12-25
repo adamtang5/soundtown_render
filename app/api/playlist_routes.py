@@ -150,7 +150,7 @@ def delete_playlist(id):
     return UNAUTHORIZED_ERROR
 
   db.session.delete(playlist)
-  db.session.submit()
+  db.session.commit()
   return jsonify({'id': id})
 
 
