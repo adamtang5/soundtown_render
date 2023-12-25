@@ -154,20 +154,6 @@ const ButtonGroup = ({ playlist }) => {
   const baseClasses = ['cursor-pointer', 'composite-button'];
   const styleClasses = ['button-action', 'b2'];
 
-  // const handleLike = async (e) => {
-  //   const formData = new FormData();
-  //   formData.append("user_id", sessionUser.id);
-  //   formData.append("playlist_id", playlist.id);
-  //   dispatch(likePlaylist(formData));
-  // };
-
-  // const handleUnlike = async (e) => {
-  //   const formData = new FormData();
-  //   formData.append("user_id", sessionUser.id);
-  //   formData.append("playlist_id", playlist.id);
-  //   dispatch(unlikePlaylist(formData));
-  // };
-
   const handlePlaylistLikeToggle = async (e) => {
     const formData = new FormData();
     formData.append("user_id", sessionUser?.id);
