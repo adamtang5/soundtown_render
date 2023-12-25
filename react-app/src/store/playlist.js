@@ -31,24 +31,6 @@ export const togglePlaylistLike = (id, data) => actionGenerator({
   action: newPlaylist,
 });
 
-export const addSongToPlaylist = (data) => actionGenerator({
-  url: "/api/playlistsongs/",
-  options: {
-    method: "POST",
-    body: data,
-  },
-  action: newPlaylist,
-});
-
-export const removeSongFromPlaylist = (data) => actionGenerator({
-  url: "/api/playlistsongs/",
-  options: {
-    method: "DELETE",
-    body: data,
-  },
-  action: newPlaylist,
-});
-
 // Create playlist in the database
 export const createPlaylist = (playlist) => actionGenerator({
   url: "/api/playlists/",
@@ -59,7 +41,7 @@ export const createPlaylist = (playlist) => actionGenerator({
   action: newPlaylist,
 });
 
-//!Get Songs from the Database
+// Get Songs from the Database
 export const getAllPlaylists = () => actionGenerator({
   url: "/api/playlists/",
   action: loadPlaylists,
@@ -71,7 +53,7 @@ export const getPlaylist = (id) => actionGenerator({
   action: newPlaylist,
 });
 
-//!Edit playlist in the database
+// Edit playlist in the database
 export const editPlaylist = (id, data) => actionGenerator({
   url: `/api/playlists/${id}`,
   options: {
@@ -81,7 +63,7 @@ export const editPlaylist = (id, data) => actionGenerator({
   action: newPlaylist,
 });
 
-//!Delete Playlist from the database
+// Delete Playlist from the database
 export const deletePlaylist = (playlistId) => actionGenerator({
   url: `/api/playlists/${playlistId}`,
   options: {

@@ -85,14 +85,16 @@ def edit_playlist(id):
     songs_to_add = new - orig
 
     def remove_song(song):
-      db.session.remove(playlist_song(playlist_id=id, song_id=song.id))
+      delete_stmt = playlist_song.delete().where(playlist_song.c.playlist_id == id).where(playlist_song.c.song_id == song.id)
+      db.session.execute(delete_stmt)
     
     for song in songs_to_remove:
       remove_song(song)
     db.session.commit()
 
     def add_song(song):
-      db.session.add(playlist_song(playlist_id=id, song_id=song.id))
+      insert_stmt = playlist_song.insert().values(playlist_id=id, song_id=song.id)
+      db.session.execute(insert_stmt)
 
     for song in songs_to_add:
       add_song(song)
