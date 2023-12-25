@@ -55,5 +55,6 @@ class Song(db.Model):
       'title': self.title,
       'audio_url': self.audio_url,
       'description': self.description,
-      'image_url': self.image_url
+      'image_url': self.image_url,
+      'likes': [like.id for like in self.likes]
     }

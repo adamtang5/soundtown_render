@@ -127,12 +127,15 @@ const SongTile = ({ song, setShowModal }) => {
       <div
         className="tile-cover"
         style={coverStyle}
-        alt={song.title}
+        alt={song?.title}
       >
         {sessionUser != null ? (
           <div className="overlay-group flex-row">
             <Actions song={song} />
-            <div onClick={handlePlay} className="overlay-play">&#9654;</div>
+            <div
+              onClick={handlePlay}
+              className="overlay-play"
+            >&#9654;</div>
             <div className="overlay-like">
               {song?.likes?.includes(sessionUser?.id) && (
                 <div
