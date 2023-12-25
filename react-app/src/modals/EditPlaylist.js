@@ -18,7 +18,7 @@ const BasicInfoForm = ({ setShowModal }) => {
   const playlist = useSelector(state => state.playlists[id]);
   const [errors, setErrors] = useState([]);
   const [title, setTitle] = useState(playlist?.title);
-  const [description, setDescription] = useState(playlist?.description);
+  const [description, setDescription] = useState(playlist?.description || '');
   const [imageUrl, setImageUrl] = useState(playlist?.image_url || '');
   const [newImage, setNewImage] = useState();
   const [songsOrder, setSongsOrder] = useState(playlist?.songs_order);

@@ -50,7 +50,7 @@ const AddToExistingPlaylist = ({
                     to={`/playlists/${pl?.id}`}
                   >
                     <div className="logo-before flex-row waveform-label">
-                      {pl?.songs.length}
+                      {pl?.songs?.length}
                     </div>
                   </Link>
                 </div>
@@ -76,14 +76,13 @@ const AddToNewPlaylist = ({ song, setShowModal }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
-  const stateUsers = useSelector(state => state.users);
   const stateSongs = useSelector(state => state.songs);
   const [errors, setErrors] = useState([]);
   const [title, setTitle] = useState("");
   const [songsOrder, setSongsOrder] = useState([song?.id]);
-  const [stagingList, setStagingList] = useState([song?.id, -3, -2, -1]);
+  const [stagingList, setStagingList] = useState([song?.id, 1, 2, 3]);
   const [likedSamples, setLikedSamples] = useState(
-    randomSample(stateUsers[sessionUser.id].likes
+    randomSample(sessionUser?.likes
       .filter(id => !songsOrder.includes(id))
       .map(id => stateSongs[id]), 3));
 
@@ -117,7 +116,7 @@ const AddToNewPlaylist = ({ song, setShowModal }) => {
     const newSongsOrder = songsOrder.filter(songId => songId !== id);
     setSongsOrder(newSongsOrder);
     convertSongsOrder2StagingList(newSongsOrder);
-    if (stateUsers[sessionUser.id].likes.includes(id)) {
+    if (sessionUser?.likes?.includes(id)) {
       setLikedSamples(orig => [...orig, stateSongs[id]]);
     }
   };
@@ -160,7 +159,7 @@ const AddToNewPlaylist = ({ song, setShowModal }) => {
             className="full-width flex-row"
             key={songId}
           >
-            {songId > 0 ? (
+            {typeof(songId) === "string" ? (
               <>
                 <img
                   src={stateSongs[songId]?.image_url}
@@ -208,7 +207,7 @@ const AddToNewPlaylist = ({ song, setShowModal }) => {
                   dimension={50}
                   isOverlay={false}
                 />}
-              user={stateUsers[song?.user_id]}
+              user={song?.user}
               buttonGroupData={[{
                 label: "Add to playlist",
                 onClick: () => addSong(song?.id),
