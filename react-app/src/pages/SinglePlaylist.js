@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 import { loadPlaylist, queuePlaylist, loadSong, queueSong } from "../store/player";
+import { authenticate } from "../store/session";
 import { getUser } from "../store/user";
 import { toggleSongLike } from "../store/song";
 import { editPlaylist, deletePlaylist, getPlaylist, togglePlaylistLike } from "../store/playlist";
@@ -174,7 +175,9 @@ const ButtonGroup = ({ playlist }) => {
 
     const res = await dispatch(deletePlaylist(playlist?.id));
     if (res) {
-      history.push("/library/playlists");
+      setShowConfirmModal(false);
+      dispatch(authenticate());
+      history.push("/");
     }
   };
 
@@ -246,9 +249,7 @@ const SinglePlaylist = () => {
   const playlist = useSelector(state => state.playlists[id]);
   const songs = useSelector(state => playlist?.songs_order?.map(id => state.songs[id]));
   const sessionUser = useSelector(state => state.session.user);
-  const playlistUser = useSelector(state => state.users[playlist?.user_id]);
-  const userPlaylists = useSelector(state => Object.values(state.playlists)
-    .filter(pl => pl.user_id === playlistUser?.id)
+  const userPlaylists = useSelector(state => state.users[playlist?.user_id]?.playlists
     .filter(pl => pl.id !== id));
 
   useEffect(() => {
@@ -338,7 +339,7 @@ const SinglePlaylist = () => {
                   <footer className="logo-before heart-label">
                     {pl?.likes?.length}
                   </footer>}
-                user={playlistUser}
+                user={playlist?.user}
               />
             ))}
           />

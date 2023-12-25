@@ -31,26 +31,6 @@ export const togglePlaylistLike = (id, data) => actionGenerator({
   action: newPlaylist,
 });
 
-// like a playlist
-export const likePlaylist = (data) => actionGenerator({
-  url: "/api/likes/playlist",
-  options: {
-    method: 'POST',
-    body: data,
-  },
-  action: newPlaylist,
-});
-
-// unlike a playlist
-export const unlikePlaylist = (data) => actionGenerator({
-  url: "/api/likes/playlist",
-  options: {
-    method: 'DELETE',
-    body: data,
-  },
-  action: newPlaylist,
-});
-
 export const addSongToPlaylist = (data) => actionGenerator({
   url: "/api/playlistsongs/",
   options: {
@@ -135,14 +115,14 @@ export default function reducer(state = initialState, action) {
     }
     case LOAD_PLAYLISTS: {
       const newState = { ...state };
-      Object.values(action.playlists).forEach((playlist) => {
+      action.playlists.forEach(playlist => {
         newState[playlist.id] = playlist;
       });
       return newState;
     }
     case REMOVE_PLAYLIST: {
       const newState = { ...state };
-      delete newState[action.payload.playlistId];
+      delete newState[action.payload.id];
       return newState;
     }
     default:
