@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { createPlaylist, addSongToPlaylist, removeSongFromPlaylist } from "../store/playlist";
@@ -86,11 +86,6 @@ const AddToNewPlaylist = ({ song, setShowModal }) => {
       .filter(id => !songsOrder.includes(id))
       .map(id => stateSongs[id]), 3));
 
-  useEffect(() => {
-    console.log(songsOrder);
-    console.log(stagingList);
-  }, [songsOrder, stagingList]);
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
