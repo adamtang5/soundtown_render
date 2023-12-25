@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { createPlaylist, addSongToPlaylist, removeSongFromPlaylist } from "../store/playlist";
+import { createPlaylist, editPlaylist } from "../store/playlist";
 import { randomSample } from "../util";
 import { IoCloseOutline } from "react-icons/io5";
 import ModalFormFooter from "../components/ModalForm/ModalFormFooter";
@@ -122,7 +122,7 @@ const AddToNewPlaylist = ({ song, setShowModal }) => {
   };
 
   const convertSongsOrder2StagingList = songsOrder => {
-    const stagingList = [-4, -3, -2, -1];
+    const stagingList = [0, 1, 2, 3];
     songsOrder.forEach((songId, idx) => stagingList[idx] = songId);
     setStagingList(stagingList);
   };
@@ -225,28 +225,38 @@ const AddSongToPlaylist = ({ song, setShowModal }) => {
   const [term, setTerm] = useState("");
   const [mode, setMode] = useState("add");
   const sessionUser = useSelector(state => state.session.user);
+  const statePlaylists = useSelector(state => state.playlists);
   const playlists = useSelector(state => Object.values(state.playlists)
     .filter(pl => pl?.user_id === sessionUser.id));
 
   const handleEnlist = async (playlistId, songId) => {
-    console.log(playlistId, songId);
-
     const formData = new FormData();
-    formData.append("playlist_id", playlistId);
-    formData.append("song_id", songId);
+    const playlist = statePlaylists[playlistId];
 
-    const playlist = await dispatch(addSongToPlaylist(formData));
-    if (playlist) return playlist;
+    formData.append("title", playlist?.title);
+    formData.append("description", playlist?.description || '');
+    formData.append(
+      "songs_order",
+      JSON.stringify([...playlist?.songs_order, songId])
+    );
+
+    const res = await dispatch(editPlaylist(playlistId, formData));
+    if (res) return res;
   };
 
   const handleDelist = async (playlistId, songId) => {
-    console.log(playlistId, songId);
-
     const formData = new FormData();
-    formData.append("playlist_id", playlistId);
-    formData.append("song_id", songId);
+    const playlist = statePlaylists[playlistId];
 
-    await dispatch(removeSongFromPlaylist(formData));
+    formData.append("title", playlist?.title);
+    formData.append("description", playlist?.description || '');
+    formData.append(
+      "songs_order",
+      JSON.stringify(playlist?.songs_order.filter(id => id !== songId))
+    );
+
+    const res = await dispatch(editPlaylist(playlistId, formData));
+    if (res) return res;
   };
 
   const navData = [
