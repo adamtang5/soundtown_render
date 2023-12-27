@@ -6,8 +6,11 @@ import ShowcaseSongs from "../components/ShowcaseSongs"
 import ShowcasePlaylists from "../components/ShowcasePlaylists";
 
 const Explore = () => {
-  const songsArr = useSelector(state => Object.values(state.songs));
-  const playlistsArr = useSelector(state => Object.values(state.playlists));
+  const sessionUser = useSelector(state => state.session.user);
+  const othersSongs = useSelector(state => Object.values(state.songs)
+    .filter(song => song?.user_id !== sessionUser?.id));
+  const othersPlaylists = useSelector(state => Object.values(state.playlists)
+    .filter(pl => pl?.user_id !== sessionUser?.id));
 
   const navData = [
     {
@@ -24,14 +27,14 @@ const Explore = () => {
     {
       path: "/explore/songs",
       component: <ShowcaseSongs
-        songs={songsArr}
-        h3="Every song from every user!"
+        songs={othersSongs}
+        h3="Check out songs from around the town!"
       />,
     },
     {
       path: "/explore/playlists",
       component: <ShowcasePlaylists
-        playlists={playlistsArr}
+        playlists={othersPlaylists}
         h3="Check out playlists from around the town!"
       />,
     },

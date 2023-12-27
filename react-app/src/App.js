@@ -32,7 +32,6 @@ const App = () => {
   useEffect(() => {
     (async () => {
       await dispatch(getAllSongs());
-      await dispatch(getAllPlaylists());
     })();
   }, [dispatch]);
 
