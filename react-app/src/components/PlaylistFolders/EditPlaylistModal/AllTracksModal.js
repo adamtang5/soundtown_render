@@ -1,22 +1,28 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
-import { removeSongFromPlaylist } from "../../../store/playlist";
+import { editPlaylist } from "../../../store/playlist";
 
 const AllTracksModal = ({ songArr }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const playlist = useSelector((state) => state.playlists[id]);
+  const statePlaylists = useSelector(state => state.playlists);
 
-  const handleDeleteSongtoPlaylist = (playlistId, songId) => async (e) => {
-    e.preventDefault();
+  const handleDelist = async (playlistId, songId) => {
     const formData = new FormData();
+    const playlist = statePlaylists[playlistId];
 
-    formData.append("playlist_id", playlistId);
-    formData.append("song_id", songId);
+    formData.append("title", playlist?.title);
+    formData.append("description", playlist?.description || '');
+    formData.append(
+      "songs_order",
+      JSON.stringify(playlist?.songs_order.filter(id => id !== songId))
+    );
 
-    dispatch(removeSongFromPlaylist(formData));
+    const res = await dispatch(editPlaylist(playlistId, formData));
+    if (res) return res;
   };
+
   return (
     <div className="AEP_track_container">
       <ul>
@@ -27,7 +33,7 @@ const AllTracksModal = ({ songArr }) => {
               <NavLink to={`/songs/${song?.id}`}>{song?.title}</NavLink>
             </div>
             <p
-              onClick={handleDeleteSongtoPlaylist(playlist?.id, song?.id)}
+              onClick={handleDelist}
               className="AEP_li_x"
             >
               &#10005;
