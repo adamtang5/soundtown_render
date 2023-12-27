@@ -151,7 +151,6 @@ const ButtonGroup = ({ playlist }) => {
   const playingId = useSelector(state => state.player.playingId);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const songsArr = [];
   const baseClasses = ['cursor-pointer', 'composite-button'];
   const styleClasses = ['button-action', 'b2'];
 
@@ -206,7 +205,7 @@ const ButtonGroup = ({ playlist }) => {
           modalForm={
             <EditPlaylist
               setShowModal={setShowEditModal}
-              songArr={songsArr}
+              songArr={playlist?.songs}
             />
           }
         />
