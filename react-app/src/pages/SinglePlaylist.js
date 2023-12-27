@@ -160,12 +160,12 @@ const ButtonGroup = ({ playlist }) => {
     await dispatch(togglePlaylistLike(playlist?.id, formData));
   };
 
-  const addPlaylistToQueue = (playlist) => {
-    dispatch(getPlaylist(playlist?.id));
+  const addPlaylistToQueue = async (playlist) => {
+    await dispatch(getPlaylist(playlist?.id));
     if (!playingId) {
-      dispatch(loadPlaylist(playlist));
+      await dispatch(loadPlaylist(playlist));
     } else {
-      dispatch(queuePlaylist(playlist));
+      await dispatch(queuePlaylist(playlist));
     }
   };
 
@@ -175,7 +175,7 @@ const ButtonGroup = ({ playlist }) => {
     const res = await dispatch(deletePlaylist(playlist?.id));
     if (res) {
       setShowConfirmModal(false);
-      dispatch(authenticate());
+      await dispatch(authenticate());
       history.push("/");
     }
   };

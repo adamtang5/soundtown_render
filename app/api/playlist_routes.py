@@ -42,7 +42,7 @@ def new_playlist():
       playlist.songs.append(song)
 
     db.session.commit()
-    return playlist.to_dict()
+    return playlist.to_extended_dict()
   else:
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
@@ -103,7 +103,7 @@ def edit_playlist(id):
     playlist.description = request.form["description"]
     playlist.updated_at = datetime.now()
     db.session.commit()
-    return playlist.to_dict()
+    return playlist.to_extended_dict()
   else:
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
@@ -153,7 +153,7 @@ def delete_playlist(id):
 
   db.session.delete(playlist)
   db.session.commit()
-  return jsonify({'id': id})
+  return {'id': id}
 
 
 # POST /api/playlists/:id/toggleLike
