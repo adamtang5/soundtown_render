@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
-from sqlalchemy import text
 from app.models import db, User, Playlist, Song, playlist_song
 from datetime import datetime
 from app.forms import NewPlaylistForm, EditPlaylistForm, PlaylistToggleLikeForm
@@ -13,10 +12,11 @@ from app.api.utils import (
 from app.s3_helpers import (
   upload_file_to_s3, allowed_file, get_unique_filename
 )
-from sqlalchemy.orm import relationship, sessionmaker, joinedload
+from sqlalchemy import text
+# from sqlalchemy.orm import relationship, sessionmaker, joinedload
 import json
 
-playlist_routes = Blueprint('playlist',__name__)
+playlist_routes = Blueprint('playlist', __name__)
 
 
 # POST /api/playlists/

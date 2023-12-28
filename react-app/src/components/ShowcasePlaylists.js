@@ -16,7 +16,7 @@ const ShowcasePlaylists = ({ playlists, h3 }) => {
     <>
       <h3>{h3}</h3>
       <div className="showcase-grid flex-row">
-        {playlists?.map(playlist => <PlaylistTile key={playlist.id} playlist={playlist} />)}
+        {playlists?.map(playlist => <PlaylistTile key={playlist?.id} playlist={playlist} />)}
       </div>
     </>
   );

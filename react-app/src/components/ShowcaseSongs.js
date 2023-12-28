@@ -9,7 +9,7 @@ const ShowcaseSongs = ({ songs, h3, setShowModal }) => {
           <SongTile
             song={song}
             setShowModal={setShowModal}
-            key={song.id}
+            key={song?.id}
           />
         ))}
       </div>
