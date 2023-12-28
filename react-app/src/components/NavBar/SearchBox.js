@@ -50,67 +50,67 @@ const SearchBox = () => {
               )
                 .map((playlistOrSong) =>
                   playlistOrSong.songs ? (
-                    <li key={playlistOrSong.id} className="flex-row search-results-li">
+                    <li key={playlistOrSong?.id} className="flex-row search-results-li">
                       <img
                         className="search-results-img"
-                        src={playlistOrSong.image_url}
-                        alt={playlistOrSong.title}
+                        src={playlistOrSong?.image_url}
+                        alt={playlistOrSong?.title}
                       />
                       <a
-                        href={`/playlists/${playlistOrSong.id}`}
+                        href={`/playlists/${playlistOrSong?.id}`}
                         className="search-results-a"
                       >
-                        {playlistOrSong.title}
+                        {playlistOrSong?.title}
                       </a>
                     </li>
-                  ) : songs[playlistOrSong.id] && songs[playlistOrSong.id].title === playlistOrSong.title && (
-                    <li key={playlistOrSong.id} className="flex-row search-results-li">
+                  ) : songs[playlistOrSong?.id] && songs[playlistOrSong?.id]?.title === playlistOrSong?.title && (
+                    <li key={playlistOrSong?.id} className="flex-row search-results-li">
                       <img
                         className="search-results-img"
-                        src={playlistOrSong.image_url}
-                        alt={playlistOrSong.title}
+                        src={playlistOrSong?.image_url}
+                        alt={playlistOrSong?.title}
                       />
                       <a
-                        href={`/songs/${playlistOrSong.id}`}
+                        href={`/songs/${playlistOrSong?.id}`}
                         className="search-results-a"
                       >
-                        {playlistOrSong.title}
+                        {playlistOrSong?.title}
                       </a>
                     </li>
                   )
                 ) : playlistsAndSongs?.filter((playlistOrSong) =>
-                  playlistOrSong.title.toLowerCase().includes(searchInput.toLowerCase())
+                  playlistOrSong?.title?.toLowerCase()?.includes(searchInput?.toLowerCase())
                 ).length ? playlistsAndSongs?.filter((playlistOrSong) =>
-                  playlistOrSong.title.toLowerCase().includes(searchInput.toLowerCase())
+                  playlistOrSong?.title?.toLowerCase()?.includes(searchInput?.toLowerCase())
                 )
                   .map((playlistOrSong) => playlistOrSong.songs ? (
-                    <li key={playlistOrSong.id} className="flex-row search-results-li">
+                    <li key={playlistOrSong?.id} className="flex-row search-results-li">
                       <img
                         className="search-results-img"
-                        src={playlistOrSong.image_url}
-                        alt={playlistOrSong.title}
+                        src={playlistOrSong?.image_url}
+                        alt={playlistOrSong?.title}
                       />
                       <a
-                        href={`/playlists/${playlistOrSong.id}`}
+                        href={`/playlists/${playlistOrSong?.id}`}
                         className="search-results-a"
                       >
-                        {playlistOrSong.title}
+                        {playlistOrSong?.title}
                       </a>
                     </li>
                   ) :
-                    songs[playlistOrSong.id] && songs[playlistOrSong.id].title === playlistOrSong.title &&
+                    songs[playlistOrSong?.id] && songs[playlistOrSong?.id].title === playlistOrSong?.title &&
                     (
-                      <li key={playlistOrSong.id} className="flex-row search-results-li">
+                      <li key={playlistOrSong?.id} className="flex-row search-results-li">
                         <img
                           className="search-results-img"
-                          src={playlistOrSong.image_url}
-                          alt={playlistOrSong.title}
+                          src={playlistOrSong?.image_url}
+                          alt={playlistOrSong?.title}
                         />
                         <a
-                          href={`/songs/${playlistOrSong.id}`}
+                          href={`/songs/${playlistOrSong?.id}`}
                           className="search-results-a"
                         >
-                          {playlistOrSong.title}
+                          {playlistOrSong?.title}
                         </a>
                       </li>
                     )

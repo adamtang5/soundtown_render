@@ -13,8 +13,8 @@ import "./Home.css";
 
 const MainFeed = () => {
   const songs = useSelector(state => state.songs);
-  const songsArr = Object.values(songs).sort((a, b) => a.id - b.id);
-  const songsArrRev = Object.values(songs).sort((a, b) => b.id - a.id);
+  const songsArr = useSelector(state => Object.values(state.songs).sort((a, b) => a?.id - b?.id));
+  const songsArrRev = useSelector(state => Object.values(state.songs).sort((a, b) => b?.id - a?.id));
 
   const data = [
     {
@@ -90,7 +90,7 @@ const SliderCard = ({ title, description, songs }) => {
       <div className="carousel-wrapper">
         <Slider {...settings}>
           {songs?.map((song) => (
-            <SongTile song={song} key={song.id} />
+            <SongTile song={song} key={song?.id} />
           ))}
         </Slider>
       </div>
@@ -107,8 +107,8 @@ const Sidebar = () => {
         const data = await res.json();
         return {
           ...creator,
-          avatar_url: data.avatar_url,
-          github_url: data.html_url,
+          avatar_url: data?.avatar_url,
+          github_url: data?.html_url,
         };
       }
     };
@@ -118,7 +118,7 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar-container flex-column">
-      {creators.length === creatorData.length && creators.every(detail => detail.avatar_url) ?
+      {creators?.length === creatorData?.length && creators.every(detail => detail?.avatar_url) ?
         (
           <>
             <div className="tech-icon">
@@ -129,14 +129,14 @@ const Sidebar = () => {
             <h3 className="sidebar-text">Creators</h3>
             {creators?.map(creator => (
               <CreatorCard
-                key={creator.github_username}
+                key={creator?.github_username}
                 creator={creator}
               />
             ))}
             <h3 className="sidebar-text">Built with</h3>
             <div className="techs flex-row">
               {techs?.map(tech => (
-                <TechCard key={tech.name} tech={tech} />
+                <TechCard key={tech?.name} tech={tech} />
               ))}
             </div>
           </>

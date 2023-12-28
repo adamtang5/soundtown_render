@@ -32,7 +32,7 @@ const AddToExistingPlaylist = ({
         onChange={(e) => setTerm(e.target.value.toLowerCase())}
       />
       <ul className="playlist-modal-results flex-column">
-        {playlists.filter(pl => pl?.title.toLowerCase().includes(term))
+        {playlists.filter(pl => pl?.title?.toLowerCase()?.includes(term))
           .map((pl, idx) => (
             <li key={idx} className="full-width flex-row">
               <img
@@ -97,7 +97,7 @@ const AddToNewPlaylist = ({ song, setShowModal }) => {
     const res = await dispatch(createPlaylist(formData));
     if (res) {
       if (res.errors) {
-        setErrors(res.erros);
+        setErrors(res.errors);
       } else {
         setShowModal(false);
         history.push(`/playlists/${res.id}`);
@@ -109,7 +109,7 @@ const AddToNewPlaylist = ({ song, setShowModal }) => {
     const newSongsOrder = [...songsOrder, id];
     setSongsOrder(newSongsOrder);
     convertSongsOrder2StagingList(newSongsOrder);
-    setLikedSamples(orig => orig.filter(song => song.id !== id));
+    setLikedSamples(orig => orig.filter(song => song?.id !== id));
   };
 
   const removeSong = id => {
@@ -227,7 +227,7 @@ const AddSongToPlaylist = ({ song, setShowModal }) => {
   const sessionUser = useSelector(state => state.session.user);
   const statePlaylists = useSelector(state => state.playlists);
   const playlists = useSelector(state => Object.values(state.playlists)
-    .filter(pl => pl?.user_id === sessionUser.id));
+    .filter(pl => pl?.user_id === sessionUser?.id));
 
   const handleEnlist = async (playlistId, songId) => {
     const formData = new FormData();

@@ -14,7 +14,7 @@ const SongComments = ({ song }) => {
       </header>
       <ul>
         {song?.comments.map(comment => (
-          <SingleComment key={comment.id} comment={comment} />
+          <SingleComment key={comment?.id} comment={comment} />
         ))}
       </ul>
     </section>

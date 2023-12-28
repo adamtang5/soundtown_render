@@ -51,11 +51,11 @@ const ButtonGroup = ({ song }) => {
     await dispatch(toggleSongLike(song?.id, formData));
   };
 
-  const addSongToQueue = (id) => {
+  const addSongToQueue = async (id) => {
     if (!playingId) {
-      dispatch(loadSong(id));
+      await dispatch(loadSong(id));
     } else {
-      dispatch(queueSong(id));
+      await dispatch(queueSong(id));
     }
   };
 
@@ -66,7 +66,7 @@ const ButtonGroup = ({ song }) => {
     const res = await dispatch(deleteSong(song?.id));
     if (res) {
       setShowConfirmModal(false);
-      dispatch(authenticate());
+      await dispatch(authenticate());
       history.push("/");
     }
   };
@@ -158,9 +158,9 @@ const SingleSong = () => {
     })();
   }, [dispatch]);
   
-  const handlePlayButtonClick = (e) => {
+  const handlePlayButtonClick = async (e) => {
     e.preventDefault();
-    dispatch(loadSong(song?.id));
+    await dispatch(loadSong(song?.id));
   };
 
   const updateImage = async (e) => {
@@ -181,11 +181,11 @@ const SingleSong = () => {
     e.preventDefault();
 
     const comment = {
-      user_id: sessionUser.id,
-      song_id: song.id,
+      user_id: sessionUser?.id,
+      song_id: song?.id,
       content,
     };
-    const data = dispatch(createComment(comment));
+    const data = await dispatch(createComment(comment));
     if (data.errors) {
       setErrors(data.errors);
     } else {

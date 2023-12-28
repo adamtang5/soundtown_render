@@ -145,7 +145,7 @@ const ProfileDropdown = ({ user }) => {
           <div className="nav-profile-dropdown">
             <div className="dropdown-links cursor-pointer">
               <NavLink
-                to={`/users/${user.id}`}
+                to={`/users/${user?.id}`}
                 exact={true}
                 className='drop-nav-links'
               > <ImUser className="prof-icon" /> Profile </NavLink>

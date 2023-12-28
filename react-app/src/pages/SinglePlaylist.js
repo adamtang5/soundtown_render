@@ -91,9 +91,9 @@ const SongRowButtonGroup = ({ song }) => {
 
   const addSongToQueue = async (id) => {
     if (!playingId) {
-      dispatch(loadSong(id));
+      await dispatch(loadSong(id));
     } else {
-      dispatch(queueSong(id));
+      await dispatch(queueSong(id));
     }
   };
 
@@ -249,7 +249,7 @@ const SinglePlaylist = () => {
   const songs = useSelector(state => playlist?.songs_order?.map(id => state.songs[id]));
   const sessionUser = useSelector(state => state.session.user);
   const userPlaylists = useSelector(state => state.users[playlist?.user_id]?.playlists
-    .filter(pl => pl.id !== id));
+    .filter(pl => pl?.id !== id));
 
   useEffect(() => {
     (async () => {
@@ -264,10 +264,10 @@ const SinglePlaylist = () => {
     })();
   }, [dispatch, playlist?.user_id]);
 
-  const handlePlayButtonClick = (e) => {
+  const handlePlayButtonClick = async (e) => {
     e.preventDefault();
-    dispatch(getPlaylist(playlist?.id));
-    dispatch(loadPlaylist(playlist));
+    await dispatch(getPlaylist(playlist?.id));
+    await dispatch(loadPlaylist(playlist));
   };
 
   const updateImage = async (e) => {
@@ -289,7 +289,7 @@ const SinglePlaylist = () => {
         placeholderImg={songs?.at(0)?.image_url}
         handlePlayButtonClick={handlePlayButtonClick}
         updateImage={updateImage}
-        isAuthorized={sessionUser.id === playlist?.user_id}
+        isAuthorized={sessionUser?.id === playlist?.user_id}
       />
       <div className="container asset-secondary flex-row">
         <main className="asset-main">
@@ -321,7 +321,7 @@ const SinglePlaylist = () => {
             collectionLink={`/users/${playlist?.user_id}/playlists`}
             styleClasses={['stack-label']}
             h3="Playlists from this user"
-            collection={userPlaylists?.slice(0, 3).map(pl => (
+            collection={userPlaylists?.slice(0, 3)?.map(pl => (
               <AssetCard
                 key={pl?.id}
                 entity="playlist"
