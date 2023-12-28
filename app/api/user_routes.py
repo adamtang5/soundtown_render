@@ -18,7 +18,7 @@ user_routes = Blueprint('users', __name__)
 
 # GET /api/users/
 @user_routes.route('/')
-# @login_required
+@login_required
 def users():
   users = User.query.all()
   return jsonify([user.to_dict() for user in users])
@@ -52,7 +52,6 @@ def edit_user(id):
     if current_user.id != id:
       return UNAUTHORIZED_ERROR
 
-    display_name = request.form.get('display_name')
     raw_avatar_url = request.form.get('avatar_url')
     raw_avatar_file = request.files.get('avatar_url')
     raw_banner_url = request.form.get('banner_url')

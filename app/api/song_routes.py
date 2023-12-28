@@ -12,7 +12,7 @@ from app.api.utils import (
 from app.s3_helpers import (
   upload_file_to_s3, allowed_file, get_unique_filename
 )
-from sqlalchemy.orm import relationship, sessionmaker, joinedload
+# from sqlalchemy.orm import relationship, sessionmaker, joinedload
 
 song_routes = Blueprint('song', __name__)
 
