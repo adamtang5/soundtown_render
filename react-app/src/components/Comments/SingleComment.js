@@ -51,8 +51,8 @@ const SingleComment = ({ comment }) => {
   const handleEdit = async (ev) => {
     ev.preventDefault();
     const newComment = {
-      id: comment.id,
-      user_id: sessionUser.id,
+      id: comment?.id,
+      user_id: sessionUser?.id,
       content,
     };
     const data = dispatch(editComment(newComment));
@@ -77,7 +77,7 @@ const SingleComment = ({ comment }) => {
   };
 
   const confirmDelete = async (ev) => {
-    const data = dispatch(deleteComment(comment.id));
+    const data = dispatch(deleteComment(comment?.id));
     if (data.errors) {
       setErrors(data.errors);
     }
@@ -97,7 +97,7 @@ const SingleComment = ({ comment }) => {
           className="flex-row"
         >
           <div className="comment-info">
-            {comment?.user_id === sessionUser.id ? (
+            {comment?.user_id === sessionUser?.id ? (
               <span className="commenter-name">You</span>
             ) : (
               <a className="commenter-name" href={`/users/${comment?.user_id}`}>
@@ -147,7 +147,7 @@ const SingleComment = ({ comment }) => {
           <div
             className={`comment-actions flex-row${showActions ? "" : " hidden"}`}
           >
-            {comment?.user_id === sessionUser.id && (
+            {comment?.user_id === sessionUser?.id && (
               <>
                 <EditCommentButton
                   handleClick={clickEdit}

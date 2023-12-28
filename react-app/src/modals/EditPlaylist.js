@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams, NavLink } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import { loadSong } from "../store/player";
 import { editPlaylist } from "../store/playlist";
 import ModalForm from "../components/ModalForm/ModalForm";
 import ModalFormImage from "../components/ModalForm/ModalFormImage";
@@ -8,7 +9,6 @@ import ModalFormInput from "../components/ModalForm/ModalFormInput";
 import ModalFormTextarea from "../components/ModalForm/ModalFormTextarea";
 import "../components/ModalForm/ModalForm.css";
 import "./ModalNav.css";
-// import "./AddEditPlaylist.css";
 
 const BasicInfoForm = ({ setShowModal }) => {
   const dispatch = useDispatch();
@@ -125,6 +125,30 @@ const BasicInfoForm = ({ setShowModal }) => {
   );
 };
 
+const SingleSongRow = ({ song }) => {
+  const dispatch = useDispatch();
+
+  const handlePlay = async (e) => {
+    e.preventDefault();
+    await dispatch(loadSong(song?.id));
+  };
+
+  return (
+    <article
+      className="song-row flex-row cursor-pointer"
+      onClick={handlePlay}
+    >
+      <div className="song-row-content flex-row">
+        <div
+          className="song-row-thumb"
+          style={{ backgroundImage: `url(${song?.image_url})` }}
+        />
+        <div className="song-row-title">{song?.title}</div>
+      </div>
+    </article>
+  )
+};
+
 const AllTracksModal = ({ songArr }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -146,24 +170,15 @@ const AllTracksModal = ({ songArr }) => {
   };
 
   return (
-    <div className="AEP_track_container">
+    <section className="playlist-songs-list">
       <ul>
-        {songArr?.map((song) => (
-          <li key={song?.id} className="AEP_li flex-row">
-            <div className="flex-row">
-              <img src={song?.image_url} className="AEP_li_img" alt={song?.title} />
-              <NavLink to={`/songs/${song?.id}`}>{song?.title}</NavLink>
-            </div>
-            <p
-              onClick={handleDelist}
-              className="AEP_li_x"
-            >
-              &#10005;
-            </p>
+        {songArr?.map(song => (
+          <li key={song?.id} className="flex-row">
+            <SingleSongRow song={song} />
           </li>
         ))}
       </ul>
-    </div>
+    </section>
   );
 };
 

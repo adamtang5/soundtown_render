@@ -25,7 +25,7 @@ const SingleSongRow = ({ song, idx }) => {
 
   const handlePlay = (e) => {
     e.preventDefault();
-    dispatch(loadSong(song.id));
+    dispatch(loadSong(song?.id));
   };
 
   return (
