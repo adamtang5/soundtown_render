@@ -20,7 +20,6 @@ const Sandbox = () => {
       const fr = new FileReader();
       fr.readAsDataURL(file);
       fr.onload = () => document.getElementById('preview').src = fr.result;
-      // dispatch(editUser(sessionUser?.id, formData));
     }
   };
 

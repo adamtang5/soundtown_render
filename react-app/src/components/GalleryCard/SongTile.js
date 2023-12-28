@@ -48,7 +48,7 @@ const Actions = ({ song }) => {
 
   const dropdownItems = [
     {
-      onClick: () => addSongToQueue(song.id),
+      onClick: () => addSongToQueue(song?.id),
       leftIcon: <CgPlayList className="cg-icon" />,
       label: "Add to Queue",
     },
@@ -104,7 +104,7 @@ const SongTile = ({ song, setShowModal }) => {
   const sessionUser = useSelector(state => state.session.user);
 
   const handlePlay = (e) => {
-    dispatch(loadSong(song.id));
+    dispatch(loadSong(song?.id));
   };
 
   const handleSongLikeToggle = async (e) => {
@@ -161,7 +161,7 @@ const SongTile = ({ song, setShowModal }) => {
         )}
       </div>
       <footer className="tile-info">
-        <NavLink to={`/songs/${song.id}`}>
+        <NavLink to={`/songs/${song?.id}`}>
           <h3>{song.title}</h3>
         </NavLink>
         <span>{song.description}</span>

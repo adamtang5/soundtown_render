@@ -48,7 +48,7 @@ const UploadSongForm = ({ setShowUploadModal }) => {
 
     const formData = new FormData();
     formData.append("audio_url", newAudio || audioUrl);
-    formData.append("user_id", sessionUser.id);
+    formData.append("user_id", sessionUser?.id);
     formData.append("title", title);
     formData.append("description", description);
     formData.append("image_url", newImage || imageUrl);

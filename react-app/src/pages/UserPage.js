@@ -120,7 +120,7 @@ const Header = () => {
                 hidden
               />
             }
-            isAuthorized={sessionUser.id === id}
+            isAuthorized={sessionUser?.id === id}
             clickHidden={() => document.getElementById(avatarInputId).click()}
             styleClasses={['button-action', 'b1']}
             uploadLabel="Upload image"
@@ -221,12 +221,12 @@ const UserPage = () => {
   }, [dispatch]);
 
   const sortKey = (a, b) => {
-    if (a.title.toLowerCase() < b.title.toLowerCase()) {
+    if (a?.title?.toLowerCase() < b?.title?.toLowerCase()) {
       return -1;
-    } else if (a.title.toLowerCase() > b.title.toLowerCase()) {
+    } else if (a?.title?.toLowerCase() > b?.title?.toLowerCase()) {
       return 1;
-    } else if (a.description.toLowerCase() !== b.description.toLowerCase()) {
-      return a.description.toLowerCase() < b.description.toLowerCase() ? -1 : 1;
+    } else if (a?.description?.toLowerCase() !== b?.description?.toLowerCase()) {
+      return a?.description?.toLowerCase() < b?.description?.toLowerCase() ? -1 : 1;
     } else {
       return 0;
     }  
@@ -263,7 +263,7 @@ const UserPage = () => {
       path: `/users/${id}/playlists`,
       component: <ShowcasePlaylists
         playlists={userPlaylists}
-        h3={sessionUser.id === id ? "Your playlists"
+        h3={sessionUser?.id === id ? "Your playlists"
           : (user?.display_name ? `Check out ${user?.display_name}'s playlists!` : '')}
       />,
     },

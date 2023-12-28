@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "./store/session";
 import { getAllSongs } from "./store/song";
-import { getAllPlaylists } from "./store/playlist";
 import ProtectedRoute from "./utilities/ProtectedRoute";
 import { ModalProvider } from "./components/Context/Modal";
 import NavBar from "./components/NavBar";
@@ -45,7 +44,7 @@ const App = () => {
         {sessionUser != null && <NavBar />}
         <Switch>
           <Route path="/" exact={true}>
-            {sessionUser != null ? <Redirect to="/home" /> : <Redirect to="/welcome" />}
+            {sessionUser !== null ? <Redirect to="/home" /> : <Redirect to="/welcome" />}
           </Route>
           <Route path="/welcome">
             <SplashPage />

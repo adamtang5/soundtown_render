@@ -49,7 +49,7 @@ const PlaylistTile = ({ playlist }) => {
         </div>
       </div>
       <footer className="tile-info">
-        <NavLink to={`/playlists/${playlist.id}`}>
+        <NavLink to={`/playlists/${playlist?.id}`}>
           <h3>{playlist.title}</h3>
         </NavLink>
         <span>{playlist.description}</span>
