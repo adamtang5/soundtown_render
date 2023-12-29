@@ -114,15 +114,17 @@ const SongRowButtonGroup = ({ song }) => {
 
   return (
     <div className="mini-asset-button-group flex-row">
-      <ToggleButton
-        condition={song?.likes?.includes(sessionUser?.id)}
-        buttonClasses={[...baseClasses, 'b3']}
-        labelClasses={['heart-label']}
-        handleOff={handleSongLikeToggle}
-        onLabel=""
-        handleOn={handleSongLikeToggle}
-        offLabel=""
-      />
+      {sessionUser?.id !== song?.user_id && (
+        <ToggleButton
+          condition={song?.likes?.includes(sessionUser?.id)}
+          buttonClasses={[...baseClasses, 'b3']}
+          labelClasses={['heart-label']}
+          handleOff={handleSongLikeToggle}
+          onLabel=""
+          handleOn={handleSongLikeToggle}
+          offLabel=""
+        />
+      )}
 
       <CopyLinkButton
         buttonClasses={[...baseClasses, ...styleClasses]}
@@ -182,15 +184,17 @@ const ButtonGroup = ({ playlist }) => {
 
   return (
     <div className="asset-button-group flex-row">
-      <ToggleButton
-        condition={playlist?.likes?.includes(sessionUser?.id)}
-        buttonClasses={[...baseClasses, 'b2']}
-        labelClasses={['heart-label']}
-        handleOff={handlePlaylistLikeToggle}
-        onLabel="Liked"
-        handleOn={handlePlaylistLikeToggle}
-        offLabel="Like"
-      />
+      {sessionUser?.id !== playlist?.user_id && (
+        <ToggleButton
+          condition={playlist?.likes?.includes(sessionUser?.id)}
+          buttonClasses={[...baseClasses, 'b2']}
+          labelClasses={['heart-label']}
+          handleOff={handlePlaylistLikeToggle}
+          onLabel="Liked"
+          handleOn={handlePlaylistLikeToggle}
+          offLabel="Like"
+        />
+      )}
 
       <CopyLinkButton
         buttonClasses={[...baseClasses, ...styleClasses]}

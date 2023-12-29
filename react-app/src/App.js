@@ -41,7 +41,7 @@ const App = () => {
   return (
     <ModalProvider>
       <BrowserRouter>
-        {sessionUser != null && <NavBar />}
+        {sessionUser !== null && <NavBar />}
         <Switch>
           <Route path="/" exact={true}>
             {sessionUser !== null ? <Redirect to="/home" /> : <Redirect to="/welcome" />}

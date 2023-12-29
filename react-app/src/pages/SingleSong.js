@@ -89,15 +89,17 @@ const ButtonGroup = ({ song }) => {
 
   return (
     <div className="asset-button-group flex-row">
-      <ToggleButton
-        condition={song?.likes?.includes(sessionUser?.id)}
-        buttonClasses={[...baseClasses, 'b2']}
-        labelClasses={['heart-label']}
-        handleOff={handleSongLikeToggle}
-        onLabel="Liked"
-        handleOn={handleSongLikeToggle}
-        offLabel="Like"
-      />
+      {sessionUser?.id !== song?.user_id && (
+        <ToggleButton
+          condition={song?.likes?.includes(sessionUser?.id)}
+          buttonClasses={[...baseClasses, 'b2']}
+          labelClasses={['heart-label']}
+          handleOff={handleSongLikeToggle}
+          onLabel="Liked"
+          handleOn={handleSongLikeToggle}
+          offLabel="Like"
+        />
+      )}
 
       <CopyLinkButton
         buttonClasses={[...baseClasses, ...styleClasses]}

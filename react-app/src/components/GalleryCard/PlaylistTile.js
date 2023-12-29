@@ -40,12 +40,14 @@ const PlaylistTile = ({ playlist }) => {
             onClick={handlePlay}
             className="overlay-play"
           >&#9654;</div>
-          <div className="overlay-like">
-            <div
-              onClick={handlePlaylistLikeToggle}
-              className={playlist?.likes?.includes(sessionUser?.id) ? "liked" : "not-liked"}
-            >&#10084;</div>
-          </div>
+          {sessionUser?.id !== playlist?.user_id && (
+            <div className="overlay-like">
+              <div
+                onClick={handlePlaylistLikeToggle}
+                className={playlist?.likes?.includes(sessionUser?.id) ? "liked" : "not-liked"}
+              >&#10084;</div>
+            </div>
+          )}
         </div>
       </div>
       <footer className="tile-info">
