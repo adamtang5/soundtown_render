@@ -1,3 +1,4 @@
+import { actionGenerator } from "./util";
 import { newSong } from "./song";
 
 // constants
@@ -5,9 +6,9 @@ const LOAD_COMMENTS = "comment/LOAD_COMMENTS";
 const NEW_COMMENT = "comment/NEW_COMMENT";
 const REMOVE_COMMENT = "comment/REMOVE_COMMENT";
 
-const loadComments = (comments) => ({
+export const loadComments = (song) => ({
   type: LOAD_COMMENTS,
-  comments,
+  comments: song.comments,
 });
 
 // for create and edit
@@ -99,16 +100,20 @@ export const deleteComment = (commentId) => async (dispatch) => {
 
 // State shape:
 // state.comments --> {
-//   [id]: {
-//      id, user_id, song_id, content, song_timestamp, created_at, updated_at,
-//      user: {},
-//      song: {},
-//   },
-//   [id]: {
-//      id, user_id, song_id, content, song_timestamp, created_at, updated_at,
-//      user: {},
-//      song: {},
-//   },
+//   [parent_id]: [
+//      {
+//        id, user_id, song_id, content, song_timestamp, created_at, updated_at,
+//        user: {},
+//        song: {},
+//      },
+//   ],
+//   [parent_id]: [
+//      {
+//        id, user_id, song_id, content, song_timestamp, created_at, updated_at,
+//        user: {},
+//        song: {},
+//      },
+//   ],
 // }
 
 const initialState = {};
@@ -116,9 +121,11 @@ const initialState = {};
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_COMMENTS: {
-      const newState = { ...state };
-      action.comments.forEach((comment) => {
-        newState[comment.id] = comment;
+      const newState = initialState;
+      action.comments.forEach(comment => {
+        const commentsOfParent = newState[comment.parent_id] || [];
+        if (!commentsOfParent.includes(comment)) commentsOfParent.push(comment);
+        newState[comment.parent_id] = commentsOfParent;
       });
       return newState;
     }

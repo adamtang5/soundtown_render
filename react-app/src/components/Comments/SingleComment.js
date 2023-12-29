@@ -10,10 +10,12 @@ import "./Comments.css";
 const SingleComment = ({ comment }) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
+  const childComments = useSelector(state => state.comments[comment?.id]);
+  const [isEditing, setIsEditing] = useState(false);
   const [showActions, setShowActions] = useState(false);
   const [showContentDisplay, setShowContentDisplay] = useState(true);
   const [showContentEditForm, setShowContentEditForm] = useState(false);
-  const [content, setContent] = useState(comment?.content);
+  const [message, setMessage] = useState(comment?.message);
   const [errors, setErrors] = useState([]);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const editButtonClasses = [
@@ -53,7 +55,7 @@ const SingleComment = ({ comment }) => {
     const newComment = {
       id: comment?.id,
       user_id: sessionUser?.id,
-      content,
+      message,
     };
     const data = dispatch(editComment(newComment));
     if (data.errors) {
@@ -68,7 +70,7 @@ const SingleComment = ({ comment }) => {
     if (e.key === "Escape") {
       setShowContentDisplay(true);
       setShowContentEditForm(false);
-      setContent(comment?.content);
+      setMessage(comment?.message);
     }
   };
 
@@ -97,10 +99,10 @@ const SingleComment = ({ comment }) => {
           className="flex-row"
         >
           <div className="comment-info">
-            {comment?.user_id === sessionUser?.id ? (
+            {comment?.user?.id === sessionUser?.id ? (
               <span className="commenter-name">You</span>
             ) : (
-              <a className="commenter-name" href={`/users/${comment?.user_id}`}>
+              <a className="commenter-name" href={`/users/${comment?.user?.id}`}>
                 {comment?.user.display_name}
               </a>
             )}
@@ -123,7 +125,7 @@ const SingleComment = ({ comment }) => {
               className={`content-display${showContentDisplay ? "" : " hidden"
                 }`}
             >
-              {comment?.content}
+              {comment?.message}
             </div>
             <form
               onSubmit={handleEdit}
@@ -131,9 +133,9 @@ const SingleComment = ({ comment }) => {
             >
               <input
                 className="content-field"
-                onChange={(e) => setContent(e.target.value)}
+                onChange={(e) => setMessage(e.target.value)}
                 onKeyDown={handleEscape}
-                value={content}
+                value={message}
                 title="Enter to submit; Hit Esc to cancel."
                 required
               />
@@ -147,7 +149,7 @@ const SingleComment = ({ comment }) => {
           <div
             className={`comment-actions flex-row${showActions ? "" : " hidden"}`}
           >
-            {comment?.user_id === sessionUser?.id && (
+            {comment?.user?.id === sessionUser?.id && (
               <>
                 <EditCommentButton
                   handleClick={clickEdit}
