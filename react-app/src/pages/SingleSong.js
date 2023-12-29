@@ -9,7 +9,6 @@ import { Modal } from "../components/Context/Modal";
 import AssetHeader from "../components/AssetHeader";
 import NewCommentForm from "../components/Comments/NewCommentForm";
 import Avatar from "../components/Icons/Avatar";
-import SongComments from "../components/Comments/SongComments";
 import AddSongToPlaylist from "../modals/AddSongToPlaylist";
 import ToggleButton from "../components/Buttons/ToggleButton";
 import CopyLinkButton from "../components/Buttons/CopyLinkButton";
@@ -17,6 +16,8 @@ import EditButton from "../components/Buttons/EditButton";
 import DropdownButton from "../components/Buttons/DropdownButton";
 import EditSongForm from "../modals/EditSongForm";
 import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
+import SpeechBubble from "../components/Icons/SpeechBubble";
+import SingleComment from "../components/Comments/SingleComment";
 
 const ButtonGroup = ({ song }) => {
   const dispatch = useDispatch();
@@ -146,17 +147,56 @@ const ButtonGroup = ({ song }) => {
   );
 };
 
+const CommentList = ({ comments }) => {
+  return comments?.map(comment => (
+    <SingleComment key={comment?.id} comment={comment} />
+  ));
+};
+
+const SongComments = ({ loaded }) => {
+  const commentsByParentId = useSelector(state => state.comments);
+  const rootComments = commentsByParentId[null];
+  console.log(rootComments);
+
+  if (!loaded) return null;
+  
+  return rootComments && rootComments?.length > 0 ? (
+    <section className="song-comments-list flex-column">
+      <header className="comments-count flex-row">
+        <SpeechBubble classes={['comment-icon', 'small-icon']} />
+        <span className="comments-count-text">
+          {rootComments !== null && rootComments?.length} comment
+          {rootComments?.length > 1 ? "s" : ""}
+        </span>
+      </header>
+      <ul>
+        <CommentList comments={rootComments} />
+      </ul>
+    </section>
+  ) : (
+    <article className="no-comments flex-column">
+      <div className="big-icon">
+        <SpeechBubble classes={['comment-icon', 'big-icon']} />
+      </div>
+      <h3>Seems a little quiet here</h3>
+      <h4>Be the first to comment on this track</h4>
+    </article>
+  );
+};
+
 const SingleSong = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const song = useSelector(state => state.songs[id]);
   const sessionUser = useSelector(state => state.session.user);
+  const [loaded, setLoaded] = useState(false);
   const [content, setContent] = useState("");
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     (async () => {
       await dispatch(getSong(id));
+      setLoaded(true);
     })();
   }, [dispatch]);
   
@@ -225,7 +265,7 @@ const SingleSong = () => {
                 </footer>
               </article>
             </aside>
-            <SongComments song={song} />
+            <SongComments loaded={loaded} />
           </section>
         </main>
         <aside>{/* TODO: Sidebar goes here */}</aside>

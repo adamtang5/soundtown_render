@@ -5,6 +5,7 @@ import songs from "./song";
 import player from "./player";
 import playlists from "./playlist";
 import users from "./user";
+import comments from "./comment";
 
 const rootReducer = combineReducers({
   session,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   player,
   playlists,
   users,
+  comments,
 });
 
 let enhancer;

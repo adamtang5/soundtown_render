@@ -1,3 +1,4 @@
+import { loadComments } from "./comment";
 import { actionGenerator } from "./util";
 
 // constants
@@ -53,6 +54,7 @@ export const getAllSongs = () => actionGenerator({
 export const getSong = (id) => actionGenerator({
   url: `/api/songs/${id}`,
   action: newSong,
+  action2: loadComments,
 });
 
 //! Edit/Update Songs from the db
