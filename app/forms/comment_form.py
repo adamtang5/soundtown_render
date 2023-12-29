@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TimeField, SubmitField
+from wtforms import StringField, TimeField
 from wtforms.validators import DataRequired
 
 
@@ -9,12 +9,11 @@ class NewCommentForm(FlaskForm):
   message = StringField('message', validators=[DataRequired()])
   parent_id = StringField('parent_id')
   song_timestamp = TimeField('song_timestamp')
-  submit = SubmitField('submit')
 
 
 class EditCommentForm(FlaskForm):
+  id = StringField('id', validators=[DataRequired()])
   message = StringField('message', validators=[DataRequired()])
-  submit = SubmitField('submit')
 
 
 class CommentToggleLikeForm(FlaskForm):

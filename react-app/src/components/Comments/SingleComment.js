@@ -33,43 +33,41 @@ const SingleComment = ({ comment }) => {
   ];
 
   const commentCardMouseOver = (e) => {
-    if (!showContentEditForm) {
+    if (!isEditing) {
       setShowActions(true);
     }
   };
 
   const commentCardMouseOut = (e) => {
-    if (!showContentEditForm && !showConfirmDelete) {
+    if (!isEditing && !showConfirmDelete) {
       setShowActions(false);
     }
   };
 
   const clickEdit = (e) => {
-    setShowContentDisplay(false);
-    setShowContentEditForm(true);
+    setIsEditing(true);
     setShowActions(false);
   };
 
   const handleEdit = async (ev) => {
     ev.preventDefault();
-    const newComment = {
-      id: comment?.id,
-      user_id: sessionUser?.id,
-      message,
-    };
-    const data = dispatch(editComment(newComment));
+
+    const formData = new FormData();
+    formData.append("id", comment?.id);
+    formData.append("message", message);
+    formData.append("parent_id", null);
+
+    const data = await dispatch(editComment(comment?.id, formData));
     if (data.errors) {
       setErrors(data.errors);
     } else {
-      setShowContentEditForm(false);
-      setShowContentDisplay(true);
+      setIsEditing(false);
     }
   };
 
   const handleEscape = (e) => {
     if (e.key === "Escape") {
-      setShowContentDisplay(true);
-      setShowContentEditForm(false);
+      setIsEditing(false);
       setMessage(comment?.message);
     }
   };
@@ -92,7 +90,7 @@ const SingleComment = ({ comment }) => {
       className="comment-card flex-row"
     >
       <aside className="comment-avatar">
-        <Avatar user={comment.user} isLink={true} />
+        <Avatar user={comment?.user} isLink={true} />
       </aside>
       <article className="comment-body flex-column">
         <header
@@ -103,7 +101,7 @@ const SingleComment = ({ comment }) => {
               <span className="commenter-name">You</span>
             ) : (
               <a className="commenter-name" href={`/users/${comment?.user?.id}`}>
-                {comment?.user.display_name}
+                {comment?.user?.display_name}
               </a>
             )}
             {comment?.song_timestamp ? (
@@ -121,7 +119,26 @@ const SingleComment = ({ comment }) => {
           className="comment-main flex-row"
         >
           <div className="comment-content">
-            <div
+            {isEditing ? (
+              <form
+                onSubmit={handleEdit}
+                className="content-edit"
+              >
+                <input
+                  className="content-field"
+                  onChange={e => setMessage(e.target.value)}
+                  onKeyDown={handleEscape}
+                  value={message}
+                  title="Enter to submit; Hit Esc to cancel."
+                  required
+                />
+              </form>
+            ) : (
+              <div className="content-display">
+                {comment?.message}
+              </div>
+            )}
+            {/* <div
               className={`content-display${showContentDisplay ? "" : " hidden"
                 }`}
             >
@@ -139,7 +156,7 @@ const SingleComment = ({ comment }) => {
                 title="Enter to submit; Hit Esc to cancel."
                 required
               />
-            </form>
+            </form> */}
             <div className="form-errors">
               {errors.map((error, idx) => (
                 <div key={idx}>{error}</div>

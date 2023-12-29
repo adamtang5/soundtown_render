@@ -7,7 +7,6 @@ import { loadSong, queueSong } from "../store/player";
 import { createComment } from "../store/comment";
 import { Modal } from "../components/Context/Modal";
 import AssetHeader from "../components/AssetHeader";
-import NewCommentForm from "../components/Comments/NewCommentForm";
 import Avatar from "../components/Icons/Avatar";
 import AddSongToPlaylist from "../modals/AddSongToPlaylist";
 import ToggleButton from "../components/Buttons/ToggleButton";
@@ -18,6 +17,41 @@ import EditSongForm from "../modals/EditSongForm";
 import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
 import SpeechBubble from "../components/Icons/SpeechBubble";
 import SingleComment from "../components/Comments/SingleComment";
+
+const NewCommentForm = ({
+  handleNewCommentSubmit,
+  message,
+  setMessage,
+  errors,
+}) => {
+  return (
+    <>
+      <div className="new-comment-wrapper flex-row">
+        <div className="new-comment-placeholder" />
+        <form
+          className="new-comment-form flex-row"
+          onSubmit={handleNewCommentSubmit}
+        >
+          <input
+            type="text"
+            onChange={e => setMessage(e.target.value)}
+            value={message}
+            placeholder="Write a comment"
+            name="comment-input"
+            id="comment-input"
+            className="comment-input"
+            autoComplete="off"
+          />
+        </form>
+      </div>
+      <div className="form-errors">
+        {errors.map((error, idx) => (
+          <div key={idx}>{error}</div>
+        ))}
+      </div>
+    </>
+  );
+};
 
 const ButtonGroup = ({ song }) => {
   const dispatch = useDispatch();
@@ -190,7 +224,7 @@ const SingleSong = () => {
   const song = useSelector(state => state.songs[id]);
   const sessionUser = useSelector(state => state.session.user);
   const [loaded, setLoaded] = useState(false);
-  const [content, setContent] = useState("");
+  const [message, setMessage] = useState("");
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
@@ -222,16 +256,16 @@ const SingleSong = () => {
   const handleNewCommentSubmit = async (e) => {
     e.preventDefault();
 
-    const comment = {
-      user_id: sessionUser?.id,
-      song_id: song?.id,
-      content,
-    };
-    const data = await dispatch(createComment(comment));
+    const formData = new FormData();
+    formData.append("user_id", sessionUser?.id);
+    formData.append("song_id", id);
+    formData.append("message", message);
+
+    const data = await dispatch(createComment(formData));
     if (data.errors) {
       setErrors(data.errors);
     } else {
-      setContent("");
+      setMessage("");
     }
   };
 
@@ -249,8 +283,8 @@ const SingleSong = () => {
         <main className="asset-main">
           <NewCommentForm
             handleNewCommentSubmit={handleNewCommentSubmit}
-            content={content}
-            setContent={setContent}
+            message={message}
+            setMessage={setMessage}
             errors={errors}
           />
           <ButtonGroup song={song} />
