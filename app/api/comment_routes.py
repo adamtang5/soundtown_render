@@ -24,11 +24,16 @@ def new_comment():
   form = NewCommentForm()
   form['csrf_token'].data = request.cookies['csrf_token']
   if form.validate_on_submit():
+    song = Song.query.get(form.data['song_id'])
+    if not song:
+      return not_found_error('song')
+    
+    parent_id = form.data['parent_id'] if form.data['parent_id'] != '' else None
     comment = Comment(
       message=form.data['message'],
-      user_id=uuid.UUID(form.data['user_id']),
-      song_id=uuid.UUID(form.data['song_id']),
-      parent_id=uuid.UUID(form.data['parent_id']) if 'parent_id' in form.data else None,
+      user_id=form.data['user_id'],
+      song_id=form.data['song_id'],
+      parent_id=parent_id,
       song_timestamp=form.data['song_timestamp'],
     )
     db.session.add(comment)
