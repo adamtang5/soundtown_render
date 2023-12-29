@@ -54,23 +54,14 @@ export const editComment = (id, data) => actionGenerator({
 });
 
 // Delete comment from DB
-export const deleteComment = (commentId) => async (dispatch) => {
-  const res = await fetch(`/api/comments/${commentId}`, {
+export const deleteComment = (id) => actionGenerator({
+  url: `/api/comments/${id}`,
+  options: {
     method: "DELETE",
-  });
-  if (res.ok) {
-    const song = await res.json();
-    dispatch(newSong(song));
-    return song;
-  } else if (res.status < 500) {
-    const data = await res.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return ["An error occurred. Please try again."];
-  }
-};
+  },
+  action: newSong,
+  action2: loadComments,
+});
 
 // State shape:
 // state.comments --> {

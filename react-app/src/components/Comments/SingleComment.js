@@ -77,10 +77,8 @@ const SingleComment = ({ comment }) => {
   };
 
   const confirmDelete = async (ev) => {
-    const data = dispatch(deleteComment(comment?.id));
-    if (data.errors) {
-      setErrors(data.errors);
-    }
+    const data = await dispatch(deleteComment(comment?.id));
+    if (data.errors) setErrors(data.errors);
   };
 
   return (
