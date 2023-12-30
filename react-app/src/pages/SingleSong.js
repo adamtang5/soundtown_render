@@ -16,7 +16,7 @@ import DropdownButton from "../components/Buttons/DropdownButton";
 import EditSongForm from "../modals/EditSongForm";
 import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
 import SpeechBubble from "../components/Icons/SpeechBubble";
-import SingleComment from "../components/Comments/SingleComment";
+import CommentList from "../components/Comments/CommentList";
 
 const NewCommentForm = ({
   handleNewCommentSubmit,
@@ -179,12 +179,6 @@ const ButtonGroup = ({ song }) => {
       />
     </div>
   );
-};
-
-const CommentList = ({ comments }) => {
-  return comments?.map(comment => (
-    <SingleComment key={comment?.id} comment={comment} />
-  ));
 };
 
 const SongComments = ({ loaded }) => {

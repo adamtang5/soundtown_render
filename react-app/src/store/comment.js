@@ -3,33 +3,11 @@ import { newSong } from "./song";
 
 // constants
 const LOAD_COMMENTS = "comment/LOAD_COMMENTS";
-const NEW_COMMENT = "comment/NEW_COMMENT";
-const REMOVE_COMMENT = "comment/REMOVE_COMMENT";
 
 export const loadComments = (song) => ({
   type: LOAD_COMMENTS,
   comments: song.comments,
 });
-
-// for create and edit
-// const newComment = (comment) => ({
-//   type: NEW_COMMENT,
-//   comment,
-// });
-
-// const removeComment = (commentId) => ({
-//   type: REMOVE_COMMENT,
-//   commentId,
-// });
-
-// Get comments of a song from DB
-export const getCommentsBySongId = (songId) => async (dispatch) => {
-  const res = await fetch(`/api/songs/${songId}/comments/`);
-  if (res.ok) {
-    const comments = await res.json();
-    dispatch(loadComments(comments));
-  }
-};
 
 // Create comment in DB
 export const createComment = (data) => actionGenerator({
@@ -92,18 +70,6 @@ export default function reducer(state = initialState, action) {
         if (!commentsOfParent.includes(comment)) commentsOfParent.push(comment);
         newState[comment.parent_id] = commentsOfParent;
       });
-      return newState;
-    }
-    case NEW_COMMENT: {
-      const newState = {
-        ...state,
-        [action.comment.id]: action.comment,
-      };
-      return newState;
-    }
-    case REMOVE_COMMENT: {
-      const newState = { ...state };
-      delete newState[action.commentId];
       return newState;
     }
     default:

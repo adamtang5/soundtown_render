@@ -148,7 +148,8 @@
   border-bottom: 1px solid var(--color-border);
 }
 
-.content-field:focus {
+.content-field:focus,
+.reply-field:focus {
   outline: none;
 }
 
@@ -220,4 +221,19 @@
 
 .confirm-delete-buttons {
   justify-content: flex-end;
+}
+
+.nested-comment {
+  margin-left: 4em;
+  margin-right: 10px;
+}
+
+.reply-field {
+  font-size: 1em;
+  width: 100%;
+  background-color: var(--color-border-light);
+  border: none;
+  border-radius: 2em;
+  padding: 1em 2em;
+  color: var(--color-border-dark);
 }
