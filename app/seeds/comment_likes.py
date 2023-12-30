@@ -2,8 +2,8 @@ import math, random
 
 from app.models import db, Comment, User
 
-MIN_PCT_COMMENTS_LIKED_BY_USER = 0.2
-MAX_PCT_COMMENTS_LIKED_BY_USER = 0.4
+MIN_PCT_COMMENTS_LIKED_BY_USER = 0.3
+MAX_PCT_COMMENTS_LIKED_BY_USER = 0.6
 
 
 def seed_comment_likes():
