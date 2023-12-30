@@ -18,7 +18,6 @@ const AddToExistingPlaylist = ({
   playlists,
   song,
   handleDelist,
-  handleEnlist,
 }) => {
   const stateSongs = useSelector(state => state.songs);
   const baseClasses = ['cursor-pointer', 'composite-button'];
@@ -58,9 +57,8 @@ const AddToExistingPlaylist = ({
                   <ToggleButton
                     condition={pl?.songs_order.includes(song?.id)}
                     buttonClasses={[...baseClasses, 'b2']}
-                    handleOff={() => handleDelist(pl?.id, song?.id)}
+                    handleToggle={() => handleDelist(pl?.id, song?.id)}
                     onLabel="Added"
-                    handleOn={() => handleEnlist(pl?.id, song?.id)}
                     offLabel="Add to playlist"
                   />
                 </div>
@@ -293,7 +291,6 @@ const AddSongToPlaylist = ({ song, setShowModal }) => {
           playlists={playlists}
           song={song}
           handleDelist={handleDelist}
-          handleEnlist={handleEnlist}
         />
       ) : (
         <AddToNewPlaylist

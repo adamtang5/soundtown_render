@@ -129,9 +129,8 @@ const ButtonGroup = ({ song }) => {
           condition={song?.likes?.includes(sessionUser?.id)}
           buttonClasses={[...baseClasses, 'b2']}
           labelClasses={['heart-label']}
-          handleOff={handleSongLikeToggle}
+          handleToggle={handleSongLikeToggle}
           onLabel="Liked"
-          handleOn={handleSongLikeToggle}
           offLabel="Like"
         />
       )}

@@ -41,6 +41,17 @@ export const deleteComment = (id) => actionGenerator({
   action2: loadComments,
 });
 
+// toggle like on a comment
+export const toggleCommentLike = (id, data) => actionGenerator({
+  url: `/api/comments/${id}/toggleLike`,
+  options: {
+    method: "POST",
+    body: data,
+  },
+  action: newSong,
+  action2: loadComments,
+});
+
 // State shape:
 // state.comments --> {
 //   [parent_id]: [

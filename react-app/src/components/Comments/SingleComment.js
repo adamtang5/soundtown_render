@@ -1,7 +1,8 @@
 import Moment from "react-moment";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteComment, editComment } from "../../store/comment";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { deleteComment, editComment, toggleCommentLike } from "../../store/comment";
 import Avatar from "../Icons/Avatar";
 import EditCommentButton from "./EditCommentButton";
 import DeleteCommentButton from "./DeleteCommentButton";
@@ -94,6 +95,14 @@ const SingleComment = ({ comment }) => {
     if (data.errors) setErrors(data.errors);
   };
 
+  const handleCommentLikeToggle = async (e) => {
+    e.stopPropagation();
+
+    const formData = new FormData();
+    formData.append("user_id", sessionUser?.id);
+    await dispatch(toggleCommentLike(comment?.id, formData));
+  };
+
   return (
     <li
       onMouseOver={commentCardMouseOver}
@@ -180,6 +189,18 @@ const SingleComment = ({ comment }) => {
               )}
             </div>
           </div>
+        </div>
+        <div className="comment-like flex-column">
+          <button
+            onClick={handleCommentLikeToggle}
+            className="cursor-pointer simple-button b2"
+            aria-label={comment?.likes?.includes(sessionUser?.id) ? 'Unlike': 'Like'}
+          >
+            <span className={comment?.likes?.includes(sessionUser?.id) ? 'like-button-on' : ''}>
+              {comment?.likes?.includes(sessionUser?.id) ? <FaHeart /> : <FaRegHeart />}
+            </span>
+          </button>
+          <div className="like-count">{comment?.likes?.length}</div>
         </div>
       </article>
       {isReplying && (

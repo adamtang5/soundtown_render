@@ -2,28 +2,20 @@ const ToggleButton = ({
   condition,
   buttonClasses,
   labelClasses = [],
-  handleOff,
+  handleToggle,
   onLabel,
-  handleOn,
   offLabel,
 }) => {
-  return condition ? (
+  return (
     <button
-      onClick={handleOff}
-      className={[...buttonClasses, 'button-toggle'].join(' ')}
+      onClick={handleToggle}
+      className={`${buttonClasses.join(' ')} 
+        ${condition ? 'button-toggle' : 'button-action'}`}
     >
       <div
-        className={['logo-before', 'label-toggle', ...labelClasses].join(' ')}
-      >{onLabel}</div>
-    </button>
-  ) : (
-    <button
-      onClick={handleOn}
-      className={[...buttonClasses, 'button-action'].join(' ')}
-    >
-      <div
-        className={['logo-before', ...labelClasses].join(' ')}
-      >{offLabel}</div>
+        className={`${['logo-before', ...labelClasses].join(' ')} 
+          ${condition ? 'label-toggle' : ''}`}
+      >{condition ? onLabel : offLabel}</div>
     </button>
   );
 };
