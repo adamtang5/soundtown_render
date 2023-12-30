@@ -21,7 +21,7 @@ def seed():
   seed_nested_comments()
   seed_likes()
   seed_playlists()
-  # seed_pl_likes()
+  seed_pl_likes()
   # seed_comment_likes()
   # Add other seed functions here
 
@@ -30,7 +30,7 @@ def seed():
 @seed_commands.command('undo')
 def undo():
   # undo_comment_likes()
-  # undo_pl_likes()
+  undo_pl_likes()
   undo_playlists()
   undo_likes()
   undo_comments()
