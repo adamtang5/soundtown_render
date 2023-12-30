@@ -236,3 +236,12 @@
   padding: 1em 2em;
   color: var(--color-border-dark);
 }
+
+.comment-like {
+  padding: 0 .5em;
+  align-items: center;
+}
+
+.like-button-on {
+  filter: var(--filter-primary);
+}

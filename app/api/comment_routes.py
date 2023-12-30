@@ -113,13 +113,11 @@ def toggle_like_comment(id):
     if current_user.id != user.id:
       return UNAUTHORIZED_ERROR
     
-    ans = None
     if user not in comment.comment_likes:
       comment.comment_likes.append(user)
-      ans = jsonify({'addLike': True})
     else:
       comment.comment_likes.remove(user)
-      ans = jsonify({'addLike': False})
-
     db.session.commit()
-    return ans
+
+    song = Song.query.get(comment.song_id)
+    return song.to_extended_dict()

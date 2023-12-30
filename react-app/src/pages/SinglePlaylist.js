@@ -113,9 +113,8 @@ const SongRowButtonGroup = ({ song }) => {
           condition={song?.likes?.includes(sessionUser?.id)}
           buttonClasses={[...baseClasses, 'b3']}
           labelClasses={['heart-label']}
-          handleOff={handleSongLikeToggle}
+          handleToggle={handleSongLikeToggle}
           onLabel=""
-          handleOn={handleSongLikeToggle}
           offLabel=""
         />
       )}
@@ -183,9 +182,8 @@ const ButtonGroup = ({ playlist }) => {
           condition={playlist?.likes?.includes(sessionUser?.id)}
           buttonClasses={[...baseClasses, 'b2']}
           labelClasses={['heart-label']}
-          handleOff={handlePlaylistLikeToggle}
+          handleToggle={handlePlaylistLikeToggle}
           onLabel="Liked"
-          handleOn={handlePlaylistLikeToggle}
           offLabel="Like"
         />
       )}
