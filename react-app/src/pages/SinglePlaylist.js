@@ -29,28 +29,22 @@ const SingleSongRow = ({ song, idx }) => {
   };
 
   return (
-    <article
-      className="song-row flex-row cursor-pointer"
-      onClick={handlePlay}
-    >
-      <div
-        className="song-row-content flex-row"
-      >
+    <article className="song-row flex-row cursor-pointer">
+      <div className="song-row-content flex-row">
         <div
           className="song-row-thumb"
           style={{ backgroundImage: `url(${song?.image_url})` }}
-        />
+          />
         <div className="song-row-idx">{idx + 1}</div>
         <div className="song-row-title">
           <Link to={`/songs/${song?.id}`}>{song?.title}</Link>
         </div>
       </div>
-      <div
-        className="song-row-overlay flex-row"
-      >
+      <div className="song-row-overlay flex-row">
         <div className="song-row-square flex-row">
           <button
             className="song-row-play cursor-pointer"
+            onClick={handlePlay}
           >&#9654;</button>
         </div>
         <SongRowButtonGroup song={song} />
