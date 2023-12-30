@@ -44,7 +44,7 @@ export const createSong = (data) => actionGenerator({
   action: newSong,
 });
 
-//! Get Songs from the Database
+// Get Songs from the Database
 export const getAllSongs = () => actionGenerator({
   url: "/api/songs/",
   action: loadSongs,
@@ -57,7 +57,7 @@ export const getSong = (id) => actionGenerator({
   action2: loadComments,
 });
 
-//! Edit/Update Songs from the db
+// Edit/Update Songs from the db
 export const editSong = (id, data) => actionGenerator({
   url: `/api/songs/${id}`,
   options: {
@@ -67,7 +67,7 @@ export const editSong = (id, data) => actionGenerator({
   action: newSong,
 });
 
-//!Delete Song from the db
+// Delete Song from the db
 export const deleteSong = (id) => actionGenerator({
   url: `/api/songs/${id}`,
   options: {

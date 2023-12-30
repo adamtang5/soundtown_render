@@ -2,14 +2,12 @@ from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
 from app.models import db, Comment, Song, User
 from app.forms import NewCommentForm, EditCommentForm, CommentToggleLikeForm
-from datetime import datetime, time
+from datetime import datetime
 from app.api.utils import (
   validation_errors_to_error_messages,
   not_found_error,
-  FILE_TYPE_ERROR,
   UNAUTHORIZED_ERROR
 )
-import uuid
 
 comment_routes = Blueprint('comment', __name__)
 
