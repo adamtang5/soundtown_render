@@ -7,9 +7,9 @@ MAX_PCT_SONGS_LIKED_BY_USER = 0.7
 
 def seed_likes():
   users = User.query.all()
-  songs = Song.query.all()
 
   for user in users:
+    songs = Song.query.filter(Song.user_id != user.id).all()
     random_songs = random.sample(
       songs,
       random.randint(
