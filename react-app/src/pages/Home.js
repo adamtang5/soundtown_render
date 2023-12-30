@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { ImSpinner3 } from 'react-icons/im';
+import { randomSample } from "../util";
 import Slider from "react-slick";
 import SongTile from "../components/GalleryCard/SongTile";
 import CreatorCard from "../components/CreatorCard";
@@ -12,28 +13,29 @@ import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 
 const MainFeed = () => {
-  const songs = useSelector(state => state.songs);
-  const songsArr = useSelector(state => Object.values(state.songs).sort((a, b) => a?.id - b?.id));
-  const songsArrRev = useSelector(state => Object.values(state.songs).sort((a, b) => b?.id - a?.id));
+  const songs = useSelector(state => Object.values(state.songs));
+  const PCT_OF_TRENDING = 0.25;
+  const PCT_OF_RECOMMENDATION = 0.15;
+  const PCT_OF_BUBBLING_UP = 0.35;
 
   const data = [
     {
       type: "songs",
       description: "Up-and-coming tracks on SoundTown",
       title: "Charts: Hot & Trending",
-      songs: songsArr,
+      songs: randomSample(songs, Math.floor(songs.length * PCT_OF_TRENDING)),
     },
     {
       type: "songs",
       description: "The latest Uploads from around the world",
       title: "Discover Daily",
-      songs: songsArrRev,
+      songs: randomSample(songs, Math.floor(songs.length * PCT_OF_RECOMMENDATION)),
     },
     {
       type: "songs",
       description: "Emerging artists and tracks",
       title: "Bubbling Up",
-      songs: songsArr,
+      songs: randomSample(songs, Math.floor(songs.length * PCT_OF_BUBBLING_UP)),
     },
   ];
 
