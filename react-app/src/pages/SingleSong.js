@@ -184,7 +184,6 @@ const ButtonGroup = ({ song }) => {
 const SongComments = ({ loaded }) => {
   const commentsByParentId = useSelector(state => state.comments);
   const rootComments = commentsByParentId[null];
-  console.log(rootComments);
 
   if (!loaded) return null;
   
