@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { createPlaylist, editPlaylist } from "../store/playlist";
@@ -11,15 +11,24 @@ import AssetCard from "../components/Modules/AssetCard";
 import PlayCover from "../components/Modules/PlayCover";
 import "./ModalNav.css";
 import "./AddSongToPlaylist.css";
+import { authenticate } from "../store/session";
 
 const AddToExistingPlaylist = ({
   term,
   setTerm,
   playlists,
   song,
-  handleDelist,
+  handleToggle,
 }) => {
+  const dispatch = useDispatch();
   const stateSongs = useSelector(state => state.songs);
+
+  useEffect(() => {
+    (async () => {
+      await dispatch(authenticate());
+    })();
+  }, [dispatch]);  
+
   const baseClasses = ['cursor-pointer', 'composite-button'];
 
   return (
@@ -31,7 +40,7 @@ const AddToExistingPlaylist = ({
         onChange={(e) => setTerm(e.target.value.toLowerCase())}
       />
       <ul className="playlist-modal-results flex-column">
-        {playlists.filter(pl => pl?.title?.toLowerCase()?.includes(term))
+        {playlists?.filter(pl => pl?.title?.toLowerCase()?.includes(term))
           .map((pl, idx) => (
             <li key={idx} className="full-width flex-row">
               <img
@@ -57,7 +66,7 @@ const AddToExistingPlaylist = ({
                   <ToggleButton
                     condition={pl?.songs_order.includes(song?.id)}
                     buttonClasses={[...baseClasses, 'b2']}
-                    handleToggle={() => handleDelist(pl?.id, song?.id)}
+                    handleToggle={() => handleToggle(pl, song)}
                     onLabel="Added"
                     offLabel="Add to playlist"
                   />
@@ -223,38 +232,20 @@ const AddSongToPlaylist = ({ song, setShowModal }) => {
   const [term, setTerm] = useState("");
   const [mode, setMode] = useState("add");
   const sessionUser = useSelector(state => state.session.user);
-  const statePlaylists = useSelector(state => state.playlists);
-  const playlists = useSelector(state => Object.values(state.playlists)
-    .filter(pl => pl?.user_id === sessionUser?.id));
 
-  const handleEnlist = async (playlistId, songId) => {
+  const handleToggle = async (playlist, song) => {
     const formData = new FormData();
-    const playlist = statePlaylists[playlistId];
-
+    formData.append("user_id", sessionUser?.id);
     formData.append("title", playlist?.title);
     formData.append("description", playlist?.description || '');
-    formData.append(
-      "songs_order",
-      JSON.stringify([...playlist?.songs_order, songId])
-    );
 
-    const res = await dispatch(editPlaylist(playlistId, formData));
-    if (res) return res;
-  };
+    const newSongsOrder = playlist?.songs_order?.includes(song?.id) ?
+      playlist?.songs_order?.filter(id => id !== song?.id) :
+      [...playlist?.songs_order, song?.id];
+    formData.append("songs_order", JSON.stringify(newSongsOrder));
 
-  const handleDelist = async (playlistId, songId) => {
-    const formData = new FormData();
-    const playlist = statePlaylists[playlistId];
-
-    formData.append("title", playlist?.title);
-    formData.append("description", playlist?.description || '');
-    formData.append(
-      "songs_order",
-      JSON.stringify(playlist?.songs_order.filter(id => id !== songId))
-    );
-
-    const res = await dispatch(editPlaylist(playlistId, formData));
-    if (res) return res;
+    const res = await dispatch(editPlaylist(playlist?.id, formData));
+    if (res) await dispatch(authenticate());
   };
 
   const navData = [
@@ -288,9 +279,9 @@ const AddSongToPlaylist = ({ song, setShowModal }) => {
         <AddToExistingPlaylist
           term={term}
           setTerm={setTerm}
-          playlists={playlists}
+          playlists={sessionUser?.playlists}
           song={song}
-          handleDelist={handleDelist}
+          handleToggle={handleToggle}
         />
       ) : (
         <AddToNewPlaylist

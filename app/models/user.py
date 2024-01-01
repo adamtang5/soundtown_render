@@ -64,7 +64,7 @@ class User(db.Model, UserMixin):
       'created_at': self.created_at,
       'updated_at': self.updated_at,
       'songs': [song.to_dict() for song in self.songs],
-      'playlists': [pl.to_dict() for pl in self.playlists],
+      'playlists': sorted([pl.to_dict() for pl in self.playlists], key=lambda pl: pl['id']),
       'likes': [song.id for song in self.likes],
       'pl_likes': [pl.id for pl in self.pl_likes],
       'comment_likes': [comment.id for comment in self.comment_likes]
