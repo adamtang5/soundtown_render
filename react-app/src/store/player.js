@@ -6,6 +6,7 @@ const QUEUE_PLAYLIST = "player/QUEUE_PLAYLIST";
 const QUEUE_ADVANCE = "player/QUEUE_ADVANCE";
 const HISTORY_STEPBACK = "player/HISTORY_STEPBACK";
 const CLEAR_PLAYER = "player/CLEAR_PLAYER";
+const UPDATE_ISPLAYING = "player/UPDATE_ISPLAYING";
 
 // adding song to play now and history
 export const loadSong = (songId) => ({
@@ -45,6 +46,12 @@ export const clearPlayer = () => ({
   type: CLEAR_PLAYER,
 });
 
+// updates isPlaying state by running isPlaying() from AudioPlayer
+export const setIsPlaying = (isPlaying) => ({
+  type: UPDATE_ISPLAYING,
+  isPlaying,
+});
+
 // State shape:
 
 // state.player --> {
@@ -55,6 +62,7 @@ export const clearPlayer = () => ({
 
 const initialState = {
   playingId: null,
+  isPlaying: false,
   playHistory: [],
   queue: [],
 };
@@ -127,6 +135,13 @@ export default function reducer(state = initialState, action) {
     }
     case CLEAR_PLAYER:
       return initialState;
+    case UPDATE_ISPLAYING: {
+      const newState = {
+        ...state,
+        isPlaying: action.isPlaying,
+      };
+      return newState;
+    }
     default:
       return state;
   }
