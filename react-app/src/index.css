@@ -533,6 +533,8 @@ fieldset {
   font-size: 3em;
   color: var(--color-primary);
   transition: color 0.15s;
+  border: none;
+  background-color: transparent;
 }
 
 .asset-banner-play:hover {

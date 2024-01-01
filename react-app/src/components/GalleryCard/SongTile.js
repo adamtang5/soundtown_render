@@ -101,7 +101,7 @@ const Actions = ({ song }) => {
 };
 
 const SongTile = ({ song, setShowModal }) => {
-  const { playerRef } = useContext(AudioContext);
+  const { play, pause } = useContext(AudioContext);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const player = useSelector(state => state.player);
@@ -109,9 +109,9 @@ const SongTile = ({ song, setShowModal }) => {
   const handlePlayPause = async (e) => {
     if (song?.id === player?.playingId) {
       if (player?.isPlaying) {
-        await playerRef?.current?.audio?.current?.pause();
+        await pause();
       } else {
-        await playerRef?.current?.audio?.current?.play();
+        await play();
       }
     } else {
       await dispatch(loadSong(song?.id));
