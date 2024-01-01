@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../store/session";
@@ -6,6 +6,7 @@ import { editSong, deleteSong, toggleSongLike, getSong } from "../store/song";
 import { loadSong, queueSong } from "../store/player";
 import { createComment } from "../store/comment";
 import { Modal } from "../components/Context/Modal";
+import { AudioContext } from "../context/AudioContext";
 import AssetHeader from "../components/AssetHeader";
 import Avatar from "../components/Icons/Avatar";
 import AddSongToPlaylist from "../modals/AddSongToPlaylist";
@@ -211,8 +212,10 @@ const SongComments = ({ loaded }) => {
 };
 
 const SingleSong = () => {
+  const { play, pause } = useContext(AudioContext);
   const dispatch = useDispatch();
   const { id } = useParams();
+  const player = useSelector(state => state.player);
   const song = useSelector(state => state.songs[id]);
   const sessionUser = useSelector(state => state.session.user);
   const [loaded, setLoaded] = useState(false);
@@ -226,10 +229,17 @@ const SingleSong = () => {
     })();
   }, [dispatch]);
   
-  const handlePlayButtonClick = async (e) => {
-    e.preventDefault();
-    await dispatch(loadSong(song?.id));
-  };
+  const handlePlayPause = async (e) => {
+    if (song?.id === player?.playingId) {
+      if (player?.isPlaying) {
+        await pause();
+      } else {
+        await play();
+      }
+    } else {
+      await dispatch(loadSong(song?.id));
+    }
+  }
 
   const updateImage = async (e) => {
     const file = e.target.files[0];
@@ -267,7 +277,8 @@ const SingleSong = () => {
         entity="song"
         asset={song}
         h3={song?.description}
-        handlePlayButtonClick={handlePlayButtonClick}
+        handlePlayPause={handlePlayPause}
+        condition={player?.isPlaying && song?.id === player?.playingId}
         updateImage={updateImage}
         isAuthorized={sessionUser.id === song?.user_id}
       />

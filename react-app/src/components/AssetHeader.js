@@ -1,4 +1,5 @@
 import Moment from "react-moment";
+import { FaCirclePlay, FaCirclePause } from "react-icons/fa6";
 import DynamicImage from "./DynamicImage";
 
 const AssetHeader = ({
@@ -6,7 +7,8 @@ const AssetHeader = ({
   asset,
   h3,
   placeholderImg,
-  handlePlayButtonClick,
+  handlePlayPause,
+  condition,
   updateImage,
   isAuthorized,
 }) => {
@@ -29,10 +31,12 @@ const AssetHeader = ({
     <header className="asset-banner flex-row">
       <div className="asset-banner-left flex-column">
         <div className="asset-banner-top-left flex-row">
-          <div
-            className="asset-banner-play cursor-pointer"
-            onClick={handlePlayButtonClick}
-          >&#9654;</div>
+          <button
+            onClick={handlePlayPause}
+            className="asset-banner-play"
+          >
+            {condition ? <FaCirclePause /> : <FaCirclePlay />}
+          </button>
           <div className="asset-banner-info flex-row">
             <div className="asset-banner-ident flex-column">
               <h2>{asset?.title}</h2>
