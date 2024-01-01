@@ -1,6 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { FaCirclePlay, FaCirclePause } from "react-icons/fa6";
+import { FaHeart } from "react-icons/fa";
 import { loadPlaylist } from "../../store/player";
 import { getPlaylist, togglePlaylistLike } from "../../store/playlist";
 import './Tile.css';
@@ -24,7 +26,7 @@ const PlaylistTile = ({ playlist }) => {
   };
 
   const coverStyle = {
-    backgroundImage: `url(${playlist.image_url || firstSong.image_url})`,
+    backgroundImage: `url(${playlist?.image_url || firstSong?.image_url})`,
     backgroundSize: "cover",
   }
 
@@ -35,17 +37,23 @@ const PlaylistTile = ({ playlist }) => {
         style={coverStyle}
         alt={playlist?.title}
       >
-        <div className="overlay-group flex-row">
-          <div
-            onClick={handlePlay}
-            className="overlay-play"
-          >&#9654;</div>
+        <div className="overlay-group">
+          <div className="overlay-layer full-box">
+            <button
+              onClick={handlePlay}
+              className="overlay-play"
+            >
+              <FaCirclePlay />
+            </button>
+          </div>
           {sessionUser?.id !== playlist?.user_id && (
             <div className="overlay-like">
-              <div
+              <button
                 onClick={handlePlaylistLikeToggle}
                 className={playlist?.likes?.includes(sessionUser?.id) ? "liked" : "not-liked"}
-              >&#10084;</div>
+              >
+                <FaHeart />
+              </button>
             </div>
           )}
         </div>
