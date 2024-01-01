@@ -32,6 +32,10 @@ ul {
   list-style: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 li button {
   border: none;
   background-color: transparent;

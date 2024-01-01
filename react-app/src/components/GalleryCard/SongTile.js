@@ -1,30 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { Modal } from "../Context/Modal";
-import { loadSong, queueSong } from "../../store/player";
-import { toggleSongLike } from "../../store/song";
-import AddSongToPlaylist from "../../modals/AddSongToPlaylist";
+import { FaCirclePlay, FaCirclePause } from "react-icons/fa6";
+import { FaHeart } from "react-icons/fa";
 import { ImMenu3 } from "react-icons/im";
 import { CgPlayList } from "react-icons/cg";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
+import { Modal } from "../Context/Modal";
+import { AudioContext } from "../../context/AudioContext"
+import { loadSong, queueSong } from "../../store/player";
+import { toggleSongLike } from "../../store/song";
+import AddSongToPlaylist from "../../modals/AddSongToPlaylist";
 import "./Tile.css";
 
 const Actions = ({ song }) => {
-  const playingId = useSelector(state => state.player.playingId);
   const dispatch = useDispatch();
+  const playingId = useSelector(state => state.player.playingId);
   const [showMenu, setShowMenu] = useState(false);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
-
-  const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true);
-  };
-
-  const openPlaylistModal = () => {
-    if (showPlaylistModal) return;
-    setShowPlaylistModal(true);
-  };
 
   useEffect(() => {
     if (!showMenu) return;
@@ -38,11 +31,21 @@ const Actions = ({ song }) => {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const addSongToQueue = (id) => {
+  const openMenu = () => {
+    if (showMenu) return;
+    setShowMenu(true);
+  };  
+
+  const openPlaylistModal = () => {
+    if (showPlaylistModal) return;
+    setShowPlaylistModal(true);
+  };  
+
+  const addSongToQueue = async (id) => {
     if (!playingId) {
-      dispatch(loadSong(id));
+      await dispatch(loadSong(id));
     } else {
-      dispatch(queueSong(id));
+      await dispatch(queueSong(id));
     }
   };
 
@@ -79,32 +82,40 @@ const Actions = ({ song }) => {
           </ul>
         )}
       </div>
-      {
-        showPlaylistModal && (
-          <Modal
-            onClose={() => setShowPlaylistModal(false)}
-            position="top"
-            paddingTop={50}
-          >
-            <div className="playlist-modal-container">
-              <AddSongToPlaylist
-                song={song}
-                setShowModal={setShowPlaylistModal}
-              />
-            </div>
-          </Modal>
-        )
-      }
+      {showPlaylistModal && (
+        <Modal
+          onClose={() => setShowPlaylistModal(false)}
+          position="top"
+          paddingTop={50}
+        >
+          <div className="playlist-modal-container">
+            <AddSongToPlaylist
+              song={song}
+              setShowModal={setShowPlaylistModal}
+            />
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
 
 const SongTile = ({ song, setShowModal }) => {
+  const { playerRef } = useContext(AudioContext);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
+  const player = useSelector(state => state.player);
 
-  const handlePlay = (e) => {
-    dispatch(loadSong(song?.id));
+  const handlePlayPause = async (e) => {
+    if (song?.id === player?.playingId) {
+      if (player?.isPlaying) {
+        await playerRef?.current?.audio?.current?.pause();
+      } else {
+        await playerRef?.current?.audio?.current?.play();
+      }
+    } else {
+      await dispatch(loadSong(song?.id));
+    }
   };
 
   const handleSongLikeToggle = async (e) => {
@@ -130,18 +141,28 @@ const SongTile = ({ song, setShowModal }) => {
         alt={song?.title}
       >
         {sessionUser !== null ? (
-          <div className="overlay-group flex-row">
+          <div className="overlay-group">
+            <div className="overlay-layer full-box">
+              <button
+                onClick={handlePlayPause}
+                className="overlay-play"
+              >
+                {player?.isPlaying && song?.id === player?.playingId ? (
+                  <FaCirclePause />
+                ) : (
+                  <FaCirclePlay />
+                )}
+              </button>
+            </div>
             <Actions song={song} />
-            <div
-              onClick={handlePlay}
-              className="overlay-play"
-            >&#9654;</div>
             {sessionUser?.id !== song?.user_id && (
               <div className="overlay-like">
-                <div
+                <button
                   onClick={handleSongLikeToggle}
                   className={song?.likes?.includes(sessionUser?.id) ? "liked": "not-liked"}
-                >&#10084;</div>
+                >
+                  <FaHeart />
+                </button>
               </div>
             )}
           </div>
@@ -156,9 +177,9 @@ const SongTile = ({ song, setShowModal }) => {
       </div>
       <footer className="tile-info">
         <NavLink to={`/songs/${song?.id}`}>
-          <h3>{song.title}</h3>
+          <h3>{song?.title}</h3>
         </NavLink>
-        <span>{song.description}</span>
+        <span>{song?.description}</span>
       </footer>
     </article>
   );

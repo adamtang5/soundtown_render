@@ -1,33 +1,37 @@
-import AudioPlayer from "react-h5-audio-player";
+import { useState, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { queueAdvance, historyStepBack } from "../../store/player";
+import AudioPlayer from "react-h5-audio-player";
+import { AudioContext } from "../../context/AudioContext";
+import { queueAdvance, historyStepBack, setIsPlaying } from "../../store/player";
 import errorFile from "../../static/audio/buzz.mp3";
+import QueueBox from "./QueueBox";
+import { ReactComponent as QueueIcon } from "../../static/svgs/queue.svg";
 import "react-h5-audio-player/lib/styles.css";
 import "./Audio.css";
 
-import { ReactComponent as QueueIcon } from "../../static/svgs/queue.svg";
-import { useState } from "react";
-import QueueBox from "./QueueBox";
-
 const Audio = () => {
+  const { playerRef } = useContext(AudioContext);
   const dispatch = useDispatch();
-  const playerState = useSelector(state => state.player);
-  const currSong = useSelector(state => state.songs[playerState.playingId]);
-
+  const player = useSelector(state => state.player);
+  const currSong = useSelector(state => state.songs[player?.playingId]);
   const [queueMenu, setQueueMenu] = useState(false);
 
-  const playNextInQueue = () => {
-    if (playerState.queue.length) {
-      dispatch(queueAdvance());
+  const updateIsPlaying = async (e) => {
+    await dispatch(setIsPlaying(playerRef?.current?.isPlaying()));
+  };
+
+  const playNextInQueue = async (e) => {
+    if (player?.queue?.length) {
+      await dispatch(queueAdvance());
     } else {
-      dispatch(queueAdvance());
+      await dispatch(queueAdvance());
     }
   };
 
-  const playLastInHistory = () => {
-    if (playerState.playHistory.length) {
-      dispatch(historyStepBack());
+  const playLastInHistory = async (e) => {
+    if (player?.playHistory?.length) {
+      await dispatch(historyStepBack());
     }
   };
 
@@ -46,10 +50,13 @@ const Audio = () => {
           {currSong?.title}
         </NavLink>
         <AudioPlayer
+          ref={playerRef}
           className="songPlayer"
           customAdditionalControls={[]}
           layout="horizontal-reverse"
           src={currSong?.audio_url}
+          onPlay={updateIsPlaying}
+          onPause={updateIsPlaying}
           onClickNext={playNextInQueue}
           onClickPrevious={playLastInHistory}
           onEnded={playNextInQueue}
@@ -70,10 +77,13 @@ const Audio = () => {
     <footer className="player">
       <div className="player songinfo">
         <AudioPlayer
+          ref={playerRef}
           className="songPlayer"
           customAdditionalControls={[]}
           layout="horizontal-reverse"
           src={null}
+          onPlay={updateIsPlaying}
+          onPause={updateIsPlaying}
           onClickPrevious={playLastInHistory}
           showSkipControls={true}
           volume={0.25}
