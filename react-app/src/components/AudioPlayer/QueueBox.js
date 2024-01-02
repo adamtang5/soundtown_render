@@ -5,7 +5,7 @@ import SingleSong from "./SingleSong";
 const QueueBox = () => {
   const queue = useSelector((state) => state.player.queue);
   const playHistory = useSelector((state) => state.player.playHistory);
-  const currSongId = useSelector((state) => state.player.playingId);
+  const currSongId = useSelector((state) => state.player.currSongId);
 
   // const listArr = [...playHistory, currSongId, ...queue];
   return (

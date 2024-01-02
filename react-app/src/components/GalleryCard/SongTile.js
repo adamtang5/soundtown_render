@@ -15,7 +15,7 @@ import "./Tile.css";
 
 const Actions = ({ song }) => {
   const dispatch = useDispatch();
-  const playingId = useSelector(state => state.player.playingId);
+  const currSongId = useSelector(state => state.player.global[state.player.currSongIdx]);
   const [showMenu, setShowMenu] = useState(false);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
 
@@ -42,7 +42,7 @@ const Actions = ({ song }) => {
   };  
 
   const addSongToQueue = async (id) => {
-    if (!playingId) {
+    if (!currSongId) {
       await dispatch(loadSong(id));
     } else {
       await dispatch(queueSong(id));
@@ -107,7 +107,7 @@ const SongTile = ({ song, setShowModal }) => {
   const player = useSelector(state => state.player);
 
   const handlePlayPause = async (e) => {
-    if (song?.id === player?.playingId) {
+    if (song?.id === player?.currSongId) {
       if (isPlaying) {
         await pause();
       } else {
@@ -147,7 +147,7 @@ const SongTile = ({ song, setShowModal }) => {
                 onClick={handlePlayPause}
                 className="overlay-play"
               >
-                {song?.id === player?.playingId && isPlaying ? (
+                {song?.id === player?.currSongId && isPlaying ? (
                   <FaCirclePause />
                 ) : (
                   <FaCirclePlay />

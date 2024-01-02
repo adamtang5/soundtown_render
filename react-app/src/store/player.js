@@ -45,16 +45,37 @@ export const clearPlayer = () => ({
   type: CLEAR_PLAYER,
 });
 
+const currPlaylistId = (currSongIdx, playlists) => {
+  for (const [startIdx, endIdx, id] of playlists) {
+    if (currSongIdx >= startIdx && currSongIdx < endIdx) return id;
+  }
+  return null;
+};
+
+const updateSecondaries = (state) => {
+  const { global, currSongIdx, playlists } = state;
+  state.currSongId = global[currSongIdx];
+  state.playHistory = global.slice(0, currSongIdx);
+  state.queue = global.slice(currSongIdx + 1);
+}
+
 // State shape:
 
 // state.player --> {
-//   playingId: id,
-//   playHistory: [id, id, ...],
-//   queue: [id, id, ...],
+//   global: [id, id, ...],
+//   currSongIdx: idx,
+//   playlists: [[startIdx, endIdx, id], [startIdx, endIdx, id], ...],
+//   --> currSongId: id = global[currSongIdx],
+//   --> currPlaylistId: id = currPlaylistId(global, currSongIdx),
+//   --> playHistory: [id, id, ...] = global.slice(0, currSongIdx),
+//   --> queue: [id, id, ...] = global.slice(currSongIdx + 1),
 // }
 
 const initialState = {
-  playingId: null,
+  global: [],
+  currSongIdx: -1,
+  playlists: [],
+  currSongId: null,
   playHistory: [],
   queue: [],
 };
@@ -62,47 +83,40 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_SONG: {
-      const newState = {
-        ...state,
-      };
-      if (newState.playingId !== action.songId) {
-        if (newState.playingId) {
-          newState.playHistory = [...newState.playHistory, newState.playingId];
-        }
-        newState.playingId = action.songId;
+      const newState = state.playlists.length ? 
+        { ...initialState } :
+        { ...state };
+      const { global, currSongIdx } = newState;
+      if (currSongIdx < 0) {
+        global.unshift(action.songId);
+        newState.currSongIdx = 0;
+      } else if (currSongIdx >= global.length) {
+        global.push(action.songId);
+        newState.currSongIdx = global.length - 1;
+      } else {
+        global.splice(currSongIdx + 1, 0, action.songId);
+        newState.currSongIdx++;
       }
+      updateSecondaries(newState);
+      return newState;
+    }
+    case HISTORY_STEPBACK: {
+      const newState = { ...state };
+      if (newState.currSongIdx > 0) newState.currSongIdx--;
+      updateSecondaries(newState);
+      return newState;
+    }
+    case QUEUE_ADVANCE: {
+      const newState = { ...state };
+      if (newState.currSongIdx < newState.global.length) newState.currSongIdx++;
+      updateSecondaries(newState);
       return newState;
     }
     case QUEUE_SONG: {
       const newState = {
         ...state,
       };
-      newState.queue = [...newState.queue, action.songId];
-      return newState;
-    }
-    case QUEUE_ADVANCE: {
-      const newState = { ...state };
-      if (newState.playingId) {
-        newState.playHistory = [...newState.playHistory, newState.playingId];
-      }
-      if (newState.queue.length) {
-        newState.playingId = newState.queue[0];
-        newState.queue = newState.queue.slice(1);
-      } else {
-        newState.playingId = null;
-      }
-      return newState;
-    }
-    case HISTORY_STEPBACK: {
-      const newState = { ...state };
-      if (newState.playingId) {
-        newState.queue = [newState.playingId, ...newState.queue];
-      }
-      if (newState.playHistory.length) {
-        newState.playingId = newState.playHistory.pop();
-      } else {
-        newState.playingId = null;
-      }
+      newState.global = [...newState.global, action.songId];
       return newState;
     }
     case QUEUE_PLAYLIST: {
@@ -114,11 +128,11 @@ export default function reducer(state = initialState, action) {
     }
     case LOAD_PLAYLIST: {
       const newState = { ...state };
-      if (newState.playingId) {
-        newState.playHistory = [...newState.playHistory, newState.playingId];
+      if (newState.currSongId) {
+        newState.playHistory = [...newState.playHistory, newState.currSongId];
       }
       const firstSong = action.playlist.songs_order[0];
-      newState.playingId = firstSong;
+      newState.currSongId = firstSong;
       newState.queue = [];
       for (let i = 1; i < action.playlist.songs_order.length; i++) {
         newState.queue = [...newState.queue, action.playlist.songs_order[i]];
