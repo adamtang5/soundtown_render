@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { ImSpinner3 } from 'react-icons/im';
-import { randomSample } from "../util";
 import Slider from "react-slick";
 import SongTile from "../components/GalleryCard/SongTile";
 import CreatorCard from "../components/CreatorCard";
@@ -13,13 +12,23 @@ import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 
 const MainFeed = () => {
-  const songIds = useSelector(state => Object.keys(state.songs));
-  const slicedSongIds = songIds.slice();
   const PCT_OF_TRENDING = 0.25;
   const PCT_OF_RECOMMENDATION = 0.15;
   const PCT_OF_BUBBLING_UP = 0.35;
 
   const trendingSongs = useSelector(state => Object.values(state.songs)
+    .toSorted((a, b) => {
+      if (a.id < b.id) {
+        return 1;
+      } else if (a.id > b.id) {
+        return -1;
+      } else {
+        return 0;
+      }
+    })
+    .slice(0, Math.floor(Object.keys(state.songs).length * PCT_OF_TRENDING)));
+
+  const recommendedSongs = useSelector(state => Object.values(state.songs)
     .toSorted((a, b) => {
       if (a.created_at < b.created_at) {
         return 1;
@@ -29,12 +38,11 @@ const MainFeed = () => {
         return 0;
       }
     })
-    .slice(0, Math.floor(Object.keys(state.songs).length * PCT_OF_TRENDING)));
+    .slice(0, Math.floor(Object.keys(state.songs).length * PCT_OF_RECOMMENDATION)));
 
-  const recommendedIds = randomSample(slicedSongIds, Math.floor(slicedSongIds.length * PCT_OF_RECOMMENDATION));
-  const recommendedSongs = useSelector(state => recommendedIds.map(id => state.songs[id]));
-  const bubblingIds = randomSample(slicedSongIds, Math.floor(slicedSongIds.length * PCT_OF_BUBBLING_UP));
-  const bubblingSongs = useSelector(state => bubblingIds.map(id => state.songs[id]));
+  const bubblingSongs = useSelector(state => Object.values(state.songs)
+    .toSorted((a, b) => a.likes.length - b.likes.length)
+    .slice(0, Math.floor(Object.keys(state.songs).length * PCT_OF_BUBBLING_UP)));
 
   const data = [
     {
