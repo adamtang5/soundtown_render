@@ -212,7 +212,7 @@ const SongComments = ({ loaded }) => {
 };
 
 const SingleSong = () => {
-  const { play, pause } = useContext(AudioContext);
+  const { play, pause, isPlaying } = useContext(AudioContext);
   const dispatch = useDispatch();
   const { id } = useParams();
   const player = useSelector(state => state.player);
@@ -231,7 +231,7 @@ const SingleSong = () => {
   
   const handlePlayPause = async (e) => {
     if (song?.id === player?.playingId) {
-      if (player?.isPlaying) {
+      if (isPlaying()) {
         await pause();
       } else {
         await play();
@@ -278,7 +278,7 @@ const SingleSong = () => {
         asset={song}
         h3={song?.description}
         handlePlayPause={handlePlayPause}
-        condition={player?.isPlaying && song?.id === player?.playingId}
+        condition={isPlaying() && song?.id === player?.playingId}
         updateImage={updateImage}
         isAuthorized={sessionUser.id === song?.user_id}
       />

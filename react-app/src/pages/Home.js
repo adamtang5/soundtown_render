@@ -13,29 +13,35 @@ import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 
 const MainFeed = () => {
-  const songs = useSelector(state => Object.values(state.songs));
+  const songIds = useSelector(state => Object.keys(state.songs));
   const PCT_OF_TRENDING = 0.25;
   const PCT_OF_RECOMMENDATION = 0.15;
   const PCT_OF_BUBBLING_UP = 0.35;
+  const trendingIds = randomSample(songIds, Math.floor(songIds.length * PCT_OF_TRENDING));
+  const trendingSongs = useSelector(state => trendingIds.map(id => state.songs[id]));
+  const recommendedIds = randomSample(songIds, Math.floor(songIds.length * PCT_OF_RECOMMENDATION));
+  const recommendedSongs = useSelector(state => recommendedIds.map(id => state.songs[id]));
+  const bubblingIds = randomSample(songIds, Math.floor(songIds.length * PCT_OF_BUBBLING_UP));
+  const bubblingSongs = useSelector(state => bubblingIds.map(id => state.songs[id]));
 
   const data = [
     {
       type: "songs",
       description: "Up-and-coming tracks on SoundTown",
       title: "Charts: Hot & Trending",
-      songs: randomSample(songs, Math.floor(songs.length * PCT_OF_TRENDING)),
+      songs: trendingSongs,
     },
     {
       type: "songs",
       description: "The latest Uploads from around the world",
       title: "Discover Daily",
-      songs: randomSample(songs, Math.floor(songs.length * PCT_OF_RECOMMENDATION)),
+      songs: recommendedSongs,
     },
     {
       type: "songs",
       description: "Emerging artists and tracks",
       title: "Bubbling Up",
-      songs: randomSample(songs, Math.floor(songs.length * PCT_OF_BUBBLING_UP)),
+      songs: bubblingSongs,
     },
   ];
 
@@ -85,6 +91,7 @@ const SliderCard = ({ title, description, songs }) => {
       },
     ],
   };
+
   return (
     <>
       <h2>{title}</h2>

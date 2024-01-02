@@ -101,14 +101,14 @@ const Actions = ({ song }) => {
 };
 
 const SongTile = ({ song, setShowModal }) => {
-  const { play, pause } = useContext(AudioContext);
+  const { play, pause, isPlaying } = useContext(AudioContext);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const player = useSelector(state => state.player);
 
   const handlePlayPause = async (e) => {
     if (song?.id === player?.playingId) {
-      if (player?.isPlaying) {
+      if (isPlaying()) {
         await pause();
       } else {
         await play();
@@ -147,7 +147,7 @@ const SongTile = ({ song, setShowModal }) => {
                 onClick={handlePlayPause}
                 className="overlay-play"
               >
-                {player?.isPlaying && song?.id === player?.playingId ? (
+                {isPlaying() && song?.id === player?.playingId ? (
                   <FaCirclePause />
                 ) : (
                   <FaCirclePlay />

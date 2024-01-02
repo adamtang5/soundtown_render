@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import AudioPlayer from "react-h5-audio-player";
 import { AudioContext } from "../../context/AudioContext";
-import { queueAdvance, historyStepBack, setIsPlaying } from "../../store/player";
+import { queueAdvance, historyStepBack } from "../../store/player";
 import errorFile from "../../static/audio/buzz.mp3";
 import QueueBox from "./QueueBox";
 import { ReactComponent as QueueIcon } from "../../static/svgs/queue.svg";
@@ -16,10 +16,6 @@ const Audio = () => {
   const player = useSelector(state => state.player);
   const currSong = useSelector(state => state.songs[player?.playingId]);
   const [queueMenu, setQueueMenu] = useState(false);
-
-  const updateIsPlaying = async (e) => {
-    await dispatch(setIsPlaying(playerRef?.current?.isPlaying()));
-  };
 
   const playNextInQueue = async (e) => {
     if (player?.queue?.length) {
@@ -55,8 +51,6 @@ const Audio = () => {
           customAdditionalControls={[]}
           layout="horizontal-reverse"
           src={currSong?.audio_url}
-          onPlay={updateIsPlaying}
-          onPause={updateIsPlaying}
           onClickNext={playNextInQueue}
           onClickPrevious={playLastInHistory}
           onEnded={playNextInQueue}
@@ -82,8 +76,6 @@ const Audio = () => {
           customAdditionalControls={[]}
           layout="horizontal-reverse"
           src={null}
-          onPlay={updateIsPlaying}
-          onPause={updateIsPlaying}
           onClickPrevious={playLastInHistory}
           showSkipControls={true}
           volume={0.25}
