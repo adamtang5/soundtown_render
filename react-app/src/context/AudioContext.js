@@ -13,11 +13,16 @@ const AudioProvider = (props) => {
     await playerRef?.current?.audio?.current?.pause();
   };
 
+  const isPlaying = async () => {
+    await playerRef?.current?.isPlaying();
+  };
+
   return (
     <AudioContext.Provider value={{
       playerRef,
       play,
       pause,
+      isPlaying,
     }}>
       {props.children}
     </AudioContext.Provider>
