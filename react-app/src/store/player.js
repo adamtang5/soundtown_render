@@ -113,10 +113,9 @@ export default function reducer(state = initialState, action) {
       return newState;
     }
     case QUEUE_SONG: {
-      const newState = {
-        ...state,
-      };
-      newState.global = [...newState.global, action.songId];
+      const newState = { ...state };
+      newState.global.push(action.songId);
+      updateSecondaries(newState);
       return newState;
     }
     case QUEUE_PLAYLIST: {
