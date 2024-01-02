@@ -58,7 +58,7 @@ const ButtonGroup = ({ song }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
-  const playingId = useSelector(state => state.player.playingId);
+  const currSongId = useSelector(state => state.player.currSongId);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
   const [showEditSongModal, setShowEditSongModal] = useState(false);
@@ -88,7 +88,7 @@ const ButtonGroup = ({ song }) => {
   };
 
   const addSongToQueue = async (id) => {
-    if (!playingId) {
+    if (!currSongId) {
       await dispatch(loadSong(id));
     } else {
       await dispatch(queueSong(id));
@@ -230,7 +230,7 @@ const SingleSong = () => {
   }, [dispatch]);
   
   const handlePlayPause = async (e) => {
-    if (song?.id === player?.playingId) {
+    if (song?.id === player?.currSongId) {
       if (isPlaying) {
         await pause();
       } else {
@@ -278,7 +278,7 @@ const SingleSong = () => {
         asset={song}
         h3={song?.description}
         handlePlayPause={handlePlayPause}
-        condition={isPlaying && song?.id === player?.playingId}
+        condition={isPlaying && song?.id === player?.currSongId}
         updateImage={updateImage}
         isAuthorized={sessionUser.id === song?.user_id}
       />

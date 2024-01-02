@@ -56,7 +56,7 @@ const SingleSongRow = ({ song, idx }) => {
 const SongRowButtonGroup = ({ song }) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  const playingId = useSelector(state => state.player.playingId);
+  const currSongId = useSelector(state => state.player.currSongId);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
   const baseClasses = ['cursor-pointer', 'composite-button'];
@@ -84,7 +84,7 @@ const SongRowButtonGroup = ({ song }) => {
   };
 
   const addSongToQueue = async (id) => {
-    if (!playingId) {
+    if (!currSongId) {
       await dispatch(loadSong(id));
     } else {
       await dispatch(queueSong(id));
@@ -143,7 +143,7 @@ const ButtonGroup = ({ playlist }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
-  const playingId = useSelector(state => state.player.playingId);
+  const currSongId = useSelector(state => state.player.currSongId);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const baseClasses = ['cursor-pointer', 'composite-button'];
@@ -157,7 +157,7 @@ const ButtonGroup = ({ playlist }) => {
 
   const addPlaylistToQueue = async (playlist) => {
     await dispatch(getPlaylist(playlist?.id));
-    if (!playingId) {
+    if (!currSongId) {
       await dispatch(loadPlaylist(playlist));
     } else {
       await dispatch(queuePlaylist(playlist));

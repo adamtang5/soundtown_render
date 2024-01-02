@@ -14,7 +14,7 @@ const Audio = () => {
   const { playerRef, setIsPlaying } = useContext(AudioContext);
   const dispatch = useDispatch();
   const player = useSelector(state => state.player);
-  const currSong = useSelector(state => state.songs[player?.playingId]);
+  const currSong = useSelector(state => state.songs[player?.currSongId]);
   const [queueMenu, setQueueMenu] = useState(false);
 
   const playNextInQueue = async (e) => {
