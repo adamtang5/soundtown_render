@@ -108,7 +108,7 @@ const SongTile = ({ song, setShowModal }) => {
 
   const handlePlayPause = async (e) => {
     if (song?.id === player?.playingId) {
-      if (isPlaying()) {
+      if (isPlaying) {
         await pause();
       } else {
         await play();
@@ -147,7 +147,7 @@ const SongTile = ({ song, setShowModal }) => {
                 onClick={handlePlayPause}
                 className="overlay-play"
               >
-                {isPlaying() && song?.id === player?.playingId ? (
+                {song?.id === player?.playingId && isPlaying ? (
                   <FaCirclePause />
                 ) : (
                   <FaCirclePlay />

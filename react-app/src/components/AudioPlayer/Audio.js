@@ -11,7 +11,7 @@ import "react-h5-audio-player/lib/styles.css";
 import "./Audio.css";
 
 const Audio = () => {
-  const { playerRef } = useContext(AudioContext);
+  const { playerRef, setIsPlaying } = useContext(AudioContext);
   const dispatch = useDispatch();
   const player = useSelector(state => state.player);
   const currSong = useSelector(state => state.songs[player?.playingId]);
@@ -51,6 +51,8 @@ const Audio = () => {
           customAdditionalControls={[]}
           layout="horizontal-reverse"
           src={currSong?.audio_url}
+          onPlay={() => setIsPlaying(playerRef?.current?.isPlaying())}
+          onPause={() => setIsPlaying(playerRef?.current?.isPlaying())}
           onClickNext={playNextInQueue}
           onClickPrevious={playLastInHistory}
           onEnded={playNextInQueue}
@@ -76,6 +78,8 @@ const Audio = () => {
           customAdditionalControls={[]}
           layout="horizontal-reverse"
           src={null}
+          onPlay={() => setIsPlaying(playerRef?.current?.isPlaying())}
+          onPause={() => setIsPlaying(playerRef?.current?.isPlaying())}
           onClickPrevious={playLastInHistory}
           showSkipControls={true}
           volume={0.25}

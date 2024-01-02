@@ -231,7 +231,7 @@ const SingleSong = () => {
   
   const handlePlayPause = async (e) => {
     if (song?.id === player?.playingId) {
-      if (isPlaying()) {
+      if (isPlaying) {
         await pause();
       } else {
         await play();
@@ -278,7 +278,7 @@ const SingleSong = () => {
         asset={song}
         h3={song?.description}
         handlePlayPause={handlePlayPause}
-        condition={isPlaying() && song?.id === player?.playingId}
+        condition={isPlaying && song?.id === player?.playingId}
         updateImage={updateImage}
         isAuthorized={sessionUser.id === song?.user_id}
       />
