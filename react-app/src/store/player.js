@@ -57,6 +57,7 @@ const updateSecondaries = (state) => {
   state.currSongId = global[currSongIdx];
   state.playHistory = global.slice(0, currSongIdx);
   state.queue = global.slice(currSongIdx + 1);
+  state.currPlaylistId = currPlaylistId(currSongIdx, playlists);
 }
 
 // State shape:
@@ -76,6 +77,7 @@ const initialState = {
   currSongIdx: -1,
   playlists: [],
   currSongId: null,
+  currPlaylistId: null,
   playHistory: [],
   queue: [],
 };
@@ -120,9 +122,12 @@ export default function reducer(state = initialState, action) {
     }
     case QUEUE_PLAYLIST: {
       const newState = { ...state };
-      action.playlist.songs_order.forEach(songId => {
-        newState.queue = [...newState.queue, songId];
-      });
+      const newPL = [newState.global.length, newState.global.length + action.playlist.songs_order.length, action.playlist.id];
+      // console.log(newPL);
+      newState.global = [...newState.global, ...action.playlist.songs_order];
+      newState.playlists.push(newPL);
+      // console.log(newState.playlists);
+      updateSecondaries(newState);
       return newState;
     }
     case LOAD_PLAYLIST: {
