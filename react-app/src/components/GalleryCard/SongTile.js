@@ -15,7 +15,7 @@ import "./Tile.css";
 
 const Actions = ({ song }) => {
   const dispatch = useDispatch();
-  const currSongId = useSelector(state => state.player.global[state.player.currSongIdx]);
+  const player = useSelector(state => state.player);
   const [showMenu, setShowMenu] = useState(false);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
 
@@ -42,7 +42,7 @@ const Actions = ({ song }) => {
   };  
 
   const addSongToQueue = async (id) => {
-    if (!currSongId) {
+    if (!player?.currSongId) {
       await dispatch(loadSong(id));
     } else {
       await dispatch(queueSong(id));
