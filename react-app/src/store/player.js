@@ -123,24 +123,21 @@ export default function reducer(state = initialState, action) {
     case QUEUE_PLAYLIST: {
       const newState = { ...state };
       const newPL = [newState.global.length, newState.global.length + action.playlist.songs_order.length, action.playlist.id];
-      // console.log(newPL);
       newState.global = [...newState.global, ...action.playlist.songs_order];
       newState.playlists.push(newPL);
-      // console.log(newState.playlists);
       updateSecondaries(newState);
       return newState;
     }
     case LOAD_PLAYLIST: {
-      const newState = { ...state };
+      const newState = { ...initialState };
       if (newState.currSongId) {
         newState.playHistory = [...newState.playHistory, newState.currSongId];
       }
-      const firstSong = action.playlist.songs_order[0];
-      newState.currSongId = firstSong;
-      newState.queue = [];
-      for (let i = 1; i < action.playlist.songs_order.length; i++) {
-        newState.queue = [...newState.queue, action.playlist.songs_order[i]];
-      }
+      const newPL = [0, action.playlist.songs_order.length, action.playlist.id];
+      newState.global = action.playlist.songs_order;
+      newState.playlists.push(newPL);
+      newState.currSongIdx = 0;
+      updateSecondaries(newState);
       return newState;
     }
     case CLEAR_PLAYER:
