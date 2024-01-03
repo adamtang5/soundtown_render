@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
@@ -7,6 +7,7 @@ import { authenticate } from "../store/session";
 import { getUser } from "../store/user";
 import { toggleSongLike } from "../store/song";
 import { editPlaylist, deletePlaylist, getPlaylist, togglePlaylistLike } from "../store/playlist";
+import { AudioContext } from "../context/AudioContext";
 import AssetHeader from "../components/AssetHeader";
 import Avatar from "../components/Icons/Avatar";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";
@@ -239,8 +240,10 @@ const ButtonGroup = ({ playlist }) => {
 };
 
 const SinglePlaylist = () => {
+  const { play, pause, isPlaying } = useContext(AudioContext);
   const dispatch = useDispatch()
   const { id } = useParams();
+  const player = useSelector(state => state.player);
   const playlist = useSelector(state => state.playlists[id]);
   const songs = useSelector(state => playlist?.songs_order?.map(id => state.songs[id]));
   const sessionUser = useSelector(state => state.session.user);
@@ -260,10 +263,16 @@ const SinglePlaylist = () => {
     })();
   }, [dispatch, playlist?.user_id]);
 
-  const handlePlayButtonClick = async (e) => {
-    e.preventDefault();
-    await dispatch(getPlaylist(playlist?.id));
-    await dispatch(loadPlaylist(playlist));
+  const handlePlayPause = async (e) => {
+    if (playlist?.id === player?.currPlaylistId) {
+      if (isPlaying) {
+        await pause();
+      } else {
+        await play();
+      }
+    } else {
+      await dispatch(loadPlaylist(playlist));
+    }
   };
 
   const updateImage = async (e) => {
@@ -283,7 +292,8 @@ const SinglePlaylist = () => {
         asset={playlist}
         h3={playlist?.description}
         placeholderImg={songs?.at(0)?.image_url}
-        handlePlayButtonClick={handlePlayButtonClick}
+        handlePlayPause={handlePlayPause}
+        condition={isPlaying && playlist?.id === player?.currPlaylistId}
         updateImage={updateImage}
         isAuthorized={sessionUser?.id === playlist?.user_id}
       />
