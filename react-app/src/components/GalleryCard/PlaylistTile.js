@@ -5,8 +5,8 @@ import { FaCirclePlay, FaCirclePause } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa";
 import { loadPlaylist } from "../../store/player";
 import { getPlaylist, togglePlaylistLike } from "../../store/playlist";
-import './Tile.css';
 import { AudioContext } from "../../context/AudioContext";
+import './Tile.css';
 
 const PlaylistTile = ({ playlist }) => {
   const { play, pause, isPlaying } = useContext(AudioContext);
