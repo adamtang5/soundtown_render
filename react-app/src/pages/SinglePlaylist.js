@@ -158,9 +158,7 @@ const ButtonGroup = ({ playlist }) => {
 
   const addPlaylistToQueue = async (playlist) => {
     await dispatch(getPlaylist(playlist?.id));
-    if (!player?.currPlaylistId) {
-      await dispatch(queuePlaylist(playlist));
-    }
+    await dispatch(queuePlaylist(playlist));
   };
 
   const removePlaylist = async (e) => {
