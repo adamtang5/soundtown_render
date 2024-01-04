@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
+import { FaPlay, FaPause } from "react-icons/fa6";
 import { loadPlaylist, queuePlaylist, loadSong, queueSong } from "../store/player";
 import { authenticate } from "../store/session";
 import { getUser } from "../store/user";
@@ -22,11 +23,23 @@ import "./SinglePlaylist.css";
 import "../components/SidebarModules/Sidebar.css";
 
 const SingleSongRow = ({ song, idx }) => {
+  const { play, pause, isPlaying } = useContext(AudioContext);
   const dispatch = useDispatch();
+  const player = useSelector(state => state.player);
+  const { id } = useParams();
+  const playlist = useSelector(state => state.playlists[id]);
 
-  const handlePlay = (e) => {
-    e.preventDefault();
-    dispatch(loadSong(song?.id));
+  const handlePlayPause = async (e) => {
+    if (playlist?.id === player?.currPlaylistId &&
+      song?.id === player?.currSongId) {
+      if (isPlaying) {
+        await pause();
+      } else {
+        await play();
+      }
+    } else {
+      await dispatch(loadPlaylist(playlist, idx));
+    }
   };
 
   return (
@@ -44,9 +57,16 @@ const SingleSongRow = ({ song, idx }) => {
       <div className="song-row-overlay flex-row">
         <div className="song-row-square flex-row">
           <button
-            className="song-row-play cursor-pointer"
-            onClick={handlePlay}
-          >&#9654;</button>
+            className="song-row-play"
+            onClick={handlePlayPause}
+          >
+            {playlist?.id === player?.currPlaylistId &&
+              song?.id === player?.currSongId && isPlaying ? (
+                <FaPause />
+              ) : (
+                <FaPlay />
+              )}
+          </button>
         </div>
         <SongRowButtonGroup song={song} />
       </div>
@@ -144,7 +164,6 @@ const ButtonGroup = ({ playlist }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
-  const player = useSelector(state => state.player);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const baseClasses = ['cursor-pointer', 'composite-button'];

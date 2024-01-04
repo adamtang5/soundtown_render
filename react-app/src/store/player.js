@@ -14,9 +14,10 @@ export const loadSong = (songId) => ({
 });
 
 // playlist.songs_order
-export const loadPlaylist = (playlist) => ({
+export const loadPlaylist = (playlist, idx=0) => ({
   type: LOAD_PLAYLIST,
   playlist,
+  idx,
 });
 
 // adding song to future queue
@@ -149,7 +150,7 @@ export default function reducer(state = initialState, action) {
       newState.songs = action.playlist.songs_order;
       newState.playlists = new Array(action.playlist.songs_order.length)
         .fill(action.playlist.id);
-      newState.currIdx = 0;
+      newState.currIdx = action.idx;
       updateSecondaries(newState);
       return newState;
     }
