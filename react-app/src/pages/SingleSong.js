@@ -58,7 +58,7 @@ const ButtonGroup = ({ song }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
-  const currSongId = useSelector(state => state.player.currSongId);
+  const player = useSelector(state => state.player);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
   const [showEditSongModal, setShowEditSongModal] = useState(false);
@@ -88,7 +88,7 @@ const ButtonGroup = ({ song }) => {
   };
 
   const addSongToQueue = async (id) => {
-    if (!currSongId) {
+    if (!player?.currSongId) {
       await dispatch(loadSong(id));
     } else {
       await dispatch(queueSong(id));
