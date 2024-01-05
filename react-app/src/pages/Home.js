@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { ImSpinner3 } from 'react-icons/im';
 import Slider from "react-slick";
-import SongTile from "../components/GalleryCard/SongTile";
+import SongTile from "../components/Tile/SongTile";
 import CreatorCard from "../components/CreatorCard";
 import creatorData from '../components/CreatorCard/creators.json';
 import TechCard from "../components/TechCard";

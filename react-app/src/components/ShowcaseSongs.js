@@ -1,4 +1,4 @@
-import SongTile from './GalleryCard/SongTile';
+import SongTile from './Tile/SongTile';
 
 const ShowcaseSongs = ({ songs, h3, setShowModal }) => {
   return (
