@@ -2,30 +2,44 @@
   width: 150px;
 }
 
-.tile-cover {
+.overlay-group {
   position: relative;
+}
+
+.tile-cover {
   height: 150px;
   width: 150px;
 }
 
-.overlay-group,
 .overlay-single {
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
   color: white;
-  opacity: 0;
-  transition: opacity 0.25s;
 }
 
-.overlay-group:hover,
 .overlay-single:hover {
   opacity: 1;
 }
 
-.overlay-layer {
-  position: relative;
-  display: grid;
+.overlay-group .overlay-shaded {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+  color: white;
+}
+
+.overlay-group .overlay-play,
+.overlay-group .overlay-shaded {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.overlay-group:hover .overlay-play,
+.overlay-play.standout,
+.overlay-group:hover .overlay-shaded {
+  opacity: 1;
+}
+
+.overlay-play.standout {
+  color: var(--color-primary);
 }
 
 .overlay-single {
@@ -33,8 +47,11 @@
 }
 
 .overlay-play {
-  justify-self: center;
-  align-self: center;
+  position: absolute;
+  top: 35%;
+  right: 35%;
+  bottom: 35%;
+  left: 35%;
   font-size: 2.5em;
   background: none;
   box-shadow: none;
@@ -49,6 +66,12 @@
   color: orangered;
 }
 
+.overlay-play,
+.overlay-actions,
+.overlay-like {
+  z-index: 10;
+}
+
 .mini .overlay-play {
   font-size: 1em;
 }
@@ -57,16 +80,25 @@
   font-size: 1.1em;
 }
 
-.overlay-like {
+.overlay-shaded {
   position: absolute;
+  height: 25%;
+  width: 100%;
+  bottom: 0;
+}
+
+.overlay-like,
+.overlay-actions {
+  position: absolute;
+  bottom: 30%;
+}
+
+.overlay-like {
   right: 8%;
-  bottom: 8%;
 }
 
 .overlay-actions {
-  position: absolute;
   left: 8%;
-  bottom: 8%;
 }
 
 .dropdown-container {

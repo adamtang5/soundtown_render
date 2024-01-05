@@ -87,6 +87,8 @@ const PlaylistTile = ({ playlist }) => {
   };
 
   const handlePlaylistLikeToggle = async (e) => {
+    e.stopPropagation();
+    
     const formData = new FormData();
     formData.append("user_id", sessionUser?.id);
     await dispatch(togglePlaylistLike(playlist?.id, formData));

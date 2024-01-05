@@ -117,6 +117,8 @@ const SongTile = ({ song, setShowModal }) => {
   };
 
   const handleSongLikeToggle = async (e) => {
+    e.stopPropagation();
+    
     const formData = new FormData();
     formData.append("user_id", sessionUser?.id);
     await dispatch(toggleSongLike(song?.id, formData));
