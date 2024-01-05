@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { FaCirclePlay, FaCirclePause } from "react-icons/fa6";
-import { FaHeart } from "react-icons/fa";
 import { ImMenu3 } from "react-icons/im";
 import { CgPlayList } from "react-icons/cg";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
@@ -11,9 +8,10 @@ import { AudioContext } from "../../context/AudioContext"
 import { loadSong, queueSong } from "../../store/player";
 import { toggleSongLike } from "../../store/song";
 import AddSongToPlaylist from "../../modals/AddSongToPlaylist";
+import AssetTile from "./AssetTile";
 import "./Tile.css";
 
-const Actions = ({ song }) => {
+const Dropdown = ({ song }) => {
   const dispatch = useDispatch();
   const player = useSelector(state => state.player);
   const [showMenu, setShowMenu] = useState(false);
@@ -134,54 +132,19 @@ const SongTile = ({ song, setShowModal }) => {
   };
 
   return (
-    <article className="tile">
-      <div
-        className="tile-cover"
-        style={coverStyle}
-        alt={song?.title}
-      >
-        {sessionUser !== null ? (
-          <div className="overlay-group">
-            <div className="overlay-layer full-box">
-              <button
-                onClick={handlePlayPause}
-                className="overlay-play"
-              >
-                {song?.id === player?.currSongId && isPlaying ? (
-                  <FaCirclePause />
-                ) : (
-                  <FaCirclePlay />
-                )}
-              </button>
-            </div>
-            <Actions song={song} />
-            {sessionUser?.id !== song?.user_id && (
-              <div className="overlay-like">
-                <button
-                  onClick={handleSongLikeToggle}
-                  className={song?.likes?.includes(sessionUser?.id) ? "liked": "not-liked"}
-                >
-                  <FaHeart />
-                </button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="overlay-single flex-row">
-            <div
-              onClick={() => setShowModal(true)}
-              className="overlay-play"
-            >&#9654;</div>
-          </div>
-        )}
-      </div>
-      <footer className="tile-info">
-        <NavLink to={`/songs/${song?.id}`}>
-          <h3>{song?.title}</h3>
-        </NavLink>
-        <span>{song?.description}</span>
-      </footer>
-    </article>
+    <AssetTile
+      entity="song"
+      asset={song}
+      isLoggedIn={sessionUser !== null}
+      handlePlayPause={handlePlayPause}
+      canPause={song?.id === player?.currSongId && isPlaying}
+      handleLikeToggle={handleSongLikeToggle}
+      coverStyle={coverStyle}
+      dropdown={<Dropdown song={song} />}
+      canLike={sessionUser?.id !== song?.user_id}
+      liked={song?.likes?.includes(sessionUser?.id)}
+      handleShowLoginModal={openLoginModal}
+    />
   );
 };
 
