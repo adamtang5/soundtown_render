@@ -46,13 +46,6 @@ export const clearPlayer = () => ({
   type: CLEAR_PLAYER,
 });
 
-const currPlaylistId = (currSongIdx, playlists) => {
-  for (const [startIdx, endIdx, id] of playlists) {
-    if (currSongIdx >= startIdx && currSongIdx < endIdx) return id;
-  }
-  return null;
-};
-
 const updateSecondaries = (state) => {
   const { songs, playlists, currIdx } = state;
   state.currSongId = songs[currIdx];
