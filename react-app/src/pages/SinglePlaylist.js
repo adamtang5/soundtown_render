@@ -43,31 +43,31 @@ const SingleSongRow = ({ song, idx }) => {
   };
 
   return (
-    <article className="song-row flex-row cursor-pointer">
-      <div className="song-row-content flex-row">
-        <div
-          className="song-row-thumb"
-          style={{ backgroundImage: `url(${song?.image_url})` }}
-          />
-        <div className="song-row-idx">{idx + 1}</div>
-        <div className="song-row-title">
-          <Link to={`/songs/${song?.id}`}>{song?.title}</Link>
+    <article className="song-row cursor-pointer">
+      <div className="song-row-overlay full-box">
+        <div className="song-row-content full-box flex-row">
+          <div
+            className="song-row-thumb"
+            style={{ backgroundImage: `url(${song?.image_url})` }}
+            />
+          <div className="song-row-idx">{idx + 1}</div>
+          <div className="song-row-title">
+            <Link to={`/songs/${song?.id}`}>{song?.title}</Link>
+          </div>
         </div>
-      </div>
-      <div className="song-row-overlay flex-row">
-        <div className="song-row-square flex-row">
-          <button
-            className="song-row-play"
-            onClick={handlePlayPause}
-          >
-            {playlist?.id === player?.currPlaylistId &&
-              song?.id === player?.currSongId && isPlaying ? (
-                <FaPause />
-              ) : (
-                <FaPlay />
-              )}
-          </button>
-        </div>
+        <button
+          onClick={handlePlayPause}
+          className={`song-row-play ${playlist?.id === player?.currPlaylistId &&
+            song?.id === player?.currSongId && 
+            isPlaying ? "standout" : ""}`}
+        >
+          {playlist?.id === player?.currPlaylistId &&
+            song?.id === player?.currSongId && isPlaying ? (
+              <FaPause />
+            ) : (
+              <FaPlay />
+            )}
+        </button>
         <SongRowButtonGroup song={song} />
       </div>
     </article>
