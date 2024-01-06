@@ -70,13 +70,13 @@ const AssetTile = ({
           )}
         </div>
       </div>
-        <footer className="tile-info">
-          <NavLink to={`/${entity}s/${asset?.id}`}>
-            <h3>{asset?.title}</h3>
-          </NavLink>
-          <span>{asset?.description}</span>
-        </footer>
-      </article>
+      <footer className="tile-info">
+        <NavLink to={`/${entity}s/${asset?.id}`}>
+          <h3>{asset?.title}</h3>
+        </NavLink>
+        <span>{asset?.description}</span>
+      </footer>
+    </article>
   );
 };
 
