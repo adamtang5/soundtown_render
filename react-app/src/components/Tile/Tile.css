@@ -1,14 +1,20 @@
+/* Shared values */
+* {
+  --tile-dim: 150px;
+}
+
 .tile {
-  width: 150px;
+  width: var(--tile-dim);
 }
 
 .overlay-group {
   position: relative;
+  height: var(--tile-dim);
 }
 
 .tile-cover {
-  height: 150px;
-  width: 150px;
+  height: var(--tile-dim);
+  width: var(--tile-dim);
 }
 
 .overlay-single {
