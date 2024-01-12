@@ -24,6 +24,8 @@
 .playlist-songs-list {
   width: 100%;
   margin-top: 20px;
+  max-height: 80%;
+  overflow-y: scroll;
 }
 
 .playlist-songs-list li {
