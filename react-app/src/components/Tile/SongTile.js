@@ -98,7 +98,7 @@ const Dropdown = ({ song }) => {
   );
 };
 
-const SongTile = ({ song, setShowModal }) => {
+const SongTile = ({ song, setShowModal, likeDisabled=false }) => {
   const { play, pause, isPlaying } = useContext(AudioContext);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
@@ -143,7 +143,7 @@ const SongTile = ({ song, setShowModal }) => {
       handleLikeToggle={handleSongLikeToggle}
       coverStyle={coverStyle}
       dropdown={<Dropdown song={song} />}
-      canLike={sessionUser?.id !== song?.user_id}
+      canLike={likeDisabled ? false : sessionUser?.id !== song?.user_id}
       liked={song?.likes?.includes(sessionUser?.id)}
       handleShowLoginModal={openLoginModal}
     />

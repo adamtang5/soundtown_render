@@ -31,7 +31,7 @@ const Library = () => {
     },
     {
       path: "/library/likes",
-      component: <ShowcaseSongs songs={userLikes} h3="Hear the tracks you've liked:" />,
+      component: <ShowcaseSongs likeDisabled songs={userLikes} h3="Hear the tracks you've liked:" />,
     },
     {
       path: "/library/playlists",
