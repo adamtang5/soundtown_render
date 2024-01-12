@@ -7,34 +7,21 @@ import ModalForm from "../components/ModalForm/ModalForm";
 import ModalFormImage from "../components/ModalForm/ModalFormImage";
 import ModalFormInput from "../components/ModalForm/ModalFormInput";
 import ModalFormTextarea from "../components/ModalForm/ModalFormTextarea";
+import ModalFormFooter from "../components/ModalForm/ModalFormFooter";
 import "../components/ModalForm/ModalForm.css";
 import "./ModalNav.css";
 
-const BasicInfoForm = ({ setShowModal }) => {
+const BasicInfo = ({ setShowModal, errors, setErrors }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
   const playlist = useSelector(state => state.playlists[id]);
-  const [errors, setErrors] = useState([]);
   const [title, setTitle] = useState(playlist?.title);
   const [description, setDescription] = useState(playlist?.description || '');
   const [imageUrl, setImageUrl] = useState(playlist?.image_url || '');
   const [newImage, setNewImage] = useState();
   const [songsOrder, setSongsOrder] = useState(playlist?.songs_order);
   const previewId = "form-preview";
-
-  const handleCancel = e => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    setErrors([]);
-    setTitle(playlist?.title);
-    setDescription(playlist?.description);
-    setImageUrl(playlist?.image_url);
-    setNewImage(null);
-    setSongsOrder(playlist?.songs_order);
-    setShowModal(false);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,18 +61,6 @@ const BasicInfoForm = ({ setShowModal }) => {
     document.getElementById("image-url").click();
   }
 
-  const buttonGroupData = [
-    {
-      label: 'Save Changes',
-      type: 'submit',
-    },
-    {
-      label: 'Cancel',
-      onClick: handleCancel,
-      type: "cancel",
-    },
-  ];
-
   return (
     <>
       <ModalForm
@@ -118,7 +93,7 @@ const BasicInfoForm = ({ setShowModal }) => {
           </>
         }
         errors={errors}
-        buttonGroupData={buttonGroupData}
+        // buttonGroupData={buttonGroupData}
       />
 
     </>
@@ -149,7 +124,7 @@ const SingleSongRow = ({ song }) => {
   )
 };
 
-const AllTracksModal = ({ songArr }) => {
+const AllTracks = ({ songArr }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const statePlaylists = useSelector(state => state.playlists);
@@ -184,6 +159,7 @@ const AllTracksModal = ({ songArr }) => {
 
 const EditPlaylist = ({ setShowModal, songArr }) => {
   const [mode, setMode] = useState("basic");
+  const [errors, setErrors] = useState([]);
 
   const navData = [
     {
@@ -193,6 +169,31 @@ const EditPlaylist = ({ setShowModal, songArr }) => {
     {
       mode: 'tracks',
       label: 'Tracks',
+    },
+  ];
+
+  const handleCancel = e => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setErrors([]);
+    setTitle(playlist?.title);
+    setDescription(playlist?.description);
+    setImageUrl(playlist?.image_url);
+    setNewImage(null);
+    setSongsOrder(playlist?.songs_order);
+    setShowModal(false);
+  };
+
+  const buttonGroupData = [
+    {
+      label: 'Save Changes',
+      type: 'submit',
+    },
+    {
+      label: 'Cancel',
+      onClick: handleCancel,
+      type: "cancel",
     },
   ];
 
@@ -213,10 +214,18 @@ const EditPlaylist = ({ setShowModal, songArr }) => {
       </header>
 
       {mode === "basic" ? (
-        <BasicInfoForm setShowModal={setShowModal} />
+        <BasicInfo
+          setShowModal={setShowModal}
+          errors={errors}
+          setErrors={setErrors} />
       ) : (
-        <AllTracksModal songArr={songArr} />
+        <AllTracks songArr={songArr} />
       )}
+
+      <ModalFormFooter
+        errors={errors}
+        buttonGroupData={buttonGroupData}
+      />
     </div>
   );
 };
