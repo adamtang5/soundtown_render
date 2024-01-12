@@ -12,7 +12,7 @@ const ModalForm = ({
 }) => {
   const entities = ['song', 'user', 'playlist'];
 
-  return (!entity || !entities.includes(entity)) ? (
+  return !entity || !entities.includes(entity) ? (
     <p>Invalid Entity</p>
   ) : (
     <form
