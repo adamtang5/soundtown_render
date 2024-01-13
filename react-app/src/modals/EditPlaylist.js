@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { loadSong } from "../store/player";
 import { editPlaylist } from "../store/playlist";
-import ModalForm from "../components/ModalForm/ModalForm";
 import ModalFormImage from "../components/ModalForm/ModalFormImage";
 import ModalFormInput from "../components/ModalForm/ModalFormInput";
 import ModalFormTextarea from "../components/ModalForm/ModalFormTextarea";
@@ -11,38 +10,11 @@ import ModalFormFooter from "../components/ModalForm/ModalFormFooter";
 import "../components/ModalForm/ModalForm.css";
 import "./ModalNav.css";
 
-const BasicInfo = ({ setShowModal, errors, setErrors }) => {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const { id } = useParams();
-  const playlist = useSelector(state => state.playlists[id]);
-  const [title, setTitle] = useState(playlist?.title);
-  const [description, setDescription] = useState(playlist?.description || '');
-  const [imageUrl, setImageUrl] = useState(playlist?.image_url || '');
-  const [newImage, setNewImage] = useState();
-  const [songsOrder, setSongsOrder] = useState(playlist?.songs_order);
+const BasicInfo = ({
+  playlistData,
+  setPlaylistData,
+}) => {
   const previewId = "form-preview";
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("image_url", newImage || imageUrl);
-    formData.append("id", id);
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append("songs_order", JSON.stringify(songsOrder));
-
-    const res = await dispatch(editPlaylist(id, formData));
-    if (res) {
-      if (res.errors) {
-        setErrors(res.errors);
-      } else {
-        setShowModal(false);
-        history.push(`/playlists/${id}`);
-      }
-    }
-  };
 
   const updateImageFile = async (e) => {
     const file = await e.target.files[0];
@@ -50,7 +22,10 @@ const BasicInfo = ({ setShowModal, errors, setErrors }) => {
     if (file) {
       const fr = new FileReader();
       fr.readAsDataURL(file);
-      setNewImage(file);
+      setPlaylistData({
+        ...playlistData,
+        newImage: file,
+      })
       const img = document.getElementById(previewId);
       fr.onload = () => img.src = fr.result;
     }
@@ -61,41 +36,48 @@ const BasicInfo = ({ setShowModal, errors, setErrors }) => {
     document.getElementById("image-url").click();
   }
 
+  const handleSetTitle = title => {
+    setPlaylistData({
+      ...playlistData,
+      title,
+    });
+  };
+
+  const handleSetDescription = description => {
+    setPlaylistData({
+      ...playlistData,
+      description,
+    });
+  };
+
   return (
     <>
-      <ModalForm
-        entity="playlist"
-        handleSubmit={handleSubmit}
-        formLeft={
+      <fieldset className="playlist-form-container flex-row">
+        <div className="playlist-form-left flex-column">
           <ModalFormImage
             dimension={250}
             entity="playlist"
-            imageUrl={imageUrl}
+            imageUrl={playlistData?.imageUrl}
             previewId={previewId}
             updateImageFile={updateImageFile}
-            newImage={newImage}
+            newImage={playlistData?.newImage}
             handleImageButtonClick={handleImageButtonClick}
           />
-        }
-        formRight={
-          <>
-            <ModalFormInput
-              label="Title"
-              value={title}
-              setValue={setTitle}
-            />
+        </div>
+        <div className="playlist-form-right flex-column">
+          <ModalFormInput
+            label="Title"
+            value={playlistData?.title}
+            setValue={handleSetTitle}
+          />
 
-            <ModalFormTextarea
-              label="Description"
-              value={description}
-              setValue={setDescription}
-            />
-          </>
-        }
-        errors={errors}
-        // buttonGroupData={buttonGroupData}
-      />
-
+          <ModalFormTextarea
+            label="Description"
+            value={playlistData?.description}
+            setValue={handleSetDescription}
+          />
+        </div>
+      </fieldset>
     </>
   );
 };
@@ -124,7 +106,7 @@ const SingleSongRow = ({ song }) => {
   )
 };
 
-const AllTracks = ({ songArr }) => {
+const AllTracks = ({ songArr, playlistData, setPlaylistData }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const statePlaylists = useSelector(state => state.playlists);
@@ -158,8 +140,20 @@ const AllTracks = ({ songArr }) => {
 };
 
 const EditPlaylist = ({ setShowModal, songArr }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { id } = useParams();
+  const playlist = useSelector(state => state.playlists[id]);
   const [mode, setMode] = useState("basic");
   const [errors, setErrors] = useState([]);
+  const [playlistData, setPlaylistData] = useState({
+    id,
+    title: playlist?.title,
+    description: playlist?.description || '',
+    imageUrl: playlist?.image_url || '',
+    newImage: null,
+    songsOrder: playlist?.songs_order,
+  });
 
   const navData = [
     {
@@ -177,12 +171,36 @@ const EditPlaylist = ({ setShowModal, songArr }) => {
     e.stopPropagation();
 
     setErrors([]);
-    setTitle(playlist?.title);
-    setDescription(playlist?.description);
-    setImageUrl(playlist?.image_url);
-    setNewImage(null);
-    setSongsOrder(playlist?.songs_order);
+    setPlaylistData({
+      id,
+      title: playlist?.title,
+      description: playlist?.description || '',
+      imageUrl: playlist?.image_url || '',
+      newImage: null,
+      songsOrder: playlist?.songs_order,
+    });
     setShowModal(false);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("image_url", playlistData?.newImage || playlistData?.imageUrl);
+    formData.append("id", playlistData?.id);
+    formData.append("title", playlistData?.title);
+    formData.append("description", playlistData?.description);
+    formData.append("songs_order", JSON.stringify(playlistData?.songsOrder));
+
+    const res = await dispatch(editPlaylist(playlistData?.id, formData));
+    if (res) {
+      if (res.errors) {
+        setErrors(res.errors);
+      } else {
+        setShowModal(false);
+        history.push(`/playlists/${playlistData?.id}`);
+      }
+    }
   };
 
   const buttonGroupData = [
@@ -213,19 +231,28 @@ const EditPlaylist = ({ setShowModal, songArr }) => {
         </nav>
       </header>
 
-      {mode === "basic" ? (
-        <BasicInfo
-          setShowModal={setShowModal}
-          errors={errors}
-          setErrors={setErrors} />
-      ) : (
-        <AllTracks songArr={songArr} />
-      )}
+      <form
+        onSubmit={handleSubmit}
+        className="modal-playlist-form modal-form"
+      >
+        {mode === "basic" ? (
+          <BasicInfo
+            playlistData={playlistData}
+            setPlaylistData={setPlaylistData}
+          />
+        ) : (
+          <AllTracks
+            songArr={songArr}
+            playlistData={playlistData}
+            setPlaylistData={setPlaylistData}
+          />
+        )}
 
-      <ModalFormFooter
-        errors={errors}
-        buttonGroupData={buttonGroupData}
-      />
+        <ModalFormFooter
+          errors={errors}
+          buttonGroupData={buttonGroupData}
+        />
+      </form>
     </div>
   );
 };
