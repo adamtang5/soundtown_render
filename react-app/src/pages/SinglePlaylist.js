@@ -214,12 +214,7 @@ const ButtonGroup = ({ playlist }) => {
           showModal={showEditModal}
           setShowModal={setShowEditModal}
           buttonClasses={[...baseClasses, ...styleClasses]}
-          modalForm={
-            <EditPlaylist
-              setShowModal={setShowEditModal}
-              songArr={playlist?.songs}
-            />
-          }
+          modalForm={<EditPlaylist setShowModal={setShowEditModal} />}
         />
       )}
 
