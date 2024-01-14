@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { loadSong } from "../store/player";
+import { loadSong, loadPlaylist } from "../store/player";
 import { editPlaylist } from "../store/playlist";
 import ModalFormImage from "../components/ModalForm/ModalFormImage";
 import ModalFormInput from "../components/ModalForm/ModalFormInput";
@@ -9,6 +9,7 @@ import ModalFormTextarea from "../components/ModalForm/ModalFormTextarea";
 import ModalFormFooter from "../components/ModalForm/ModalFormFooter";
 import "../components/ModalForm/ModalForm.css";
 import "./ModalNav.css";
+import { AudioContext } from "../context/AudioContext";
 
 const BasicInfo = ({
   playlistData,
@@ -83,7 +84,27 @@ const BasicInfo = ({
 };
 
 const SingleSongRow = ({ song }) => {
+  const { play, pause, isPlaying } = useContext(AudioContext);
   const dispatch = useDispatch();
+  const player = useSelector(state => state.player);
+  const { id } = useParams();
+  const playlist = useSelector(state => state.playlists[id]);
+
+  const handlePlayPause = async (e) => {
+    if (playlist?.id === player?.currPlaylistId &&
+      song?.id === player?.currSongId) {
+      if (isPlaying) {
+        await pause();
+      } else {
+        await play();
+      }
+    } else {
+      await dispatch(loadPlaylist(
+        playlist,
+        playlist?.songs_order.indexOf(song?.id)
+      ))
+    }
+  };
 
   const handlePlay = async (e) => {
     e.preventDefault();
@@ -106,10 +127,13 @@ const SingleSongRow = ({ song }) => {
   )
 };
 
-const AllTracks = ({ songArr, playlistData, setPlaylistData }) => {
+const AllTracks = ({ playlistData, setPlaylistData }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const statePlaylists = useSelector(state => state.playlists);
+  const playlist = useSelector(state => state.playlists[id]);
+  const [songsOrder, setSongsOrder] = useState(playlist?.songs_order);
+  const playlistSongs = useSelector(state => songsOrder?.map(id => state.songs[id]));
 
   const handleDelist = async (playlistId, songId) => {
     const formData = new FormData();
@@ -129,7 +153,7 @@ const AllTracks = ({ songArr, playlistData, setPlaylistData }) => {
   return (
     <section className="playlist-songs-list">
       <ul>
-        {songArr?.map(song => (
+        {playlistSongs?.map(song => (
           <li key={song?.id} className="flex-row">
             <SingleSongRow song={song} />
           </li>
@@ -139,7 +163,7 @@ const AllTracks = ({ songArr, playlistData, setPlaylistData }) => {
   );
 };
 
-const EditPlaylist = ({ setShowModal, songArr }) => {
+const EditPlaylist = ({ setShowModal }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
@@ -242,7 +266,6 @@ const EditPlaylist = ({ setShowModal, songArr }) => {
           />
         ) : (
           <AllTracks
-            songArr={songArr}
             playlistData={playlistData}
             setPlaylistData={setPlaylistData}
           />

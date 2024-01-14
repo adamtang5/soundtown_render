@@ -72,6 +72,7 @@
 .song-row-content {
   gap: 15px;
   position: relative;
+  align-items: center;
 }
 
 .song-row-play,
