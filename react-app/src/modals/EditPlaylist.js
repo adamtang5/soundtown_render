@@ -10,6 +10,7 @@ import ModalFormFooter from "../components/ModalForm/ModalFormFooter";
 import "../components/ModalForm/ModalForm.css";
 import "./ModalNav.css";
 import { AudioContext } from "../context/AudioContext";
+import { FaPause, FaPlay } from "react-icons/fa6";
 
 const BasicInfo = ({
   playlistData,
@@ -91,6 +92,8 @@ const SingleSongRow = ({ song }) => {
   const playlist = useSelector(state => state.playlists[id]);
 
   const handlePlayPause = async (e) => {
+    e.preventDefault();
+
     if (playlist?.id === player?.currPlaylistId &&
       song?.id === player?.currSongId) {
       if (isPlaying) {
@@ -106,22 +109,29 @@ const SingleSongRow = ({ song }) => {
     }
   };
 
-  const handlePlay = async (e) => {
-    e.preventDefault();
-    await dispatch(loadSong(song?.id));
-  };
-
   return (
-    <article
-      className="song-row flex-row cursor-pointer"
-      onClick={handlePlay}
-    >
-      <div className="song-row-content flex-row">
-        <div
-          className="song-row-thumb"
-          style={{ backgroundImage: `url(${song?.image_url})` }}
-        />
-        <div className="song-row-title">{song?.title}</div>
+    <article className="song-row cursor-pointer">
+      <div className="song-row-overlay full-box">
+        <div className="song-row-content full-box flex-row">
+          <div
+            className="song-row-thumb"
+            style={{ backgroundImage: `url(${song?.image_url})` }}
+          />
+          <div className="song-row-title">{song?.title}</div>
+        </div>
+        <button
+          onClick={handlePlayPause}
+          className={`song-row-play ${playlist?.id === player?.currPlaylistId &&
+            song?.id === player?.currSongId &&
+            isPlaying ? "standout" : ""}`}
+        >
+          {playlist?.id === player?.currPlaylistId &&
+            song?.id === player?.currSongId && isPlaying ? (
+              <FaPause />
+            ) : (
+              <FaPlay />
+            )}
+        </button>
       </div>
     </article>
   )
