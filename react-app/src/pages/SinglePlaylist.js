@@ -17,7 +17,7 @@ import ToggleButton from "../components/Buttons/ToggleButton";
 import CopyLinkButton from "../components/Buttons/CopyLinkButton";
 import DropdownButton from "../components/Buttons/DropdownButton";
 import EditButton from "../components/Buttons/EditButton";
-import EditPlaylist from "../modals/EditPlaylist";
+import EditPlaylistForm from "../modals/EditPlaylistForm";
 import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
 import "./SinglePlaylist.css";
 import "../components/SidebarModules/Sidebar.css";
@@ -214,7 +214,7 @@ const ButtonGroup = ({ playlist }) => {
           showModal={showEditModal}
           setShowModal={setShowEditModal}
           buttonClasses={[...baseClasses, ...styleClasses]}
-          modalForm={<EditPlaylist setShowModal={setShowEditModal} />}
+          modalForm={<EditPlaylistForm setShowModal={setShowEditModal} />}
         />
       )}
 

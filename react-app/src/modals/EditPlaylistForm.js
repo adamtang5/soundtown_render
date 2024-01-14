@@ -173,7 +173,7 @@ const AllTracks = ({ playlistData, setPlaylistData }) => {
   );
 };
 
-const EditPlaylist = ({ setShowModal }) => {
+const EditPlaylistForm = ({ setShowModal }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
@@ -290,4 +290,4 @@ const EditPlaylist = ({ setShowModal }) => {
   );
 };
 
-export default EditPlaylist;
+export default EditPlaylistForm;
