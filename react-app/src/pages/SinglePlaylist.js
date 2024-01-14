@@ -49,7 +49,7 @@ const SingleSongRow = ({ song, idx }) => {
           <div
             className="song-row-thumb"
             style={{ backgroundImage: `url(${song?.image_url})` }}
-            />
+          />
           <div className="song-row-idx">{idx + 1}</div>
           <div className="song-row-title">
             <Link to={`/songs/${song?.id}`}>{song?.title}</Link>
