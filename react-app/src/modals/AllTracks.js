@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { loadPlaylist } from "../store/player";
 import { editPlaylist } from "../store/playlist";
 import { AudioContext } from "../context/AudioContext";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { FaPause, FaPlay } from "react-icons/fa6";
 
 const SingleSongRow = ({ song }) => {
@@ -82,15 +83,37 @@ const AllTracks = ({ playlistData, setPlaylistData }) => {
     if (res) return res;
   };
 
+  const onDragEnd = result => {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) return;
+    if (destination.index === source.index) return;
+  };
+
   return (
     <section className="playlist-songs-list">
-      <ul>
-        {playlistSongs?.map(song => (
-          <li key={song?.id} className="flex-row">
-            <SingleSongRow song={song} />
-          </li>
-        ))}
-      </ul>
+      <DragDropContext
+        onDragEnd={onDragEnd}
+      >
+        <Droppable
+          droppableId={playlistData?.id}
+        >
+          {(provided, snapshot) => (
+            <ul
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              isDraggingOver={snapshot.isDraggingOver}
+            >
+              {playlistSongs?.map(song => (
+                <li key={song?.id} className="flex-row">
+                  <SingleSongRow song={song} />
+                </li>
+              ))}
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
+      </DragDropContext>
     </section>
   );
 };
