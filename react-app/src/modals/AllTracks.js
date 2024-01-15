@@ -1,13 +1,13 @@
 import { useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { loadPlaylist } from "../store/player";
 import { editPlaylist } from "../store/playlist";
 import { AudioContext } from "../context/AudioContext";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { FaPause, FaPlay } from "react-icons/fa6";
 
-const SingleSongRow = ({ song }) => {
+const SingleSongRow = ({ song, idx }) => {
   const { play, pause, isPlaying } = useContext(AudioContext);
   const dispatch = useDispatch();
   const player = useSelector(state => state.player);
@@ -33,30 +33,44 @@ const SingleSongRow = ({ song }) => {
   };
 
   return (
-    <article className="song-row cursor-pointer">
-      <div className="song-row-overlay full-box">
-        <div className="song-row-content full-box flex-row">
-          <div
-            className="song-row-thumb"
-            style={{ backgroundImage: `url(${song?.image_url})` }}
-          />
-          <div className="song-row-title">{song?.title}</div>
-        </div>
-        <button
-          onClick={handlePlayPause}
-          className={`song-row-play ${playlist?.id === player?.currPlaylistId &&
-            song?.id === player?.currSongId &&
-            isPlaying ? "standout" : ""}`}
+    <Draggable
+      draggableId={song?.id}
+      index={idx}
+    >
+      {(provided, snapshot) => (
+        <article
+          className="song-row"
+          style={{ cursor: "move" }}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+          isDragging={snapshot.isDragging}
         >
-          {playlist?.id === player?.currPlaylistId &&
-            song?.id === player?.currSongId && isPlaying ? (
-              <FaPause />
-            ) : (
-              <FaPlay />
-            )}
-        </button>
-      </div>
-    </article>
+          <div className="song-row-overlay full-box">
+            <div className="song-row-content full-box flex-row">
+              <div
+                className="song-row-thumb"
+                style={{ backgroundImage: `url(${song?.image_url})` }}
+              />
+              <div className="song-row-title">{song?.title}</div>
+            </div>
+            <button
+              onClick={handlePlayPause}
+              className={`song-row-play ${playlist?.id === player?.currPlaylistId &&
+                song?.id === player?.currSongId &&
+                isPlaying ? "standout" : ""}`}
+            >
+              {playlist?.id === player?.currPlaylistId &&
+                song?.id === player?.currSongId && isPlaying ? (
+                <FaPause />
+              ) : (
+                <FaPlay />
+              )}
+            </button>
+          </div>
+        </article>
+      )}
+    </Draggable>
   )
 };
 
@@ -83,37 +97,26 @@ const AllTracks = ({ playlistData, setPlaylistData }) => {
     if (res) return res;
   };
 
-  const onDragEnd = result => {
-    const { destination, source, draggableId } = result;
-
-    if (!destination) return;
-    if (destination.index === source.index) return;
-  };
-
   return (
     <section className="playlist-songs-list">
-      <DragDropContext
-        onDragEnd={onDragEnd}
+      <Droppable
+        droppableId={playlistData?.id}
       >
-        <Droppable
-          droppableId={playlistData?.id}
-        >
-          {(provided, snapshot) => (
-            <ul
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              isDraggingOver={snapshot.isDraggingOver}
-            >
-              {playlistSongs?.map(song => (
-                <li key={song?.id} className="flex-row">
-                  <SingleSongRow song={song} />
-                </li>
-              ))}
-              {provided.placeholder}
-            </ul>
-          )}
-        </Droppable>
-      </DragDropContext>
+        {(provided, snapshot) => (
+          <ul
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            isDraggingOver={snapshot.isDraggingOver}
+          >
+            {playlistSongs?.map((song, idx) => (
+              <li key={song?.id} className="flex-row">
+                <SingleSongRow song={song} idx={idx} />
+              </li>
+            ))}
+            {provided.placeholder}
+          </ul>
+        )}
+      </Droppable>
     </section>
   );
 };
