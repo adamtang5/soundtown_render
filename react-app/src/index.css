@@ -83,6 +83,10 @@ fieldset {
   cursor: pointer;
 }
 
+.cursor-move {
+  cursor: move;
+}
+
 .full-width {
   width: 100%;
 }
