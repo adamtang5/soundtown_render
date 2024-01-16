@@ -40,7 +40,6 @@ const SingleSongRow = ({ song, idx }) => {
       {(provided, snapshot) => (
         <article
           className="song-row"
-          style={{ cursor: "move" }}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
@@ -97,27 +96,52 @@ const AllTracks = ({ playlistData, setPlaylistData }) => {
     if (res) return res;
   };
 
+  const onDragEnd = result => {
+    const { destination, source, draggableId } = result;
+    // console.log('destination: ', destination);
+    // console.log('source: ', source);
+    // console.log('draggableId: ', draggableId);
+
+    if (!destination) return;
+    if (destination.index === source.index) return;
+
+    const newSongsOrder = [...songsOrder];
+    newSongsOrder.splice(source.index, 1);
+    newSongsOrder.splice(destination.index, 0, draggableId);
+
+    setSongsOrder(newSongsOrder);
+
+    setPlaylistData({
+      ...playlistData,
+      songsOrder: newSongsOrder,
+    });
+  };
+
   return (
-    <section className="playlist-songs-list">
-      <Droppable
-        droppableId={playlistData?.id}
-      >
-        {(provided, snapshot) => (
-          <ul
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            isDraggingOver={snapshot.isDraggingOver}
-          >
-            {playlistSongs?.map((song, idx) => (
-              <li key={song?.id} className="flex-row">
-                <SingleSongRow song={song} idx={idx} />
-              </li>
-            ))}
-            {provided.placeholder}
-          </ul>
-        )}
-      </Droppable>
-    </section>
+    <DragDropContext
+      onDragEnd={onDragEnd}
+    >
+      <section className="playlist-songs-list">
+        <Droppable
+          droppableId={playlistData?.id}
+        >
+          {(provided, snapshot) => (
+            <ul
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              isDraggingOver={snapshot.isDraggingOver}
+            >
+              {playlistSongs?.map((song, idx) => (
+                <li key={song?.id} className="flex-row">
+                  <SingleSongRow song={song} idx={idx} />
+                </li>
+              ))}
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
+      </section>
+    </DragDropContext>
   );
 };
 

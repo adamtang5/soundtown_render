@@ -655,6 +655,11 @@ fieldset {
   border-width: 1.1px;
 }
 
+/* Drag and Drop */
+.draggable {
+  background-color: white;
+}
+
 /* Responsive Design */
 @media screen and (min-width: 1240px) {
   * {
