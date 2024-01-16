@@ -6,7 +6,6 @@ import { getAllSongs } from "./store/song";
 import ProtectedRoute from "./utilities/ProtectedRoute";
 import { ModalProvider } from "./components/Context/Modal";
 import AudioProvider from "./context/AudioContext";
-import { DragDropContext } from "react-beautiful-dnd";
 import NavBar from "./components/NavBar";
 import SplashPage from "./pages/SplashPage";
 import Home from "./pages/Home";
@@ -40,56 +39,45 @@ const App = () => {
     return null;
   }
 
-  const onDragEnd = result => {
-    const { destination, source, draggableId } = result;
-
-    if (!destination) return;
-    if (destination.index === source.index) return;
-  };
-
   return (
     <ModalProvider>
       <AudioProvider>
-        <DragDropContext
-          onDragEnd={onDragEnd}
-        >
-          <BrowserRouter>
-            {sessionUser !== null && <NavBar />}
-            <Switch>
-              <Route path="/" exact={true}>
-                {sessionUser !== null ? <Redirect to="/home" /> : <Redirect to="/welcome" />}
-              </Route>
-              <Route path="/welcome">
-                <SplashPage />
-              </Route>
-              <ProtectedRoute path="/home">
-                <Home />
-              </ProtectedRoute>
-              <ProtectedRoute path="/explore">
-                <Explore />
-              </ProtectedRoute>
-              <ProtectedRoute path="/library">
-                <Library />
-              </ProtectedRoute>
-              <ProtectedRoute path="/users/:id">
-                <UserPage />
-              </ProtectedRoute>
-              <ProtectedRoute path="/songs/:id" exact={true}>
-                <SingleSong />
-              </ProtectedRoute>
-              <ProtectedRoute path="/playlists/:id" exact={true}>
-                <SinglePlaylist />
-              </ProtectedRoute>
-              <ProtectedRoute path="/sandbox">
-                <Sandbox />
-              </ProtectedRoute>
-              <Route>
-                <p>not found</p>
-              </Route>
-            </Switch>
-            <Audio />
-          </BrowserRouter>
-        </DragDropContext>
+        <BrowserRouter>
+          {sessionUser !== null && <NavBar />}
+          <Switch>
+            <Route path="/" exact={true}>
+              {sessionUser !== null ? <Redirect to="/home" /> : <Redirect to="/welcome" />}
+            </Route>
+            <Route path="/welcome">
+              <SplashPage />
+            </Route>
+            <ProtectedRoute path="/home">
+              <Home />
+            </ProtectedRoute>
+            <ProtectedRoute path="/explore">
+              <Explore />
+            </ProtectedRoute>
+            <ProtectedRoute path="/library">
+              <Library />
+            </ProtectedRoute>
+            <ProtectedRoute path="/users/:id">
+              <UserPage />
+            </ProtectedRoute>
+            <ProtectedRoute path="/songs/:id" exact={true}>
+              <SingleSong />
+            </ProtectedRoute>
+            <ProtectedRoute path="/playlists/:id" exact={true}>
+              <SinglePlaylist />
+            </ProtectedRoute>
+            <ProtectedRoute path="/sandbox">
+              <Sandbox />
+            </ProtectedRoute>
+            <Route>
+              <p>not found</p>
+            </Route>
+          </Switch>
+          <Audio />
+        </BrowserRouter>
       </AudioProvider>
     </ModalProvider>
   );
