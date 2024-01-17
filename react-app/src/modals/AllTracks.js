@@ -38,36 +38,40 @@ const SingleSongRow = ({ song, idx }) => {
       index={idx}
     >
       {(provided, snapshot) => (
-        <article
-          className="song-row"
+        <li
+          className={`flex-row ${snapshot.isDragging ? "dragging" : "not-dragging"}`}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
         >
-          <div className="song-row-overlay full-box">
-            <div className="song-row-content full-box flex-row">
-              <div
-                className="song-row-thumb"
-                style={{ backgroundImage: `url(${song?.image_url})` }}
-              />
-              <div className="song-row-title">{song?.title}</div>
+          <article
+            className="song-row"
+          >
+            <div className="song-row-overlay full-box">
+              <div className="song-row-content full-box flex-row">
+                <div
+                  className="song-row-thumb"
+                  style={{ backgroundImage: `url(${song?.image_url})` }}
+                />
+                <div className="song-row-title">{song?.title}</div>
+              </div>
+              <button
+                onClick={handlePlayPause}
+                className={`song-row-play ${playlist?.id === player?.currPlaylistId &&
+                  song?.id === player?.currSongId &&
+                  isPlaying ? "standout" : ""}`}
+              >
+                {playlist?.id === player?.currPlaylistId &&
+                  song?.id === player?.currSongId && isPlaying ? (
+                  <FaPause />
+                ) : (
+                  <FaPlay />
+                )}
+              </button>
             </div>
-            <button
-              onClick={handlePlayPause}
-              className={`song-row-play ${playlist?.id === player?.currPlaylistId &&
-                song?.id === player?.currSongId &&
-                isPlaying ? "standout" : ""}`}
-            >
-              {playlist?.id === player?.currPlaylistId &&
-                song?.id === player?.currSongId && isPlaying ? (
-                <FaPause />
-              ) : (
-                <FaPlay />
-              )}
-            </button>
-          </div>
-        </article>
+          </article>
+        </li>
       )}
     </Draggable>
   )
@@ -98,9 +102,6 @@ const AllTracks = ({ playlistData, setPlaylistData }) => {
 
   const onDragEnd = result => {
     const { destination, source, draggableId } = result;
-    // console.log('destination: ', destination);
-    // console.log('source: ', source);
-    // console.log('draggableId: ', draggableId);
 
     if (!destination) return;
     if (destination.index === source.index) return;
@@ -132,9 +133,7 @@ const AllTracks = ({ playlistData, setPlaylistData }) => {
               isDraggingOver={snapshot.isDraggingOver}
             >
               {playlistSongs?.map((song, idx) => (
-                <li key={song?.id} className="flex-row">
-                  <SingleSongRow song={song} idx={idx} />
-                </li>
+                <SingleSongRow key={song?.id} song={song} idx={idx} />
               ))}
               {provided.placeholder}
             </ul>

@@ -656,7 +656,11 @@ fieldset {
 }
 
 /* Drag and Drop */
-.draggable {
+.dragging {
+  background-color: rgb(225, 225, 225);
+}
+
+.not-dragging {
   background-color: white;
 }
 
