@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { loadPlaylist } from "../store/player";
-import { editPlaylist } from "../store/playlist";
 import { AudioContext } from "../context/AudioContext";
 import { FaPause, FaPlay } from "react-icons/fa6";
 import { IoCloseCircle } from "react-icons/io5";
@@ -84,26 +83,9 @@ const SingleSongRow = ({ song, idx, onDelete }) => {
 
 const AllTracks = ({ playlistData, setPlaylistData }) => {
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const statePlaylists = useSelector(state => state.playlists);
   const playlist = useSelector(state => state.playlists[id]);
   const [songsOrder, setSongsOrder] = useState(playlist?.songs_order);
   const playlistSongs = useSelector(state => songsOrder?.map(id => state.songs[id]));
-
-  // const handleDelist = async (playlistId, songId) => {
-  //   const formData = new FormData();
-  //   const playlist = statePlaylists[playlistId];
-
-  //   formData.append("title", playlist?.title);
-  //   formData.append("description", playlist?.description || '');
-  //   formData.append(
-  //     "songs_order",
-  //     JSON.stringify(playlist?.songs_order.filter(id => id !== songId))
-  //   );
-
-  //   const res = await dispatch(editPlaylist(playlistId, formData));
-  //   if (res) return res;
-  // };
 
   const handleDelete = idx => {
     const newSongsOrder = [...songsOrder];
