@@ -6,8 +6,9 @@ import { loadPlaylist } from "../store/player";
 import { editPlaylist } from "../store/playlist";
 import { AudioContext } from "../context/AudioContext";
 import { FaPause, FaPlay } from "react-icons/fa6";
+import { IoCloseCircle } from "react-icons/io5";
 
-const SingleSongRow = ({ song, idx }) => {
+const SingleSongRow = ({ song, idx, onDelete }) => {
   const { play, pause, isPlaying } = useContext(AudioContext);
   const dispatch = useDispatch();
   const player = useSelector(state => state.player);
@@ -45,9 +46,7 @@ const SingleSongRow = ({ song, idx }) => {
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
         >
-          <article
-            className="song-row"
-          >
+          <article className="song-row">
             <div className="song-row-overlay full-box">
               <div className="song-row-content full-box flex-row">
                 <div
@@ -69,6 +68,12 @@ const SingleSongRow = ({ song, idx }) => {
                   <FaPlay />
                 )}
               </button>
+              <button
+                className="song-row-delete"
+                onClick={onDelete}
+              >
+                <IoCloseCircle />
+              </button>
             </div>
           </article>
         </li>
@@ -85,19 +90,31 @@ const AllTracks = ({ playlistData, setPlaylistData }) => {
   const [songsOrder, setSongsOrder] = useState(playlist?.songs_order);
   const playlistSongs = useSelector(state => songsOrder?.map(id => state.songs[id]));
 
-  const handleDelist = async (playlistId, songId) => {
-    const formData = new FormData();
-    const playlist = statePlaylists[playlistId];
+  // const handleDelist = async (playlistId, songId) => {
+  //   const formData = new FormData();
+  //   const playlist = statePlaylists[playlistId];
 
-    formData.append("title", playlist?.title);
-    formData.append("description", playlist?.description || '');
-    formData.append(
-      "songs_order",
-      JSON.stringify(playlist?.songs_order.filter(id => id !== songId))
-    );
+  //   formData.append("title", playlist?.title);
+  //   formData.append("description", playlist?.description || '');
+  //   formData.append(
+  //     "songs_order",
+  //     JSON.stringify(playlist?.songs_order.filter(id => id !== songId))
+  //   );
 
-    const res = await dispatch(editPlaylist(playlistId, formData));
-    if (res) return res;
+  //   const res = await dispatch(editPlaylist(playlistId, formData));
+  //   if (res) return res;
+  // };
+
+  const handleDelete = idx => {
+    const newSongsOrder = [...songsOrder];
+    newSongsOrder.splice(idx, 1);
+
+    setSongsOrder(newSongsOrder);
+
+    setPlaylistData({
+      ...playlistData,
+      songsOrder: newSongsOrder,
+    });
   };
 
   const onDragEnd = result => {
@@ -133,7 +150,12 @@ const AllTracks = ({ playlistData, setPlaylistData }) => {
               isDraggingOver={snapshot.isDraggingOver}
             >
               {playlistSongs?.map((song, idx) => (
-                <SingleSongRow key={song?.id} song={song} idx={idx} />
+                <SingleSongRow
+                  key={song?.id}
+                  song={song}
+                  idx={idx}
+                  onDelete={() => handleDelete(idx)}
+                />
               ))}
               {provided.placeholder}
             </ul>

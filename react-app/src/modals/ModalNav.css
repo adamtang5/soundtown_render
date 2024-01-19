@@ -42,3 +42,7 @@
 .nav-header li:not(.active):hover {
   border-bottom: 2px solid;
 }
+
+.combo-form-container .song-row {
+  width: 100%;
+}
