@@ -101,14 +101,24 @@
 
 .song-row-play {
   color: var(--color-primary);
-  position: absolute;
-  top: 25%;
-  bottom: 25%;
   left: 10px;
 }
 
 .song-row-play:hover {
   color: var(--color-primary);
+}
+
+.song-row-delete {
+  color: var(--color-info);
+  right: 10px;
+  transform: scale(1.5);
+}
+
+.song-row-play,
+.song-row-delete {
+  position: absolute;
+  top: 25%;
+  bottom: 25%;
 }
 
 .user-badge {
