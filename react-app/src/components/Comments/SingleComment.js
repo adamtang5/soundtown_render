@@ -110,7 +110,7 @@ const SingleComment = ({ comment }) => {
     >
       <article className="comment-card flex-row">
         <aside className="comment-avatar">
-          <Avatar user={comment?.user} isLink={true} />
+          <Avatar user={comment?.user} isLink />
         </aside>
         <div className="comment-body flex-column">
           <header

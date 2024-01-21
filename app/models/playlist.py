@@ -45,7 +45,7 @@ class Playlist(db.Model):
       'created_at': self.created_at,
       'updated_at': self.updated_at,
       'songs': [song.to_dict() for song in self.songs],
-      'likes': [like.id for like in self.pl_likes]
+      'likes': [like.to_dict() for like in self.pl_likes]
     }
 
   def to_dict(self):

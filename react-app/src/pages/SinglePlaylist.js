@@ -306,7 +306,7 @@ const SinglePlaylist = () => {
           <section className="playlist-two-columns flex-row">
             <aside>
               <article className="user-badge flex-column">
-                <Avatar user={playlist?.user} isLink={true} />
+                <Avatar user={playlist?.user} isLink />
                 <footer>
                   <Link to={`/users/${playlist?.user_id}`}>
                     {playlist?.user?.display_name}
@@ -349,6 +349,16 @@ const SinglePlaylist = () => {
                   </footer>}
                 user={playlist?.user}
               />
+            ))}
+          />
+          <SidebarCollection
+            collectionLink={`/playlists/${playlist?.id}/likes`}
+            styleClasses={['heart-label']}
+            h3={`${playlist?.likes?.length} like${playlist?.likes?.length > 1 ? "s" : ""}`}
+            collection={playlist?.likes?.slice(0, 9)?.map(user => (
+              <li key={user?.id}>
+                <Avatar user={user} isLink />
+              </li>
             ))}
           />
         </aside>

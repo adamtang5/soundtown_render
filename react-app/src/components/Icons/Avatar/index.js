@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./Avatar.css";
 
-const Avatar = ({ user, isLink }) => {
+const Avatar = ({ user, isLink=false }) => {
   const Visual = () => {
     return user?.avatar_url ? (
       <img src={user?.avatar_url} alt={user?.display_name} />

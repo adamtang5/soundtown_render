@@ -294,7 +294,7 @@ const SingleSong = () => {
           <section className="comment-two-columns flex-row">
             <aside>
               <article className="user-badge flex-column">
-                <Avatar user={song?.user} isLink={true} />
+                <Avatar user={song?.user} isLink />
                 <footer>
                   <Link to={`/users/${song?.user_id}`}>
                     {song?.user?.display_name}

@@ -39,7 +39,7 @@ const ReplyCommentForm = ({ parent, setIsReplying }) => {
     <ul className="nested-comment">
       <li className="comment-card flex-row">
         <aside className="comment-avatar">
-          <Avatar user={sessionUser} isLink={false} />
+          <Avatar user={sessionUser} />
         </aside>
         <form
           onSubmit={handleReply}
