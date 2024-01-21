@@ -79,7 +79,6 @@ const SongRowButtonGroup = ({ song }) => {
   const sessionUser = useSelector(state => state.session.user);
   const player = useSelector(state => state.player);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showPlaylistModal, setShowPlaylistModal] = useState(false);
   const baseClasses = ['cursor-pointer', 'composite-button'];
   const styleClasses = ['button-action', 'b3'];
 
@@ -119,12 +118,6 @@ const SongRowButtonGroup = ({ song }) => {
         className="logo-before flex-row enqueue-label"
       >Add to queue</div>,
     },
-    // {
-    //   onClick: () => setShowPlaylistModal(true),
-    //   label: <div
-    //     className="logo-before flex-row enlist-label"
-    //   >Add to playlist</div>,
-    // },
   ];
 
   return (
