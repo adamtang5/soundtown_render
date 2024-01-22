@@ -21,9 +21,7 @@ const SidebarCollection = ({
           <div className="hover-animation">View all</div>
         </Link>
       </header>
-      <ul className="sidebar-list">
-        {collection}
-      </ul>
+      {collection}
     </article>
   );
 };

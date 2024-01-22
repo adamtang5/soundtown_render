@@ -29,13 +29,22 @@
   font-size: 14px;
 }
 
+.sidebar-header .heart-label::before {
+  top: 2px;
+  margin-right: 5px;
+  filter: invert(61%) sepia(0%) saturate(17%) hue-rotate(139deg) brightness(97%) contrast(89%);
+}
+
 .sidebar-list li {
-  width: 100%;
-  margin: 5px 0;
+  margin: 5px -10px 5px 0;
 }
 
 .sidebar-list .avatar {
   display: block;
+}
+
+.sidebar-list .avatar img {
+  border: 2px solid var(--color-border-light);
 }
 
 .sidebar-cover-bg {
