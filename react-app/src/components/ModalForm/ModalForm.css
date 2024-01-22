@@ -11,6 +11,10 @@
   margin: 20px 0;
 }
 
+.modal-playlist-form .playlist-songs-list {
+  overflow-y: scroll;
+}
+
 .modal-form {
   position: relative;
 }
