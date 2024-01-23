@@ -44,6 +44,7 @@ const SingleSongRow = ({ song, idx, onDelete }) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
+          title="Drag to re-order"
         >
           <article className="song-row">
             <div className="song-row-overlay full-box">
@@ -59,6 +60,8 @@ const SingleSongRow = ({ song, idx, onDelete }) => {
                 className={`song-row-play ${playlist?.id === player?.currPlaylistId &&
                   song?.id === player?.currSongId &&
                   isPlaying ? "standout" : ""}`}
+                title={playlist?.id === player?.currPlaylistId &&
+                  song?.id === player?.currSongId && isPlaying ? "Pause" : "Play"}
               >
                 {playlist?.id === player?.currPlaylistId &&
                   song?.id === player?.currSongId && isPlaying ? (
@@ -70,6 +73,7 @@ const SingleSongRow = ({ song, idx, onDelete }) => {
               <button
                 className="song-row-delete"
                 onClick={onDelete}
+                title="Remove from playlist"
               >
                 <IoCloseCircle />
               </button>
