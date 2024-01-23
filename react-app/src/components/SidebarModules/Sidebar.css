@@ -59,3 +59,36 @@
   width: 50px;
   height: 50px;
 }
+
+.asset-sidebar .github-badge {
+  background-color: black;
+  border-radius: .5em;
+  gap: .75em;
+  padding: .5em .75em;
+  color: white;
+  align-items: center;
+  width: fit-content;
+  font-size: .75em;
+}
+
+.asset-sidebar .github-badge .white-bg,
+.asset-sidebar .github-badge img {
+  border-radius: 50%;
+}
+
+.asset-sidebar .github-badge img {
+  width: 25px;
+  height: 25px;
+  filter: invert(1);
+  -webkit-filter: invert(1);
+}
+
+.sidebar-credits a {
+  width: fit-content;
+  display: block;
+}
+
+.sidebar-tech-list {
+  gap: .75em;
+  flex-wrap: wrap;
+}

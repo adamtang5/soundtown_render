@@ -21,6 +21,7 @@ import EditPlaylistForm from "../modals/EditPlaylistForm";
 import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
 import "./SinglePlaylist.css";
 import "../components/SidebarModules/Sidebar.css";
+import Credits from "../components/SidebarModules/Credits";
 
 const SingleSongRow = ({ song, idx }) => {
   const { play, pause, isPlaying } = useContext(AudioContext);
@@ -369,6 +370,7 @@ const SinglePlaylist = () => {
               </ul>
             }
           />
+          <Credits />
         </aside>
       </div>
     </>

@@ -1,54 +1,62 @@
 [
   {
     "name": "JavaScript",
-    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/javascript/javascript-original.svg"
+    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/javascript/javascript-original.svg",
+    "badge_url": "https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=for-the-badge&logo=JavaScript&logoColor=black"
   },
   {
     "name": "React.js",
-    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/react/react-original.svg"
+    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/react/react-original.svg",
+    "badge_url": "https://img.shields.io/badge/React-61DAFB.svg?style=for-the-badge&logo=React&logoColor=black"
   },
   {
     "name": "Redux",
-    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/redux/redux-original.svg"
-  },
-  {
-    "name": "Node.js",
-    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/nodejs/nodejs-plain-wordmark.svg"
+    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/redux/redux-original.svg",
+    "badge_url": "https://img.shields.io/badge/Redux-764ABC.svg?style=for-the-badge&logo=Redux&logoColor=white"
   },
   {
     "name": "Python",
-    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/python/python-original-wordmark.svg"
+    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/python/python-original-wordmark.svg",
+    "badge_url": "https://img.shields.io/badge/Python-3776AB.svg?style=for-the-badge&logo=Python&logoColor=white"
   },
   {
     "name": "Flask",
-    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/flask/flask-original-wordmark.svg"
+    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/flask/flask-original-wordmark.svg",
+    "badge_url": "https://img.shields.io/badge/Flask-000000.svg?style=for-the-badge&logo=Flask&logoColor=white"
   },
   {
     "name": "Postgresql",
-    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/postgresql/postgresql-original.svg"
+    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/postgresql/postgresql-original.svg",
+    "badge_url": "https://img.shields.io/badge/PostgreSQL-4169E1.svg?style=for-the-badge&logo=PostgreSQL&logoColor=white"
   },
   {
     "name": "SQLAlchemy",
-    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/sqlalchemy/sqlalchemy-original-wordmark.svg"
+    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/sqlalchemy/sqlalchemy-original-wordmark.svg",
+    "badge_url": "https://img.shields.io/badge/SQLAlchemy-D71F00.svg?style=for-the-badge&logo=SQLAlchemy&logoColor=white"
   },
   {
     "name": "CSS 3",
-    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/css3/css3-original.svg"
+    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/css3/css3-original.svg",
+    "badge_url": "https://img.shields.io/badge/CSS3-1572B6.svg?style=for-the-badge&logo=CSS3&logoColor=white"
   },
   {
     "name": "HTML 5",
-    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/html5/html5-original.svg"
+    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/html5/html5-original.svg",
+    "badge_url": "https://img.shields.io/badge/HTML5-E34F26.svg?style=for-the-badge&logo=HTML5&logoColor=white"
   },
   {
     "name": "Git",
-    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/git/git-original.svg"
+    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/git/git-original.svg",
+    "badge_url": "https://img.shields.io/badge/Git-F05032.svg?style=for-the-badge&logo=Git&logoColor=white"
   },
   {
     "name": "Docker",
-    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/docker/docker-original-wordmark.svg"
+    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/docker/docker-original-wordmark.svg",
+    "badge_url": "https://img.shields.io/badge/Docker-2496ED.svg?style=for-the-badge&logo=Docker&logoColor=white"
   },
   {
     "name": "Visual Studio Code",
-    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/vscode/vscode-original.svg"
+    "image_url": "https://raw.githubusercontent.com/devicons/devicon/v2.15.1/icons/vscode/vscode-original.svg",
+    "badge_url": "https://img.shields.io/badge/Visual%20Studio%20Code-007ACC.svg?style=for-the-badge&logo=Visual-Studio-Code&logoColor=white"
   }
 ]
