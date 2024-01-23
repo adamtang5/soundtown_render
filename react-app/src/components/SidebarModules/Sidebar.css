@@ -89,6 +89,10 @@
 }
 
 .sidebar-tech-list {
-  gap: .75em;
+  gap: .5em;
   flex-wrap: wrap;
+}
+
+.sidebar-tech-list img {
+  border-radius: .25em;
 }
