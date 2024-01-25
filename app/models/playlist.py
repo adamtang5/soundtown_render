@@ -33,6 +33,12 @@ class Playlist(db.Model):
     back_populates="playlists"
   )
 
+  def sort_by_id(self):
+    d = dict()
+    for item in self.songs:
+      d[str(item.id)] = item
+    return [d[id].to_dict() for id in json.loads(self.songs_order)]
+
   def to_extended_dict(self):
     return {
       'id': self.id,
@@ -44,7 +50,7 @@ class Playlist(db.Model):
       'description': self.description,
       'created_at': self.created_at,
       'updated_at': self.updated_at,
-      'songs': [song.to_dict() for song in self.songs],
+      'songs': self.sort_by_id(),
       'likes': [like.to_dict() for like in self.pl_likes]
     }
 
