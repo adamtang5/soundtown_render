@@ -95,4 +95,5 @@
 
 .sidebar-tech-list img {
   border-radius: .25em;
+  filter: saturate(75%);
 }
