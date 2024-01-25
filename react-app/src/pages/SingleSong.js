@@ -20,6 +20,7 @@ import SpeechBubble from "../components/Icons/SpeechBubble";
 import CommentList from "../components/Comments/CommentList";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";
 import AssetCard from "../components/Modules/AssetCard";
+import Credits from "../components/SidebarModules/Credits";
 
 const NewCommentForm = ({
   handleNewCommentSubmit,
@@ -229,7 +230,7 @@ const SingleSong = () => {
       await dispatch(getSong(id));
       setLoaded(true);
     })();
-  }, [dispatch]);
+  }, [dispatch, id]);
   
   const handlePlayPause = async (e) => {
     if (song?.id === player?.currSongId) {
@@ -339,6 +340,7 @@ const SingleSong = () => {
               </ul>
             }
           />
+          <Credits />
         </aside>
       </div>
     </>

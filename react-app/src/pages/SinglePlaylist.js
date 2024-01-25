@@ -258,7 +258,7 @@ const SinglePlaylist = () => {
     (async () => {
       await dispatch(getPlaylist(id));
     })();
-  }, [dispatch]);
+  }, [dispatch, id]);
   
   useEffect(() => {
     (async () => {
