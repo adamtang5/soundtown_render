@@ -341,7 +341,7 @@ const SinglePlaylist = () => {
                     assetCover={
                       <div className="sidebar-cover-bg">
                         <img
-                          src={pl?.image_url}
+                          src={pl?.image_url || pl?.songs[0]?.image_url}
                           className="sidebar-cover"
                           alt=""
                         />

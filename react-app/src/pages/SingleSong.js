@@ -18,6 +18,8 @@ import EditSongForm from "../modals/EditSongForm";
 import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
 import SpeechBubble from "../components/Icons/SpeechBubble";
 import CommentList from "../components/Comments/CommentList";
+import SidebarCollection from "../components/SidebarModules/SidebarCollection";
+import AssetCard from "../components/Modules/AssetCard";
 
 const NewCommentForm = ({
   handleNewCommentSubmit,
@@ -305,7 +307,39 @@ const SingleSong = () => {
             <SongComments loaded={loaded} />
           </section>
         </main>
-        <aside>{/* TODO: Sidebar goes here */}</aside>
+        <aside className="asset-sidebar">
+          <SidebarCollection
+            collectionLink={`/songs/${song?.id}/playlists`}
+            styleClasses={['stack-label']}
+            h3="In playlists"
+            collection={
+              <ul className="sidebar-list">
+                {song?.playlists?.slice(0, 3)?.map(pl => (
+                  <AssetCard
+                    key={pl?.id}
+                    entity="playlist"
+                    asset={pl}
+                    assetCover={
+                      <div className="sidebar-cover-bg">
+                        <img
+                          src={pl?.image_url || pl?.songs[0]?.image_url}
+                          className="sidebar-cover"
+                          alt={pl?.title}
+                        />
+                      </div>
+                    }
+                    assetFooter={
+                      <footer className="logo-before heart-label">
+                        {pl?.likes?.length}
+                      </footer>
+                    }
+                    user={pl?.user}
+                  />
+                ))}
+              </ul>
+            }
+          />
+        </aside>
       </div>
     </>
   );
