@@ -340,6 +340,20 @@ const SingleSong = () => {
               </ul>
             }
           />
+          <SidebarCollection
+            collectionLink={`/songs/${song?.id}/likes`}
+            styleClasses={['heart-label']}
+            h3={`${song?.likes?.length} like${song?.likes?.length > 1 ? "s" : ""}`}
+            collection={
+              <ul className="sidebar-list flex-row">
+                {song?.likes?.slice(0, 9)?.map(user => (
+                  <li key={user?.id}>
+                    <Avatar user={user} isLink />
+                  </li>
+                ))}
+              </ul>
+            }
+          />
           <Credits />
         </aside>
       </div>
