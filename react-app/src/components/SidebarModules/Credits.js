@@ -28,7 +28,7 @@ const CreatorsList = () => {
   return (
     <ul className="sidebar-list flex-row">
       {creators?.map(creator => (
-        <li key={creator?.html_url}>
+        <li key={creator?.github_url}>
           <a className="avatar" href={creator?.github_url} target="_blank" rel="noreferrer">
             <img src={creator?.avatar_url} alt={`${creator?.first_name} ${creator?.last_name}`} />
           </a>
