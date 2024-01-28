@@ -13,6 +13,7 @@ import Explore from "./pages/Explore";
 import Library from "./pages/Library";
 import UserPage from "./pages/UserPage";
 import SingleSong from "./pages/SingleSong";
+import SongPlaylists from "./pages/SongPlaylists";
 import SinglePlaylist from "./pages/SinglePlaylist";
 import Audio from "./components/AudioPlayer/Audio";
 import Sandbox from "./pages/Sandbox";
@@ -65,6 +66,9 @@ const App = () => {
             </ProtectedRoute>
             <ProtectedRoute path="/songs/:id" exact={true}>
               <SingleSong />
+            </ProtectedRoute>
+            <ProtectedRoute path="/songs/:id/playlists" exact={true}>
+              <SongPlaylists />
             </ProtectedRoute>
             <ProtectedRoute path="/playlists/:id" exact={true}>
               <SinglePlaylist />
