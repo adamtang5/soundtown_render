@@ -16,6 +16,7 @@ import SingleSong from "./pages/SingleSong";
 import SongPlaylists from "./pages/SongPlaylists";
 import SongLikes from "./pages/SongLikes";
 import SinglePlaylist from "./pages/SinglePlaylist";
+import PlaylistLikes from "./pages/PlaylistLikes";
 import Audio from "./components/AudioPlayer/Audio";
 import Sandbox from "./pages/Sandbox";
 
@@ -76,6 +77,9 @@ const App = () => {
             </ProtectedRoute>
             <ProtectedRoute path="/playlists/:id" exact={true}>
               <SinglePlaylist />
+            </ProtectedRoute>
+            <ProtectedRoute path="/playlists/:id/likes" exact={true}>
+              <PlaylistLikes />
             </ProtectedRoute>
             <ProtectedRoute path="/sandbox">
               <Sandbox />
