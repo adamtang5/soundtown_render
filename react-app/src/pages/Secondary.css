@@ -1,0 +1,10 @@
+.secondary-banner {
+  padding-top: 2em;
+  gap: 1em;
+}
+
+.secondary-banner h2 {
+  font-size: 2em;
+  font-weight: 500;
+  height: fit-content;
+}
