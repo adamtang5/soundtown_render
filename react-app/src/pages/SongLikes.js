@@ -7,6 +7,17 @@ const SongLikes = () => {
   const { id } = useParams();
   const song = useSelector(state => state.songs[id]);
 
+  const navData = [
+    {
+      to: `/songs/${id}/likes`,
+      label: "Likes",
+    },
+    {
+      to: `/songs/${id}/playlists`,
+      label: "In playlists",
+    },
+  ];
+  
   return (
     <main className="container">
       <SecondaryHeader
@@ -14,6 +25,7 @@ const SongLikes = () => {
         asset={song}
         dimension={100}
         imageUrl={song?.image_url}
+        navData={navData}
       />
     </main>
   );

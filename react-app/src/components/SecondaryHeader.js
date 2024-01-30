@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
+import StickyNav from "./StickyNav";
 
 const SecondaryHeader = ({
   entity,
   asset,
   dimension,
   imageUrl,
+  navData,
 }) => {
   return (
     <header>
@@ -30,6 +32,7 @@ const SecondaryHeader = ({
           <h2>{asset?.title}</h2>
         </Link>
       </div>
+      <StickyNav navData={navData} />
     </header>
   );
 };
