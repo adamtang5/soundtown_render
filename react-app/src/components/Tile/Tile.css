@@ -211,3 +211,12 @@
   opacity: .95;
   color: rgba(128, 128, 128, 0.686);
 }
+
+.user-tile {
+  align-items: center;
+  gap: 1em;
+}
+
+.user-tile-info {
+  color: var(--color-info);
+}
