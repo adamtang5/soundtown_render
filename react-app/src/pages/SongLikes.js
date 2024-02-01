@@ -38,7 +38,7 @@ const SongLikes = () => {
         navData={navData}
       />
       <section className="showcase">
-        <div className="showcase-grid flex-row">
+        <div className="secondary-showcase-grid flex-row">
           {song?.likes?.map((user, idx) => (
             <article className="user-tile flex-column" key={idx}>
               <Link to={`/users/${user?.id}`} exact={true}>
