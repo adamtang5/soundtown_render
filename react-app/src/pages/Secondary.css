@@ -8,3 +8,9 @@
   font-weight: 500;
   height: fit-content;
 }
+
+.secondary-showcase-grid {
+  padding: 60px 0;
+  flex-wrap: wrap;
+  gap: 50px;
+}
