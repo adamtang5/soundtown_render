@@ -309,51 +309,55 @@ const SingleSong = () => {
           </section>
         </main>
         <aside className="asset-sidebar">
-          <SidebarCollection
-            collectionLink={`/songs/${song?.id}/playlists`}
-            styleClasses={['stack-label']}
-            h3="In playlists"
-            collection={
-              <ul className="sidebar-list">
-                {song?.playlists?.slice(0, 3)?.map(pl => (
-                  <AssetCard
-                    key={pl?.id}
-                    entity="playlist"
-                    asset={pl}
-                    assetCover={
-                      <div className="sidebar-cover-bg">
-                        <img
-                          src={pl?.image_url || pl?.songs[0]?.image_url}
-                          className="sidebar-cover"
-                          alt={pl?.title}
-                        />
-                      </div>
-                    }
-                    assetFooter={
-                      <footer className="logo-before heart-label">
-                        {pl?.likes?.length}
-                      </footer>
-                    }
-                    user={pl?.user}
-                  />
-                ))}
-              </ul>
-            }
-          />
-          <SidebarCollection
-            collectionLink={`/songs/${song?.id}/likes`}
-            styleClasses={['heart-label']}
-            h3={`${song?.likes?.length} like${song?.likes?.length > 1 ? "s" : ""}`}
-            collection={
-              <ul className="sidebar-list flex-row">
-                {song?.likes?.slice(0, 9)?.map(user => (
-                  <li key={user?.id}>
-                    <Avatar user={user} isLink />
-                  </li>
-                ))}
-              </ul>
-            }
-          />
+          {song?.playlists?.length > 0 && (
+            <SidebarCollection
+              collectionLink={`/songs/${song?.id}/playlists`}
+              styleClasses={['stack-label']}
+              h3="In playlists"
+              collection={
+                <ul className="sidebar-list">
+                  {song?.playlists?.slice(0, 3)?.map(pl => (
+                    <AssetCard
+                      key={pl?.id}
+                      entity="playlist"
+                      asset={pl}
+                      assetCover={
+                        <div className="sidebar-cover-bg">
+                          <img
+                            src={pl?.image_url || pl?.songs[0]?.image_url}
+                            className="sidebar-cover"
+                            alt={pl?.title}
+                          />
+                        </div>
+                      }
+                      assetFooter={
+                        <footer className="logo-before heart-label">
+                          {pl?.likes?.length}
+                        </footer>
+                      }
+                      user={pl?.user}
+                    />
+                  ))}
+                </ul>
+              }
+            />
+          )}
+          {song?.likes?.length > 0 && (
+            <SidebarCollection
+              collectionLink={`/songs/${song?.id}/likes`}
+              styleClasses={['heart-label']}
+              h3={`${song?.likes?.length} like${song?.likes?.length > 1 ? "s" : ""}`}
+              collection={
+                <ul className="sidebar-list flex-row">
+                  {song?.likes?.slice(0, 9)?.map(user => (
+                    <li key={user?.id}>
+                      <Avatar user={user} isLink />
+                    </li>
+                  ))}
+                </ul>
+              }
+            />
+          )}
           <Credits />
         </aside>
       </div>
