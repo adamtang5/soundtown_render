@@ -1,7 +1,6 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { getSong } from "../store/song";
 import SecondaryHeader from "../components/SecondaryHeader";
 import "../pages/Secondary.css";
@@ -41,7 +40,7 @@ const SongLikes = () => {
         <div className="secondary-showcase-grid flex-row">
           {song?.likes?.map((user, idx) => (
             <article className="user-tile flex-column" key={idx}>
-              <Link to={`/users/${user?.id}`} exact={true}>
+              <Link to={`/users/${user?.id}`}>
                 <div className="full-box">
                   <img
                     className="circle preview"
@@ -50,7 +49,7 @@ const SongLikes = () => {
                   />
                 </div>
               </Link>
-              <Link to={`/users/${user?.id}`} exact={true}>
+              <Link to={`/users/${user?.id}`}>
                 <footer className="user-tile-info">
                   {user?.display_name}
                 </footer>
