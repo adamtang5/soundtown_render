@@ -184,7 +184,7 @@ const ButtonGroup = ({ song }) => {
   );
 };
 
-const SongComments = ({ loaded }) => {
+const SongComments = ({ song, loaded }) => {
   const commentsByParentId = useSelector(state => state.comments);
   const rootComments = commentsByParentId[null];
 
@@ -195,8 +195,8 @@ const SongComments = ({ loaded }) => {
       <header className="comments-count flex-row">
         <SpeechBubble classes={['comment-icon', 'small-icon']} />
         <span className="comments-count-text">
-          {rootComments !== null && rootComments?.length} comment
-          {rootComments?.length > 1 ? "s" : ""}
+          {song?.comments?.length} comment
+          {song?.comments?.length > 1 ? "s" : ""}
         </span>
       </header>
       <ul>
@@ -305,7 +305,7 @@ const SingleSong = () => {
                 </footer>
               </article>
             </aside>
-            <SongComments loaded={loaded} />
+            <SongComments song={song} loaded={loaded} />
           </section>
         </main>
         <aside className="asset-sidebar">
