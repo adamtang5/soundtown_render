@@ -45,6 +45,7 @@ This is a clone of [Soundcloud](https://soundcloud.com/). Access the [Sound Town
 
     * ```pipenv shell```
     * ```flask db migrate```
+    * ```flask db upgrade```
     * ```flask seed all```
     * ```flask run```
 
