@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSong } from "../store/song";
 import SongSecondary from "../components/SongSecondary";
-import ShowcaseSongLikes from "../components/ShowcaseSongLikes";
+import ShowcaseAssetLikes from "../components/ShowcaseAssetLikes";
 
 const SongLikes = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const SongLikes = () => {
   return (
     <SongSecondary
       song={song}
-      showcase={<ShowcaseSongLikes song={song} />}
+      showcase={<ShowcaseAssetLikes entity="song" asset={song} />}
     />
   );
 };

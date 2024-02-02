@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-const ShowcaseSongLikes = ({ song }) => {
+const ShowcaseAssetLikes = ({ entity, asset }) => {
   return (
     <>
-      {song?.likes?.map((user, idx) => (
+      {asset?.likes?.map((user, idx) => (
         <article className="user-tile flex-column" key={idx}>
           <Link to={`/users/${user?.id}`}>
             <div className="full-box">
@@ -25,4 +25,4 @@ const ShowcaseSongLikes = ({ song }) => {
   );
 };
 
-export default ShowcaseSongLikes;
+export default ShowcaseAssetLikes;
