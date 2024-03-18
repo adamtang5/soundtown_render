@@ -22,9 +22,7 @@ const AssetCard = ({
           <Link to={`/${entity}s/${asset?.id}`}>
             {asset?.title}
           </Link>
-          <Link to={`/${entity}s/${asset?.id}`}>
-            {assetFooter}
-          </Link>
+          {assetFooter}
         </div>
         <ul className="asset-li-actions flex-row">
           {buttonGroupData.map((data, idx) => (
