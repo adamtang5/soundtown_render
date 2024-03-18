@@ -15,6 +15,7 @@
 .tile-cover {
   height: var(--tile-dim);
   width: var(--tile-dim);
+  position: relative;
 }
 
 .overlay-single {
