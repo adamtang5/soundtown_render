@@ -339,13 +339,16 @@ const SinglePlaylist = () => {
                     entity="playlist"
                     asset={pl}
                     assetCover={
-                      <div className="sidebar-cover-bg">
-                        <img
-                          src={pl?.image_url || pl?.songs[0]?.image_url}
-                          className="sidebar-cover"
-                          alt=""
-                        />
-                      </div>}
+                      <Link to={`/playlists/${pl?.id}`}>
+                        <div className="sidebar-cover-bg">
+                          <img
+                            src={pl?.image_url || pl?.songs[0]?.image_url}
+                            className="sidebar-cover"
+                            alt=""
+                          />
+                        </div>
+                      </Link>
+                    }
                     assetFooter={
                       <footer className="logo-before heart-label">
                         {pl?.likes?.length}
