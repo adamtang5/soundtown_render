@@ -6,7 +6,7 @@ def seed_users():
   demo = User(
     email='demo@aa.io',
     display_name='Demo user',
-    avatar_url='https://avatarfiles.alphacoders.com/194/thumb-194221.jpg',
+    avatar_url='https://i.ibb.co/Qb79Y9g/eighth-note-sq.png',
     banner_url='https://i.ytimg.com/vi/zob-2dpRtH0/maxresdefault.jpg',
     password='password')
   marnie = User(
