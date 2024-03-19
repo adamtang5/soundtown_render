@@ -327,52 +327,56 @@ const SinglePlaylist = () => {
           </section>
         </main>
         <aside className="asset-sidebar">
-          <SidebarCollection
-            collectionLink={`/users/${playlist?.user_id}/playlists`}
-            styleClasses={['stack-label']}
-            h3="Playlists from this user"
-            collection={
-              <ul className="sidebar-list">
-                {userPlaylists?.slice(0, 3)?.map(pl => (
-                  <AssetCard
-                    key={pl?.id}
-                    entity="playlist"
-                    asset={pl}
-                    assetCover={
-                      <Link to={`/playlists/${pl?.id}`}>
-                        <div className="sidebar-cover-bg">
-                          <img
-                            src={pl?.image_url || pl?.songs[0]?.image_url}
-                            className="sidebar-cover"
-                            alt=""
-                          />
-                        </div>
-                      </Link>
-                    }
-                    assetFooter={
-                      <footer className="logo-before heart-label">
-                        {pl?.likes?.length}
-                      </footer>}
-                    user={playlist?.user}
-                  />
-                ))}
-              </ul>
-            }
-          />
-          <SidebarCollection
-            collectionLink={`/playlists/${playlist?.id}/likes`}
-            styleClasses={['heart-label']}
-            h3={`${playlist?.likes?.length} like${playlist?.likes?.length > 1 ? "s" : ""}`}
-            collection={
-              <ul className="sidebar-list flex-row">
-                {playlist?.likes?.slice(0, 9)?.map(user => (
-                  <li key={user?.id}>
-                    <Avatar user={user} isLink />
-                  </li>
-                ))}
-              </ul>
-            }
-          />
+          {userPlaylists?.length > 0 && (
+            <SidebarCollection
+              collectionLink={`/users/${playlist?.user_id}/playlists`}
+              styleClasses={['stack-label']}
+              h3="Playlists from this user"
+              collection={
+                <ul className="sidebar-list">
+                  {userPlaylists?.slice(0, 3)?.map(pl => (
+                    <AssetCard
+                      key={pl?.id}
+                      entity="playlist"
+                      asset={pl}
+                      assetCover={
+                        <Link to={`/playlists/${pl?.id}`}>
+                          <div className="sidebar-cover-bg">
+                            <img
+                              src={pl?.image_url || pl?.songs[0]?.image_url}
+                              className="sidebar-cover"
+                              alt=""
+                            />
+                          </div>
+                        </Link>
+                      }
+                      assetFooter={
+                        <footer className="logo-before heart-label">
+                          {pl?.likes?.length}
+                        </footer>}
+                      user={playlist?.user}
+                    />
+                  ))}
+                </ul>
+              }
+            />
+          )}
+          {playlist?.likes?.length > 0 && (
+            <SidebarCollection
+              collectionLink={`/playlists/${playlist?.id}/likes`}
+              styleClasses={['heart-label']}
+              h3={`${playlist?.likes?.length} like${playlist?.likes?.length > 1 ? "s" : ""}`}
+              collection={
+                <ul className="sidebar-list flex-row">
+                  {playlist?.likes?.slice(0, 9)?.map(user => (
+                    <li key={user?.id}>
+                      <Avatar user={user} isLink />
+                    </li>
+                  ))}
+                </ul>
+              }
+            />
+          )}
           <Credits />
         </aside>
       </div>
