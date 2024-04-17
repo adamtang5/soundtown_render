@@ -130,7 +130,7 @@ const ButtonGroup = ({ song }) => {
     <div className="asset-button-group flex-row">
       {sessionUser?.id !== song?.user_id && (
         <ToggleButton
-          condition={song?.likes?.includes(sessionUser?.id)}
+          condition={sessionUser?.id in song?.likes}
           buttonClasses={[...baseClasses, 'b2']}
           labelClasses={['heart-label']}
           handleToggle={handleSongLikeToggle}
@@ -220,6 +220,7 @@ const SingleSong = () => {
   const { id } = useParams();
   const player = useSelector(state => state.player);
   const song = useSelector(state => state.songs[id]);
+  const songLikes = useSelector(state => Object.values(state?.songs[id]?.likes));
   const sessionUser = useSelector(state => state.session.user);
   const [loaded, setLoaded] = useState(false);
   const [message, setMessage] = useState("");
@@ -344,14 +345,14 @@ const SingleSong = () => {
               }
             />
           )}
-          {song?.likes?.length > 0 && (
+          {songLikes?.length > 0 && (
             <SidebarCollection
               collectionLink={`/songs/${song?.id}/likes`}
               styleClasses={['heart-label']}
-              h3={`${song?.likes?.length} like${song?.likes?.length > 1 ? "s" : ""}`}
+              h3={`${songLikes?.length} like${songLikes?.length > 1 ? "s" : ""}`}
               collection={
                 <ul className="sidebar-list flex-row">
-                  {song?.likes?.slice(0, 9)?.map(user => (
+                  {Object.values(song?.likes)?.slice(0, 9)?.map(user => (
                     <li key={user?.id}>
                       <Avatar user={user} isLink />
                     </li>
