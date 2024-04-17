@@ -220,7 +220,7 @@ const SingleSong = () => {
   const { id } = useParams();
   const player = useSelector(state => state.player);
   const song = useSelector(state => state.songs[id]);
-  const songLikes = useSelector(state => Object.values(state?.songs[id]?.likes));
+  const songLikes = song?.likes ? Object.values(song?.likes) : [];
   const sessionUser = useSelector(state => state.session.user);
   const [loaded, setLoaded] = useState(false);
   const [message, setMessage] = useState("");
@@ -274,6 +274,10 @@ const SingleSong = () => {
       setMessage("");
     }
   };
+
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <>
