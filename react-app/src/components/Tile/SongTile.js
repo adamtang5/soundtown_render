@@ -144,7 +144,7 @@ const SongTile = ({ song, setShowModal, likeDisabled=false }) => {
       coverStyle={coverStyle}
       dropdown={<Dropdown song={song} />}
       canLike={likeDisabled ? false : sessionUser?.id !== song?.user_id}
-      liked={song?.likes?.includes(sessionUser?.id)}
+      liked={sessionUser?.id in song?.likes}
       handleShowLoginModal={openLoginModal}
     />
   );
