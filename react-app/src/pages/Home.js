@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ImSpinner3 } from 'react-icons/im';
+import { getAllSongs } from "../store/song";
 import Slider from "react-slick";
 import SongTile from "../components/Tile/SongTile";
 import CreatorCard from "../components/CreatorCard";
@@ -16,6 +17,8 @@ const MainFeed = () => {
   const PCT_OF_RECOMMENDATION = 0.15;
   const PCT_OF_BUBBLING_UP = 0.35;
 
+  const dispatch = useDispatch();
+  const [loaded, setLoaded] = useState(false);
   const trendingSongs = useSelector(state => Object.values(state.songs)
     .toSorted((a, b) => {
       if (a.id < b.id) {
@@ -43,6 +46,17 @@ const MainFeed = () => {
   const bubblingSongs = useSelector(state => Object.values(state.songs)
     .toSorted((a, b) => a.likes.length - b.likes.length)
     .slice(0, Math.floor(Object.keys(state.songs).length * PCT_OF_BUBBLING_UP)));
+
+  useEffect(() => {
+    (async () => {
+      await dispatch(getAllSongs());
+      setLoaded(true);
+    })();
+  }, [dispatch]);
+
+  if (!loaded) {
+    return null;
+  }
 
   const data = [
     {
