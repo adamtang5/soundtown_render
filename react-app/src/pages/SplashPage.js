@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import AuthForm from "../modals/AuthForm";
 import { Modal } from "../components/Context/Modal";
+import { getAllSongs } from "../store/song";
 import Logo from "../components/Icons/Logo";
 import ShowcaseSongs from "../components/ShowcaseSongs";
 import "./SplashPage.css";
 
 const SplashPage = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
   const [authMode, setAuthMode] = useState("login");
@@ -17,6 +19,12 @@ const SplashPage = () => {
   useEffect(() => {
     if (sessionUser) history.push('/home');
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      await dispatch(getAllSongs());
+    })();
+  }, [dispatch]);
 
   return (
     <>
