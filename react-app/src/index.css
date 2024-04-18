@@ -669,16 +669,28 @@ fieldset {
   * {
     --container-max-width: 1240px;
   }
+
+  .user-tile {
+    max-width: 180px;
+  }
 }
 
 @media screen and (max-width: 1239px) {
   * {
     --container-max-width: 1080px;
   }
+
+  .user-tile {
+    max-width: 150px;
+  }
 }
 
 @media screen and (max-width: 1079px) {
   * {
     --container-max-width: 960px;
+  }
+
+  .user-tile {
+    max-width: 135px;
   }
 }
