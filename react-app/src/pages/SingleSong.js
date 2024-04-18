@@ -356,7 +356,7 @@ const SingleSong = () => {
               h3={`${songLikes?.length} like${songLikes?.length > 1 ? "s" : ""}`}
               collection={
                 <ul className="sidebar-list flex-row">
-                  {Object.values(song?.likes)?.slice(0, 9)?.map(user => (
+                  {songLikes?.slice(0, 9)?.map(user => (
                     <li key={user?.id}>
                       <Avatar user={user} isLink />
                     </li>
