@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-const ShowcaseAssetLikes = ({ entity, asset }) => {
+const ShowcaseAssetLikes = ({ entity, asset, assetLikes }) => {
   return (
     <>
-      {asset?.likes?.map((user, idx) => (
+      {assetLikes?.map((user, idx) => (
         <article className="user-tile flex-column" key={idx}>
           <Link to={`/users/${user?.id}`}>
             <div className="full-box">

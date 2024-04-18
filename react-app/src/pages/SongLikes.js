@@ -9,6 +9,7 @@ const SongLikes = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const song = useSelector(state => state.songs[id]);
+  const songLikes = song?.likes ? Object.values(song?.likes) : [];
   const history = useHistory();
 
   useEffect(() => {
@@ -17,14 +18,20 @@ const SongLikes = () => {
     })();
   }, [dispatch, id]);
 
-  if (song && !song?.likes?.length) {
+  if (song && !songLikes?.length) {
     history.push(`/songs/${song?.id}`);
   }
 
   return (
     <SongSecondary
       song={song}
-      showcase={<ShowcaseAssetLikes entity="song" asset={song} />}
+      showcase={
+        <ShowcaseAssetLikes
+          entity="song"
+          asset={song}
+          assetLikes={songLikes}
+        />
+      }
     />
   );
 };
