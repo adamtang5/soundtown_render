@@ -1,9 +1,9 @@
 import SecondaryHeader from "../components/SecondaryHeader";
 import "../pages/Secondary.css";
 
-const SongSecondary = ({ song, showcase }) => {
+const SongSecondary = ({ song, songLikes, showcase }) => {
   const navData = [];
-  if (song?.likes?.length) {
+  if (songLikes?.length) {
     navData.push({
       to: `/songs/${song?.id}/likes`,
       label: "Likes",
