@@ -25,6 +25,7 @@ const SongLikes = () => {
   return (
     <SongSecondary
       song={song}
+      songLikes={songLikes}
       showcase={
         <ShowcaseAssetLikes
           entity="song"
