@@ -23,7 +23,7 @@ const PlaylistSecondary = ({ secondary }) => {
   let plLikes = [];
   if (loaded) {
     plLikes = Object.values(playlist?.likes);
-    if (!plLikes?.length) {
+    if (secondary === "likes" && !plLikes?.length) {
       history.push(`playlists/${playlist?.id}`);
     }
   }
