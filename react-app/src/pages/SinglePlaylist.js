@@ -6,7 +6,7 @@ import { FaPlay, FaPause } from "react-icons/fa6";
 import { loadPlaylist, queuePlaylist, loadSong, queueSong } from "../store/player";
 import { authenticate } from "../store/session";
 import { getUser } from "../store/user";
-import { toggleSongLike } from "../store/song";
+import { getAllSongs, toggleSongLike } from "../store/song";
 import { editPlaylist, deletePlaylist, getPlaylist, togglePlaylistLike } from "../store/playlist";
 import { AudioContext } from "../context/AudioContext";
 import AssetHeader from "../components/AssetHeader";
@@ -125,7 +125,7 @@ const SongRowButtonGroup = ({ song }) => {
     <div className="mini-asset-button-group flex-row">
       {sessionUser?.id !== song?.user_id && (
         <ToggleButton
-          condition={song?.likes?.includes(sessionUser?.id)}
+          condition={sessionUser?.id in song?.likes}
           buttonClasses={[...baseClasses, 'b3']}
           labelClasses={['heart-label']}
           handleToggle={handleSongLikeToggle}
@@ -256,6 +256,7 @@ const SinglePlaylist = () => {
 
   useEffect(() => {
     (async () => {
+      await dispatch(getAllSongs());
       await dispatch(getPlaylist(id));
     })();
   }, [dispatch, id]);
