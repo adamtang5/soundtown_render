@@ -189,7 +189,7 @@ const ButtonGroup = ({ playlist }) => {
     <div className="asset-button-group flex-row">
       {sessionUser?.id !== playlist?.user_id && (
         <ToggleButton
-          condition={playlist?.likes?.includes(sessionUser?.id)}
+          condition={sessionUser?.id in playlist?.likes}
           buttonClasses={[...baseClasses, 'b2']}
           labelClasses={['heart-label']}
           handleToggle={handlePlaylistLikeToggle}
@@ -249,15 +249,18 @@ const SinglePlaylist = () => {
   const { id } = useParams();
   const player = useSelector(state => state.player);
   const playlist = useSelector(state => state.playlists[id]);
+  const plLikes = playlist?.likes ? Object.values(playlist?.likes) : [];
   const songs = useSelector(state => playlist?.songs_order?.map(id => state.songs[id]));
   const sessionUser = useSelector(state => state.session.user);
   const userPlaylists = useSelector(state => state.users[playlist?.user_id]?.playlists
     .filter(pl => pl?.id !== id));
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     (async () => {
       await dispatch(getAllSongs());
       await dispatch(getPlaylist(id));
+      setLoaded(true);
     })();
   }, [dispatch, id]);
   
@@ -289,6 +292,8 @@ const SinglePlaylist = () => {
       await dispatch(editPlaylist(playlist?.id, formData));
     }
   };
+
+  if (!loaded) return null;
 
   return (
     <>
@@ -362,14 +367,14 @@ const SinglePlaylist = () => {
               }
             />
           )}
-          {playlist?.likes?.length > 0 && (
+          {plLikes?.length > 0 && (
             <SidebarCollection
               collectionLink={`/playlists/${playlist?.id}/likes`}
               styleClasses={['heart-label']}
-              h3={`${playlist?.likes?.length} like${playlist?.likes?.length > 1 ? "s" : ""}`}
+              h3={`${plLikes?.length} like${plLikes?.length > 1 ? "s" : ""}`}
               collection={
                 <ul className="sidebar-list flex-row">
-                  {playlist?.likes?.slice(0, 9)?.map(user => (
+                  {plLikes?.slice(0, 9)?.map(user => (
                     <li key={user?.id}>
                       <Avatar user={user} isLink />
                     </li>
