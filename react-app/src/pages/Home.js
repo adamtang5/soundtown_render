@@ -45,7 +45,21 @@ const MainFeed = () => {
     .slice(0, Math.floor(Object.keys(state.songs).length * PCT_OF_RECOMMENDATION)));
 
   const bubblingSongs = useSelector(state => Object.values(state.songs)
-    .toSorted((a, b) => Object.keys(b.likes).length - Object.keys(a.likes).length)
+    .toSorted((a, b) => {
+      if (Object.keys(a.likes).length < Object.keys(b.likes).length) {
+        return 1;
+      } else if (Object.keys(a.likes).length > Object.keys(b.likes).length) {
+        return -1;
+      } else {
+        if (a.id < b.id) {
+          return -1;
+        } else if (a.id > b.id) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+    })
     .slice(0, Math.floor(Object.keys(state.songs).length * PCT_OF_BUBBLING_UP)));
 
   useEffect(() => {
