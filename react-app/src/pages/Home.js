@@ -11,6 +11,7 @@ import techs from '../components/TechCard/techs.json';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
+import Credits from "../components/SidebarModules/Credits";
 
 const MainFeed = () => {
   const PCT_OF_TRENDING = 0.25;
@@ -44,7 +45,7 @@ const MainFeed = () => {
     .slice(0, Math.floor(Object.keys(state.songs).length * PCT_OF_RECOMMENDATION)));
 
   const bubblingSongs = useSelector(state => Object.values(state.songs)
-    .toSorted((a, b) => a.likes.length - b.likes.length)
+    .toSorted((a, b) => Object.keys(b.likes).length - Object.keys(a.likes).length)
     .slice(0, Math.floor(Object.keys(state.songs).length * PCT_OF_BUBBLING_UP)));
 
   useEffect(() => {
@@ -199,6 +200,9 @@ const Home = () => {
       <div className="sidebar">
         <Sidebar />
       </div>
+      {/* <aside className="asset-sidebar">
+        <Credits />
+      </aside> */}
     </main>
   );
 };
