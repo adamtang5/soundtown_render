@@ -15,9 +15,9 @@ import UserPage from "./pages/UserPage";
 import SingleSong from "./pages/SingleSong";
 import SongSecondary from "./pages/SongSecondary";
 import SinglePlaylist from "./pages/SinglePlaylist";
-import PlaylistLikes from "./pages/PlaylistLikes";
 import Audio from "./components/AudioPlayer/Audio";
 import Sandbox from "./pages/Sandbox";
+import PlaylistSecondary from "./pages/PlaylistSecondary";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -78,7 +78,7 @@ const App = () => {
               <SinglePlaylist />
             </ProtectedRoute>
             <ProtectedRoute path="/playlists/:id/likes" exact={true}>
-              <PlaylistLikes />
+              <PlaylistSecondary secondary="likes" />
             </ProtectedRoute>
             <ProtectedRoute path="/sandbox">
               <Sandbox />
