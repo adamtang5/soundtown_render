@@ -39,6 +39,12 @@ class Playlist(db.Model):
       d[str(item.id)] = item
     return [d[id].to_dict() for id in json.loads(self.songs_order)]
 
+  def normalized_likes(self):
+    ans = dict()
+    for user in self.pl_likes:
+      ans[str(user.id)] = user.to_dict()
+    return ans
+
   def to_extended_dict(self):
     return {
       'id': self.id,
@@ -51,7 +57,7 @@ class Playlist(db.Model):
       'created_at': self.created_at,
       'updated_at': self.updated_at,
       'songs': self.sort_by_id(),
-      'likes': [like.to_dict() for like in self.pl_likes]
+      'likes': self.normalized_likes()
     }
 
   def to_dict(self):
@@ -62,5 +68,5 @@ class Playlist(db.Model):
       'songs_order': json.loads(self.songs_order),
       'image_url': self.image_url,
       'description': self.description,
-      'likes': [like.id for like in self.pl_likes]
+      'likes': self.normalized_likes()
     }
