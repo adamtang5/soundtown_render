@@ -24,7 +24,8 @@ const SongSecondary = ({ secondary }) => {
   let songLikes = [];
   if (loaded) {
     songLikes = Object.values(song?.likes);
-    if (!songLikes?.length) {
+    if (secondary === "likes" && !songLikes?.length ||
+      secondary === "playlists" && !song?.playlists?.length) {
       history.push(`/songs/${song?.id}`);
     }
   }
@@ -37,10 +38,7 @@ const SongSecondary = ({ secondary }) => {
       assetLikes={songLikes}
     />;
   } else if (secondary === "playlists") {
-    showcase = <ShowcaseSongPlaylists
-      song={song}
-      songLikes={songLikes}
-    />;
+    showcase = <ShowcaseSongPlaylists song={song} />;
   }
 
   const navData = [];
