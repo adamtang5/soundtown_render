@@ -229,6 +229,7 @@ const SingleSong = () => {
   useEffect(() => {
     (async () => {
       await dispatch(getSong(id));
+      document.title = `Sound Town | ${song?.title}`;
       setLoaded(true);
     })();
   }, [dispatch, id]);
