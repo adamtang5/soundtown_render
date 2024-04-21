@@ -17,6 +17,9 @@ const SongSecondary = ({ secondary }) => {
   useEffect(() => {
     (async () => {
       await dispatch(getSong(id));
+      if (secondary === "playlists") {
+        document.title = `Listen to playlists featuring ${song?.title}`;
+      }
       setLoaded(true);
     })();
   }, [dispatch, id]);
