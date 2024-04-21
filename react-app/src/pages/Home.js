@@ -65,6 +65,7 @@ const MainFeed = () => {
   useEffect(() => {
     (async () => {
       await dispatch(getAllSongs());
+      document.title = "Discover the top streamed music and songs online on Sound Town";
       setLoaded(true);
     })();
   }, [dispatch]);
