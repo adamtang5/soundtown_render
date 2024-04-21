@@ -40,6 +40,8 @@ const Explore = () => {
     },
   ];
 
+  document.title = "Check out songs and playlists from around the town!";
+
   return (
     <main className="container">
       <StickyNav navData={navData} />
