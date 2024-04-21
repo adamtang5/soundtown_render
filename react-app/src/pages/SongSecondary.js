@@ -21,6 +21,12 @@ const SongSecondary = ({ secondary }) => {
     })();
   }, [dispatch, id]);
 
+  if (secondary === "playlists") {
+    document.title = `Listen to playlists featuring ${song?.title}`;
+  } else if (secondary === "likes") {
+    document.title = `See all likes of ${song?.title}`;
+  }
+
   let songLikes = [];
   if (loaded) {
     songLikes = Object.values(song?.likes);
