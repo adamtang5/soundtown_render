@@ -269,6 +269,8 @@ const UserPage = () => {
     },
   ];
 
+  document.title = `Stream ${user?.display_name} music | Listen to songs, playlists on Sound Town`;
+  
   return (
     <>
       <Header />
