@@ -229,7 +229,6 @@ const SingleSong = () => {
   useEffect(() => {
     (async () => {
       await dispatch(getSong(id));
-      document.title = `Sound Town | ${song?.title}`;
       setLoaded(true);
     })();
   }, [dispatch, id]);
@@ -245,10 +244,10 @@ const SingleSong = () => {
       await dispatch(loadSong(song?.id));
     }
   }
-
+  
   const updateImage = async (e) => {
     const file = e.target.files[0];
-
+    
     if (file) {
       const formData = new FormData();
       formData.append('id', song?.id);
@@ -259,15 +258,15 @@ const SingleSong = () => {
       await dispatch(editSong(song?.id, formData));
     }
   };
-
+  
   const handleNewCommentSubmit = async (e) => {
     e.preventDefault();
-
+    
     const formData = new FormData();
     formData.append("user_id", sessionUser?.id);
     formData.append("song_id", id);
     formData.append("message", message);
-
+    
     const data = await dispatch(createComment(formData));
     if (data.errors) {
       setErrors(data.errors);
@@ -275,7 +274,9 @@ const SingleSong = () => {
       setMessage("");
     }
   };
-
+  
+  document.title = `Sound Town | ${song?.title}`;
+  
   if (!loaded) {
     return null;
   }
