@@ -213,12 +213,16 @@ const UserPage = () => {
   const { id } = useParams();
   const sessionUser = useSelector(state => state.session.user);
   const user = useSelector(state => state.users[id]);
+  const userSongs = useSelector(state => Object.values(state.songs)
+    .filter(song => song?.user_id === user?.id));
+  const userPlaylists = useSelector(state => Object.values(state.playlists)
+    .filter(pl => pl?.user_id === user?.id));
 
   useEffect(() => {
     (async () => {
       await dispatch(getUser(id));
-    })();
-  }, [dispatch]);
+    })();  
+  }, [dispatch]);  
 
   const sortKey = (a, b) => {
     if (a?.title?.toLowerCase() < b?.title?.toLowerCase()) {
@@ -229,11 +233,11 @@ const UserPage = () => {
       return a?.description?.toLowerCase() < b?.description?.toLowerCase() ? -1 : 1;
     } else {
       return 0;
-    }  
+    }    
   };
 
-  const userSongs = user?.songs?.toSorted(sortKey);
-  const userPlaylists = user?.playlists?.toSorted(sortKey);
+  userSongs?.sort(sortKey);
+  userPlaylists?.sort(sortKey);
 
   if (history.location.pathname === `/users/${id}`) {
     history.push(`/users/${id}/songs`);
