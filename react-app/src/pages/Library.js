@@ -39,6 +39,8 @@ const Library = () => {
     },
   ];
 
+  document.title = "Hear your tracks, likes and playlists on Sound Town"
+
   return (
     <main className="container">
       <StickyNav navData={navData} />
