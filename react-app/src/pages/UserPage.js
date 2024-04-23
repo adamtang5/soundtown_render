@@ -279,7 +279,7 @@ const UserPage = () => {
     <>
       <Header />
       <div className="container flex-row">
-        <main className="user-page-main full-width">
+        <main className="asset-main">
           <StickyNav
             navData={navData}
             optComp={<ButtonGroup />}
@@ -297,9 +297,10 @@ const UserPage = () => {
             </Switch>
           </section>
         </main>
-        <aside className="user-page-summary">
+        <aside className="asset-sidebar">
           {/* TODO: Stats */}
-          {/* TODO: Likes */}
+          {/* TODO: Song Likes */}
+          {/* TODO: Playlist Likes */}
           {/* TODO: Following */}
           {/* TODO: Comments */}
           {/* TODO: Legal */}
