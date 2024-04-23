@@ -278,33 +278,35 @@ const UserPage = () => {
   return (
     <>
       <Header />
-      <div className="container flex-row">
-        <main className="asset-main">
-          <StickyNav
-            navData={navData}
-            optComp={<ButtonGroup />}
-          />
-          <section className="showcase">
-            <Switch>
-              <ProtectedRoute path={`/users/${id}`} exact={true}>
-                <Redirect to={`/users/${id}/songs`} />
-              </ProtectedRoute>
-              {routes.map((route, idx) => (
-                <ProtectedRoute path={route.path} key={idx}>
-                  {route.component}
+      <div className="container">
+        <StickyNav
+          navData={navData}
+          optComp={<ButtonGroup />}
+        />
+        <div className="flex-row">
+          <main className="asset-main">
+            <section className="showcase">
+              <Switch>
+                <ProtectedRoute path={`/users/${id}`} exact={true}>
+                  <Redirect to={`/users/${id}/songs`} />
                 </ProtectedRoute>
-              ))}
-            </Switch>
-          </section>
-        </main>
-        <aside className="asset-sidebar">
-          {/* TODO: Stats */}
-          {/* TODO: Song Likes */}
-          {/* TODO: Playlist Likes */}
-          {/* TODO: Following */}
-          {/* TODO: Comments */}
-          {/* TODO: Legal */}
-        </aside>
+                {routes.map((route, idx) => (
+                  <ProtectedRoute path={route.path} key={idx}>
+                    {route.component}
+                  </ProtectedRoute>
+                ))}
+              </Switch>
+            </section>
+          </main>
+          <aside className="asset-sidebar">
+            {/* TODO: Stats */}
+            {/* TODO: Song Likes */}
+            {/* TODO: Playlist Likes */}
+            {/* TODO: Following */}
+            {/* TODO: Comments */}
+            {/* TODO: Legal */}
+          </aside>
+        </div>
       </div>
     </>
   );
