@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Redirect, useHistory, Switch } from "react-router-dom";
+import { useHistory, useParams, Link, Redirect, Switch } from "react-router-dom";
 import { editUser, getUser } from "../store/user";
 import DropdownButton from "../components/Buttons/DropdownButton";
 import DynamicImage from "../components/DynamicImage";
@@ -12,6 +12,10 @@ import ProtectedRoute from "../utilities/ProtectedRoute";
 import EditButton from "../components/Buttons/EditButton";
 import EditUserForm from "../modals/EditUserForm";
 import "./UserPage.css";
+import { getAllSongs } from "../store/song";
+import { getAllPlaylists } from "../store/playlist";
+import SidebarCollection from "../components/SidebarModules/SidebarCollection";
+import AssetCard from "../components/Modules/AssetCard";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -211,16 +215,22 @@ const UserPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
+  const [loaded, setLoaded] = useState(false);
   const sessionUser = useSelector(state => state.session.user);
   const user = useSelector(state => state.users[id]);
   const userSongs = useSelector(state => Object.values(state.songs)
     .filter(song => song?.user_id === user?.id));
   const userPlaylists = useSelector(state => Object.values(state.playlists)
     .filter(pl => pl?.user_id === user?.id));
+  const userSongLikes = useSelector(state => user?.likes?.map(id => state.songs[id]));
+  const userPlaylistLikes = useSelector(state => user?.likes?.map(id => state.playlists[id]));
 
   useEffect(() => {
     (async () => {
       await dispatch(getUser(id));
+      await dispatch(getAllSongs());
+      await dispatch(getAllPlaylists());
+      setLoaded(true);
     })();  
   }, [dispatch]);  
 
@@ -275,6 +285,8 @@ const UserPage = () => {
 
   document.title = `Stream ${user?.display_name} music | Listen to songs, playlists on Sound Town`;
   
+  if (!loaded) return null;
+
   return (
     <>
       <Header />
@@ -300,7 +312,41 @@ const UserPage = () => {
           </main>
           <aside className="asset-sidebar">
             {/* TODO: Stats */}
-            {/* TODO: Song Likes */}
+            {userSongLikes?.length > 0 && (
+              <SidebarCollection
+                collectionLink={`/users/${user?.id}/likes`}
+                styleClasses={['heart-label']}
+                h3={`${userSongLikes?.length} like${userSongLikes?.length > 1 ? "s" : ""}`}
+                collection={
+                  <ul className="sidebar-list">
+                    {userSongLikes?.slice(0, 3)?.map(song => (
+                      <AssetCard
+                        key={song?.id}
+                        entity="song"
+                        asset={song}
+                        assetCover={
+                          <Link to={`/songs/${song?.id}`}>
+                            <div className="sidebar-cover-bg">
+                              <img
+                                src={song?.image_url}
+                                className="sidebar-cover"
+                                alt={song?.title}
+                              />
+                            </div>
+                          </Link>
+                        }
+                        assetFooter={
+                          <footer className="logo-before heart-label">
+                            {Object.values(song?.likes)?.length}
+                          </footer>
+                        }
+                        user={song?.user}
+                      />
+                    ))}
+                  </ul>
+                }
+              />
+            )}
             {/* TODO: Playlist Likes */}
             {/* TODO: Following */}
             {/* TODO: Comments */}
