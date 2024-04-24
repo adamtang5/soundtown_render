@@ -214,6 +214,50 @@ const SongComments = ({ song, loaded }) => {
   );
 };
 
+const SongPlaylists = ({ song }) => {
+  return (
+    <SidebarCollection
+      collectionLink={`/songs/${song?.id}/playlists`}
+      styleClasses={['stack-label']}
+      h3="In playlists"
+      collection={
+        <ul className="sidebar-list">
+          {song?.playlists?.slice(0, 3)?.map(pl => (
+            <AssetCard
+              key={pl?.id}
+              entity="playlist"
+              asset={pl}
+              assetCover={
+                <Link to={`/playlists/${pl?.id}`}>
+                  <div className="sidebar-cover-bg">
+                    <img
+                      src={pl?.image_url || pl?.songs[0]?.image_url}
+                      className="sidebar-cover"
+                      alt={pl?.title}
+                    />
+                  </div>
+                </Link>
+              }
+              assetFooter={
+                <footer className="flex-row">
+                  {Object.values(pl?.likes)?.length > 0 && (
+                    <Link to={`/playlists/${pl?.id}/likes`}>
+                      <div className="logo-before heart-label">
+                        {Object.values(pl?.likes)?.length}
+                      </div>
+                    </Link>
+                  )}
+                </footer>
+              }
+              user={pl?.user}
+            />
+          ))}
+        </ul>
+      }
+    />
+  );
+};
+
 const SingleSong = () => {
   const { play, pause, isPlaying } = useContext(AudioContext);
   const dispatch = useDispatch();
@@ -317,39 +361,7 @@ const SingleSong = () => {
         </main>
         <aside className="asset-sidebar">
           {song?.playlists?.length > 0 && (
-            <SidebarCollection
-              collectionLink={`/songs/${song?.id}/playlists`}
-              styleClasses={['stack-label']}
-              h3="In playlists"
-              collection={
-                <ul className="sidebar-list">
-                  {song?.playlists?.slice(0, 3)?.map(pl => (
-                    <AssetCard
-                      key={pl?.id}
-                      entity="playlist"
-                      asset={pl}
-                      assetCover={
-                        <Link to={`/playlists/${pl?.id}`}>
-                          <div className="sidebar-cover-bg">
-                            <img
-                              src={pl?.image_url || pl?.songs[0]?.image_url}
-                              className="sidebar-cover"
-                              alt={pl?.title}
-                            />
-                          </div>
-                        </Link>
-                      }
-                      assetFooter={
-                        <footer className="logo-before heart-label">
-                          {pl?.likes?.length}
-                        </footer>
-                      }
-                      user={pl?.user}
-                    />
-                  ))}
-                </ul>
-              }
-            />
+            <SongPlaylists song={song} />
           )}
           {songLikes?.length > 0 && (
             <SidebarCollection
