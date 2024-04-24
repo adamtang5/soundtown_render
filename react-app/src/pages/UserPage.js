@@ -244,6 +244,13 @@ const UserSongLikes = ({ user, likes }) => {
                       </div>
                     </Link>
                   )}
+                  {song?.comments_count > 0 && (
+                    <Link to={`/songs/${song?.id}`}>
+                      <div className="logo-before speech-bubble-label">
+                        {song?.comments_count}
+                      </div>
+                    </Link>
+                  )}
                 </footer>
               }
               user={song?.user}
