@@ -211,6 +211,50 @@ const ButtonGroup = () => {
   );
 };
 
+const UserSongLikes = ({ user, likes }) => {
+  return (
+    <SidebarCollection
+      collectionLink={`/users/${user?.id}/likes`}
+      styleClasses={['heart-label']}
+      h3={`${likes?.length} like${likes?.length > 1 ? "s" : ""}`}
+      collection={
+        <ul className="sidebar-list">
+          {likes?.slice(0, 3)?.map(song => (
+            <AssetCard
+              key={song?.id}
+              entity="song"
+              asset={song}
+              assetCover={
+                <Link to={`/songs/${song?.id}`}>
+                  <div className="sidebar-cover-bg">
+                    <img
+                      src={song?.image_url}
+                      className="sidebar-cover"
+                      alt={song?.title}
+                    />
+                  </div>
+                </Link>
+              }
+              assetFooter={
+                <footer className="flex-row">
+                  {Object.values(song?.likes)?.length > 0 && (
+                    <Link to={`/songs/${song?.id}/likes`}>
+                      <div className="logo-before heart-label">
+                        {Object.values(song?.likes)?.length}
+                      </div>
+                    </Link>
+                  )}
+                </footer>
+              }
+              user={song?.user}
+            />
+          ))}
+        </ul>
+      }
+    />
+  );
+};
+
 const UserPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -313,38 +357,9 @@ const UserPage = () => {
           <aside className="asset-sidebar">
             {/* TODO: Stats */}
             {userSongLikes?.length > 0 && (
-              <SidebarCollection
-                collectionLink={`/users/${user?.id}/likes`}
-                styleClasses={['heart-label']}
-                h3={`${userSongLikes?.length} like${userSongLikes?.length > 1 ? "s" : ""}`}
-                collection={
-                  <ul className="sidebar-list">
-                    {userSongLikes?.slice(0, 3)?.map(song => (
-                      <AssetCard
-                        key={song?.id}
-                        entity="song"
-                        asset={song}
-                        assetCover={
-                          <Link to={`/songs/${song?.id}`}>
-                            <div className="sidebar-cover-bg">
-                              <img
-                                src={song?.image_url}
-                                className="sidebar-cover"
-                                alt={song?.title}
-                              />
-                            </div>
-                          </Link>
-                        }
-                        assetFooter={
-                          <footer className="logo-before heart-label">
-                            {Object.values(song?.likes)?.length}
-                          </footer>
-                        }
-                        user={song?.user}
-                      />
-                    ))}
-                  </ul>
-                }
+              <UserSongLikes
+                user={user}
+                likes={userSongLikes}
               />
             )}
             {/* TODO: Playlist Likes */}
