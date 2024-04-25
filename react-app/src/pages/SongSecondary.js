@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSong } from "../store/song";
+import { getAllPlaylists } from "../store/playlist";
 import ShowcaseAssetLikes from "../components/ShowcaseAssetLikes";
-import ShowcaseSongPlaylists from "../components/ShowcaseSongPlaylists";
+import ShowcasePlaylists from "../components/ShowcasePlaylists";
 import SecondaryHeader from "../components/SecondaryHeader";
 import "./Secondary.css";
 
@@ -11,12 +12,16 @@ const SongSecondary = ({ secondary }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const song = useSelector(state => state.songs[id]);
+  const songPlaylists = useSelector(state => song?.playlists?.map(pl => {
+    return state.playlists[pl?.id];
+  }));
   const [loaded, setLoaded] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
     (async () => {
       await dispatch(getSong(id));
+      await dispatch(getAllPlaylists());
       setLoaded(true);
     })();
   }, [dispatch, id]);
@@ -44,7 +49,7 @@ const SongSecondary = ({ secondary }) => {
       assetLikes={songLikes}
     />;
   } else if (secondary === "playlists") {
-    showcase = <ShowcaseSongPlaylists song={song} />;
+    showcase = <ShowcasePlaylists playlists={songPlaylists} />;
   }
 
   const navData = [];
