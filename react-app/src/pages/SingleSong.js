@@ -21,6 +21,7 @@ import CommentList from "../components/Comments/CommentList";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";
 import AssetCard from "../components/Modules/AssetCard";
 import Credits from "../components/SidebarModules/Credits";
+import { getAllPlaylists } from "../store/playlist";
 
 const NewCommentForm = ({
   handleNewCommentSubmit,
@@ -215,6 +216,21 @@ const SongComments = ({ song, loaded }) => {
 };
 
 const SongPlaylists = ({ song }) => {
+  const dispatch = useDispatch();
+  const songPlaylists = useSelector(state => song?.playlists?.map(pl => {
+    return state.playlists[pl?.id];
+  }));
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      await dispatch(getAllPlaylists());
+      setLoaded(true);
+    })();
+  }, [dispatch]);
+
+  if (!loaded) return null;
+  
   return (
     <SidebarCollection
       collectionLink={`/songs/${song?.id}/playlists`}
@@ -222,7 +238,7 @@ const SongPlaylists = ({ song }) => {
       h3="In playlists"
       collection={
         <ul className="sidebar-list">
-          {song?.playlists?.slice(0, 3)?.map(pl => (
+          {songPlaylists?.slice(0, 3)?.map(pl => (
             <AssetCard
               key={pl?.id}
               entity="playlist"

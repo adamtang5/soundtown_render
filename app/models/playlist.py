@@ -63,7 +63,7 @@ class Playlist(db.Model):
   def to_dict(self):
     return {
       'id': self.id,
-      'user_id': self.user_id,
+      'user': self.user.to_dict(),
       'title': self.title,
       'songs_order': json.loads(self.songs_order),
       'image_url': self.image_url,
