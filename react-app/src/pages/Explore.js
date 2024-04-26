@@ -8,9 +8,9 @@ import ShowcasePlaylists from "../components/ShowcasePlaylists";
 const Explore = () => {
   const sessionUser = useSelector(state => state.session.user);
   const othersSongs = useSelector(state => Object.values(state.songs)
-    .filter(song => song?.user_id !== sessionUser?.id));
+    .filter(song => song?.user?.id !== sessionUser?.id));
   const othersPlaylists = useSelector(state => Object.values(state.playlists)
-    .filter(pl => pl?.user_id !== sessionUser?.id));
+    .filter(pl => pl?.user?.id !== sessionUser?.id));
 
   const navData = [
     {

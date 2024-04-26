@@ -143,7 +143,7 @@ const SongTile = ({ song, setShowModal, likeDisabled=false }) => {
       handleLikeToggle={handleSongLikeToggle}
       coverStyle={coverStyle}
       dropdown={<Dropdown song={song} />}
-      canLike={likeDisabled ? false : sessionUser?.id !== song?.user_id}
+      canLike={likeDisabled ? false : sessionUser?.id !== song?.user?.id}
       liked={sessionUser?.id in song?.likes}
       handleShowLoginModal={openLoginModal}
     />

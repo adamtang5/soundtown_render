@@ -123,7 +123,7 @@ const SongRowButtonGroup = ({ song }) => {
 
   return (
     <div className="mini-asset-button-group flex-row">
-      {sessionUser?.id !== song?.user_id && (
+      {sessionUser?.id !== song?.user?.id && (
         <ToggleButton
           condition={sessionUser?.id in song?.likes}
           buttonClasses={[...baseClasses, 'b3']}
@@ -187,7 +187,7 @@ const ButtonGroup = ({ playlist }) => {
 
   return (
     <div className="asset-button-group flex-row">
-      {sessionUser?.id !== playlist?.user_id && (
+      {sessionUser?.id !== playlist?.user?.id && (
         <ToggleButton
           condition={sessionUser?.id in playlist?.likes}
           buttonClasses={[...baseClasses, 'b2']}
@@ -203,7 +203,7 @@ const ButtonGroup = ({ playlist }) => {
         label="Copy Link"
       />
 
-      {sessionUser?.id === playlist?.user_id && (
+      {sessionUser?.id === playlist?.user?.id && (
         <EditButton
           showModal={showEditModal}
           setShowModal={setShowEditModal}
@@ -221,7 +221,7 @@ const ButtonGroup = ({ playlist }) => {
         >Add to Queue</div>
       </button>
 
-      {sessionUser?.id === playlist?.user_id && (
+      {sessionUser?.id === playlist?.user?.id && (
         <>
           <button
             className={[...baseClasses, ...styleClasses].join(' ')}
@@ -252,7 +252,7 @@ const SinglePlaylist = () => {
   const plLikes = playlist?.likes ? Object.values(playlist?.likes) : [];
   const songs = useSelector(state => playlist?.songs_order?.map(id => state.songs[id]));
   const sessionUser = useSelector(state => state.session.user);
-  const userPlaylists = useSelector(state => state.users[playlist?.user_id]?.playlists
+  const userPlaylists = useSelector(state => state.users[playlist?.user?.id]?.playlists
     .filter(pl => pl?.id !== id));
   const [loaded, setLoaded] = useState(false);
 
@@ -267,9 +267,9 @@ const SinglePlaylist = () => {
   useEffect(() => {
     (async () => {
       if (!playlist) return;
-      await dispatch(getUser(playlist?.user_id));
+      await dispatch(getUser(playlist?.user?.id));
     })();
-  }, [dispatch, playlist?.user_id]);
+  }, [dispatch, playlist?.user?.id]);
 
   const handlePlayPause = async (e) => {
     if (playlist?.id === player?.currPlaylistId) {
@@ -305,7 +305,7 @@ const SinglePlaylist = () => {
         handlePlayPause={handlePlayPause}
         condition={isPlaying && playlist?.id === player?.currPlaylistId}
         updateImage={updateImage}
-        isAuthorized={sessionUser?.id === playlist?.user_id}
+        isAuthorized={sessionUser?.id === playlist?.user?.id}
       />
       <div className="container asset-secondary flex-row">
         <main className="asset-main">
@@ -315,7 +315,7 @@ const SinglePlaylist = () => {
               <article className="user-badge flex-column">
                 <Avatar user={playlist?.user} isLink />
                 <footer>
-                  <Link to={`/users/${playlist?.user_id}`}>
+                  <Link to={`/users/${playlist?.user?.id}`}>
                     {playlist?.user?.display_name}
                   </Link>
                 </footer>
@@ -335,7 +335,7 @@ const SinglePlaylist = () => {
         <aside className="asset-sidebar">
           {userPlaylists?.length > 0 && (
             <SidebarCollection
-              collectionLink={`/users/${playlist?.user_id}/playlists`}
+              collectionLink={`/users/${playlist?.user?.id}/playlists`}
               styleClasses={['stack-label']}
               h3="Playlists from this user"
               collection={

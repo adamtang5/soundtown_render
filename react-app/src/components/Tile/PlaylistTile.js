@@ -109,7 +109,7 @@ const PlaylistTile = ({ playlist }) => {
       handleLikeToggle={handlePlaylistLikeToggle}
       coverStyle={coverStyle}
       dropdown={<Dropdown playlist={playlist} />}
-      canLike={sessionUser?.id !== playlist?.user_id}
+      canLike={sessionUser?.id !== playlist?.user?.id}
       liked={sessionUser?.id in playlist?.likes}
     />
   );

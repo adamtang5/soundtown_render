@@ -121,7 +121,7 @@ const ButtonGroup = ({ song }) => {
       label: "Add to playlist",
     },
     {
-      cond: sessionUser?.id === song?.user_id,
+      cond: sessionUser?.id === song?.user?.id,
       onClick: () => setShowConfirmModal(true),
       label: "Delete song",
     },
@@ -129,7 +129,7 @@ const ButtonGroup = ({ song }) => {
 
   return (
     <div className="asset-button-group flex-row">
-      {sessionUser?.id !== song?.user_id && (
+      {sessionUser?.id !== song?.user?.id && (
         <ToggleButton
           condition={sessionUser?.id in song?.likes}
           buttonClasses={[...baseClasses, 'b2']}
@@ -145,7 +145,7 @@ const ButtonGroup = ({ song }) => {
         label="Copy Link"
       />
 
-      {sessionUser?.id === song?.user_id && (
+      {sessionUser?.id === song?.user?.id && (
         <EditButton
           showModal={showEditSongModal}
           setShowModal={setShowEditSongModal}
@@ -350,7 +350,7 @@ const SingleSong = () => {
         handlePlayPause={handlePlayPause}
         condition={isPlaying && song?.id === player?.currSongId}
         updateImage={updateImage}
-        isAuthorized={sessionUser.id === song?.user_id}
+        isAuthorized={sessionUser.id === song?.user?.id}
       />
       <div className="container asset-secondary flex-row">
         <main className="asset-main">
@@ -366,7 +366,7 @@ const SingleSong = () => {
               <article className="user-badge flex-column">
                 <Avatar user={song?.user} isLink />
                 <footer>
-                  <Link to={`/users/${song?.user_id}`}>
+                  <Link to={`/users/${song?.user?.id}`}>
                     {song?.user?.display_name}
                   </Link>
                 </footer>
