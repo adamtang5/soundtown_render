@@ -270,7 +270,7 @@ const UserPage = () => {
   const sessionUser = useSelector(state => state.session.user);
   const user = useSelector(state => state.users[id]);
   const userSongs = useSelector(state => Object.values(state.songs)
-    .filter(song => song?.user_id === user?.id));
+    .filter(song => song?.user?.id === user?.id));
   const userPlaylists = useSelector(state => Object.values(state.playlists)
     .filter(pl => pl?.user?.id === user?.id));
   const userSongLikes = useSelector(state => user?.likes?.map(id => state.songs[id]));
@@ -282,9 +282,8 @@ const UserPage = () => {
       await dispatch(getAllSongs());
       await dispatch(getAllPlaylists());
       setLoaded(true);
-      console.log(userPlaylists);
-    })();  
-  }, [dispatch]);  
+    })();
+  }, [dispatch]);
 
   const sortKey = (a, b) => {
     if (a?.title?.toLowerCase() < b?.title?.toLowerCase()) {

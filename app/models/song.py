@@ -58,7 +58,7 @@ class Song(db.Model):
   def to_dict(self):
     return {
       'id': self.id,
-      'user_id': self.user_id,
+      'user': self.user.to_dict(),
       'title': self.title,
       'audio_url': self.audio_url,
       'description': self.description,
