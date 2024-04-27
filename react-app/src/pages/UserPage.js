@@ -283,7 +283,7 @@ const UserPage = () => {
       await dispatch(getAllPlaylists());
       setLoaded(true);
     })();
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   const sortKey = (a, b) => {
     if (a?.title?.toLowerCase() < b?.title?.toLowerCase()) {
