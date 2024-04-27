@@ -320,7 +320,7 @@ const UserPage = () => {
       path: `/users/${id}/songs`,
       component: <ShowcaseSongs
         songs={userSongs}
-        h3={sessionUser.id === id ? "Songs you uploaded"
+        h3={sessionUser?.id === id ? "Songs you uploaded"
           : (user?.display_name ? `Check out ${user?.display_name}'s tracks!` : '')}
       />,
     },
