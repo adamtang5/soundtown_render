@@ -262,6 +262,50 @@ const UserSongLikes = ({ user, likes }) => {
   );
 };
 
+const UserPlaylistLikes = ({ user, likes }) => {
+  return (
+    <SidebarCollection
+      collectionLink={`/users/${user?.id}/likes`}
+      styleClasses={['heart-label']}
+      h3={`${likes?.length} liked playlist${likes?.length > 1 ? "s" : ""}`}
+      collection={
+        <ul className="sidebar-list">
+          {likes?.slice(0, 3)?.map(pl => (
+            <AssetCard
+              key={pl?.id}
+              entity="playlist"
+              asset={pl}
+              assetCover={
+                <Link to={`/playlists/${pl?.id}`}>
+                  <div className="sidebar-cover-bg">
+                    <img
+                      src={pl?.image_url || pl?.songs[0]?.image_url}
+                      className="sidebar-cover"
+                      alt={pl?.title}
+                    />
+                  </div>
+                </Link>
+              }
+              assetFooter={
+                <footer className="flex-row">
+                  {Object.values(pl?.likes)?.length > 0 && (
+                    <Link to={`/playlists/${pl?.id}/likes`}>
+                      <div className="logo-before heart-label">
+                        {Object.values(pl?.likes)?.length}
+                      </div>
+                    </Link>
+                  )}
+                </footer>
+              }
+              user={pl?.user}
+            />
+          ))}
+        </ul>
+      }
+    />
+  );
+};
+
 const UserPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -274,7 +318,7 @@ const UserPage = () => {
   const userPlaylists = useSelector(state => Object.values(state.playlists)
     .filter(pl => pl?.user?.id === user?.id));
   const userSongLikes = useSelector(state => user?.likes?.map(id => state.songs[id]));
-  const userPlaylistLikes = useSelector(state => user?.likes?.map(id => state.playlists[id]));
+  const userPlaylistLikes = useSelector(state => user?.pl_likes?.map(id => state.playlists[id]));
 
   useEffect(() => {
     (async () => {
@@ -369,7 +413,12 @@ const UserPage = () => {
                 likes={userSongLikes}
               />
             )}
-            {/* TODO: Playlist Likes */}
+            {userPlaylistLikes?.length > 0 && (
+              <UserPlaylistLikes
+                user={user}
+                likes={userPlaylistLikes}
+              />
+            )}
             {/* TODO: Following */}
             {/* TODO: Comments */}
             {/* TODO: Legal */}
