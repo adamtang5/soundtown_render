@@ -346,7 +346,7 @@ const UserPage = () => {
           navData={navData}
           optComp={<ButtonGroup />}
         />
-        <div className="flex-row">
+        <div className="asset-secondary flex-row">
           <main className="asset-main">
             <section className="showcase">
               <Switch>
