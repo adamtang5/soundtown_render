@@ -216,7 +216,7 @@ const UserSongLikes = ({ user, likes }) => {
     <SidebarCollection
       collectionLink={`/users/${user?.id}/likes`}
       styleClasses={['heart-label']}
-      h3={`${likes?.length} like${likes?.length > 1 ? "s" : ""}`}
+      h3={`${likes?.length} liked song${likes?.length > 1 ? "s" : ""}`}
       collection={
         <ul className="sidebar-list">
           {likes?.slice(0, 3)?.map(song => (
