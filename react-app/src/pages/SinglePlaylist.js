@@ -356,10 +356,11 @@ const SinglePlaylist = () => {
                           </div>
                         </Link>
                       }
-                      assetFooter={
+                      assetFooter={Object.keys(pl?.likes)?.length > 0 && (
                         <footer className="logo-before heart-label">
-                          {pl?.likes?.length}
-                        </footer>}
+                          {Object.keys(pl?.likes)?.length}
+                        </footer>
+                      )}
                       user={playlist?.user}
                     />
                   ))}
