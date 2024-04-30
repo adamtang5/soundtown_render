@@ -320,6 +320,16 @@ const UserPage = () => {
   const userSongLikes = useSelector(state => user?.likes?.map(id => state.songs[id]));
   const userPlaylistLikes = useSelector(state => user?.pl_likes?.map(id => state.playlists[id]));
 
+  userSongLikes?.sort((a, b) => {
+    if (a?.comments_count < b?.comments_count) {
+      return 1;
+    } else if (a?.comments_count > b?.comments_count) {
+      return -1;
+    } else {
+      return Object.keys(b?.likes)?.length - Object.keys(a?.likes)?.length;
+    }
+  });
+
   useEffect(() => {
     (async () => {
       await dispatch(getUser(id));
