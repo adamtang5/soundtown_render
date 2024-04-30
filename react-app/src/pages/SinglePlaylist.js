@@ -189,7 +189,7 @@ const ButtonGroup = ({ playlist }) => {
     <div className="asset-button-group flex-row">
       {sessionUser?.id !== playlist?.user?.id && (
         <ToggleButton
-          condition={sessionUser?.id in playlist?.likes}
+          condition={playlist?.likes?.hasKey(sessionUser?.id)}
           buttonClasses={[...baseClasses, 'b2']}
           labelClasses={['heart-label']}
           handleToggle={handlePlaylistLikeToggle}
@@ -250,6 +250,7 @@ const SinglePlaylist = () => {
   const player = useSelector(state => state.player);
   const playlist = useSelector(state => state.playlists[id]);
   const plLikes = playlist?.likes ? Object.values(playlist?.likes) : [];
+  const stateSongs = useSelector(state => state.songs);
   const songs = useSelector(state => playlist?.songs_order?.map(id => state.songs[id]));
   const sessionUser = useSelector(state => state.session.user);
   const userPlaylists = useSelector(state => state.users[playlist?.user?.id]?.playlists
@@ -349,7 +350,7 @@ const SinglePlaylist = () => {
                         <Link to={`/playlists/${pl?.id}`}>
                           <div className="sidebar-cover-bg">
                             <img
-                              src={pl?.image_url || pl?.songs[0]?.image_url}
+                              src={pl?.image_url || stateSongs[pl?.songs_order[0]]?.image_url}
                               className="sidebar-cover"
                               alt=""
                             />
