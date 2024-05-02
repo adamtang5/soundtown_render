@@ -216,20 +216,21 @@ const SongComments = ({ song, loaded }) => {
 };
 
 const SongPlaylists = ({ song }) => {
-  const dispatch = useDispatch();
-  const songPlaylists = useSelector(state => song?.playlists?.map(pl => {
-    return state.playlists[pl?.id];
-  }));
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      await dispatch(getAllPlaylists());
-      setLoaded(true);
-    })();
-  }, [dispatch]);
-
-  if (!loaded) return null;
+  const songPlaylists = song?.playlists?.toSorted((a, b) => {
+    if (a?.likes_count > b?.likes_count) {
+      return -1;
+    } else if (a?.likes_count < b?.likes_count) {
+      return 1;
+    } else {
+      if (a?.title?.toLowerCase() > b?.title?.toLowerCase()) {
+        return 1;
+      } else if (a?.title?.toLowerCase() < b?.title?.toLowerCase()) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }
+  });
   
   return (
     <SidebarCollection
