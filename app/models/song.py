@@ -64,5 +64,6 @@ class Song(db.Model):
       'description': self.description,
       'image_url': self.image_url,
       'likes': self.normalized_likes(),
+      'likes_count': len(self.likes),
       'comments_count': len(self.comments)
     }
