@@ -68,5 +68,6 @@ class Playlist(db.Model):
       'songs_order': json.loads(self.songs_order),
       'image_url': self.image_url,
       'description': self.description,
-      'likes': self.normalized_likes()
+      'likes': self.normalized_likes(),
+      'likes_count': len(self.pl_likes)
     }
