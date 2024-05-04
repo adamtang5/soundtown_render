@@ -293,6 +293,8 @@ const SinglePlaylist = () => {
     }
   };
 
+  document.title = `Listen to ${playlist?.title} playlist online for free on Sound Town`
+
   if (!loaded) return null;
 
   return (
