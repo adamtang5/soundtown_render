@@ -189,7 +189,7 @@ const ButtonGroup = ({ playlist }) => {
     <div className="asset-button-group flex-row">
       {sessionUser?.id !== playlist?.user?.id && (
         <ToggleButton
-          condition={playlist?.likes?.hasKey(sessionUser?.id)}
+          condition={sessionUser?.id in playlist?.likes}
           buttonClasses={[...baseClasses, 'b2']}
           labelClasses={['heart-label']}
           handleToggle={handlePlaylistLikeToggle}
@@ -303,7 +303,7 @@ const SinglePlaylist = () => {
         entity="playlist"
         asset={playlist}
         h3={playlist?.description}
-        placeholderImg={songs?.at(0)?.image_url}
+        placeholderImg={playlist?.alt_image_url}
         handlePlayPause={handlePlayPause}
         condition={isPlaying && playlist?.id === player?.currPlaylistId}
         updateImage={updateImage}
