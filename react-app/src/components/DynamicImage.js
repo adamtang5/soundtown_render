@@ -123,11 +123,21 @@ const DynamicImage = ({
             { position: "relative" }}
         >
           {standalone ? (
-            <img
-              alt=""
-              className={`${[...entities[entity].styleClasses, "preview"].join(' ')}${imageUrl ? ' white-bg' : ''}`}
-              src={imageUrl}
-            />
+            <>
+              {entity === "playlist" ? (
+                <img
+                  alt=""
+                  className={`${[...entities[entity].styleClasses, "preview"].join(' ')}${imageUrl ? ' white-bg' : ''}`}
+                  src={imageUrl || placeholderImg}
+                />
+              ) : (
+                <img
+                  alt=""
+                  className={`${[...entities[entity].styleClasses, "preview"].join(' ')}${imageUrl ? ' white-bg' : ''}`}
+                  src={imageUrl}
+                />
+              )}
+            </>
           ) : (
             <>
               {(imageUrl || stagedFile) && <img
