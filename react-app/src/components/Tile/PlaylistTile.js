@@ -71,7 +71,6 @@ const PlaylistTile = ({ playlist }) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const player = useSelector(state => state.player);
-  const firstSong = useSelector(state => state.songs[playlist?.songs_order[0]]);
 
   const handlePlayPause = async (e) => {
     if (playlist?.id === player?.currPlaylistId) {
@@ -95,7 +94,7 @@ const PlaylistTile = ({ playlist }) => {
   };
 
   const coverStyle = {
-    backgroundImage: `url(${playlist?.image_url || firstSong?.image_url})`,
+    backgroundImage: `url(${playlist?.image_url || playlist?.alt_image_url})`,
     backgroundSize: "cover",
   }
 
