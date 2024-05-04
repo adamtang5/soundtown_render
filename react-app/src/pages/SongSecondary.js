@@ -66,6 +66,8 @@ const SongSecondary = ({ secondary }) => {
     });
   }
 
+  if (!loaded) return null;
+
   return (
     <main className="container">
       <SecondaryHeader
