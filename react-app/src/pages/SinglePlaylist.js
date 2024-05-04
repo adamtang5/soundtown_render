@@ -22,6 +22,7 @@ import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
 import "./SinglePlaylist.css";
 import "../components/SidebarModules/Sidebar.css";
 import Credits from "../components/SidebarModules/Credits";
+import { sortKeyByLikesThenTitle } from "../util";
 
 const SingleSongRow = ({ song, idx }) => {
   const { play, pause, isPlaying } = useContext(AudioContext);
@@ -253,7 +254,8 @@ const SinglePlaylist = () => {
   const songs = useSelector(state => playlist?.songs_order?.map(id => state.songs[id]));
   const sessionUser = useSelector(state => state.session.user);
   const userPlaylists = useSelector(state => state.users[playlist?.user?.id]?.playlists
-    .filter(pl => pl?.id !== id));
+    .filter(pl => pl?.id !== id)
+    .toSorted(sortKeyByLikesThenTitle));
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -335,7 +337,7 @@ const SinglePlaylist = () => {
           </section>
         </main>
         <aside className="asset-sidebar">
-          {userPlaylists?.length > 0 && (
+          {playlist?.user_id !== sessionUser?.id && userPlaylists?.length > 0 && (
             <SidebarCollection
               collectionLink={`/users/${playlist?.user?.id}/playlists`}
               styleClasses={['stack-label']}

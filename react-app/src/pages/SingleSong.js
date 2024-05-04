@@ -21,6 +21,7 @@ import CommentList from "../components/Comments/CommentList";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";
 import AssetCard from "../components/Modules/AssetCard";
 import Credits from "../components/SidebarModules/Credits";
+import { sortKeyByLikesThenTitle } from "../util";
 
 const NewCommentForm = ({
   handleNewCommentSubmit,
@@ -215,21 +216,7 @@ const SongComments = ({ song, loaded }) => {
 };
 
 const SongPlaylists = ({ song }) => {
-  const songPlaylists = song?.playlists?.toSorted((a, b) => {
-    if (a?.likes_count > b?.likes_count) {
-      return -1;
-    } else if (a?.likes_count < b?.likes_count) {
-      return 1;
-    } else {
-      if (a?.title?.toLowerCase() > b?.title?.toLowerCase()) {
-        return 1;
-      } else if (a?.title?.toLowerCase() < b?.title?.toLowerCase()) {
-        return -1;
-      } else {
-        return 0;
-      }
-    }
-  });
+  const songPlaylists = song?.playlists?.toSorted(sortKeyByLikesThenTitle);
   
   return (
     <SidebarCollection
