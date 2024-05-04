@@ -21,7 +21,6 @@ const AddToExistingPlaylist = ({
   handleToggle,
 }) => {
   const dispatch = useDispatch();
-  const stateSongs = useSelector(state => state.songs);
 
   useEffect(() => {
     (async () => {
@@ -45,7 +44,7 @@ const AddToExistingPlaylist = ({
             <li key={idx} className="full-width flex-row">
               <img
                 className="modal-results-left"
-                src={pl?.image_url || stateSongs[pl?.songs_order[0]]?.image_url}
+                src={pl?.image_url || pl?.alt_image_url}
                 alt={pl?.title}
               />
               <div className="modal-results-right flex-row full-width">
