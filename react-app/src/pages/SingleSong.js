@@ -21,7 +21,6 @@ import CommentList from "../components/Comments/CommentList";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";
 import AssetCard from "../components/Modules/AssetCard";
 import Credits from "../components/SidebarModules/Credits";
-import { getAllPlaylists } from "../store/playlist";
 
 const NewCommentForm = ({
   handleNewCommentSubmit,
