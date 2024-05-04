@@ -51,7 +51,7 @@ const PlaylistSecondary = ({ secondary }) => {
         entity="playlist"
         asset={playlist}
         dimension={100}
-        imageUrl={playlist?.image_url || playlist?.songs[0]?.image_url}
+        imageUrl={playlist?.image_url || playlist?.alt_image_url}
         navData={navData}
       />
       <section className="showcase">
