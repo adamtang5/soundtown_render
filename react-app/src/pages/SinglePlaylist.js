@@ -189,7 +189,7 @@ const ButtonGroup = ({ playlist }) => {
     <div className="asset-button-group flex-row">
       {sessionUser?.id !== playlist?.user?.id && (
         <ToggleButton
-          condition={sessionUser?.id in playlist?.likes}
+          condition={playlist?.likes?.hasKey(sessionUser?.id)}
           buttonClasses={[...baseClasses, 'b2']}
           labelClasses={['heart-label']}
           handleToggle={handlePlaylistLikeToggle}
