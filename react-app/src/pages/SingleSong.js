@@ -248,7 +248,7 @@ const SongPlaylists = ({ song }) => {
                 <Link to={`/playlists/${pl?.id}`}>
                   <div className="sidebar-cover-bg">
                     <img
-                      src={pl?.image_url || pl?.songs[0]?.image_url}
+                      src={pl?.image_url || pl?.alt_image_url}
                       className="sidebar-cover"
                       alt={pl?.title}
                     />
