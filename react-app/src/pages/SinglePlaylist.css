@@ -29,12 +29,15 @@
 
 .playlist-songs-list li {
   list-style: none;
-  padding: 10px;
+  padding: 0 10px;
+  min-height: 50px;
   border-bottom: 1.5px solid lightgrey;
+  align-items: center;
 }
 
-.playlist-songs-list li:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+.playlist-songs-list li:hover,
+.playlist-songs-list li:has(.mini-asset-button-group:hover) {
+  background-color: var(--color-border);
 }
 
 .song-row {
@@ -66,6 +69,10 @@
 .song-row-play.standout,
 .song-row-overlay:hover .mini-asset-button-group {
   opacity: 1;
+}
+
+.song-row-overlay:hover .mini-asset-button-group {
+  background-color: var(--color-border);
 }
 
 .song-row-content {
@@ -131,6 +138,11 @@
   position: absolute;
   top: 10%;
   bottom: 10%;
-  right: 10px;
+  right: 0;
   gap: 5px;
+  height: 30px;
+  width: 200px;
+  padding: 0 5px 6px;
+  justify-content: flex-end;
+  pointer-events: auto;
 }
