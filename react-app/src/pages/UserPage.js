@@ -16,6 +16,7 @@ import { getAllSongs } from "../store/song";
 import { getAllPlaylists } from "../store/playlist";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";
 import AssetCard from "../components/Modules/AssetCard";
+import { sortKeyByLikesThenTitle } from "../util";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -329,6 +330,8 @@ const UserPage = () => {
       return Object.keys(b?.likes)?.length - Object.keys(a?.likes)?.length;
     }
   });
+
+  userPlaylistLikes?.sort(sortKeyByLikesThenTitle);
 
   useEffect(() => {
     (async () => {
