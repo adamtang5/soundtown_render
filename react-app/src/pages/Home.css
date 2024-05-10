@@ -1,7 +1,8 @@
 .sidebar-container {
   border-left: 2.5px solid var(--color-off-white-bg);
+  padding-left: 25px;
   margin-left: 25px;
-  align-items: center;
+  /* align-items: center; */
   padding-top: 20px;
   position: sticky;
   top: 50px;
