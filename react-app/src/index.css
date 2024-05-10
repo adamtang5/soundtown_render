@@ -126,12 +126,12 @@ fieldset {
 
 .mainfeed {
   flex: 1 1 70%;
-  max-width: calc(.65 * var(--container-max-width));
+  max-width: calc(.69 * var(--container-max-width));
 }
 
 .sidebar {
   flex: 1 1 30%;
-  max-width: calc(.35 * var(--container-max-width));
+  max-width: calc(.31 * var(--container-max-width));
 }
 
 .notification {
