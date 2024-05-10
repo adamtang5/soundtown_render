@@ -1,8 +1,10 @@
-.asset-sidebar article {
+.asset-sidebar article,
+.sidebar article {
   margin-bottom: 2em;
 }
 
-.asset-sidebar header {
+.asset-sidebar header,
+.sidebar header {
   border-bottom: 1px solid var(--color-border);
   padding-bottom: 10px;
   margin-bottom: 15px;
@@ -60,7 +62,8 @@
   height: 50px;
 }
 
-.asset-sidebar .github-badge {
+.asset-sidebar .github-badge,
+.sidebar .github-badge {
   background-color: black;
   border-radius: .5em;
   gap: .75em;
@@ -72,11 +75,14 @@
 }
 
 .asset-sidebar .github-badge .white-bg,
-.asset-sidebar .github-badge img {
+.sidebar .github-badge .white-bg,
+.asset-sidebar .github-badge img,
+.sidebar .github-badge img {
   border-radius: 50%;
 }
 
-.asset-sidebar .github-badge img {
+.asset-sidebar .github-badge img,
+.sidebar .github-badge img {
   width: 25px;
   height: 25px;
   filter: invert(1);
