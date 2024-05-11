@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "./store/session";
-// import { getAllSongs } from "./store/song";
 import ProtectedRoute from "./utilities/ProtectedRoute";
 import { ModalProvider } from "./components/Context/Modal";
 import AudioProvider from "./context/AudioContext";
@@ -31,15 +30,7 @@ const App = () => {
     })();
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     await dispatch(getAllSongs());
-  //   })();
-  // }, [dispatch]);
-
-  if (!loaded) {
-    return null;
-  }
+  if (!loaded) return null;
 
   return (
     <ModalProvider>
