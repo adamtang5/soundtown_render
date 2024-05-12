@@ -17,6 +17,7 @@ import { getAllPlaylists } from "../store/playlist";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";
 import AssetCard from "../components/Modules/AssetCard";
 import { sortKeyByLikesThenTitle } from "../util";
+import Credits from "../components/SidebarModules/Credits";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -434,7 +435,7 @@ const UserPage = () => {
             )}
             {/* TODO: Following */}
             {/* TODO: Comments */}
-            {/* TODO: Legal */}
+            <Credits />
           </aside>
         </div>
       </div>
