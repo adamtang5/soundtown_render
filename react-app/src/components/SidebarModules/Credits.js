@@ -1,25 +1,45 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import creatorData from "../CreatorCard/creators.json";
 import techData from "../TechCard/techs.json";
+import { updateCreator } from "../../store/creator";
 import { ImSpinner3 } from "react-icons/im";
 
 const CreatorsList = () => {
-  const [creators, setCreators] = useState([]);
+  const dispatch = useDispatch();
+  const creators = useSelector(state => Object.values(state.creators))
+    .toSorted((a, b) => {
+      if (a?.last_name?.toLowerCase() > b?.last_name?.toLowerCase()) {
+        return 1;
+      } else if (a?.last_name?.toLowerCase() < b?.last_name?.toLowerCase()) {
+        return -1;
+      } else {
+        if (a?.first_name?.toLowerCase() > b?.first_name?.toLowerCase()) {
+          return 1;
+        } else if (a?.first_name?.toLowerCase() < b?.first_name?.toLowerCase()) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+    });
+
   useEffect(() => {
-    const updateCreator = async (creator) => {
+    const fetchCreator = async (creator) => {
       const res = await fetch(`https://api.github.com/users/${creator.github_username}`);
       if (res.ok) {
         const data = await res.json();
-        return {
+        const newCreator = await {
           ...creator,
           avatar_url: data?.avatar_url,
           github_url: data?.html_url,
         };
+        await dispatch(updateCreator(newCreator));
       }
     };
-    Promise.all(creatorData.map(creator => updateCreator(creator)))
-      .then(newCreators => setCreators(newCreators));
-  }, []);
+    if (creators?.length === creatorData?.length && creators?.every(detail => detail?.avatar_url)) return;
+    Promise.all(creatorData.map(creator => fetchCreator(creator)));
+  }, [])
 
   if (creators?.length !== creatorData?.length || !creators?.every(detail => detail?.avatar_url)) {
     return <ImSpinner3 className="spinning pinwheel" />
