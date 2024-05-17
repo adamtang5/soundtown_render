@@ -23,7 +23,7 @@ import AssetCard from "../components/Modules/AssetCard";
 import Credits from "../components/SidebarModules/Credits";
 import { sortKeyByLikesThenTitle } from "../util";
 import { getPlaylist } from "../store/playlist";
-import { FaPause, FaPlay } from "react-icons/fa6";
+import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 
 const NewCommentForm = ({
   handleNewCommentSubmit,
@@ -275,9 +275,9 @@ const SongPlaylists = ({ song }) => {
               handlePlayPause={e => handlePlayPause(pl)}
               playPauseClasses={`asset-li-play ${pl?.id === player?.currPlaylistId && isPlaying ? "standout" : ""}`}
               playPauseIcon={pl?.id === player?.currPlaylistId && isPlaying ? (
-                <FaPause />
+                <FaCirclePause />
               ) : (
-                <FaPlay />
+                <FaCirclePlay />
               )}
             />
           ))}
