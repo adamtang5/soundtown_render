@@ -603,6 +603,40 @@ fieldset {
   gap: 10px;
 }
 
+.asset-li-overlay {
+  width: 100%;
+  align-items: center;
+  position: relative;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+}
+
+.asset-li-overlay .asset-li-play {
+  opacity: 0;
+}
+
+.asset-li-overlay:hover .asset-li-play,
+.asset-li-overlay .asset-li-play.standout {
+  opacity: 1;
+}
+
+.asset-li-content {
+  gap: 15px;
+  position: relative;
+  align-items: center;
+}
+
+.asset-li-play {
+  z-index: 10;
+  color: var(--color-primary);
+  position: absolute;
+  top: 30%;
+  bottom: 30%;
+  left: 1.2rem;
+  font-size: 1.5em;
+}
+
 .asset-li-left {}
 
 .asset-li-right {
