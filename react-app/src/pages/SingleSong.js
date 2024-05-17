@@ -3,7 +3,7 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../store/session";
 import { editSong, deleteSong, toggleSongLike, getSong } from "../store/song";
-import { loadSong, queueSong } from "../store/player";
+import { loadPlaylist, loadSong, queueSong } from "../store/player";
 import { createComment } from "../store/comment";
 import { Modal } from "../components/Context/Modal";
 import { AudioContext } from "../context/AudioContext";
@@ -22,6 +22,8 @@ import SidebarCollection from "../components/SidebarModules/SidebarCollection";
 import AssetCard from "../components/Modules/AssetCard";
 import Credits from "../components/SidebarModules/Credits";
 import { sortKeyByLikesThenTitle } from "../util";
+import { getPlaylist } from "../store/playlist";
+import { FaPause, FaPlay } from "react-icons/fa6";
 
 const NewCommentForm = ({
   handleNewCommentSubmit,
@@ -216,8 +218,24 @@ const SongComments = ({ song, loaded }) => {
 };
 
 const SongPlaylists = ({ song }) => {
+  const { play, pause, isPlaying } = useContext(AudioContext);
+  const dispatch = useDispatch();
+  const player = useSelector(state => state.player);
   const songPlaylists = song?.playlists?.toSorted(sortKeyByLikesThenTitle);
   
+  const handlePlayPause = async (playlist) => {
+    if (playlist?.id === player?.currPlaylistId) {
+      if (isPlaying) {
+        await pause();
+      } else {
+        await play();
+      }
+    } else {
+      await dispatch(getPlaylist(playlist?.id));
+      await dispatch(loadPlaylist(playlist));
+    }
+  };
+
   return (
     <SidebarCollection
       collectionLink={`/songs/${song?.id}/playlists`}
@@ -253,6 +271,14 @@ const SongPlaylists = ({ song }) => {
                 </footer>
               }
               user={pl?.user}
+              overlay={true}
+              handlePlayPause={e => handlePlayPause(pl)}
+              playPauseClasses={`asset-li-play ${pl?.id === player?.currPlaylistId && isPlaying ? "standout" : ""}`}
+              playPauseIcon={pl?.id === player?.currPlaylistId && isPlaying ? (
+                <FaPause />
+              ) : (
+                <FaPlay />
+              )}
             />
           ))}
         </ul>
