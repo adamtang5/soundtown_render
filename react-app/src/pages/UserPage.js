@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, Link, Redirect, Switch } from "react-router-dom";
 import { editUser, getUser } from "../store/user";
@@ -11,13 +11,16 @@ import StickyNav from "../components/StickyNav";
 import ProtectedRoute from "../utilities/ProtectedRoute";
 import EditButton from "../components/Buttons/EditButton";
 import EditUserForm from "../modals/EditUserForm";
-import "./UserPage.css";
 import { getAllSongs } from "../store/song";
-import { getAllPlaylists } from "../store/playlist";
+import { getAllPlaylists, getPlaylist } from "../store/playlist";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";
 import AssetCard from "../components/Modules/AssetCard";
 import { sortKeyByLikesThenTitle } from "../util";
 import Credits from "../components/SidebarModules/Credits";
+import "./UserPage.css";
+import { AudioContext } from "../context/AudioContext";
+import { loadPlaylist } from "../store/player";
+import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -265,6 +268,23 @@ const UserSongLikes = ({ user, likes }) => {
 };
 
 const UserPlaylistLikes = ({ user, likes }) => {
+  const { play, pause, isPlaying } = useContext(AudioContext);
+  const dispatch = useDispatch();
+  const player = useSelector(state => state.player);
+
+  const handlePlayPause = async (playlist) => {
+    if (playlist?.id === player?.currPlaylistId) {
+      if (isPlaying) {
+        await pause();
+      } else {
+        await play();
+      }
+    } else {
+      await dispatch(getPlaylist(playlist?.id));
+      await dispatch(loadPlaylist(playlist));
+    }
+  };
+
   return (
     <SidebarCollection
       collectionLink={`/users/${user?.id}/likes`}
@@ -300,6 +320,14 @@ const UserPlaylistLikes = ({ user, likes }) => {
                 </footer>
               }
               user={pl?.user}
+              overlay={true}
+              handlePlayPause={e => handlePlayPause(pl)}
+              playPauseClasses={`asset-li-play ${pl?.id === player?.currPlaylistId && isPlaying ? "standout" : ""}`}
+              playPauseIcon={pl?.id === player?.currPlaylistId && isPlaying ? (
+                <FaCirclePause />
+              ) : (
+                <FaCirclePlay />
+              )}
             />
           ))}
         </ul>
