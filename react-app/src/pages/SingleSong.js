@@ -3,7 +3,7 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../store/session";
 import { editSong, deleteSong, toggleSongLike, getSong } from "../store/song";
-import { loadPlaylist, loadSong, queueSong } from "../store/player";
+import { loadSong, queueSong } from "../store/player";
 import { createComment } from "../store/comment";
 import { Modal } from "../components/Context/Modal";
 import { AudioContext } from "../context/AudioContext";
@@ -19,11 +19,9 @@ import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
 import SpeechBubble from "../components/Icons/SpeechBubble";
 import CommentList from "../components/Comments/CommentList";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";
-import AssetCard from "../components/Modules/AssetCard";
 import Credits from "../components/SidebarModules/Credits";
 import { sortKeyByLikesThenTitle } from "../util";
-import { getPlaylist } from "../store/playlist";
-import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
+import SidebarPlaylistsCollection from "../components/SidebarModules/SidebarPlaylistsCollection";
 
 const NewCommentForm = ({
   handleNewCommentSubmit,
@@ -218,71 +216,14 @@ const SongComments = ({ song, loaded }) => {
 };
 
 const SongPlaylists = ({ song }) => {
-  const { play, pause, isPlaying } = useContext(AudioContext);
-  const dispatch = useDispatch();
-  const player = useSelector(state => state.player);
   const songPlaylists = song?.playlists?.toSorted(sortKeyByLikesThenTitle);
   
-  const handlePlayPause = async (playlist) => {
-    if (playlist?.id === player?.currPlaylistId) {
-      if (isPlaying) {
-        await pause();
-      } else {
-        await play();
-      }
-    } else {
-      await dispatch(getPlaylist(playlist?.id));
-      await dispatch(loadPlaylist(playlist));
-    }
-  };
-
   return (
-    <SidebarCollection
+    <SidebarPlaylistsCollection
       collectionLink={`/songs/${song?.id}/playlists`}
       styleClasses={['stack-label']}
       h3="In playlists"
-      collection={
-        <ul className="sidebar-list">
-          {songPlaylists?.slice(0, 3)?.map(pl => (
-            <AssetCard
-              key={pl?.id}
-              entity="playlist"
-              asset={pl}
-              assetCover={
-                <Link to={`/playlists/${pl?.id}`}>
-                  <div className="sidebar-cover-bg">
-                    <img
-                      src={pl?.image_url || pl?.alt_image_url}
-                      className="sidebar-cover"
-                      alt={pl?.title}
-                    />
-                  </div>
-                </Link>
-              }
-              assetFooter={
-                <footer className="flex-row">
-                  {Object.values(pl?.likes)?.length > 0 && (
-                    <Link to={`/playlists/${pl?.id}/likes`}>
-                      <div className="logo-before heart-label">
-                        {Object.values(pl?.likes)?.length}
-                      </div>
-                    </Link>
-                  )}
-                </footer>
-              }
-              user={pl?.user}
-              overlay={true}
-              handlePlayPause={e => handlePlayPause(pl)}
-              playPauseClasses={`asset-li-play ${pl?.id === player?.currPlaylistId && isPlaying ? "standout" : ""}`}
-              playPauseIcon={pl?.id === player?.currPlaylistId && isPlaying ? (
-                <FaCirclePause />
-              ) : (
-                <FaCirclePlay />
-              )}
-            />
-          ))}
-        </ul>
-      }
+      playlists={songPlaylists}
     />
   );
 };

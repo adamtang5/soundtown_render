@@ -12,17 +12,17 @@ import { AudioContext } from "../context/AudioContext";
 import AssetHeader from "../components/AssetHeader";
 import Avatar from "../components/Icons/Avatar";
 import SidebarCollection from "../components/SidebarModules/SidebarCollection";
-import AssetCard from "../components/Modules/AssetCard";
 import ToggleButton from "../components/Buttons/ToggleButton";
 import CopyLinkButton from "../components/Buttons/CopyLinkButton";
 import DropdownButton from "../components/Buttons/DropdownButton";
 import EditButton from "../components/Buttons/EditButton";
 import EditPlaylistForm from "../modals/EditPlaylistForm";
 import ConfirmDeleteModal from "../components/ConfirmModal/ConfirmDeleteModal";
-import "./SinglePlaylist.css";
-import "../components/SidebarModules/Sidebar.css";
 import Credits from "../components/SidebarModules/Credits";
 import { sortKeyByLikesThenTitle } from "../util";
+import SidebarPlaylistsCollection from "../components/SidebarModules/SidebarPlaylistsCollection";
+import "./SinglePlaylist.css";
+import "../components/SidebarModules/Sidebar.css";
 
 const SingleSongRow = ({ song, idx }) => {
   const { play, pause, isPlaying } = useContext(AudioContext);
@@ -244,6 +244,17 @@ const ButtonGroup = ({ playlist }) => {
   );
 };
 
+const UserOtherPlaylists = ({ playlist, userOtherPlaylists }) => {
+  return (
+    <SidebarPlaylistsCollection
+      collectionLink={`/users/${playlist?.user?.id}/playlists`}
+      styleClasses={['stack-label']}
+      h3="Playlists from this user"
+      playlists={userOtherPlaylists}
+    />
+  );
+};
+
 const SinglePlaylist = () => {
   const { play, pause, isPlaying } = useContext(AudioContext);
   const dispatch = useDispatch()
@@ -253,7 +264,7 @@ const SinglePlaylist = () => {
   const plLikes = playlist?.likes ? Object.values(playlist?.likes) : [];
   const songs = useSelector(state => playlist?.songs_order?.map(id => state.songs[id]));
   const sessionUser = useSelector(state => state.session.user);
-  const userPlaylists = useSelector(state => state.users[playlist?.user?.id]?.playlists
+  const userOtherPlaylists = useSelector(state => state.users[playlist?.user?.id]?.playlists
     .filter(pl => pl?.id !== id)
     .toSorted(sortKeyByLikesThenTitle));
   const [loaded, setLoaded] = useState(false);
@@ -337,39 +348,10 @@ const SinglePlaylist = () => {
           </section>
         </main>
         <aside className="asset-sidebar">
-          {playlist?.user_id !== sessionUser?.id && userPlaylists?.length > 0 && (
-            <SidebarCollection
-              collectionLink={`/users/${playlist?.user?.id}/playlists`}
-              styleClasses={['stack-label']}
-              h3="Playlists from this user"
-              collection={
-                <ul className="sidebar-list">
-                  {userPlaylists?.slice(0, 3)?.map(pl => (
-                    <AssetCard
-                      key={pl?.id}
-                      entity="playlist"
-                      asset={pl}
-                      assetCover={
-                        <Link to={`/playlists/${pl?.id}`}>
-                          <div className="sidebar-cover-bg">
-                            <img
-                              src={pl?.image_url || pl?.alt_image_url}
-                              className="sidebar-cover"
-                              alt=""
-                            />
-                          </div>
-                        </Link>
-                      }
-                      assetFooter={Object.keys(pl?.likes)?.length > 0 && (
-                        <footer className="logo-before heart-label">
-                          {Object.keys(pl?.likes)?.length}
-                        </footer>
-                      )}
-                      user={playlist?.user}
-                    />
-                  ))}
-                </ul>
-              }
+          {playlist?.user_id !== sessionUser?.id && userOtherPlaylists?.length > 0 && (
+            <UserOtherPlaylists
+              playlist={playlist}
+              userOtherPlaylists={userOtherPlaylists}
             />
           )}
           {plLikes?.length > 0 && (
