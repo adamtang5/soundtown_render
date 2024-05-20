@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import SidebarCollection from "./SidebarCollection";
 import AssetCard from "../Modules/AssetCard";
+import { useContext } from "react";
+import { AudioContext } from "../../context/AudioContext";
+import { useDispatch, useSelector } from "react-redux";
+import { loadSong } from "../../store/player";
+import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 
 const SidebarSongsCollection = ({
   collectionLink,
@@ -8,6 +13,22 @@ const SidebarSongsCollection = ({
   h3,
   songs,
 }) => {
+  const { play, pause, isPlaying } = useContext(AudioContext);
+  const dispatch = useDispatch();
+  const player = useSelector(state => state.player);
+
+  const handlePlayPause = async (song) => {
+    if (song?.id === player?.currSongId) {
+      if (isPlaying) {
+        await pause();
+      } else {
+        await play();
+      }
+    } else {
+      await dispatch(loadSong(song?.id));
+    }
+  };
+
   return (
     <SidebarCollection
       collectionLink={collectionLink}
@@ -50,12 +71,20 @@ const SidebarSongsCollection = ({
                 </footer>
               }
               user={song?.user}
+              overlay={true}
+              handlePlayPause={e => handlePlayPause(song)}
+              playPauseClasses={`asset-li-play ${isPlaying && song?.id === player?.currSongId ? "standout" : ""}`}
+              playPauseIcon={isPlaying && song?.id === player?.currSongId ? (
+                <FaCirclePause />
+              ) : (
+                <FaCirclePlay />
+              )}
             />
           ))}
         </ul>
       }
     />
-  )
+  );
 };
 
 export default SidebarSongsCollection;

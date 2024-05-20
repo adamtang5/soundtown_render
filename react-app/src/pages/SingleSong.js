@@ -257,7 +257,7 @@ const SingleSong = () => {
     } else {
       await dispatch(loadSong(song?.id));
     }
-  }
+  };
   
   const updateImage = async (e) => {
     const file = e.target.files[0];
