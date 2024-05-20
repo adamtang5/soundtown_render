@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams, Link, Redirect, Switch } from "react-router-dom";
+import { useHistory, useParams, Redirect, Switch } from "react-router-dom";
 import { editUser, getUser } from "../store/user";
 import DropdownButton from "../components/Buttons/DropdownButton";
 import DynamicImage from "../components/DynamicImage";
@@ -13,10 +13,9 @@ import EditButton from "../components/Buttons/EditButton";
 import EditUserForm from "../modals/EditUserForm";
 import { getAllSongs } from "../store/song";
 import { getAllPlaylists } from "../store/playlist";
-import SidebarCollection from "../components/SidebarModules/SidebarCollection";
-import AssetCard from "../components/Modules/AssetCard";
 import { sortKeyByLikesThenTitle } from "../util";
 import Credits from "../components/SidebarModules/Credits";
+import SidebarSongsCollection from "../components/SidebarModules/SidebarSongsCollection";
 import SidebarPlaylistsCollection from "../components/SidebarModules/SidebarPlaylistsCollection";
 import "./UserPage.css";
 
@@ -216,51 +215,11 @@ const ButtonGroup = () => {
 
 const UserSongLikes = ({ user, likes }) => {
   return (
-    <SidebarCollection
+    <SidebarSongsCollection
       collectionLink={`/users/${user?.id}/likes`}
       styleClasses={['heart-label']}
       h3={`${likes?.length} liked song${likes?.length > 1 ? "s" : ""}`}
-      collection={
-        <ul className="sidebar-list">
-          {likes?.slice(0, 3)?.map(song => (
-            <AssetCard
-              key={song?.id}
-              entity="song"
-              asset={song}
-              assetCover={
-                <Link to={`/songs/${song?.id}`}>
-                  <div className="sidebar-cover-bg">
-                    <img
-                      src={song?.image_url}
-                      className="sidebar-cover"
-                      alt={song?.title}
-                    />
-                  </div>
-                </Link>
-              }
-              assetFooter={
-                <footer className="flex-row">
-                  {Object.values(song?.likes)?.length > 0 && (
-                    <Link to={`/songs/${song?.id}/likes`}>
-                      <div className="logo-before heart-label">
-                        {Object.values(song?.likes)?.length}
-                      </div>
-                    </Link>
-                  )}
-                  {song?.comments_count > 0 && (
-                    <Link to={`/songs/${song?.id}`}>
-                      <div className="logo-before speech-bubble-label">
-                        {song?.comments_count}
-                      </div>
-                    </Link>
-                  )}
-                </footer>
-              }
-              user={song?.user}
-            />
-          ))}
-        </ul>
-      }
+      songs={likes}
     />
   );
 };
