@@ -49,6 +49,11 @@
   border: 2px solid var(--color-border-light);
 }
 
+.sidebar-list .mini-asset-button-group {
+  top: 25%;
+  bottom: 25%;
+}
+
 .sidebar-cover-bg {
   background-image: url(../../static/images/playlist-bg-small.png);
   height: 60px;
