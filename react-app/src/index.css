@@ -124,14 +124,15 @@ fieldset {
   flex-wrap: nowrap;
 }
 
-.mainfeed {
-  flex: 1 1 70%;
-  max-width: calc(.69 * var(--container-max-width));
+.mainfeed,
+.asset-main {
+  flex: 1 1 calc(.7 * var(--container-max-width));
+  min-width: 580px;
 }
 
-.sidebar {
-  flex: 1 1 30%;
-  max-width: calc(.31 * var(--container-max-width));
+.sidebar,
+.asset-sidebar {
+  width: 300px;
 }
 
 .notification {
@@ -577,19 +578,11 @@ fieldset {
   padding-top: 20px;
 }
 
-.asset-main {
-  width: 70%;
-}
-
 .asset-button-group {
   padding: 0 0 12px;
   border-bottom: 1px solid grey;
   width: 100%;
   gap: 5px;
-}
-
-.asset-sidebar {
-  width: 30%;
 }
 
 /* Asset LI cards */
