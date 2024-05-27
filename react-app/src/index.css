@@ -126,13 +126,12 @@ fieldset {
 
 .mainfeed,
 .asset-main {
-  flex: 1 1 calc(.7 * var(--container-max-width));
-  min-width: 580px;
+  flex: 1 1 580px;
 }
 
 .sidebar,
 .asset-sidebar {
-  width: 300px;
+  flex: 0 0 300px;
 }
 
 .notification {
