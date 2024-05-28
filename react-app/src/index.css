@@ -503,6 +503,10 @@ fieldset {
   border: none;
 }
 
+.button-group-menu .logo-before.flex-row {
+  gap: 5px;
+}
+
 /* Hover Animation */
 .hover-animated {
   opacity: 0;

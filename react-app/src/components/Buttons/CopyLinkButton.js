@@ -4,6 +4,7 @@ const CopyLinkButton = ({
   buttonClasses,
   label,
   link = window.location.href,
+  isOfDropdown = false,
 }) => {
   const [showNotification, setShowNotification] = useState(false);
 
@@ -13,10 +14,9 @@ const CopyLinkButton = ({
     setTimeout(() => {
       setShowNotification(false);
     }, 2500);
-
   }, [showNotification]);
 
-  const addToClipBoard = e => {
+  const addToClipboard = e => {
     e.stopPropagation();
 
     if (showNotification) return;
@@ -26,14 +26,21 @@ const CopyLinkButton = ({
 
   return (
     <>
-      <button
-        onClick={addToClipBoard}
-        className={buttonClasses.join(' ')}
-      >
+      {isOfDropdown ? (
         <div
-          className="logo-before chain-label"
+          onClick={addToClipboard}
+          className="logo-before flex-row chain-label"
         >{label}</div>
-      </button>
+      ) : (
+        <button
+          onClick={addToClipboard}
+          className={buttonClasses.join(' ')}
+        >
+          <div
+            className="logo-before chain-label"
+          >{label}</div>
+        </button>
+      )}
       {showNotification && (
         <div className="notification top-right">Link has been copied to the clipboard!</div>
       )}
