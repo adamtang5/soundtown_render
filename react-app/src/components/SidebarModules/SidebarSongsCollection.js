@@ -50,6 +50,13 @@ const SidebarSongButtonGroup = ({ song }) => {
 
   const dropdownItems = [
     {
+      label: <CopyLinkButton
+        label="Copy Link"
+        link={`${window.location.origin}/songs/${song?.id}`}
+        isOfDropdown={true}
+      />,
+    },
+    {
       onClick: () => addSongToQueue(song.id),
       label: <div className="logo-before flex-row enqueue-label">
         Add to queue
@@ -69,11 +76,6 @@ const SidebarSongButtonGroup = ({ song }) => {
           offLabel=""
         />
       )}
-      <CopyLinkButton
-        buttonClasses={[...baseClasses, ...styleClasses]}
-        label=""
-        link={`${window.location.origin}/songs/${song?.id}`}
-      />
       <DropdownButton
         toggleLabel=""
         toggleClasses={styleClasses}
