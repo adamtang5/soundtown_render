@@ -80,7 +80,7 @@ const SidebarSongButtonGroup = ({ song }) => {
         toggleLabel=""
         toggleClasses={styleClasses}
         beforeLabel="ellipses-label"
-        labelSize="13"
+        labelSize="l3"
         showDropdown={showDropdown}
         setShowDropdown={setShowDropdown}
         dropdownUlClasses={['menu', 'button-group-menu', 'flex-column']}

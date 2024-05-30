@@ -485,7 +485,7 @@ fieldset {
   width: 130px;
   top: 24px;
   left: 2px;
-  z-index: 7;
+  z-index: 11;
 }
 
 .button-group-menu li {
