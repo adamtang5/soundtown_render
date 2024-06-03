@@ -600,7 +600,6 @@ fieldset {
 }
 
 .asset-li-overlay {
-  width: 100%;
   align-items: center;
   position: relative;
   top: 0;
@@ -608,12 +607,14 @@ fieldset {
   background-color: transparent;
 }
 
-.asset-li-overlay .asset-li-play {
+.asset-li-overlay .asset-li-play,
+.asset-li-overlay .mini-asset-button-group {
   opacity: 0;
 }
 
 .asset-li-overlay:hover .asset-li-play,
-.asset-li-overlay .asset-li-play.standout {
+.asset-li-play.standout,
+.asset-li-overlay:hover .mini-asset-button-group {
   opacity: 1;
 }
 
