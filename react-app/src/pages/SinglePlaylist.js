@@ -244,7 +244,26 @@ const ButtonGroup = ({ playlist }) => {
   );
 };
 
-const UserOtherPlaylists = ({ playlist, userOtherPlaylists }) => {
+const UserOtherPlaylists = ({ playlist }) => {
+  const dispatch = useDispatch();
+  const [loaded, setLoaded] = useState(false);
+  const userOtherPlaylists = useSelector(state => playlist?.siblings?.map(pl => {
+    return state.playlists[pl?.id];
+  }))?.toSorted(sortKeyByLikesThenTitle);
+
+  useEffect(() => {
+    (async () => {
+      if (playlist) {
+        for (const pl of playlist?.siblings) {
+          await dispatch(getPlaylist(pl?.id));
+        }
+        setLoaded(true);
+      }
+    })();
+  }, [dispatch]);
+
+  if (!loaded) return null;
+
   return (
     <SidebarPlaylistsCollection
       collectionLink={`/users/${playlist?.user?.id}/playlists`}
@@ -264,9 +283,6 @@ const SinglePlaylist = () => {
   const plLikes = playlist?.likes ? Object.values(playlist?.likes) : [];
   const songs = useSelector(state => playlist?.songs_order?.map(id => state.songs[id]));
   const sessionUser = useSelector(state => state.session.user);
-  const userOtherPlaylists = useSelector(state => state.users[playlist?.user?.id]?.playlists
-    .filter(pl => pl?.id !== id)
-    .toSorted(sortKeyByLikesThenTitle));
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -276,13 +292,6 @@ const SinglePlaylist = () => {
       setLoaded(true);
     })();
   }, [dispatch, id]);
-  
-  useEffect(() => {
-    (async () => {
-      if (!playlist) return;
-      await dispatch(getUser(playlist?.user?.id));
-    })();
-  }, [dispatch, playlist?.user?.id]);
 
   const handlePlayPause = async (e) => {
     if (playlist?.id === player?.currPlaylistId) {
@@ -348,11 +357,8 @@ const SinglePlaylist = () => {
           </section>
         </main>
         <aside className="asset-sidebar">
-          {playlist?.user_id !== sessionUser?.id && userOtherPlaylists?.length > 0 && (
-            <UserOtherPlaylists
-              playlist={playlist}
-              userOtherPlaylists={userOtherPlaylists}
-            />
+          {playlist?.user_id !== sessionUser?.id && playlist?.siblings?.length > 0 && (
+            <UserOtherPlaylists playlist={playlist} />
           )}
           {plLikes?.length > 0 && (
             <SidebarCollection
