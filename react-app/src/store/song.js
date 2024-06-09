@@ -50,11 +50,17 @@ export const getAllSongs = () => actionGenerator({
   action: loadSongs,
 });
 
-// Get One Song from the Database by id
+// Get One Song and its Comments from the Database by id
 export const getSong = (id) => actionGenerator({
   url: `/api/songs/${id}`,
   action: newSong,
   action2: loadComments,
+});
+
+// Get One Song from the Database by id
+export const getSongOnly = (id) => actionGenerator({
+  url: `/api/songs/${id}`,
+  action: newSong,
 });
 
 // Edit/Update Songs from the db

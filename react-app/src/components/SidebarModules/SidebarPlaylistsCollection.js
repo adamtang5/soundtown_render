@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AudioContext } from "../../context/AudioContext";
 import SidebarCollection from "./SidebarCollection";
+import { getSongOnly } from "../../store/song";
 import { getPlaylist, togglePlaylistLike } from "../../store/playlist";
 import { loadPlaylist, queuePlaylist } from "../../store/player";
 import AssetCard from "../Modules/AssetCard";
@@ -14,7 +15,6 @@ import DropdownButton from "../Buttons/DropdownButton";
 const SidebarPlaylistButtonGroup = ({ playlist }) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  const player = useSelector(state => state.player);
   const [showDropdown, setShowDropdown] = useState(false);
   const baseClasses = ['cursor-pointer', 'composite-button'];
   const styleClasses = ['button-action', 'b3'];
@@ -106,6 +106,9 @@ const SidebarPlaylistsCollection = ({
       }
     } else {
       await dispatch(getPlaylist(playlist?.id));
+      for (const id of playlist?.songs_order) {
+        await dispatch(getSongOnly(id));
+      }
       await dispatch(loadPlaylist(playlist));
     }
   };
@@ -146,7 +149,7 @@ const SidebarPlaylistsCollection = ({
               }
               user={pl?.user}
               overlay={true}
-              handlePlayPause={e => handlePlayPause(pl)}
+              handlePlayPause={() => handlePlayPause(pl)}
               playPauseClasses={`asset-li-play ${pl?.id === player?.currPlaylistId && isPlaying ? "standout" : ""}`}
               playPauseIcon={pl?.id === player?.currPlaylistId && isPlaying ? (
                 <FaCirclePause />
