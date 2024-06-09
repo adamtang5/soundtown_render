@@ -610,6 +610,7 @@ fieldset {
 .asset-li-overlay .asset-li-play,
 .asset-li-overlay .mini-asset-button-group {
   opacity: 0;
+  width: max-content;
 }
 
 .asset-li-overlay:hover .asset-li-play,
