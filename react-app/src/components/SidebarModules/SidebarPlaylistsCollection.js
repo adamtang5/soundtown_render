@@ -42,6 +42,9 @@ const SidebarPlaylistButtonGroup = ({ playlist }) => {
 
   const addPlaylistToQueue = async (pl) => {
     await dispatch(getPlaylist(pl?.id));
+    for (const id of pl?.songs_order) {
+      await dispatch(getSongOnly(id));
+    }
     await dispatch(queuePlaylist(pl));
   };
 
@@ -54,7 +57,7 @@ const SidebarPlaylistButtonGroup = ({ playlist }) => {
       />,
     },
     {
-      onClick: () => addPlaylistToQueue(playlist?.id),
+      onClick: () => addPlaylistToQueue(playlist),
       label: <div className="logo-before flex-row enqueue-label">
         Add to queue
       </div>,
