@@ -50,6 +50,7 @@ class Playlist(db.Model):
       'id': self.id,
       'user_id': self.user_id,
       'user': self.user.to_dict(),
+      'siblings': sorted([pl.to_dict() for pl in self.user.playlists if pl.id != self.id], key=lambda pl: pl['id']),
       'title': self.title,
       'songs_order': json.loads(self.songs_order),
       'image_url': self.image_url,
