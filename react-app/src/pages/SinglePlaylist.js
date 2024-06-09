@@ -257,7 +257,7 @@ const UserOtherPlaylists = ({ playlist, userOtherPlaylists }) => {
 
 const SinglePlaylist = () => {
   const { play, pause, isPlaying } = useContext(AudioContext);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { id } = useParams();
   const player = useSelector(state => state.player);
   const playlist = useSelector(state => state.playlists[id]);
