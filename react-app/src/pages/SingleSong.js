@@ -22,6 +22,7 @@ import SidebarCollection from "../components/SidebarModules/SidebarCollection";
 import Credits from "../components/SidebarModules/Credits";
 import { sortKeyByLikesThenTitle } from "../util";
 import SidebarPlaylistsCollection from "../components/SidebarModules/SidebarPlaylistsCollection";
+import { getPlaylist } from "../store/playlist";
 
 const NewCommentForm = ({
   handleNewCommentSubmit,
@@ -216,8 +217,25 @@ const SongComments = ({ song, loaded }) => {
 };
 
 const SongPlaylists = ({ song }) => {
-  const songPlaylists = song?.playlists?.toSorted(sortKeyByLikesThenTitle);
+  const dispatch = useDispatch();
+  const [loaded, setLoaded] = useState(false);
+  const songPlaylists = useSelector(state => song?.playlists?.map(pl => {
+    return state.playlists[pl?.id];
+  }))?.toSorted(sortKeyByLikesThenTitle);
   
+  useEffect(() => {
+    (async () => {
+      if (song) {
+        for (const pl of song?.playlists) {
+          await dispatch(getPlaylist(pl?.id));
+        }
+        setLoaded(true);
+      }
+    })();
+  }, [dispatch]);
+
+  if (!loaded) return null;
+
   return (
     <SidebarPlaylistsCollection
       collectionLink={`/songs/${song?.id}/playlists`}
