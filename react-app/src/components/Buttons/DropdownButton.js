@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { AnyDropdownContext } from "../../context/AnyDropdownContext";
+
 const DropdownButton = ({
   toggleLabel,
   toggleClasses = [],
@@ -8,6 +11,7 @@ const DropdownButton = ({
   dropdownUlClasses,
   dropdownItems,
 }) => {
+  const { showAnyDropdown, setShowAnyDropdown } = useContext(AnyDropdownContext);
   const ulStyle = {
     position: "absolute",
   };
@@ -15,6 +19,7 @@ const DropdownButton = ({
   const handleDropdownClick = e => {
     e.preventDefault();
     e.stopPropagation();
+    setShowAnyDropdown(!showDropdown);
     setShowDropdown(!showDropdown);
   };
 
@@ -32,7 +37,7 @@ const DropdownButton = ({
           className={[...toggleLabelBaseClasses, beforeLabel].join(' ')}
         >{toggleLabel}</div>
       </button>
-      {showDropdown && (
+      {showAnyDropdown && showDropdown && (
         <ul
           className={[...dropdownUlClasses, labelSize].join(' ')}
           style={ulStyle}
