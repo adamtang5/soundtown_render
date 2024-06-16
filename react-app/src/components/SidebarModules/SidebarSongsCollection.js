@@ -10,6 +10,7 @@ import { toggleSongLike } from "../../store/song";
 import ToggleButton from "../Buttons/ToggleButton";
 import CopyLinkButton from "../Buttons/CopyLinkButton";
 import DropdownButton from "../Buttons/DropdownButton";
+import { AnyDropdownContext } from "../../context/AnyDropdownContext";
 
 const SidebarSongButtonGroup = ({ song }) => {
   const dispatch = useDispatch();
@@ -97,6 +98,7 @@ const SidebarSongsCollection = ({
   songs,
 }) => {
   const { play, pause, isPlaying } = useContext(AudioContext);
+  const { setShowAnyDropdown } = useContext(AnyDropdownContext);
   const dispatch = useDispatch();
   const player = useSelector(state => state.player);
 
@@ -114,6 +116,7 @@ const SidebarSongsCollection = ({
 
   return (
     <SidebarCollection
+      onMouseOut={() => setShowAnyDropdown(false)}
       collectionLink={collectionLink}
       styleClasses={styleClasses}
       h3={h3}
