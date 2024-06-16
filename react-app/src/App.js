@@ -5,6 +5,7 @@ import { authenticate } from "./store/session";
 import ProtectedRoute from "./utilities/ProtectedRoute";
 import { ModalProvider } from "./components/Context/Modal";
 import AudioProvider from "./context/AudioContext";
+import AnyDropdownProvider from "./context/AnyDropdownContext";
 import NavBar from "./components/NavBar";
 import SplashPage from "./pages/SplashPage";
 import Home from "./pages/Home";
@@ -35,51 +36,53 @@ const App = () => {
   return (
     <ModalProvider>
       <AudioProvider>
-        <BrowserRouter>
-          {sessionUser !== null && <NavBar />}
-          <Switch>
-            <Route path="/" exact={true}>
-              {sessionUser !== null ? <Redirect to="/home" /> : <Redirect to="/welcome" />}
-            </Route>
-            <Route path="/welcome">
-              <SplashPage />
-            </Route>
-            <ProtectedRoute path="/home">
-              <Home />
-            </ProtectedRoute>
-            <ProtectedRoute path="/explore">
-              <Explore />
-            </ProtectedRoute>
-            <ProtectedRoute path="/library">
-              <Library />
-            </ProtectedRoute>
-            <ProtectedRoute path="/users/:id">
-              <UserPage />
-            </ProtectedRoute>
-            <ProtectedRoute path="/songs/:id" exact={true}>
-              <SingleSong />
-            </ProtectedRoute>
-            <ProtectedRoute path="/songs/:id/playlists" exact={true}>
-              <SongSecondary secondary="playlists" />
-            </ProtectedRoute>
-            <ProtectedRoute path="/songs/:id/likes" exact={true}>
-              <SongSecondary secondary="likes" />
-            </ProtectedRoute>
-            <ProtectedRoute path="/playlists/:id" exact={true}>
-              <SinglePlaylist />
-            </ProtectedRoute>
-            <ProtectedRoute path="/playlists/:id/likes" exact={true}>
-              <PlaylistSecondary secondary="likes" />
-            </ProtectedRoute>
-            <ProtectedRoute path="/sandbox">
-              <Sandbox />
-            </ProtectedRoute>
-            <Route>
-              <p>not found</p>
-            </Route>
-          </Switch>
-          <Audio />
-        </BrowserRouter>
+        <AnyDropdownProvider>
+          <BrowserRouter>
+            {sessionUser !== null && <NavBar />}
+            <Switch>
+              <Route path="/" exact={true}>
+                {sessionUser !== null ? <Redirect to="/home" /> : <Redirect to="/welcome" />}
+              </Route>
+              <Route path="/welcome">
+                <SplashPage />
+              </Route>
+              <ProtectedRoute path="/home">
+                <Home />
+              </ProtectedRoute>
+              <ProtectedRoute path="/explore">
+                <Explore />
+              </ProtectedRoute>
+              <ProtectedRoute path="/library">
+                <Library />
+              </ProtectedRoute>
+              <ProtectedRoute path="/users/:id">
+                <UserPage />
+              </ProtectedRoute>
+              <ProtectedRoute path="/songs/:id" exact={true}>
+                <SingleSong />
+              </ProtectedRoute>
+              <ProtectedRoute path="/songs/:id/playlists" exact={true}>
+                <SongSecondary secondary="playlists" />
+              </ProtectedRoute>
+              <ProtectedRoute path="/songs/:id/likes" exact={true}>
+                <SongSecondary secondary="likes" />
+              </ProtectedRoute>
+              <ProtectedRoute path="/playlists/:id" exact={true}>
+                <SinglePlaylist />
+              </ProtectedRoute>
+              <ProtectedRoute path="/playlists/:id/likes" exact={true}>
+                <PlaylistSecondary secondary="likes" />
+              </ProtectedRoute>
+              <ProtectedRoute path="/sandbox">
+                <Sandbox />
+              </ProtectedRoute>
+              <Route>
+                <p>not found</p>
+              </Route>
+            </Switch>
+            <Audio />
+          </BrowserRouter>
+        </AnyDropdownProvider>
       </AudioProvider>
     </ModalProvider>
   );
