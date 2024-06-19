@@ -5,7 +5,6 @@ import { Link, useParams } from "react-router-dom";
 import { FaPlay, FaPause } from "react-icons/fa6";
 import { loadPlaylist, queuePlaylist, loadSong, queueSong } from "../store/player";
 import { authenticate } from "../store/session";
-import { getUser } from "../store/user";
 import { getAllSongs, toggleSongLike } from "../store/song";
 import { editPlaylist, deletePlaylist, getPlaylist, togglePlaylistLike } from "../store/playlist";
 import { AudioContext } from "../context/AudioContext";

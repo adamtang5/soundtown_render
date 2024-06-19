@@ -5,12 +5,11 @@ const SidebarCollection = ({
   styleClasses,
   h3,
   collection,
-  ...props
 }) => {
   const baseClasses = ['logo-before', 'no-animation'];
 
   return (
-    <article {...props} >
+    <article>
       <header>
         <Link
           className="sidebar-header flex-row"

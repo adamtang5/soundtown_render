@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { AnyDropdownContext } from "../../context/AnyDropdownContext";
+import { useDispatch, useSelector } from "react-redux";
+import { showAllDropdowns, hideAllDropdowns } from "../../store/dropdown";
 
 const DropdownButton = ({
   toggleLabel,
@@ -11,7 +11,8 @@ const DropdownButton = ({
   dropdownUlClasses,
   dropdownItems,
 }) => {
-  const { showAnyDropdown, setShowAnyDropdown } = useContext(AnyDropdownContext);
+  const dispatch = useDispatch();
+  const showing = useSelector(state => state.dropdown.showing);
   const ulStyle = {
     position: "absolute",
   };
@@ -19,7 +20,11 @@ const DropdownButton = ({
   const handleDropdownClick = e => {
     e.preventDefault();
     e.stopPropagation();
-    setShowAnyDropdown(!showDropdown);
+    if (showDropdown) {
+      dispatch(hideAllDropdowns());
+    } else {
+      dispatch(showAllDropdowns());
+    }
     setShowDropdown(!showDropdown);
   };
 
@@ -37,7 +42,7 @@ const DropdownButton = ({
           className={[...toggleLabelBaseClasses, beforeLabel].join(' ')}
         >{toggleLabel}</div>
       </button>
-      {showAnyDropdown && showDropdown && (
+      {showing && showDropdown && (
         <ul
           className={[...dropdownUlClasses, labelSize].join(' ')}
           style={ulStyle}

@@ -1,94 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AudioContext } from "../../context/AudioContext";
 import SidebarCollection from "./SidebarCollection";
 import { getSongOnly } from "../../store/song";
-import { getPlaylist, togglePlaylistLike } from "../../store/playlist";
-import { loadPlaylist, queuePlaylist } from "../../store/player";
+import { getPlaylist } from "../../store/playlist";
+import { loadPlaylist } from "../../store/player";
 import AssetCard from "../Modules/AssetCard";
 import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
-import CopyLinkButton from "../Buttons/CopyLinkButton";
-import ToggleButton from "../Buttons/ToggleButton";
-import DropdownButton from "../Buttons/DropdownButton";
-
-const SidebarPlaylistButtonGroup = ({ playlist }) => {
-  const dispatch = useDispatch();
-  const sessionUser = useSelector(state => state.session.user);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const baseClasses = ['cursor-pointer', 'composite-button'];
-  const styleClasses = ['button-action', 'b3'];
-
-  useEffect(() => {
-    if (!showDropdown) return;
-
-    const closeDropdown = () => {
-      if (!showDropdown) return;
-      setShowDropdown(false);
-    };
-
-    document.addEventListener("click", closeDropdown);
-
-    return () => document.removeEventListener("click", closeDropdown);
-  }, [showDropdown]);
-
-  const handlePlaylistLikeToggle = async (e) => {
-    e.stopPropagation();
-
-    const formData = new FormData();
-    formData.append("user_id", sessionUser?.id);
-    await dispatch(togglePlaylistLike(playlist?.id, formData));
-  };
-
-  const addPlaylistToQueue = async (pl) => {
-    await dispatch(getPlaylist(pl?.id));
-    for (const id of pl?.songs_order) {
-      await dispatch(getSongOnly(id));
-    }
-    await dispatch(queuePlaylist(pl));
-  };
-
-  const dropdownItems = [
-    {
-      label: <CopyLinkButton
-        label="Copy Link"
-        link={`${window.location.origin}/playlists/${playlist?.id}`}
-        isOfDropdown={true}
-      />,
-    },
-    {
-      onClick: () => addPlaylistToQueue(playlist),
-      label: <div className="logo-before flex-row enqueue-label">
-        Add to queue
-      </div>,
-    },
-  ];
-
-  return (
-    <div className="mini-asset-button-group flex-row">
-      {sessionUser?.id !== playlist?.user?.id && (
-        <ToggleButton
-          condition={sessionUser?.id in playlist?.likes}
-          buttonClasses={[...baseClasses, 'b3']}
-          labelClasses={['heart-label']}
-          handleToggle={handlePlaylistLikeToggle}
-          onLabel=""
-          offLabel=""
-        />
-      )}
-      <DropdownButton
-        toggleLabel=""
-        toggleClasses={styleClasses}
-        beforeLabel="ellipses-label"
-        labelSize="l3"
-        showDropdown={showDropdown}
-        setShowDropdown={setShowDropdown}
-        dropdownUlClasses={['menu', 'button-group-menu', 'flex-column']}
-        dropdownItems={dropdownItems}
-      />
-    </div>
-  )
-};
 
 const SidebarPlaylistsCollection = ({
   collectionLink,
@@ -159,7 +78,6 @@ const SidebarPlaylistsCollection = ({
               ) : (
                 <FaCirclePlay />
               )}
-              hoverButtonGroup={<SidebarPlaylistButtonGroup playlist={pl} />}
             />
           ))}
         </ul>
