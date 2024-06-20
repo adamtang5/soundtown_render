@@ -153,7 +153,7 @@ const SliderCard = ({ title, description, songs }) => {
 
 const Home = () => {
   return (
-    <main className="container flex-row two-columns full-width">
+    <main className="container two-columns full-width">
       <div className="mainfeed">
         <MainFeed />
       </div>

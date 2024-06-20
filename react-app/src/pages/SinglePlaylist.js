@@ -44,7 +44,7 @@ const SingleSongRow = ({ song, idx }) => {
   };
 
   return (
-    <article className="song-row cursor-pointer">
+    <article className="song-row full-box cursor-pointer">
       <div className="song-row-overlay full-box">
         <div className="song-row-content full-box flex-row">
           <div
@@ -330,7 +330,7 @@ const SinglePlaylist = () => {
         updateImage={updateImage}
         isAuthorized={sessionUser?.id === playlist?.user?.id}
       />
-      <div className="container asset-secondary flex-row">
+      <div className="container asset-secondary two-columns">
         <main className="asset-main">
           <ButtonGroup playlist={playlist} />
           <section className="playlist-two-columns flex-row">

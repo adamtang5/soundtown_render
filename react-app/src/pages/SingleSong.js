@@ -324,7 +324,7 @@ const SingleSong = () => {
         updateImage={updateImage}
         isAuthorized={sessionUser.id === song?.user?.id}
       />
-      <div className="container asset-secondary flex-row">
+      <div className="container asset-secondary two-columns">
         <main className="asset-main">
           <NewCommentForm
             handleNewCommentSubmit={handleNewCommentSubmit}

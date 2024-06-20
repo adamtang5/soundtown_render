@@ -121,17 +121,16 @@ fieldset {
 }
 
 .two-columns {
-  flex-wrap: nowrap;
+  display: grid;
+  grid-template-columns: 1fr 300px;
 }
 
-.mainfeed,
+.mainfeed {
+  max-width: calc((var(--container-max-width) - 50px) * 0.7);
+}
+
 .asset-main {
-  flex: 1 1 580px;
-}
-
-.sidebar,
-.asset-sidebar {
-  flex: 0 0 300px;
+  max-width: calc(var(--container-max-width) - 380px);
 }
 
 .notification {
