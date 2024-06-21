@@ -10,6 +10,7 @@ const DropdownButton = ({
   setShowDropdown,
   dropdownUlClasses,
   dropdownItems,
+  isMultiple = false,
 }) => {
   const dispatch = useDispatch();
   const showing = useSelector(state => state.dropdown.showing);
@@ -20,10 +21,12 @@ const DropdownButton = ({
   const handleDropdownClick = e => {
     e.preventDefault();
     e.stopPropagation();
-    if (showDropdown) {
-      dispatch(hideAllDropdowns());
-    } else {
-      dispatch(showAllDropdowns());
+    if (isMultiple) {
+      if (showDropdown) {
+        dispatch(hideAllDropdowns());
+      } else {
+        dispatch(showAllDropdowns());
+      }
     }
     setShowDropdown(!showDropdown);
   };
@@ -42,7 +45,7 @@ const DropdownButton = ({
           className={[...toggleLabelBaseClasses, beforeLabel].join(' ')}
         >{toggleLabel}</div>
       </button>
-      {showing && showDropdown && (
+      {(!isMultiple || showing) && showDropdown && (
         <ul
           className={[...dropdownUlClasses, labelSize].join(' ')}
           style={ulStyle}
