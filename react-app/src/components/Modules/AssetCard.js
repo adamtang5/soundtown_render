@@ -153,6 +153,7 @@ const AssetCard = ({
             setShowDropdown={setShowDropdown}
             dropdownUlClasses={["menu", "button-group-menu", "flex-column"]}
             dropdownItems={dropdownItems}
+            isMultiple={true}
           />
         </div>
       </div>
