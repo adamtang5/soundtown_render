@@ -16,7 +16,8 @@ def seed_songs():
         title=song_dict["title"],
         audio_url=song_dict["audio_url"],
         description=song_dict["description"],
-        image_url=song_dict["image_url"])
+        image_url=song_dict["image_url"],
+        play_count=random.randint(50, 5000))
       db.session.add(new_song)
 
     db.session.commit()
