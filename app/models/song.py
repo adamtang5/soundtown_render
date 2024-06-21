@@ -15,6 +15,7 @@ class Song(db.Model):
   audio_url = db.Column(db.String, nullable=False)
   description = db.Column(db.Text)
   image_url = db.Column(db.String)
+  play_count = db.Column(db.Integer, default=0)
   created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
   updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
@@ -48,6 +49,7 @@ class Song(db.Model):
       'audio_url': self.audio_url,
       'description': self.description,
       'image_url': self.image_url,
+      'play_count': self.play_count,
       'comments': sorted([comment.to_dict() for comment in self.comments], key=lambda comment: comment['created_at']),
       'playlists': sorted([pl.to_dict() for pl in self.playlists], key=lambda pl: pl['id']),
       'created_at': self.created_at,
@@ -63,6 +65,7 @@ class Song(db.Model):
       'audio_url': self.audio_url,
       'description': self.description,
       'image_url': self.image_url,
+      'play_count': self.play_count,
       'likes': self.normalized_likes(),
       'likes_count': len(self.likes),
       'comments_count': len(self.comments)

@@ -1,8 +1,8 @@
-"""create tables
+"""empty message
 
-Revision ID: 8fc8b156a6d7
+Revision ID: f63e5b79b313
 Revises: 
-Create Date: 2023-12-22 15:52:05.091798
+Create Date: 2024-06-20 21:55:24.389237
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '8fc8b156a6d7'
+revision = 'f63e5b79b313'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -49,6 +49,7 @@ def upgrade():
     sa.Column('audio_url', sa.String(), nullable=False),
     sa.Column('description', sa.Text(), nullable=True),
     sa.Column('image_url', sa.String(), nullable=True),
+    sa.Column('play_count', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
