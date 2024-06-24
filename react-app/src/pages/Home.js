@@ -17,12 +17,18 @@ const MainFeed = () => {
   const [loaded, setLoaded] = useState(false);
   const trendingSongs = useSelector(state => Object.values(state.songs)
     .toSorted((a, b) => {
-      if (a.id < b.id) {
-        return 1;
-      } else if (a.id > b.id) {
+      if (b?.play_count < a?.play_count) {
         return -1;
+      } else if (b?.play_count > a?.play_count) {
+        return 1;
       } else {
-        return 0;
+        if (a?.id > b?.id) {
+          return -1;
+        } else if (a?.id < b?.id) {
+          return 1;
+        } else {
+          return 0;
+        }
       }
     })
     .slice(0, Math.floor(Object.keys(state.songs).length * PCT_OF_TRENDING)));
