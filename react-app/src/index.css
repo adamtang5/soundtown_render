@@ -580,10 +580,13 @@ fieldset {
   padding-top: 20px;
 }
 
+.song-info {
+  border-bottom: 1px solid grey;
+  justify-content: space-between;
+}
+
 .asset-button-group {
   padding: 0 0 12px;
-  border-bottom: 1px solid grey;
-  width: 100%;
   gap: 5px;
 }
 

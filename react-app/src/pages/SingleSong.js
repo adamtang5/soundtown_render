@@ -23,6 +23,7 @@ import Credits from "../components/SidebarModules/Credits";
 import { sortKeyByLikesThenTitle } from "../util";
 import SidebarPlaylistsCollection from "../components/SidebarModules/SidebarPlaylistsCollection";
 import { getPlaylist } from "../store/playlist";
+import { FaHeart, FaPlay } from "react-icons/fa6";
 
 const NewCommentForm = ({
   handleNewCommentSubmit,
@@ -186,6 +187,18 @@ const ButtonGroup = ({ song }) => {
   );
 };
 
+const SongMeta = ({ song }) => {
+  return (
+    <div className="song-meta flex-row">
+      <FaPlay />
+      {song?.play_count}
+
+      <FaHeart />
+      {Object.keys(song?.likes)?.length}
+    </div>
+  );
+};
+
 const SongComments = ({ song, loaded }) => {
   const commentsByParentId = useSelector(state => state.comments);
   const rootComments = commentsByParentId[null];
@@ -332,7 +345,10 @@ const SingleSong = () => {
             setMessage={setMessage}
             errors={errors}
           />
-          <ButtonGroup song={song} />
+          <div className="song-info full-width flex-row">
+            <ButtonGroup song={song} />
+            <SongMeta song={song} />
+          </div>
           <section className="comment-two-columns flex-row">
             <aside>
               <article className="user-badge flex-column">
