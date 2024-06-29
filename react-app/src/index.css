@@ -585,8 +585,30 @@ fieldset {
   justify-content: space-between;
 }
 
+.song-info > *,
 .asset-button-group {
   padding: 0 0 12px;
+}
+
+.song-meta {
+  gap: 0.5em;
+}
+
+.song-meta * {
+  color: var(--color-info);
+  font-size: 0.95em;
+}
+
+.song-meta-tag {
+  gap: 0.3em;
+}
+
+.song-info,
+.song-meta-tag {
+  align-items: center;
+}
+
+.asset-button-group {
   gap: 5px;
 }
 
