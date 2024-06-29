@@ -187,14 +187,15 @@ const ButtonGroup = ({ song }) => {
   );
 };
 
-const SongMeta = ({ song }) => {
+const SongMeta = ({ items }) => {
   return (
     <div className="song-meta flex-row">
-      <FaPlay />
-      {song?.play_count}
-
-      <FaHeart />
-      {Object.keys(song?.likes)?.length}
+      {items.map((item, idx) => (
+        <div key={idx} className="song-meta-tag flex-row">
+          {item.icon}
+          {item.text}
+        </div>
+      ))}
     </div>
   );
 };
@@ -325,6 +326,23 @@ const SingleSong = () => {
   if (!loaded) {
     return null;
   }
+  
+  const songMetaItems = [];
+  if (song?.play_count) {
+    songMetaItems.push({
+      icon: <FaPlay />,
+      text: <span>{song?.play_count}</span>,
+    });
+  }
+
+  if (Object.keys(song?.likes)?.length) {
+    songMetaItems.push({
+      icon: <FaHeart />,
+      text: <Link to={`/songs/${song?.id}/likes`}>
+        {Object.keys(song?.likes)?.length}
+      </Link>,
+    });
+  }
 
   return (
     <>
@@ -347,7 +365,7 @@ const SingleSong = () => {
           />
           <div className="song-info full-width flex-row">
             <ButtonGroup song={song} />
-            <SongMeta song={song} />
+            <SongMeta items={songMetaItems} />
           </div>
           <section className="comment-two-columns flex-row">
             <aside>
