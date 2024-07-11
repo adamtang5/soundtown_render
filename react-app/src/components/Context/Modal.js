@@ -37,7 +37,7 @@ export function Modal({
   return ReactDOM.createPortal(
     <div
       id="modal"
-      className={classes[position][0]}
+      className={`full-box ${classes[position][0]}`}
       style={{ paddingTop: `${paddingTop}px` }}
     >
       <div

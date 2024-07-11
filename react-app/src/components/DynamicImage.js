@@ -127,13 +127,13 @@ const DynamicImage = ({
               {entity === "playlist" ? (
                 <img
                   alt=""
-                  className={`${[...entities[entity].styleClasses, "preview"].join(' ')}${imageUrl ? ' white-bg' : ''}`}
+                  className={`${[...entities[entity].styleClasses, "full-box"].join(' ')}${imageUrl ? ' white-bg' : ''}`}
                   src={imageUrl || placeholderImg}
                 />
               ) : (
                 <img
                   alt=""
-                  className={`${[...entities[entity].styleClasses, "preview"].join(' ')}${imageUrl ? ' white-bg' : ''}`}
+                  className={`${[...entities[entity].styleClasses, "full-box"].join(' ')}${imageUrl ? ' white-bg' : ''}`}
                   src={imageUrl}
                 />
               )}
@@ -143,13 +143,13 @@ const DynamicImage = ({
               {(imageUrl || stagedFile) && <img
                 id={previewId}
                 alt=""
-                className={`${[...entities[entity].styleClasses, "preview"].join(' ')}${imageUrl ? ' white-bg' : ''}`}
+                className={`${[...entities[entity].styleClasses, "full-box"].join(' ')}${imageUrl ? ' white-bg' : ''}`}
                 src={imageUrl}
               />}
             </>
           )}
           {isAuthorized && <div
-            className={`overlay flex-column-rev${standalone && entities[entity].nullable ? ' hover-animated' : ''}`}
+            className={`overlay full-box flex-column-rev${standalone && entities[entity].nullable ? ' hover-animated' : ''}`}
           >
             {hiddenInput}
             {imageUrl || stagedFile ? (

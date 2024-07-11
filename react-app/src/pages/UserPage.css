@@ -30,7 +30,6 @@
 }
 
 .user-page-banner-left {
-  width: 100%;
   gap: 30px;
 }
 
@@ -41,18 +40,6 @@
   line-height: 30px;
   height: max-content;
   padding: 5px 10px;
-}
-
-.image-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: center;
-  padding: 20px;
 }
 
 .update-image-button,

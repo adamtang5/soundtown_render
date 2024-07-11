@@ -7,6 +7,7 @@ const ModalFormFooter = ({
 }) => {
   return (
     <footer
+      className="full-width"
       style={xPadding !== undefined ? {
         paddingLeft: `${xPadding}px`,
         paddingRight: `${xPadding}px`,

@@ -8,7 +8,7 @@ const ShowcaseAssetLikes = ({ entity, asset, assetLikes }) => {
           <Link to={`/users/${user?.id}`}>
             <div className="full-box">
               <img
-                className="circle preview"
+                className="circle full-box"
                 src={user?.avatar_url}
                 alt={user?.display_name}
               />

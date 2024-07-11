@@ -98,7 +98,7 @@ const MainFeed = () => {
   return (
     <>
       {data.map((grp, idx) => (
-        <section className="mainfeed-section" key={idx}>
+        <section className="mainfeed-section full-width" key={idx}>
           <SliderCard key={idx} {...grp} />
         </section>
       ))}

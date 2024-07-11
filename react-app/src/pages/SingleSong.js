@@ -36,7 +36,7 @@ const NewCommentForm = ({
       <div className="new-comment-wrapper flex-row">
         <div className="new-comment-placeholder" />
         <form
-          className="new-comment-form flex-row"
+          className="new-comment-form full-width flex-row"
           onSubmit={handleNewCommentSubmit}
         >
           <input
@@ -46,7 +46,7 @@ const NewCommentForm = ({
             placeholder="Write a comment"
             name="comment-input"
             id="comment-input"
-            className="comment-input"
+            className="comment-input full-box"
             autoComplete="off"
           />
         </form>
@@ -207,7 +207,7 @@ const SongComments = ({ song, loaded }) => {
   if (!loaded) return null;
   
   return rootComments && rootComments?.length > 0 ? (
-    <section className="song-comments-list flex-column">
+    <section className="song-comments-list full-width flex-column">
       <header className="comments-count flex-row">
         <SpeechBubble classes={['comment-icon', 'small-icon']} />
         <span className="comments-count-text">
@@ -220,7 +220,7 @@ const SongComments = ({ song, loaded }) => {
       </ul>
     </section>
   ) : (
-    <article className="no-comments flex-column">
+    <article className="no-comments full-width flex-column">
       <div className="big-icon">
         <SpeechBubble classes={['comment-icon', 'big-icon']} />
       </div>

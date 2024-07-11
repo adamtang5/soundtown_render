@@ -11,7 +11,7 @@ const ConfirmModal = ({
   };
 
   return (
-    <article className="confirm-delete flex-column">
+    <article className="confirm-delete full-width flex-column">
       <main>
         <h2>Are you sure?</h2>
         {body}

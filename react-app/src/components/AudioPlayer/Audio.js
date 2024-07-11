@@ -32,8 +32,8 @@ const Audio = () => {
   };
 
   return currSong ? (
-    <footer className="player">
-      <div className="player songinfo">
+    <footer className="player full-width">
+      <div className="player full-width songinfo">
         <img
           className="songImg"
           src={currSong?.image_url}
@@ -70,8 +70,8 @@ const Audio = () => {
       </audio>
     </footer>
   ) : (
-    <footer className="player">
-      <div className="player songinfo">
+    <footer className="player full-width">
+      <div className="player full-width songinfo">
         <AudioPlayer
           ref={playerRef}
           className="songPlayer"

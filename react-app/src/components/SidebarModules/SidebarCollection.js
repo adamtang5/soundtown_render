@@ -12,7 +12,7 @@ const SidebarCollection = ({
     <article>
       <header>
         <Link
-          className="sidebar-header flex-row"
+          className="sidebar-header full-width flex-row"
           to={collectionLink}
         >
           <h3

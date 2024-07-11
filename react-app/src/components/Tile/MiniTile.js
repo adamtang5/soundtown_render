@@ -17,7 +17,7 @@ const MiniTile = ({
       width: `${dimension}px`,
     }}>
       <div className="mini" style={coverStyle} alt={asset?.title}>
-        <div className="overlay-single flex-row">
+        <div className="overlay-single full-box flex-row">
           <button
             className="overlay-play"
             onClick={handlePlay}

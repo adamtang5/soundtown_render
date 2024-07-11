@@ -49,11 +49,11 @@ const Dropdown = ({ playlist }) => {
       </div>
       <div className="dropdown-container">
         {showMenu && (
-          <ul className="dropdown-list flex-column">
+          <ul className="dropdown-list full-box flex-column">
             {dropdownItems.map((item, idx) => (
               <li
                 key={idx}
-                className="flex-row cursor-pointer"
+                className="full-box flex-row cursor-pointer"
                 onClick={item.onClick}
               >
                 {item.leftIcon}{item.label}

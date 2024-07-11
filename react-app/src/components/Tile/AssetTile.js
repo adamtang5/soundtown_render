@@ -25,7 +25,7 @@ const AssetTile = ({
         style={coverStyle}
         alt={asset?.title}
       >
-        <div className="overlay-single flex-row">
+        <div className="overlay-single full-box flex-row">
           <button
             className="overlay-play"
           >
@@ -56,7 +56,7 @@ const AssetTile = ({
         >
           {canPause ? <FaCirclePause /> : <FaCirclePlay />}
         </button>
-        <div className="overlay-shaded">
+        <div className="overlay-shaded full-width">
           {dropdown}
           {canLike && (
             <div className="overlay-like">
