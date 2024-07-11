@@ -47,13 +47,23 @@ const SingleSongRow = ({ song, idx }) => {
     <article className="song-row full-box cursor-pointer">
       <div className="song-row-overlay full-box">
         <div className="song-row-content full-box flex-row">
-          <div
-            className="song-row-thumb"
-            style={{ backgroundImage: `url(${song?.image_url})` }}
-          />
-          <div className="song-row-idx">{idx + 1}</div>
-          <div className="song-row-title">
-            <Link to={`/songs/${song?.id}`}>{song?.title}</Link>
+          <div className="song-row-content-left flex-row">
+            <div
+              className="song-row-thumb"
+              style={{ backgroundImage: `url(${song?.image_url})` }}
+            />
+            <div className="song-row-idx">{idx + 1}</div>
+            <div className="song-row-title">
+              <Link to={`/songs/${song?.id}`}>{song?.title}</Link>
+            </div>
+          </div>
+          <div className="song-row-content-right">
+            <div className="song-meta flex-row">
+              <div className="song-meta-tag flex-row">
+                <FaPlay />
+                <span>{song?.play_count}</span>
+              </div>
+            </div>
           </div>
         </div>
         <button

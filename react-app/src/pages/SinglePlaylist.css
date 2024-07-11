@@ -47,11 +47,6 @@
   color: var(--color-border-dark);
 }
 
-.song-row-content,
-.song-row-overlay {
-  width: 100%;
-}
-
 .song-row-overlay {
   align-items: center;
   position: relative;
@@ -76,6 +71,12 @@
 }
 
 .song-row-content {
+  justify-content: space-between;
+  align-items: center;
+  padding-right: .5em;
+}
+
+.song-row-content-left {
   gap: 15px;
   position: relative;
   align-items: center;
