@@ -91,6 +91,10 @@ fieldset {
   width: 100%;
 }
 
+.full-height {
+  height: 100%;
+}
+
 .full-box {
   height: 100%;
   width: 100%;
@@ -529,14 +533,11 @@ fieldset {
 }
 
 .asset-banner-left {
-  width: 100%;
-  height: 100%;
   justify-content: space-between;
 }
 
 .asset-banner-top-left {
   align-items: flex-start;
-  width: 100%;
   gap: 20px;
 }
 
@@ -553,7 +554,6 @@ fieldset {
 }
 
 .asset-banner-info {
-  width: 100%;
   justify-content: space-between;
 }
 

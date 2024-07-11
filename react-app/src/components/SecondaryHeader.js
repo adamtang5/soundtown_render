@@ -19,7 +19,7 @@ const SecondaryHeader = ({
             }}
           >
             <img
-              className="square preview white-bg"
+              className="square full-box white-bg"
               src={imageUrl}
               alt={asset?.title}
             />

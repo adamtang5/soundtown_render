@@ -50,7 +50,11 @@ const CreatorsList = () => {
       {creators?.map(creator => (
         <li key={creator?.github_url}>
           <a className="avatar" href={creator?.github_url} target="_blank" rel="noreferrer">
-            <img src={creator?.avatar_url} alt={`${creator?.first_name} ${creator?.last_name}`} />
+            <img
+              className="full-box"
+              src={creator?.avatar_url}
+              alt={`${creator?.first_name} ${creator?.last_name}`}
+            />
           </a>
         </li>
       ))}
@@ -75,7 +79,7 @@ const Credits = () => {
     <>
       <article className="sidebar-credits">
         <header>
-          <h3 className="sidebar-header">About Project</h3>
+          <h3 className="sidebar-header full-width">About Project</h3>
         </header>
         <a href="https://github.com/adamtang5/soundtown_render" target="_blank" rel="noreferrer">
           <div className="github-badge flex-row">
@@ -86,13 +90,13 @@ const Credits = () => {
       </article>
       <article className="sidebar-credits">
         <header>
-          <h3 className="sidebar-header">Creators</h3>
+          <h3 className="sidebar-header full-width">Creators</h3>
         </header>
         <CreatorsList />
       </article>
       <article className="sidebar-credits">
         <header>
-          <h3 className="sidebar-header">Technologies Used</h3>
+          <h3 className="sidebar-header full-width">Technologies Used</h3>
         </header>
         <TechList />
       </article>

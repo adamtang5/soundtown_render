@@ -29,15 +29,15 @@ const AssetHeader = ({
     <p>Invalid Entity</p>
   ) : (
     <header className="asset-banner flex-row">
-      <div className="asset-banner-left flex-column">
-        <div className="asset-banner-top-left flex-row">
+      <div className="asset-banner-left full-box flex-column">
+        <div className="asset-banner-top-left full-width flex-row">
           <button
             onClick={handlePlayPause}
             className="asset-banner-play"
           >
             {condition ? <FaCirclePause /> : <FaCirclePlay />}
           </button>
-          <div className="asset-banner-info flex-row">
+          <div className="asset-banner-info full-width flex-row">
             <div className="asset-banner-ident flex-column">
               <h2>{asset?.title}</h2>
               <h3>{h3}</h3>

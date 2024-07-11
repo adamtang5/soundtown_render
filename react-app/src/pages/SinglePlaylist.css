@@ -22,7 +22,6 @@
 }
 
 .playlist-songs-list {
-  width: 100%;
   max-width: calc(var(--container-max-width) - 520px);
   margin-top: 20px;
   max-height: 80%;
@@ -76,7 +75,8 @@
   padding-right: .5em;
 }
 
-.song-row-content-left {
+.song-row-content-left,
+.song-row-content-right {
   gap: 15px;
   position: relative;
   align-items: center;
@@ -123,9 +123,12 @@
 
 .song-row-play,
 .song-row-delete {
-  position: absolute;
   top: 25%;
   bottom: 25%;
+}
+
+.song-row-play {
+  position: absolute;
 }
 
 .user-badge {

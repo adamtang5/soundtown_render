@@ -108,14 +108,12 @@ const SingleComment = ({ comment }) => {
       onMouseOver={commentCardMouseOver}
       onMouseOut={commentCardMouseOut}
     >
-      <article className="comment-card flex-row">
+      <article className="comment-card full-width flex-row">
         <aside className="comment-avatar">
           <Avatar user={comment?.user} isLink />
         </aside>
-        <div className="comment-body flex-column">
-          <header
-            className="flex-row"
-          >
+        <div className="comment-body full-width flex-column">
+          <header className="full-width flex-row">
             <div className="comment-info">
               {comment?.user?.id === sessionUser?.id ? (
                 <span className="commenter-name">You</span>
@@ -135,17 +133,15 @@ const SingleComment = ({ comment }) => {
             </div>
             <Moment fromNow>{comment?.updated_at}</Moment>
           </header>
-          <div
-            className="comment-main flex-row"
-          >
-            <div className="comment-content">
+          <div className="comment-main full-width flex-row">
+            <div className="comment-content full-width">
               {isEditing ? (
                 <form
                   onSubmit={handleEdit}
-                  className="content-edit"
+                  className="content-edit full-width"
                 >
                   <input
-                    className="content-field"
+                    className="content-field full-width"
                     onChange={e => setMessage(e.target.value)}
                     onKeyDown={handleEscape}
                     value={message}

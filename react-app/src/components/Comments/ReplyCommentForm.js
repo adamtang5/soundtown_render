@@ -37,7 +37,7 @@ const ReplyCommentForm = ({ parent, setIsReplying }) => {
 
   return (
     <ul className="nested-comment">
-      <li className="comment-card flex-row">
+      <li className="comment-card full-width flex-row">
         <aside className="comment-avatar">
           <Avatar user={sessionUser} />
         </aside>
@@ -47,7 +47,7 @@ const ReplyCommentForm = ({ parent, setIsReplying }) => {
         >
           <input
             autoFocus
-            className="reply-field"
+            className="reply-field full-width"
             onChange={e => setMessage(e.target.value)}
             onKeyDown={handleEscape}
             value={message}

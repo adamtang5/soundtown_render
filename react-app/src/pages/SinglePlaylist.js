@@ -354,7 +354,7 @@ const SinglePlaylist = () => {
                 </footer>
               </article>
             </aside>
-            <section className="playlist-songs-list">
+            <section className="playlist-songs-list full-width">
               <ul>
                 {songs?.map((song, idx) => (
                   <li key={idx} className="flex-row">

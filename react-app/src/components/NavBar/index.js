@@ -20,7 +20,7 @@ const Left = () => {
   const navLink = (label, url) => {
     return (
       <NavLink
-        className="navlinks flex-row-center"
+        className="navlinks full-height flex-row-center"
         to={url}
         exact={true}
         activeClassName="active"
@@ -44,9 +44,9 @@ const Left = () => {
   ]
 
   return (
-    <div className="navbar-left flex-row">
+    <div className="navbar-left full-height flex-row">
       <NavLink
-        className="nav-logo"
+        className="nav-logo full-height"
         to="/"
         exact={true}
         activeClassName="active"
@@ -54,11 +54,11 @@ const Left = () => {
         <Logo />
       </NavLink>
 
-      <ul className="navbar-links flex-row">
+      <ul className="navbar-links full-height flex-row">
         {navLinksData.map(data => (
           <li
             key={data.label}
-            className={`navbar-link flex-row ${location.pathname.startsWith(data.url) ? 'active' : ''}`}
+            className={`navbar-link full-height flex-row ${location.pathname.startsWith(data.url) ? 'active' : ''}`}
           >
             {navLink(data.label, data.url)}
           </li>
@@ -75,7 +75,7 @@ const Right = () => {
   const [showUploadModal, setShowUploadModal] = useState(false);
 
   return (
-    <div className="navbar-right">
+    <div className="navbar-right full-height">
       <UploadButton
         showUploadModal={showUploadModal}
         setShowUploadModal={setShowUploadModal}
@@ -143,32 +143,32 @@ const ProfileDropdown = ({ user }) => {
       <div className="nav-dropdown">
         {showMenu && (
           <div className="nav-profile-dropdown">
-            <div className="dropdown-links cursor-pointer">
+            <div className="dropdown-links full-width cursor-pointer">
               <NavLink
                 to={`/users/${user?.id}`}
                 exact={true}
-                className='drop-nav-links'
+                className="drop-nav-links full-box"
               > <ImUser className="prof-icon" /> Profile </NavLink>
             </div>
-            <div className="dropdown-links cursor-pointer">
+            <div className="dropdown-links full-width cursor-pointer">
               <NavLink
                 to={`/library/likes`}
                 exact={true}
-                className='drop-nav-links'
+                className="drop-nav-links full-box"
               > <RiHeartsFill className="prof-icon" /> Likes </NavLink>
             </div>
-            <div className="dropdown-links cursor-pointer">
+            <div className="dropdown-links full-width cursor-pointer">
               <NavLink
                 to={`/library/playlists`}
                 exact={true}
-                className='drop-nav-links'
+                className="drop-nav-links full-box"
               > <RiFoldersFill className="prof-icon" /> Playlists </NavLink>
             </div>
             <div
-              className="cursor-pointer dropdown-links"
+              className="dropdown-links full-width cursor-pointer"
               onClick={onLogout}
             >
-              <span className='drop-nav-links'>
+              <span className="drop-nav-links full-box">
                 <BiLogOut className="prof-icon" /> Log Out
               </span>
             </div>
@@ -182,7 +182,7 @@ const ProfileDropdown = ({ user }) => {
 const NavBar = () => {
   return (
     <header className="navbar-bg">
-      <div className="navbar flex-row">
+      <div className="navbar full-height flex-row">
         <Left />
         <Right />
       </div>

@@ -46,14 +46,31 @@ const SingleSongRow = ({ song, idx, onDelete }) => {
           isDragging={snapshot.isDragging}
           title="Drag to re-order"
         >
-          <article className="song-row">
+          <article className="song-row full-width">
             <div className="song-row-overlay full-box">
               <div className="song-row-content full-box flex-row">
-                <div
-                  className="song-row-thumb"
-                  style={{ backgroundImage: `url(${song?.image_url})` }}
-                />
-                <div className="song-row-title">{song?.title}</div>
+                <div className="song-row-content-left flex-row">
+                  <div
+                    className="song-row-thumb"
+                    style={{ backgroundImage: `url(${song?.image_url})` }}
+                  />
+                  <div className="song-row-title">{song?.title}</div>
+                </div>
+                <div className="song-row-content-right flex-row">
+                  <div className="song-meta flex-row">
+                    <div className="song-meta-tag flex-row">
+                      <FaPlay />
+                      <span>{song?.play_count}</span>
+                    </div>
+                  </div>
+                  <button
+                    className="song-row-delete"
+                    onClick={onDelete}
+                    title="Remove from playlist"
+                  >
+                    <IoCloseCircle />
+                  </button>
+                </div>
               </div>
               <button
                 onClick={handlePlayPause}
@@ -69,13 +86,6 @@ const SingleSongRow = ({ song, idx, onDelete }) => {
                 ) : (
                   <FaPlay />
                 )}
-              </button>
-              <button
-                className="song-row-delete"
-                onClick={onDelete}
-                title="Remove from playlist"
-              >
-                <IoCloseCircle />
               </button>
             </div>
           </article>
@@ -125,7 +135,7 @@ const AllTracks = ({ playlistData, setPlaylistData }) => {
     <DragDropContext
       onDragEnd={onDragEnd}
     >
-      <section className="playlist-songs-list">
+      <section className="playlist-songs-list full-width">
         <Droppable
           droppableId={playlistData?.id}
         >

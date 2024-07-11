@@ -110,7 +110,7 @@ const Header = () => {
       <div
         className="banner-content flex-row"
       >
-        <div className="user-page-banner-left flex-row">
+        <div className="user-page-banner-left full-width flex-row">
           <DynamicImage
             dimension={200}
             standalone={true}

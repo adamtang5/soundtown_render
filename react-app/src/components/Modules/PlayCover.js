@@ -19,7 +19,7 @@ const PlayCover = ({
       }}
     >
       {isOverlay && (
-        <div className="overlay play flex-row">
+        <div className="overlay play full-box flex-row">
           <button
             className="play cursor-pointer"
             onClick={handlePlay}
